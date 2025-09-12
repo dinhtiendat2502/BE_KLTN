@@ -1,23 +1,34 @@
 package com.app.toeic.model;
 
 
+import com.app.toeic.enums.ERole;
+import com.app.toeic.enums.EUser;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
 
+
 @Entity
-@Table(name = "role")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String roleId;
-    private String roleName;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
+    @Enumerated(EnumType.STRING)
+    ERole roleName;
+
+    public Role(ERole roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getRoleName() {
+        return roleName.toString();
+    }
 }
