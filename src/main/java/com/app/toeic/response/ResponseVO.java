@@ -11,8 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseVO implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private String message;
+    private Boolean success;
     private Object data;
-    private String status;
+    private String message;
 }

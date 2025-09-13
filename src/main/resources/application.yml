@@ -1,0 +1,45 @@
+# server
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+#localhost:8080/api/
+#database
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/toeichero?useUnicode=true&useJDBCCompliantTimezoneShift=true&createDatabaseIfNotExist=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: 123456
+  jpa:
+    database: mysql
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: none
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+# jwt
+jwt:
+  secret: 872c871a1ab996919a3e97145ece2418bb837cadbd69387d96cd45eef831f239
+  expiration: 86400000
+
+
+# logging
+logging:
+  file:
+    name: /var/log/toeichero/toeichero.log
+  logback:
+    rollingpolicy:
+      max-file-size: 100KB
+  level:
+    root: INFO
+    com.toeichero: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# deployment
