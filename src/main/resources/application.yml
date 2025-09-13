@@ -8,9 +8,9 @@ server:
 #database
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/toeichero?useUnicode=true&useJDBCCompliantTimezoneShift=true&createDatabaseIfNotExist=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/toeicute?useUnicode=true&useJDBCCompliantTimezoneShift=true&createDatabaseIfNotExist=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
-    password: 123456
+    password:
   jpa:
     database: mysql
     properties:
@@ -32,13 +32,13 @@ jwt:
 # logging
 logging:
   file:
-    name: /var/log/toeichero/toeichero.log
+    name: /var/log/toeicute/toeicute.log
   logback:
     rollingpolicy:
       max-file-size: 100KB
   level:
     root: INFO
-    com.toeichero: DEBUG
+    com.toeicute: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 

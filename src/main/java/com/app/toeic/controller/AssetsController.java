@@ -20,4 +20,9 @@ public class AssetsController {
     public ResponseVO getAssets(@PathVariable("path") String path) {
         return new ResponseVO(Boolean.TRUE, assetsRepository.findByPath(path).orElse(null), "Get assets successfully");
     }
+
+    @GetMapping("/test")
+    public ResponseVO test() {
+        return new ResponseVO(Boolean.TRUE, "test", "Get assets successfully");
+    }
 }
