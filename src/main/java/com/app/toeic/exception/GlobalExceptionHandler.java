@@ -28,6 +28,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseVO handleUnwantedException(Exception e) {
         log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException: {}", e.getMessage());
-        return new ResponseVO(Boolean.FALSE, "", "Something went wrong");
+        return new ResponseVO(Boolean.FALSE, "", "Something went wrong" + e.getMessage());
     }
 }

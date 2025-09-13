@@ -24,13 +24,7 @@ public class RegisterDto implements Serializable {
     @Email(message = "Email is invalid")
     String email;
 
-    @NotBlank(message = "Username is required")
-    String username;
-
     @NotBlank(message = "Password is required")
     @Min(value = 8, message = "Password must be at least 8 characters")
     String password;
-
-    String phone;
-    String address;
 }

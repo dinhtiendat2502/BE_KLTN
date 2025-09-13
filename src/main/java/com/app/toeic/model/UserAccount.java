@@ -28,25 +28,14 @@ public class UserAccount implements Serializable, UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
-    @Column(unique = true, nullable = false)
-    @NotBlank(message = "Username is required")
-    private String username;
-
     @NotBlank(message = "Password is required")
-    @Min(value = 8, message = "Password must be at least 6 characters")
     @Column(nullable = false)
     private String password;
     private String fullName;
 
     @Column(unique = true, nullable = false)
     @Email(message = "Email is invalid")
-    @NotBlank(message = "Email is required")
     private String email;
-
-    private String phone;
-
-    @Column(length = 1000)
-    private String address;
 
     @Column(length = 1000)
     private String avatar;
@@ -71,7 +60,7 @@ public class UserAccount implements Serializable, UserDetails {
 
     @Override
     public String getUsername() {
-        return this.username;
+        return this.email;
     }
 
     @Override

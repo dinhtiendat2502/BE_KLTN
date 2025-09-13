@@ -3,10 +3,10 @@ INSERT INTO role(role_name) VALUES ('ADMIN');
 INSERT INTO role(role_name) VALUES ('USER');
 
 
-INSERT INTO user_account(address, avatar, email, full_name, password, phone, status, username)
-VALUES('','','superadmin@toeicute.com','super admin toeicute', '1234qwer', '', 'ACTIVE', 'superadmin');
-INSERT INTO user_account(address, avatar, email, full_name, password, phone, status, username)
-VALUES('','','admin@toeicute.com','admin toeicute', '1234qwer', '', 'ACTIVE', 'admin');
+INSERT INTO user_account(email, full_name, password)
+VALUES('superadmin@toeicute.com','super admin toeicute', '1234qwer');
+INSERT INTO user_account(email, full_name, password)
+VALUES('admin@toeicute.com','admin toeicute', '1234qwer');
 
 
 -- INSERT FOR SUPER ADMIN --------------------------------

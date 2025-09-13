@@ -39,9 +39,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseVO authenticate(LoginDto loginDto) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserAccount user = iUserRepository.findByUsername(authentication.getName()).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "User not found"));
+        UserAccount user = iUserRepository.findByEmail(authentication.getName()).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "User not found"));
         List<String> rolesNames = new ArrayList<>();
         user.getRoles().forEach(r -> rolesNames.add(r.getRoleName()));
         var token = jwtUtilities.generateToken(user.getUsername(), rolesNames);
@@ -54,17 +54,10 @@ public class UserServiceImpl implements UserService {
         if (iUserRepository.existsByEmail(registerDto.getEmail())) {
             throw new AppException(HttpStatus.SEE_OTHER, "Email is already taken !");
         }
-        if (iUserRepository.existsByUsername(registerDto.getUsername())) {
-            throw new AppException(HttpStatus.SEE_OTHER, "Username is already taken !");
-        }
-
         UserAccount user = new UserAccount();
         user.setEmail(registerDto.getEmail());
         user.setFullName(registerDto.getFullName());
-        user.setUsername(registerDto.getUsername());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        user.setAddress(registerDto.getAddress());
-        user.setPhone(registerDto.getPhone());
         user.setAvatar(AvatarHelper.getAvatar(user.getAvatar()));
         Role role = iRoleRepository.findByRoleName(ERole.USER);
         user.setRoles(Collections.singleton(role));
