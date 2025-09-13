@@ -20,7 +20,8 @@ import java.io.Serializable;
 public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    Integer roleId;
+
     @Enumerated(EnumType.STRING)
     ERole roleName;
 

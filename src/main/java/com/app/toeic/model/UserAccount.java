@@ -24,20 +24,21 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserAccount implements Serializable, UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer userId;
 
     @Column(nullable = false, unique = true)
     private String username;
     private String password;
-    private String firstName;
-    private String lastName;
+    private String fullName;
 
+    @Column(nullable = false, unique = true)
     private String email;
     private String phone;
     private String address;
     private String avatar;
 
+    @Enumerated(EnumType.STRING)
     private EUser status;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)

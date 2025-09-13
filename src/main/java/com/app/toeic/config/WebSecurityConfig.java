@@ -1,7 +1,7 @@
 package com.app.toeic.config;
 
 import com.app.toeic.jwt.JwtAuthenticationFilter;
-import com.app.toeic.service.CustomerUserDetailsService;
+import com.app.toeic.service.impl.CustomerUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +13,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
