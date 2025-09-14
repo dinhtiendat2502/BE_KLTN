@@ -1,8 +1,6 @@
 package com.app.toeic.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,14 +15,14 @@ import java.io.Serializable;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RegisterDto implements Serializable {
-    @NotBlank(message = "Full name is required")
-    String fullName;
-
-    @NotBlank(message = "Email is required")
+    @NotEmpty(message = "Email is required")
     @Email(message = "Email is invalid")
     String email;
 
-    @NotBlank(message = "Password is required")
-    @Min(value = 8, message = "Password must be at least 8 characters")
+    @NotEmpty(message = "Password is required")
+    @Size(min = 8, message = "Password must be at least 8 characters")
     String password;
+
+    @NotEmpty(message = "Full name is required")
+    String fullName;
 }

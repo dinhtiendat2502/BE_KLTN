@@ -6,7 +6,6 @@ import com.app.toeic.enums.ERole;
 import com.app.toeic.enums.EUser;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.jwt.JwtTokenProvider;
-import com.app.toeic.model.Role;
 import com.app.toeic.model.UserAccount;
 import com.app.toeic.repository.IRoleRepository;
 import com.app.toeic.repository.IUserAccountRepository;
@@ -39,30 +38,47 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseVO authenticate(LoginDto loginDto) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()));
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(
+                        loginDto.getEmail(),
+                        loginDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserAccount user = iUserRepository.findByEmail(authentication.getName()).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "User not found"));
+        UserAccount user = iUserRepository
+                .findByEmail(authentication.getName())
+                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "User not found"));
         List<String> rolesNames = new ArrayList<>();
         user.getRoles().forEach(r -> rolesNames.add(r.getRoleName()));
         var token = jwtUtilities.generateToken(user.getUsername(), rolesNames);
-
-        return new ResponseVO(Boolean.TRUE, token, "Login successfully");
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(token)
+                .message("Đăng nhập thành công")
+                .build();
     }
 
     @Override
     public ResponseVO register(RegisterDto registerDto) {
-        if (iUserRepository.existsByEmail(registerDto.getEmail())) {
-            throw new AppException(HttpStatus.SEE_OTHER, "Email is already taken !");
+        if (Boolean.TRUE.equals(iUserRepository.existsByEmail(registerDto.getEmail()))) {
+            throw new AppException(HttpStatus.SEE_OTHER, "Email đã được đăng ký!");
         }
-        UserAccount user = new UserAccount();
-        user.setEmail(registerDto.getEmail());
-        user.setFullName(registerDto.getFullName());
-        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        user.setAvatar(AvatarHelper.getAvatar(user.getAvatar()));
-        Role role = iRoleRepository.findByRoleName(ERole.USER);
-        user.setRoles(Collections.singleton(role));
-        user.setStatus(EUser.ACTIVE);
-        var userAccount = iUserRepository.save(user);
-        return new ResponseVO(Boolean.TRUE, userAccount, "Register successfully");
+        var user = UserAccount
+                .builder()
+                .email(registerDto.getEmail())
+                .fullName(registerDto.getFullName())
+                .password(passwordEncoder.encode(registerDto.getPassword()))
+                .avatar(AvatarHelper.getAvatar(""))
+                .roles(Collections.singleton(iRoleRepository.findByRoleName(ERole.USER)))
+                .status(EUser.INACTIVE)
+                .build();
+
+        iUserRepository.save(user);
+
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(null)
+                .message("Đăng kí tài khoản thành công")
+                .build();
     }
 }

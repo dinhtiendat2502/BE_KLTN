@@ -38,6 +38,6 @@ public class Exam implements Serializable {
     private LocalDateTime  updatedAt;
 
     @ManyToOne
-    @JoinColumn(name = "topicId")
+    @JoinColumn(name = "topic_id")
     private Topic topic;
 }

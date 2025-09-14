@@ -1,6 +1,5 @@
 package com.app.toeic.service.impl;
 
-import com.app.toeic.model.UserAccount;
 import com.app.toeic.repository.IUserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,8 +16,6 @@ public class CustomerUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return iUserRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found !"));
+                .orElseThrow(() -> new UsernameNotFoundException("Không tìm thấy email!"));
     }
-
-
 }
