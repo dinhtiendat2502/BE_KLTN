@@ -2,6 +2,7 @@ package com.app.toeic.service.impl;
 
 import com.app.toeic.dto.LoginDto;
 import com.app.toeic.dto.RegisterDto;
+import com.app.toeic.dto.UserDto;
 import com.app.toeic.enums.ERole;
 import com.app.toeic.enums.EUser;
 import com.app.toeic.exception.AppException;
@@ -79,6 +80,27 @@ public class UserServiceImpl implements UserService {
                 .success(Boolean.TRUE)
                 .data(null)
                 .message("Đăng kí tài khoản thành công")
+                .build();
+    }
+
+    @Override
+    public ResponseVO getAllUser() {
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(iUserRepository.findAll())
+                .message("Lấy danh sách user thành công")
+                .build();
+    }
+
+    @Override
+    public ResponseVO updateUser(UserDto user) {
+        var _user = iUserRepository.findById(user.getId()).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "User not found"));
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(iUserRepository.save(_user))
+                .message("Cập nhật user thành công")
                 .build();
     }
 }
