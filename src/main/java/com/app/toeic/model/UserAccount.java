@@ -2,6 +2,7 @@ package com.app.toeic.model;
 
 
 import com.app.toeic.enums.EUser;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
@@ -9,11 +10,15 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -42,6 +47,15 @@ public class UserAccount implements Serializable, UserDetails {
 
     @Enumerated(EnumType.STRING)
     private EUser status = EUser.ACTIVE;
+
+
+    @JsonIgnore
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @JsonIgnore
+    @UpdateTimestamp
+    private LocalDateTime  updatedAt;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     Set<Role> roles = new HashSet<>();
