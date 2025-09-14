@@ -3465,3 +3465,6 @@ Consider defining a bean of type 'org.springframework.security.authentication.Au
 2023-12-11T14:48:53.023+07:00  INFO 11088 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
 2023-12-11T14:48:53.096+07:00  INFO 11088 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
 2023-12-11T14:48:53.117+07:00  INFO 11088 --- [restartedMain] com.app.toeic.BeApplication              : Started BeApplication in 7.005 seconds (process running for 7.934)
+2023-12-11T16:11:02.176+07:00  INFO 11088 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-12-11T16:11:02.202+07:00  INFO 11088 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-12-11T16:11:02.229+07:00  INFO 11088 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
