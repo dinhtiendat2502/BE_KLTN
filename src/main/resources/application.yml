@@ -33,10 +33,14 @@ spring:
             required: true
 jwt:
   secret: "${JWT_SECRET:872c871a1ab996919a3e97145ece2418bb837cadbd69387d96cd45eef831f239}"
-  expiration: "${JWT_EXPIRATION:86400000}"
+  expiration: "${JWT_EXPIRATION:86400}"
 logging:
   file:
     name: log/toeicute/toeicute.log
   logback:
     rollingPolicy:
       max-history: 2
+firebase:
+  project-id: "${FIREBASE_PROJECT_ID:toeicute-70460}"
+  token-key: "${FIREBASE_TOKEN_KEY:toeicute-upload}"
+  bucket-name: "${FIREBASE_BUCKET_NAME:toeicute-70460.appspot.com}"

@@ -15,14 +15,14 @@ import java.io.Serializable;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RegisterDto implements Serializable {
-    @NotEmpty(message = "Email is required")
-    @Email(message = "Email is invalid")
+    @NotEmpty(message = "Email không được bỏ trống")
+    @Email(message = "Email không hợp lệ")
     String email;
 
-    @NotEmpty(message = "Password is required")
-    @Size(min = 8, message = "Password must be at least 8 characters")
+    @NotEmpty(message = "Mật khẩu không được bỏ trống")
+    @Size(min = 8, message = "Mật khẩu phải có ít nhất 8 ký tự")
     String password;
 
-    @NotEmpty(message = "Full name is required")
+    @NotEmpty(message = "Họ tên không được bỏ trống")
     String fullName;
 }
