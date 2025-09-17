@@ -39,24 +39,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseVO authenticate(LoginDto loginDto) {
-        var v1 = new UsernamePasswordAuthenticationToken(
-                loginDto.getEmail(),
-                loginDto.getPassword());
-        Authentication authentication = authenticationManager
-                .authenticate(v1);
+        var v1 = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+        Authentication authentication = authenticationManager.authenticate(v1);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserAccount user = iUserRepository
-                .findByEmail(authentication.getName())
-                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Không tìm thấy email!"));
+        UserAccount user = iUserRepository.findByEmail(authentication.getName()).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Không tìm thấy email!"));
         List<String> rolesNames = new ArrayList<>();
         user.getRoles().forEach(r -> rolesNames.add(r.getRoleName()));
         var token = jwtUtilities.generateToken(user.getUsername(), rolesNames);
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .data(token)
-                .message("Đăng nhập thành công")
-                .build();
+        return ResponseVO.builder().success(Boolean.TRUE).data(token).message("Đăng nhập thành công").build();
     }
 
     @Override
@@ -64,24 +54,11 @@ public class UserServiceImpl implements UserService {
         if (Boolean.TRUE.equals(iUserRepository.existsByEmail(registerDto.getEmail()))) {
             throw new AppException(HttpStatus.SEE_OTHER, "Email đã được đăng ký!");
         }
-        var user = UserAccount
-                .builder()
-                .email(registerDto.getEmail())
-                .fullName(registerDto.getFullName())
-                .password(passwordEncoder.encode(registerDto.getPassword()))
-                .avatar(AvatarHelper.getAvatar(""))
-                .roles(Collections.singleton(iRoleRepository.findByRoleName(ERole.USER)))
-                .status(EUser.INACTIVE)
-                .build();
+        var user = UserAccount.builder().email(registerDto.getEmail()).fullName(registerDto.getFullName()).password(passwordEncoder.encode(registerDto.getPassword())).avatar(AvatarHelper.getAvatar("")).roles(Collections.singleton(iRoleRepository.findByRoleName(ERole.USER))).status(EUser.INACTIVE).build();
 
         iUserRepository.save(user);
 
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .data(null)
-                .message("Đăng kí tài khoản thành công")
-                .build();
+        return ResponseVO.builder().success(Boolean.TRUE).data(null).message("Đăng kí tài khoản thành công").build();
     }
 
     @Override
@@ -89,20 +66,14 @@ public class UserServiceImpl implements UserService {
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .data(iUserRepository.findAll())
-                .message("Lấy danh sách user thành công")
-                .build();
+                .data(iUserRepository.findAllByRolesNotContains(iRoleRepository.findByRoleName(ERole.ADMIN)))
+                .message("Lấy danh sách user thành công").build();
     }
 
     @Override
     public ResponseVO updateUser(UserDto user) {
         var u = iUserRepository.findById(user.getId()).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "User not found"));
         u.setStatus(user.getStatus());
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .data(iUserRepository.save(u))
-                .message("Cập nhật user thành công")
-                .build();
+        return ResponseVO.builder().success(Boolean.TRUE).data(iUserRepository.save(u)).message("Cập nhật user thành công").build();
     }
 }
