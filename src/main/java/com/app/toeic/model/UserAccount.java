@@ -2,6 +2,7 @@ package com.app.toeic.model;
 
 
 import com.app.toeic.enums.EUser;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -56,6 +57,11 @@ public class UserAccount implements Serializable, UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private Set<UserExamHistory> userExamHistories = new HashSet<>();
+
 
     @Override
     @JsonIgnore

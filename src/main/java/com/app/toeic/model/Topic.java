@@ -1,5 +1,6 @@
 package com.app.toeic.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -37,4 +38,8 @@ public class Topic implements Serializable {
     @JsonIgnore
     @UpdateTimestamp
     private LocalDateTime  updatedAt;
+
+    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private Set<Exam> exams = new HashSet<>();
 }

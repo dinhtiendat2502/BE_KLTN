@@ -1,6 +1,7 @@
 package com.app.toeic.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,9 @@ public class Exam implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id")
-    @JsonIgnore
     private Topic topic;
+
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private Set<Question> questions = new HashSet<>();
 }
