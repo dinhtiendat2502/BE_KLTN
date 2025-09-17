@@ -1,15 +1,12 @@
 package com.app.toeic.exception;
 
 import com.app.toeic.response.ResponseVO;
-import com.app.toeic.util.HttpStatus;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.FileUploadBase;
 import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -129,7 +126,7 @@ public class GlobalExceptionHandler {
                 .builder()
                 .success(Boolean.FALSE)
                 .data(null)
-                .message("Có lỗi xảy ra, vui lòng thử lại sau!")
+                .message("Hệ thống đang bị lỗi, vui lòng thử lại sau!")
                 .build();
     }
 }
