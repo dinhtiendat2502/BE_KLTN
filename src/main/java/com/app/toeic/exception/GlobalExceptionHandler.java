@@ -3,6 +3,8 @@ package com.app.toeic.exception;
 import com.app.toeic.response.ResponseVO;
 import com.app.toeic.util.HttpStatus;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -42,6 +44,17 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseVO handleResourceNotFoundException(ResourceNotFoundException e) {
+        log.error("Exception >> GlobalExceptionHandler >> handleResourceNotFoundException: {}", e.getMessage());
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .data(null)
+                .message("Không tìm thấy tài nguyên")
+                .build();
+    }
+
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseVO handleNotFoundException(NoHandlerFoundException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleNotFoundException: {}", e.getMessage());
@@ -50,6 +63,17 @@ public class GlobalExceptionHandler {
                 .success(Boolean.FALSE)
                 .data(null)
                 .message("Không tìm thấy đường dẫn")
+                .build();
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseVO handleBadCredentialsException(BadCredentialsException e) {
+        log.error("Exception >> GlobalExceptionHandler >> handleBadCredentialsException: {}", e.getMessage());
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .data(null)
+                .message("Tên đăng nhập hoặc mật khẩu không đúng")
                 .build();
     }
 
@@ -66,7 +90,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseVO handleUnwantedException(Exception e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException: {}", e.getClass().getSimpleName());
+        log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException: {}", e.getMessage());
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)

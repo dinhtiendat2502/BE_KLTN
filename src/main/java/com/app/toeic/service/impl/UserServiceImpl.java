@@ -39,14 +39,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseVO authenticate(LoginDto loginDto) {
+        var v1 = new UsernamePasswordAuthenticationToken(
+                loginDto.getEmail(),
+                loginDto.getPassword());
         Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(
-                        loginDto.getEmail(),
-                        loginDto.getPassword()));
+                .authenticate(v1);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserAccount user = iUserRepository
                 .findByEmail(authentication.getName())
-                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "User not found"));
+                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Không tìm thấy email!"));
         List<String> rolesNames = new ArrayList<>();
         user.getRoles().forEach(r -> rolesNames.add(r.getRoleName()));
         var token = jwtUtilities.generateToken(user.getUsername(), rolesNames);
@@ -95,11 +96,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseVO updateUser(UserDto user) {
-        var _user = iUserRepository.findById(user.getId()).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "User not found"));
+        var u = iUserRepository.findById(user.getId()).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "User not found"));
+        u.setStatus(user.getStatus());
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .data(iUserRepository.save(_user))
+                .data(iUserRepository.save(u))
                 .message("Cập nhật user thành công")
                 .build();
     }

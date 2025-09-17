@@ -37,7 +37,7 @@ public class Exam implements Serializable {
     @UpdateTimestamp
     private LocalDateTime  updatedAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id")
     private Topic topic;
 }
