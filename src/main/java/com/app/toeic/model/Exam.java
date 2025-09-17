@@ -13,6 +13,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "exam")
@@ -26,7 +28,6 @@ public class Exam implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer examId;
     private String examName;
-
     private String status = "ACTIVE";
 
     @JsonIgnore
@@ -39,5 +40,6 @@ public class Exam implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id")
+    @JsonIgnore
     private Topic topic;
 }

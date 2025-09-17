@@ -21,7 +21,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AppException.class)
     public ResponseVO handleAppException(AppException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleAppException: {}", e.getMessage());
-        return new ResponseVO(Boolean.FALSE, "", e.getMessage());
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message(e.getMessage())
+                .build();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
