@@ -18,40 +18,27 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public ResponseVO getAllTopic() {
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .data(iTopicRepository.findAllByStatus("ACTIVE"))
-                .message("Lấy danh sách bộ đề thi thành công")
-                .build();
+        return ResponseVO.builder().success(Boolean.TRUE).data(iTopicRepository.findAllByStatus("ACTIVE")).message("Lấy danh sách bộ đề thi thành công").build();
     }
 
     @Override
-    public ResponseVO getTopicById(Long id) {
+    public ResponseVO getTopicById(Integer id) {
         return null;
     }
 
     @Override
     public ResponseVO addTopic(Topic topic) {
-        return ResponseVO.builder()
-                .success(Boolean.TRUE)
-                .data(iTopicRepository.save(topic))
-                .message("Thêm bộ đề thi thành công!")
-                .build();
+        iTopicRepository.existsByTopicName(topic.getTopicName()).ifPresent(topic1 -> {
+            throw new AppException(HttpStatus.SEE_OTHER, "Bộ đề thi đã tồn tại!");
+        });
+        return ResponseVO.builder().success(Boolean.TRUE).data(iTopicRepository.save(topic)).message("Thêm bộ đề thi thành công!").build();
     }
 
     @Override
     public ResponseVO removeTopic(Integer topicId) {
-        var topic = iTopicRepository
-                .findById(topicId)
-                .orElseThrow(() ->
-                        new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy bộ đề thi"));
+        var topic = iTopicRepository.findById(topicId).orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy bộ đề thi"));
         topic.setStatus("INACTIVE");
         iTopicRepository.save(topic);
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .message(String.format("Xóa bộ đề thi %s thành công!", topic.getTopicName()))
-                .build();
+        return ResponseVO.builder().success(Boolean.TRUE).message(String.format("Xóa bộ đề thi %s thành công!", topic.getTopicName())).build();
     }
 }

@@ -5,7 +5,7 @@ import com.app.toeic.response.ResponseVO;
 
 public interface TopicService {
     ResponseVO getAllTopic();
-    ResponseVO getTopicById(Long id);
+    ResponseVO getTopicById(Integer id);
     ResponseVO addTopic(Topic topic);
     ResponseVO removeTopic(Integer topicId);
 }

@@ -4,11 +4,11 @@ package com.app.toeic.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Index;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
@@ -23,12 +23,18 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Exam implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer examId;
     private String examName;
+    private String examImage;
+    private String audioPart1;
+    private String audioPart2;
+    private String audioPart3;
+    private String audioPart4;
     private String status = "ACTIVE";
 
     @JsonIgnore
@@ -41,9 +47,12 @@ public class Exam implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id")
+    @JsonIgnore
+    @Index(name = "topic_id_index")
     private Topic topic;
 
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
     @JsonBackReference
+    @Builder.Default
     private Set<Question> questions = new HashSet<>();
 }
