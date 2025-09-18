@@ -23,13 +23,19 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public ResponseVO getAllExam() {
-        return null;
+        return
+                ResponseVO
+                        .builder()
+                        .success(Boolean.TRUE)
+                        .data(examRepository.findAllByStatus("ACTIVE"))
+                        .message("Lấy danh sách đề thi thành công")
+                        .build();
     }
 
     @Override
     @Transactional
     public ResponseVO addExam(Exam exam) {
-        if(Boolean.TRUE.equals(examRepository.existsExamByExamName(exam.getExamName()))){
+        if (Boolean.TRUE.equals(examRepository.existsExamByExamName(exam.getExamName()))) {
             throw new AppException(HttpStatus.SEE_OTHER, "Đề thi đã tồn tại!");
         }
         examRepository.save(exam);
