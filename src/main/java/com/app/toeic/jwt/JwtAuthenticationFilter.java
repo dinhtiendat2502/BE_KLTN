@@ -3,6 +3,7 @@ package com.app.toeic.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +14,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
 
 
 @Slf4j
@@ -48,5 +52,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
+    }
+    private Optional<String> getJwtFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return Optional.of(bearerToken.replace("Bearer ", ""));
+        }
+        Cookie[] cookies = Optional.ofNullable(request.getCookies()).orElse(new Cookie[]{});
+        return Arrays.stream(cookies).filter(c -> "session".equalsIgnoreCase(c.getName()))
+                .findFirst().map(Cookie::getValue);
     }
 }

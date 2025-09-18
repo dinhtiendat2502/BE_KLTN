@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Data
 @Builder
 public class ExamDto implements Serializable {
-
+    Integer examId;
     @NotEmpty(message = "Tên đề thi không được để trống")
     String examName;
     String examImage;

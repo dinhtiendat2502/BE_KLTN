@@ -2,6 +2,8 @@ package com.app.toeic.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,7 +39,7 @@ public class Topic implements Serializable {
 
     @JsonIgnore
     @UpdateTimestamp
-    private LocalDateTime  updatedAt;
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
     @JsonBackReference

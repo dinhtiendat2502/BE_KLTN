@@ -3,18 +3,12 @@ package com.app.toeic.controller.admin;
 
 import com.app.toeic.dto.ExamDto;
 import com.app.toeic.model.Exam;
-import com.app.toeic.model.Question;
 import com.app.toeic.repository.ITopicRepository;
 import com.app.toeic.response.ResponseVO;
 import com.app.toeic.service.ExamService;
-import com.app.toeic.service.TopicService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 @CrossOrigin("*")
 @RequestMapping("/admin/exam")
@@ -41,9 +35,36 @@ public class ExamController {
                 .status("ACTIVE")
                 .topic(examDto.getTopicId() != null ? topicService.findById(examDto.getTopicId()).orElse(null) : null)
                 .build();
-
         return examService.addExam(exam);
     }
 
+    @PatchMapping("/update-exam")
+    public ResponseVO updateExam(@Valid @RequestBody ExamDto examDto) {
+        var exam = examService.findById(examDto.getExamId()).orElse(null);
+        if (exam == null) {
+            return ResponseVO.builder()
+                    .success(Boolean.FALSE)
+                    .message("Không tìm thấy đề thi")
+                    .build();
+        }
+        exam.setExamName(examDto.getExamName());
+        exam.setTopic(examDto.getTopicId() != null ? topicService.findById(examDto.getTopicId()).orElse(null) : null);
+        return examService.updateExam(exam);
+    }
 
+    @GetMapping("/find-by-id")
+    public ResponseVO findById(@RequestParam Integer examId) {
+        var exam = examService.findExamWithPart(examId).orElse(null);
+        if (exam == null) {
+            return ResponseVO.builder()
+                    .success(Boolean.FALSE)
+                    .message("Không tìm thấy đề thi")
+                    .build();
+        }
+        return ResponseVO.builder()
+                .success(Boolean.TRUE)
+                .data(exam)
+                .message("Lấy đề thi thành công")
+                .build();
+    }
 }

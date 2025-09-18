@@ -1,7 +1,10 @@
 package com.app.toeic.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,18 +27,20 @@ public class Question implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionId;
     private String questionNumber;
+    @Column(columnDefinition = "TEXT")
     private String questionContent;
     @Column(columnDefinition = "TEXT")
-    private String paragraph;
-    private int part;
+    private String paragraph1;
+    @Column(columnDefinition = "TEXT")
+    private String paragraph2;
+    @Column(columnDefinition = "TEXT")
     private String questionImage;
+    @Column(columnDefinition = "TEXT")
     private String questionAudio;
     private String answerA;
     private String answerB;
     private String answerC;
     private String answerD;
-
-    @JsonIgnore
     private String correctAnswer;
 
     @JsonIgnore
@@ -44,11 +49,12 @@ public class Question implements Serializable {
 
     @JsonIgnore
     @UpdateTimestamp
-    private LocalDateTime  updatedAt;
+    private LocalDateTime updatedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "exam_id")
+    @ManyToOne
+    @JoinColumn(name = "part_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
-    private Exam exam;
+    @org.hibernate.annotations.Index(name = "part_id_index")
+    @JsonBackReference
+    private Part part;
 }

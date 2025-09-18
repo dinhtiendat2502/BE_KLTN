@@ -271,9 +271,7 @@ public class ExcelServiceImpl implements ExcelService {
                 continue;
             }
             var question = Question.builder().questionNumber(questionNumber + "").part(part).build();
-            Iterator<Cell> cellsInRow = currentRow.iterator();
-            while (cellsInRow.hasNext()) {
-                Cell currentCell = cellsInRow.next();
+            for (Cell currentCell : currentRow) {
                 int columnIndex = currentCell.getColumnIndex();
                 switch (columnIndex) {
                     case 2 -> {

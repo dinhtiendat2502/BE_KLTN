@@ -7,6 +7,7 @@ import com.app.toeic.repository.IExamRepository;
 import com.app.toeic.repository.IQuestionRepository;
 import com.app.toeic.response.ResponseVO;
 import com.app.toeic.service.ExamService;
+import com.app.toeic.service.PartService;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ExamServiceImpl implements ExamService {
     private final IExamRepository examRepository;
-    private final IQuestionRepository questionRepository;
+    private final PartService partService;
 
     @Override
     public ResponseVO getAllExam() {
@@ -38,7 +40,8 @@ public class ExamServiceImpl implements ExamService {
         if (Boolean.TRUE.equals(examRepository.existsExamByExamName(exam.getExamName()))) {
             throw new AppException(HttpStatus.SEE_OTHER, "Đề thi đã tồn tại!");
         }
-        examRepository.save(exam);
+        var returnExam = examRepository.save(exam);
+        partService.init7PartForExam(returnExam);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
@@ -48,8 +51,18 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    @Transactional
     public ResponseVO updateExam(Exam exam) {
-        return null;
+        if (Boolean.TRUE.equals(examRepository.existsExamByExamName(exam.getExamName()))) {
+            throw new AppException(HttpStatus.SEE_OTHER, "Đề thi đã tồn tại!");
+        }
+        examRepository.save(exam);
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data("")
+                .message("Cập nhật đề thi thành công!")
+                .build();
     }
 
     @Override
@@ -58,6 +71,16 @@ public class ExamServiceImpl implements ExamService {
         exam.setStatus("INACTIVE");
         examRepository.save(exam);
         return ResponseVO.builder().success(Boolean.TRUE).message(String.format("Xóa đề thi %s thành công!", exam.getExamName())).build();
+    }
+
+    @Override
+    public Optional<Exam> findById(Integer examId) {
+        return examRepository.findById(examId);
+    }
+
+    @Override
+    public Optional<Exam> findExamWithPart(Integer examId) {
+        return examRepository.findExamWithPart(examId);
     }
 
     private int getPart(int questionNumber) {
