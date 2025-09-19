@@ -12,5 +12,7 @@ import java.util.Optional;
 public interface ITopicRepository extends JpaRepository<Topic, Integer> {
     List<Topic> findAllByStatus(String status);
 
-    Optional<Topic> existsByTopicName(String topicName);
+    List<Topic> findAllByStatusOrderByExamsDesc(String status);
+
+    Boolean existsByTopicName(String topicName);
 }

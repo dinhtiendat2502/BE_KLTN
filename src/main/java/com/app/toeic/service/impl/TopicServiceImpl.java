@@ -10,6 +10,8 @@ import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TopicServiceImpl implements TopicService {
@@ -28,9 +30,9 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public ResponseVO addTopic(Topic topic) {
-        iTopicRepository.existsByTopicName(topic.getTopicName()).ifPresent(topic1 -> {
+        if (Boolean.TRUE.equals(iTopicRepository.existsByTopicName(topic.getTopicName()))) {
             throw new AppException(HttpStatus.SEE_OTHER, "Bộ đề thi đã tồn tại!");
-        });
+        }
         return ResponseVO.builder().success(Boolean.TRUE).data(iTopicRepository.save(topic)).message("Thêm bộ đề thi thành công!").build();
     }
 
@@ -40,5 +42,10 @@ public class TopicServiceImpl implements TopicService {
         topic.setStatus("INACTIVE");
         iTopicRepository.save(topic);
         return ResponseVO.builder().success(Boolean.TRUE).message(String.format("Xóa bộ đề thi %s thành công!", topic.getTopicName())).build();
+    }
+
+    @Override
+    public List<Topic> getAllTopics() {
+        return iTopicRepository.findAllByStatusOrderByExamsDesc("ACTIVE");
     }
 }

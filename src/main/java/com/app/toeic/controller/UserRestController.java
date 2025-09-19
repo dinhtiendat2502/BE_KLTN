@@ -59,7 +59,7 @@ public class UserRestController {
         return userService.updateAvatar(profile);
     }
 
-    @PostMapping("/get-profile")
+    @GetMapping("/get-profile")
     public ResponseVO getProfile(HttpServletRequest request) {
         var profile = userService.getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));

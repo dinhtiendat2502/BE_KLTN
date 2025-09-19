@@ -12,11 +12,21 @@ import java.util.Optional;
 
 @Repository
 public interface IExamRepository extends JpaRepository<Exam, Integer> {
-    Boolean existsExamByExamName(String examName);
+    @Query("SELECT COUNT(e) > 0 FROM Exam e WHERE e.examName = ?1 AND e.examId <> ?2")
+    Boolean existsExamByExamName(String examName, Integer examId);
 
-    @Query("SELECT e FROM Exam e JOIN FETCH e.topic t WHERE e.status = 'ACTIVE'")
+    @Query("SELECT e FROM Exam e LEFT JOIN FETCH e.topic t WHERE e.status = 'ACTIVE' ORDER BY t.topicId DESC, e.examName ASC")
     List<ExamVO.ExamListAll> findAllByStatus(String status);
+
+    @Query("SELECT e FROM Exam e LEFT JOIN FETCH e.topic t WHERE e.status = 'ACTIVE' AND t.topicId = ?1 ORDER BY t.topicId DESC, e.examName ASC")
+    List<ExamVO.ExamListAll> findAllByStatusAndTopicId(Integer topicId);
+
+    @Query("SELECT e FROM Exam e LEFT JOIN FETCH e.topic t WHERE e.status = 'ACTIVE' AND t = NULL ORDER BY e.examName ASC")
+    List<ExamVO.ExamListAll> findAllByTopicIsNull();
 
     @Query("SELECT e FROM Exam e JOIN FETCH e.parts p WHERE e.examId = ?1")
     Optional<Exam> findExamWithPart(Integer examId);
+
+    @Query("SELECT e FROM Exam e WHERE e.examId = ?1")
+    Optional<Exam> findExamByExamId(Integer examId);
 }

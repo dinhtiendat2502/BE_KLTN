@@ -1,8 +1,10 @@
 package com.app.toeic.service;
 
 import com.app.toeic.model.Exam;
+import com.app.toeic.model.Topic;
 import com.app.toeic.response.ResponseVO;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ExamService {
@@ -17,4 +19,8 @@ public interface ExamService {
     Optional<Exam> findById(Integer examId);
 
     Optional<Exam> findExamWithPart(Integer examId);
+
+    Object getAllExamByTopic(Integer topicId);
+
+    Optional<Exam> findExamByExamId(Integer examId);
 }

@@ -3,6 +3,7 @@ package com.app.toeic.service.impl;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.model.Exam;
 import com.app.toeic.model.Question;
+import com.app.toeic.model.Topic;
 import com.app.toeic.repository.IExamRepository;
 import com.app.toeic.repository.IQuestionRepository;
 import com.app.toeic.response.ResponseVO;
@@ -37,7 +38,7 @@ public class ExamServiceImpl implements ExamService {
     @Override
     @Transactional
     public ResponseVO addExam(Exam exam) {
-        if (Boolean.TRUE.equals(examRepository.existsExamByExamName(exam.getExamName()))) {
+        if (Boolean.TRUE.equals(examRepository.existsExamByExamName(exam.getExamName(), Integer.MIN_VALUE))) {
             throw new AppException(HttpStatus.SEE_OTHER, "Đề thi đã tồn tại!");
         }
         var returnExam = examRepository.save(exam);
@@ -53,7 +54,7 @@ public class ExamServiceImpl implements ExamService {
     @Override
     @Transactional
     public ResponseVO updateExam(Exam exam) {
-        if (Boolean.TRUE.equals(examRepository.existsExamByExamName(exam.getExamName()))) {
+        if (Boolean.TRUE.equals(examRepository.existsExamByExamName(exam.getExamName(), exam.getExamId()))) {
             throw new AppException(HttpStatus.SEE_OTHER, "Đề thi đã tồn tại!");
         }
         examRepository.save(exam);
@@ -81,6 +82,22 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public Optional<Exam> findExamWithPart(Integer examId) {
         return examRepository.findExamWithPart(examId);
+    }
+
+    @Override
+    public Object getAllExamByTopic(Integer topicId) {
+        if (topicId == null || topicId == 0) {
+            return examRepository.findAllByStatus("ACTIVE");
+        }
+        if (topicId == -1) {
+            return examRepository.findAllByTopicIsNull();
+        }
+        return examRepository.findAllByStatusAndTopicId(topicId);
+    }
+
+    @Override
+    public Optional<Exam> findExamByExamId(Integer examId) {
+        return examRepository.findExamByExamId(examId);
     }
 
     private int getPart(int questionNumber) {
