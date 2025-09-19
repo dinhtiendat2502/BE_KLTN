@@ -10,7 +10,5 @@ import java.io.Serializable;
 @Data
 @Builder
 public class UserUpdateAvatarDto implements Serializable {
-    @Email(message = "Email không hợp lệ")
-    String email;
     String avatar;
 }

@@ -3,6 +3,7 @@ package com.app.toeic.service.impl;
 import com.app.toeic.dto.LoginDto;
 import com.app.toeic.dto.RegisterDto;
 import com.app.toeic.dto.UserDto;
+import com.app.toeic.dto.UserUpdateDto;
 import com.app.toeic.enums.ERole;
 import com.app.toeic.enums.EUser;
 import com.app.toeic.exception.AppException;
@@ -14,18 +15,23 @@ import com.app.toeic.response.ResponseVO;
 import com.app.toeic.service.UserService;
 import com.app.toeic.util.AvatarHelper;
 import com.app.toeic.util.HttpStatus;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -36,6 +42,7 @@ public class UserServiceImpl implements UserService {
     private final IRoleRepository iRoleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtUtilities;
+    private final UserDetailsService userDetailsService;
 
     @Override
     public ResponseVO authenticate(LoginDto loginDto) {
@@ -86,19 +93,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseVO updateProfile(String email, String fullName, String password) {
-        var user = iUserRepository.findByEmail(email).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
-        user.setFullName(fullName);
-        user.setPassword(passwordEncoder.encode(password));
+    public Object updateProfile(UserUpdateDto userUpdateDto, UserAccount user) {
+        if (!passwordEncoder.matches(userUpdateDto.getCurrentPassword(), user.getPassword())) {
+            throw new AppException(HttpStatus.SEE_OTHER, "Mật khẩu hiện tại không đúng!");
+        }
+        if (StringUtils.isNotEmpty(userUpdateDto.getFullName()))
+            user.setFullName(userUpdateDto.getFullName());
+        user.setPassword(passwordEncoder.encode(userUpdateDto.getNewPassword()));
         iUserRepository.save(user);
-        return ResponseVO.builder().success(Boolean.TRUE).data(null).message("Cập nhật thông tin thành công!").build();
+        return "Cập nhật thông tin thành công!";
     }
 
     @Override
-    public ResponseVO updateAvatar(String email, String avatar) {
-        var user = iUserRepository.findByEmail(email).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
-        user.setAvatar(avatar);
-        iUserRepository.save(user);
+    public ResponseVO updateAvatar(UserAccount userAccount) {
+        iUserRepository.save(userAccount);
         return ResponseVO.builder().success(Boolean.TRUE).data(null).message("Cập nhật avatar thành công!").build();
+    }
+
+    @Override
+    public Optional<UserAccount> getProfile(HttpServletRequest request) {
+        var token = jwtUtilities.getToken(request);
+        if (StringUtils.isNotEmpty(token) && jwtUtilities.validateToken(token)) {
+            String email = jwtUtilities.extractUsername(token);
+
+            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            if (Boolean.TRUE.equals(jwtUtilities.validateToken(token, userDetails))) {
+                var user = iUserRepository.findByEmail(email).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
+                return Optional.of(user);
+            }
+        }
+        return Optional.empty();
     }
 }

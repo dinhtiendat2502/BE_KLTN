@@ -12,14 +12,16 @@ import java.io.Serializable;
 @Data
 @Builder
 public class UserUpdatePasswordDto implements Serializable {
-    @Email(message = "Email không hợp lệ")
-    String email;
-    
+    String token;
     @NotEmpty(message = "Mật khẩu cũ không được bỏ trống")
     @Size(min = 8, message = "Mật khẩu phải có ít nhất 8 ký tự")
-    String oldPassword;
+    String currentPassword;
 
     @NotEmpty(message = "Mật khẩu mới không được bỏ trống")
     @Size(min = 8, message = "Mật khẩu phải có ít nhất 8 ký tự")
     String newPassword;
+
+    @NotEmpty(message = "Mật khẩu mới không được bỏ trống")
+    @Size(min = 8, message = "Mật khẩu phải có ít nhất 8 ký tự")
+    String confirmPassword;
 }

@@ -2,11 +2,15 @@ package com.app.toeic.controller;
 
 
 import com.app.toeic.dto.*;
+import com.app.toeic.exception.AppException;
 import com.app.toeic.response.ResponseVO;
 import com.app.toeic.service.EmailService;
 import com.app.toeic.service.UserService;
+import com.app.toeic.util.HttpStatus;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,21 +36,43 @@ public class UserRestController {
         return emailService.sendEmail(emailDto, "email-template");
     }
 
-    @PatchMapping("/update-password")
-    public ResponseVO updatePassword(@Valid @RequestBody UserUpdatePasswordDto userUpdatePasswordDto) {
-        if (!userUpdatePasswordDto.getOldPassword().equals(userUpdatePasswordDto.getNewPassword())) {
-            return ResponseVO.builder().success(Boolean.FALSE).message("Mật khẩu không khớp!").build();
-        }
-        return userService.updatePassword(userUpdatePasswordDto.getEmail(), userUpdatePasswordDto.getNewPassword());
-    }
-
     @PatchMapping("/update-profile")
-    public ResponseVO updateProfile(@Valid @RequestBody UserUpdateDto userUpdateDto) {
-        return userService.updateProfile(userUpdateDto.getEmail(), userUpdateDto.getFullName(), userUpdateDto.getPassword());
+    public ResponseVO updateProfile(@Valid @RequestBody UserUpdateDto userUpdateDto, HttpServletRequest request) {
+        var profile = userService.getProfile(request)
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
+        if (StringUtils.compareIgnoreCase(userUpdateDto.getNewPassword(), userUpdateDto.getConfirmPassword()) != 0) {
+            return ResponseVO.builder().success(Boolean.FALSE).message("Mật khẩu không khớp").build();
+        }
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(userService.updateProfile(userUpdateDto, profile))
+                .message("Cập nhật thông tin thành công")
+                .build();
     }
 
     @PatchMapping("/update-avatar")
-    public ResponseVO updateAvatar(@Valid @RequestBody UserUpdateAvatarDto userUpdateAvatarDto) {
-        return userService.updateAvatar(userUpdateAvatarDto.getEmail(), userUpdateAvatarDto.getAvatar());
+    public ResponseVO updateAvatar(@Valid @RequestBody UserUpdateAvatarDto userUpdateAvatarDto, HttpServletRequest request) {
+        var profile = userService.getProfile(request)
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
+        profile.setAvatar(userUpdateAvatarDto.getAvatar());
+        return userService.updateAvatar(profile);
+    }
+
+    @PostMapping("/get-profile")
+    public ResponseVO getProfile(HttpServletRequest request) {
+        var profile = userService.getProfile(request)
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(profile)
+                .message("Get profile successfully")
+                .build();
+    }
+
+    @GetMapping("/test")
+    public ResponseVO test() {
+        return new ResponseVO(Boolean.TRUE, "test", "Get assets successfully");
     }
 }

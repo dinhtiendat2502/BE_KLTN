@@ -1,5 +1,6 @@
 package com.app.toeic.dto;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BearerToken implements Serializable {
-    private String accessToken ;
-    private String tokenType ;
+    String accessToken;
+    String tokenType;
 }

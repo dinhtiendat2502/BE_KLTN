@@ -35,7 +35,7 @@ spring:
             required: true
 jwt:
   secret: "${JWT_SECRET:872c871a1ab996919a3e97145ece2418bb837cadbd69387d96cd45eef831f239}"
-  expiration: "${JWT_EXPIRATION:86400}"
+  expiration: "${JWT_EXPIRATION:864000}"
 logging:
   file:
     name: log/toeicute/toeicute.log
