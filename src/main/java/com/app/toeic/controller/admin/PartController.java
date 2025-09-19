@@ -34,4 +34,16 @@ public class PartController {
                 .message("Lấy part thành công!")
                 .build();
     }
+
+    @PatchMapping("/update-part")
+    public ResponseVO updatePart(@RequestBody PartDto partDto) {
+        var part = partService.getPartById(partDto.getPartId());
+        part.setPartAudio(partDto.getPartAudio());
+        partService.savePart(part);
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .message("Cập nhật part thành công!")
+                .build();
+    }
 }
