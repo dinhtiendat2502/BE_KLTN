@@ -28,5 +28,5 @@ public interface IExamRepository extends JpaRepository<Exam, Integer> {
     Optional<Exam> findExamWithPart(Integer examId);
 
     @Query("SELECT e FROM Exam e WHERE e.examId = ?1")
-    Optional<Exam> findExamByExamId(Integer examId);
+    Optional<ExamVO.ExamList> findExamByExamId(Integer examId);
 }

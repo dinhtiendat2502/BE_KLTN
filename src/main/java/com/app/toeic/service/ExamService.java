@@ -2,6 +2,7 @@ package com.app.toeic.service;
 
 import com.app.toeic.model.Exam;
 import com.app.toeic.model.Topic;
+import com.app.toeic.response.ExamVO;
 import com.app.toeic.response.ResponseVO;
 
 import java.util.List;
@@ -22,5 +23,5 @@ public interface ExamService {
 
     Object getAllExamByTopic(Integer topicId);
 
-    Optional<Exam> findExamByExamId(Integer examId);
+    Optional<ExamVO.ExamList> findExamByExamId(Integer examId);
 }

@@ -6,6 +6,7 @@ import com.app.toeic.model.Question;
 import com.app.toeic.model.Topic;
 import com.app.toeic.repository.IExamRepository;
 import com.app.toeic.repository.IQuestionRepository;
+import com.app.toeic.response.ExamVO;
 import com.app.toeic.response.ResponseVO;
 import com.app.toeic.service.ExamService;
 import com.app.toeic.service.PartService;
@@ -96,7 +97,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public Optional<Exam> findExamByExamId(Integer examId) {
+    public Optional<ExamVO.ExamList> findExamByExamId(Integer examId) {
         return examRepository.findExamByExamId(examId);
     }
 
