@@ -57,17 +57,12 @@ public class UserServiceImpl implements UserService {
         var user = UserAccount.builder().email(registerDto.getEmail()).fullName(registerDto.getFullName()).password(passwordEncoder.encode(registerDto.getPassword())).avatar(AvatarHelper.getAvatar("")).roles(Collections.singleton(iRoleRepository.findByRoleName(ERole.USER))).status(EUser.INACTIVE).build();
 
         iUserRepository.save(user);
-
         return ResponseVO.builder().success(Boolean.TRUE).data(null).message("Đăng kí tài khoản thành công").build();
     }
 
     @Override
     public ResponseVO getAllUser() {
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .data(iUserRepository.findAllByRolesNotContains(iRoleRepository.findByRoleName(ERole.ADMIN)))
-                .message("Lấy danh sách user thành công").build();
+        return ResponseVO.builder().success(Boolean.TRUE).data(iUserRepository.findAllByRolesNotContains(iRoleRepository.findByRoleName(ERole.ADMIN))).message("Lấy danh sách user thành công").build();
     }
 
     @Override
@@ -75,5 +70,35 @@ public class UserServiceImpl implements UserService {
         var u = iUserRepository.findById(user.getId()).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "User not found"));
         u.setStatus(user.getStatus());
         return ResponseVO.builder().success(Boolean.TRUE).data(iUserRepository.save(u)).message("Cập nhật user thành công").build();
+    }
+
+    @Override
+    public UserAccount findByEmail(String email) {
+        return iUserRepository.findByEmail(email).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
+    }
+
+    @Override
+    public ResponseVO updatePassword(String email, String newPassword) {
+        var user = iUserRepository.findByEmail(email).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
+        user.setPassword(passwordEncoder.encode(newPassword));
+        iUserRepository.save(user);
+        return ResponseVO.builder().success(Boolean.TRUE).data(null).message("Cập nhật mật khẩu thành công!").build();
+    }
+
+    @Override
+    public ResponseVO updateProfile(String email, String fullName, String password) {
+        var user = iUserRepository.findByEmail(email).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
+        user.setFullName(fullName);
+        user.setPassword(passwordEncoder.encode(password));
+        iUserRepository.save(user);
+        return ResponseVO.builder().success(Boolean.TRUE).data(null).message("Cập nhật thông tin thành công!").build();
+    }
+
+    @Override
+    public ResponseVO updateAvatar(String email, String avatar) {
+        var user = iUserRepository.findByEmail(email).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
+        user.setAvatar(avatar);
+        iUserRepository.save(user);
+        return ResponseVO.builder().success(Boolean.TRUE).data(null).message("Cập nhật avatar thành công!").build();
     }
 }
