@@ -31,4 +31,15 @@ public class ExamRestController {
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
         return ResponseVO.builder().success(Boolean.TRUE).data(exam).message("Lấy đề thi thành công").build();
     }
+
+    @GetMapping("/find-full-question/{examId}")
+    public ResponseVO findFullQuestion(@PathVariable("examId") String examId) {
+        var exam = examService.findExamWithFullQuestion(Integer.parseInt(examId))
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
+        return ResponseVO.builder()
+                .success(Boolean.TRUE)
+                .data(exam)
+                .message("Lấy đề thi thành công")
+                .build();
+    }
 }

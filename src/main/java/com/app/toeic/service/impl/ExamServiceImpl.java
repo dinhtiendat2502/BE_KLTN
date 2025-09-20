@@ -27,13 +27,7 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public ResponseVO getAllExam() {
-        return
-                ResponseVO
-                        .builder()
-                        .success(Boolean.TRUE)
-                        .data(examRepository.findAllByStatus("ACTIVE"))
-                        .message("Lấy danh sách đề thi thành công")
-                        .build();
+        return ResponseVO.builder().success(Boolean.TRUE).data(examRepository.findAllByStatus("ACTIVE")).message("Lấy danh sách đề thi thành công").build();
     }
 
     @Override
@@ -44,12 +38,7 @@ public class ExamServiceImpl implements ExamService {
         }
         var returnExam = examRepository.save(exam);
         partService.init7PartForExam(returnExam);
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .data(null)
-                .message("Thêm đề thi thành công!")
-                .build();
+        return ResponseVO.builder().success(Boolean.TRUE).data(null).message("Thêm đề thi thành công!").build();
     }
 
     @Override
@@ -59,12 +48,7 @@ public class ExamServiceImpl implements ExamService {
             throw new AppException(HttpStatus.SEE_OTHER, "Đề thi đã tồn tại!");
         }
         examRepository.save(exam);
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .data("")
-                .message("Cập nhật đề thi thành công!")
-                .build();
+        return ResponseVO.builder().success(Boolean.TRUE).data("").message("Cập nhật đề thi thành công!").build();
     }
 
     @Override
@@ -99,6 +83,11 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public Optional<ExamVO.ExamList> findExamByExamId(Integer examId) {
         return examRepository.findExamByExamId(examId);
+    }
+
+    @Override
+    public Optional<ExamVO.ExamFullQuestion> findExamWithFullQuestion(Integer examId) {
+        return examRepository.findExamWithFullQuestion(examId);
     }
 
     private int getPart(int questionNumber) {

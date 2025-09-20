@@ -53,9 +53,12 @@ public class UserAccount implements Serializable, UserDetails {
 
     @JsonIgnore
     @UpdateTimestamp
-    private LocalDateTime  updatedAt;
+    private LocalDateTime updatedAt;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

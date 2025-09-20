@@ -2,10 +2,12 @@ package com.app.toeic.controller.admin;
 
 
 import com.app.toeic.dto.ExamDto;
+import com.app.toeic.exception.AppException;
 import com.app.toeic.model.Exam;
 import com.app.toeic.repository.ITopicRepository;
 import com.app.toeic.response.ResponseVO;
 import com.app.toeic.service.ExamService;
+import com.app.toeic.util.HttpStatus;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -55,13 +57,9 @@ public class ExamController {
 
     @GetMapping("/find-by-id")
     public ResponseVO findById(@RequestParam Integer examId) {
-        var exam = examService.findExamWithPart(examId).orElse(null);
-        if (exam == null) {
-            return ResponseVO.builder()
-                    .success(Boolean.FALSE)
-                    .message("Không tìm thấy đề thi")
-                    .build();
-        }
+        var exam = examService.findExamWithPart(examId)
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
+
         return ResponseVO.builder()
                 .success(Boolean.TRUE)
                 .data(exam)

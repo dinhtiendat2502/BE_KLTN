@@ -24,4 +24,6 @@ public interface ExamService {
     Object getAllExamByTopic(Integer topicId);
 
     Optional<ExamVO.ExamList> findExamByExamId(Integer examId);
+
+    Optional<ExamVO.ExamFullQuestion> findExamWithFullQuestion(Integer examId);
 }

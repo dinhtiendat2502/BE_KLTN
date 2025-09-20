@@ -25,21 +25,21 @@ public class UserExamHistory implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userExamHistoryId;
 
-    private int numberOfCorrectAnswer;
-    private int numberOfWrongAnswer;
-    private int numberOfNotAnswer;
-    private int numberOfCorrectAnswerPart1;
-    private int numberOfCorrectAnswerPart2;
-    private int numberOfCorrectAnswerPart3;
-    private int numberOfCorrectAnswerPart4;
-    private int numberOfCorrectAnswerPart5;
-    private int numberOfCorrectAnswerPart6;
-    private int numberOfCorrectAnswerPart7;
-    private int numberOfCorrectListeningAnswer;
-    private int numberOfWrongListeningAnswer;
-    private int numberOfCorrectReadingAnswer;
-    private int numberOfWrongReadingAnswer;
-    private int totalScore;
+    private Integer numberOfCorrectAnswer;
+    private Integer numberOfWrongAnswer;
+    private Integer numberOfNotAnswer;
+    private Integer numberOfCorrectAnswerPart1;
+    private Integer numberOfCorrectAnswerPart2;
+    private Integer numberOfCorrectAnswerPart3;
+    private Integer numberOfCorrectAnswerPart4;
+    private Integer numberOfCorrectAnswerPart5;
+    private Integer numberOfCorrectAnswerPart6;
+    private Integer numberOfCorrectAnswerPart7;
+    private Integer numberOfCorrectListeningAnswer;
+    private Integer numberOfWrongListeningAnswer;
+    private Integer numberOfCorrectReadingAnswer;
+    private Integer numberOfWrongReadingAnswer;
+    private Integer totalScore;
 
     @CreationTimestamp
     private LocalDateTime examDate;

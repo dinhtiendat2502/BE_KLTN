@@ -4,6 +4,7 @@ package com.app.toeic.response;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -56,5 +57,70 @@ public class ExamVO implements Serializable {
         String getAudioPart4();
 
         String getStatus();
+    }
+
+    public interface ExamFullQuestion {
+        Integer getExamId();
+
+        String getExamName();
+
+        String getExamImage();
+
+        String getAudioPart1();
+
+        String getAudioPart2();
+
+        String getAudioPart3();
+
+        String getAudioPart4();
+
+        String getStatus();
+
+        Set<Part> getParts();
+
+
+        interface Part {
+            Integer getPartId();
+
+            String getPartName();
+
+            String getPartCode();
+
+            String getPartImage();
+
+            String getPartAudio();
+
+            String getPartContent();
+
+            int getNumberOfQuestion();
+
+            String getStatus();
+
+            Set<Question> getQuestions();
+
+            interface Question {
+                Integer getQuestionId();
+
+                String getQuestionNumber();
+
+                String getQuestionContent();
+
+                String getParagraph1();
+
+                String getParagraph2();
+
+                String getQuestionImage();
+
+                String getQuestionAudio();
+
+                String getAnswerA();
+
+                String getAnswerB();
+
+                String getAnswerC();
+
+                String getAnswerD();
+            }
+        }
     }
 }
