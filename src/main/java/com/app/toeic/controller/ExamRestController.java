@@ -4,8 +4,11 @@ package com.app.toeic.controller;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.response.ResponseVO;
 import com.app.toeic.service.ExamService;
+import com.app.toeic.service.UserService;
 import com.app.toeic.util.HttpStatus;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("*")
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/exam")
 public class ExamRestController {
     private final ExamService examService;
+    private final UserService userService;
 
     @GetMapping("/list")
     public ResponseVO getAllExams() {
@@ -41,5 +45,18 @@ public class ExamRestController {
                 .data(exam)
                 .message("Lấy đề thi thành công")
                 .build();
+    }
+
+    @PostMapping("/finish-exam")
+    public ResponseVO finishExam(HttpServletRequest request) {
+        var profile = userService.getProfile(request)
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
+        return
+                ResponseVO
+                        .builder()
+                        .success(Boolean.TRUE)
+                        .data(profile)
+                        .message("Nộp bài thành công")
+                        .build();
     }
 }

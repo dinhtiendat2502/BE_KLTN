@@ -12,6 +12,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "user_exam_history")
@@ -40,6 +42,8 @@ public class UserExamHistory implements Serializable {
     private Integer numberOfCorrectReadingAnswer;
     private Integer numberOfWrongReadingAnswer;
     private Integer totalScore;
+    private Integer timeToDoExam;       // calculate by second
+    private Integer timeRemaining;      // calculate by second
 
     @CreationTimestamp
     private LocalDateTime examDate;
@@ -55,4 +59,8 @@ public class UserExamHistory implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Exam exam;
+
+    @OneToMany(mappedBy = "userExamHistory", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<UserAnswer> userAnswers = new HashSet<>();
 }

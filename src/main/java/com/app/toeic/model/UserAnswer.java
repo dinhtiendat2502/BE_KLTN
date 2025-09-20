@@ -26,4 +26,8 @@ public class UserAnswer implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_exam_history_id")
+    private UserExamHistory userExamHistory;
 }

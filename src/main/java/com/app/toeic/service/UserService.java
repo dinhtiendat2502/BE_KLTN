@@ -29,4 +29,10 @@ public interface UserService {
     ResponseVO updateAvatar(UserAccount userAccount);
 
     Optional<UserAccount> getProfile(HttpServletRequest request);
+
+    Boolean isLogin(HttpServletRequest request);
+
+    void save(UserAccount userAccount);
+
+    Boolean keepAlive(HttpServletRequest request);
 }

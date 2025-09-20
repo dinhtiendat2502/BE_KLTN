@@ -2,6 +2,7 @@ package com.app.toeic.controller;
 
 
 import com.app.toeic.dto.*;
+import com.app.toeic.enums.EUser;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.response.ResponseVO;
 import com.app.toeic.service.EmailService;
@@ -69,6 +70,32 @@ public class UserRestController {
                 .data(profile)
                 .message("Get profile successfully")
                 .build();
+    }
+
+    @GetMapping("/is-login")
+    public ResponseVO isLogin(HttpServletRequest request) {
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(userService.isLogin(request))
+                .build();
+    }
+
+    @GetMapping("/keep-alive")
+    public ResponseVO keepAlive(HttpServletRequest request) {
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(userService.keepAlive(request))
+                .build();
+    }
+
+    @PostMapping("/confirm-otp")
+    public ResponseVO confirmOtp(String email) {
+        var user = userService.findByEmail(email);
+        user.setStatus(EUser.ACTIVE);
+        userService.save(user);
+        return ResponseVO.builder().success(Boolean.TRUE).data(null).message("Xác thực tài khoản thành công!").build();
     }
 
     @GetMapping("/test")

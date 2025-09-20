@@ -11,6 +11,7 @@ import com.app.toeic.jwt.JwtTokenProvider;
 import com.app.toeic.model.UserAccount;
 import com.app.toeic.repository.IRoleRepository;
 import com.app.toeic.repository.IUserAccountRepository;
+import com.app.toeic.response.LoginResponse;
 import com.app.toeic.response.ResponseVO;
 import com.app.toeic.service.UserService;
 import com.app.toeic.util.AvatarHelper;
@@ -50,10 +51,36 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = authenticationManager.authenticate(v1);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         UserAccount user = iUserRepository.findByEmail(authentication.getName()).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Không tìm thấy email!"));
+        if (user.getStatus().equals(EUser.INACTIVE)) {
+            return ResponseVO
+                    .builder()
+                    .success(Boolean.FALSE)
+                    .data(user.getStatus())
+                    .message("Tài khoản chưa được kích hoạt!")
+                    .build();
+        } else if (user.getStatus().equals(EUser.BLOCKED)) {
+            return ResponseVO
+                    .builder()
+                    .success(Boolean.FALSE)
+                    .message("Tài khoản đã bị khóa!")
+                    .build();
+        }
+
         List<String> rolesNames = new ArrayList<>();
         user.getRoles().forEach(r -> rolesNames.add(r.getRoleName()));
         var token = jwtUtilities.generateToken(user.getUsername(), rolesNames);
-        return ResponseVO.builder().success(Boolean.TRUE).data(token).message("Đăng nhập thành công").build();
+        var res = LoginResponse
+                .builder()
+                .token(token)
+                .email(user.getEmail())
+                .roles(rolesNames)
+                .build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(res)
+                .message("Đăng nhập thành công")
+                .build();
     }
 
     @Override
@@ -123,5 +150,31 @@ public class UserServiceImpl implements UserService {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public Boolean isLogin(HttpServletRequest request) {
+        var token = jwtUtilities.getToken(request);
+        if (StringUtils.isNotEmpty(token) && jwtUtilities.validateToken(token)) {
+            String email = jwtUtilities.extractUsername(token);
+
+            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            return jwtUtilities.validateToken(token, userDetails);
+        }
+        return Boolean.FALSE;
+    }
+
+    @Override
+    public void save(UserAccount userAccount) {
+        iUserRepository.save(userAccount);
+    }
+
+    @Override
+    public Boolean keepAlive(HttpServletRequest request) {
+        var token = jwtUtilities.getToken(request);
+        if (StringUtils.isNotEmpty(token) && jwtUtilities.validateToken(token)) {
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 }
