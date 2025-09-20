@@ -123,4 +123,37 @@ public class ExamVO implements Serializable {
             }
         }
     }
+
+    public interface ExamFullQuestionWithAnswer {
+        Integer getExamId();
+
+        String getExamName();
+
+
+        String getStatus();
+
+        Set<ExamFullQuestionWithAnswer.Part> getParts();
+
+        interface Part {
+            Integer getPartId();
+
+            String getPartName();
+
+            String getPartCode();
+
+            int getNumberOfQuestion();
+
+            String getStatus();
+
+            Set<ExamFullQuestionWithAnswer.Part.Question> getQuestions();
+
+            interface Question {
+                Integer getQuestionId();
+
+                String getQuestionNumber();
+
+                String getCorrectAnswer();
+            }
+        }
+    }
 }

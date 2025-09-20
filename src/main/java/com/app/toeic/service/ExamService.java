@@ -26,4 +26,10 @@ public interface ExamService {
     Optional<ExamVO.ExamList> findExamByExamId(Integer examId);
 
     Optional<ExamVO.ExamFullQuestion> findExamWithFullQuestion(Integer examId);
+
+    Optional<ExamVO.ExamFullQuestionWithAnswer> findExamFullQuestionWithAnswer(Integer examId);
+
+    String findCorrectAnswer(ExamVO.ExamFullQuestionWithAnswer examFullQuestionWithAnswer, Integer questionId);
+
+    Optional<ExamVO.ExamFullQuestion> findExamPractice(int i, List<String> listPart);
 }

@@ -7,11 +7,9 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,7 +24,7 @@ public class UserExamHistory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userExamHistoryId;
-
+    private Integer totalQuestion;
     private Integer numberOfCorrectAnswer;
     private Integer numberOfWrongAnswer;
     private Integer numberOfNotAnswer;
@@ -42,6 +40,8 @@ public class UserExamHistory implements Serializable {
     private Integer numberOfCorrectReadingAnswer;
     private Integer numberOfWrongReadingAnswer;
     private Integer totalScore;
+    private Integer totalScoreReading;
+    private Integer totalScoreListening;
     private Integer timeToDoExam;       // calculate by second
     private Integer timeRemaining;      // calculate by second
 

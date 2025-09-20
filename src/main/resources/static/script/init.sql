@@ -139,13 +139,10 @@ create table if not exists user_answer
         primary key,
     selected_answer      varchar(255) null,
     question_id          int          null,
-    user_id              int          null,
     is_correct           bit          null,
     user_exam_history_id int          null,
     constraint FK33v5ea65kc5flb2ej9b3k7dq4
         foreign key (user_exam_history_id) references user_exam_history (user_exam_history_id),
-    constraint FKb6b1vt0w2oeh6swfr8a7gggor
-        foreign key (user_id) references user_account (user_id),
     constraint FKpsk90eok3ounaet92hku3gny1
         foreign key (question_id) references question (question_id)
 );

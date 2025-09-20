@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -88,6 +89,28 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public Optional<ExamVO.ExamFullQuestion> findExamWithFullQuestion(Integer examId) {
         return examRepository.findExamWithFullQuestion(examId);
+    }
+
+    @Override
+    public Optional<ExamVO.ExamFullQuestionWithAnswer> findExamFullQuestionWithAnswer(Integer examId) {
+        return examRepository.findExamFullQuestionWithAnswer(examId);
+    }
+
+    @Override
+    public String findCorrectAnswer(ExamVO.ExamFullQuestionWithAnswer examFullQuestionWithAnswer, Integer questionId) {
+        return examFullQuestionWithAnswer
+                .getParts()
+                .stream()
+                .flatMap(part -> part.getQuestions().stream())
+                .filter(question -> Objects.equals(question.getQuestionId(), questionId))
+                .map(ExamVO.ExamFullQuestionWithAnswer.Part.Question::getCorrectAnswer)
+                .findFirst()
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy câu hỏi"));
+    }
+
+    @Override
+    public Optional<ExamVO.ExamFullQuestion> findExamPractice(int i, List<String> listPart) {
+        return examRepository.findExamPractice(i, listPart);
     }
 
     private int getPart(int questionNumber) {

@@ -15,12 +15,15 @@ public class FinishExamDto implements Serializable {
     Integer examId;
     List<Answer> answers;
     Integer totalTime;
+    Integer timeRemaining;
+    Integer totalQuestion;
 
     @Getter
     @Setter
-    static class Answer {
+    public static class Answer {
         Integer questionId;
         String answer;
+        String partCode;
     }
 }
 

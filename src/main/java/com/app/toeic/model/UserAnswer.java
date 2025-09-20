@@ -19,9 +19,6 @@ public class UserAnswer implements Serializable {
 
     private String selectedAnswer;
     private Boolean isCorrect;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UserAccount user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
