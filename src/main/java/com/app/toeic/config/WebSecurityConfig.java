@@ -33,12 +33,12 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sess ->
                         sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(cors -> cors.configurationSource(corsConfiguration()))
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().permitAll()
                 )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .cors(cors -> cors.configurationSource(corsConfiguration()))
                 .headers((headers) -> headers.cacheControl(HeadersConfigurer.CacheControlConfig::disable));
         return http.build();
     }
@@ -48,15 +48,9 @@ public class WebSecurityConfig {
         CorsConfiguration corsConfig = new CorsConfiguration();
         corsConfig.applyPermitDefaultValues();
         corsConfig.setAllowCredentials(true);
-        corsConfig.addAllowedMethod("GET");
-        corsConfig.addAllowedMethod("PATCH");
-        corsConfig.addAllowedMethod("POST");
-        corsConfig.addAllowedMethod("PUT");
-        corsConfig.addAllowedMethod("DELETE");
-        corsConfig.addAllowedMethod("OPTIONS");
-        corsConfig.setAllowedOrigins(List.of("*"));
-        corsConfig.setAllowedHeaders(List.of("Authorization", "Requestor-Type"));
-        corsConfig.setExposedHeaders(List.of("X-Get-Header"));
+        corsConfig.addAllowedOriginPattern("*");
+        corsConfig.addAllowedHeader("*");
+        corsConfig.addAllowedMethod("*");
         UrlBasedCorsConfigurationSource source =
                 new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfig);
