@@ -6,6 +6,7 @@ import com.app.toeic.enums.EUser;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.response.ResponseVO;
 import com.app.toeic.service.EmailService;
+import com.app.toeic.service.FirebaseStorageService;
 import com.app.toeic.service.UserService;
 import com.app.toeic.util.HttpStatus;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +14,9 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/user")
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserRestController {
     private final UserService userService;
     private final EmailService emailService;
+    private final FirebaseStorageService firebaseStorageService;
 
     @PostMapping("/register")
     public ResponseVO register(@Valid @RequestBody RegisterDto registerDto) {
@@ -52,11 +57,11 @@ public class UserRestController {
                 .build();
     }
 
-    @PatchMapping("/update-avatar")
-    public ResponseVO updateAvatar(@Valid @RequestBody UserUpdateAvatarDto userUpdateAvatarDto, HttpServletRequest request) {
+    @PostMapping("/update-avatar")
+    public ResponseVO updateAvatar(@Valid @RequestBody UserUpdateAvatarDto updateAvatarDto, HttpServletRequest request) throws IOException {
         var profile = userService.getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
-        profile.setAvatar(userUpdateAvatarDto.getAvatar());
+        profile.setAvatar(updateAvatarDto.getAvatar());
         return userService.updateAvatar(profile);
     }
 

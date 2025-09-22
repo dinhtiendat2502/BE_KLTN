@@ -3,6 +3,7 @@ package com.app.toeic.service.impl;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.service.FirebaseStorageService;
 import com.app.toeic.util.HttpStatus;
+import com.app.toeic.util.URLHelper;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.*;
@@ -24,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -49,7 +51,7 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
 
     @Override
     public String uploadFile(MultipartFile file) throws IOException {
-        String fileName = generateFileName(file.getOriginalFilename());
+        String fileName = generateFileName(URLHelper.replaceByRegex(Objects.requireNonNull(file.getOriginalFilename())));
         Map<String, String> map = new HashMap<>();
         map.put(TOKEN_UPLOAD, fileName);
         var blobId = BlobId.of(BUCKET_NAME, fileName);
