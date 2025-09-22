@@ -70,24 +70,6 @@ public class UserRestController {
                 .build();
     }
 
-//    @PatchMapping("/update-profile")
-//    public ResponseVO updateProfile(@Valid @RequestBody UserUpdateDto userUpdateDto, HttpServletRequest request) {
-//        var profile = userService.getProfile(request)
-//                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
-//        profile.setFullName(userUpdateDto.getFullName());
-//        profile.setPhone(userUpdateDto.getPhone());
-//        profile.setAddress(userUpdateDto.getAddress());
-//        if (StringUtils.isNotBlank(userUpdateDto.getAvatar())) {
-//            profile.setAvatar(userUpdateDto.getAvatar());
-//        }
-//        return ResponseVO
-//                .builder()
-//                .success(Boolean.TRUE)
-//                .data(userService.updateProfile(profile))
-//                .message("Cập nhật thông tin thành công")
-//                .build();
-//    }
-
     @PatchMapping("/update-profile")
     public ResponseVO updateProfile(@RequestParam("file") MultipartFile file,
                                     @RequestParam("fullName") String fullName,

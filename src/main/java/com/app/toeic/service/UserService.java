@@ -36,4 +36,6 @@ public interface UserService {
     Object updateProfile(UserAccount profile);
 
     Object loginSocial(LoginSocialDto loginSocialDto);
+
+    Object isAdminLogin(HttpServletRequest request);
 }

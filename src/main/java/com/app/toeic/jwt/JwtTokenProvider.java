@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
@@ -37,6 +38,10 @@ public class JwtTokenProvider {
 
     public String extractPassword(String token) {
         return extractClaim(token, claims -> (String) claims.get("password"));
+    }
+
+    public List<String> extractRoles(String token) {
+        return Collections.singletonList(extractClaim(token, claims -> claims.get("role").toString()));
     }
 
     public Claims extractAllClaims(String token) {
