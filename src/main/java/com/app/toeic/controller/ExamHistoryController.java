@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class ExamHistoryController {
     private final UserExamHistoryService userExamHistoryService;
     private final UserService userService;
-    private final String SUCCESS = "Thành công";
+    private static final String SUCCESS = "Thành công";
 
     @GetMapping("/find-by-id/{examHistoryId}")
     public ResponseVO findById(@PathVariable("examHistoryId") String examHistoryId) {
@@ -35,6 +35,19 @@ public class ExamHistoryController {
         var profile = userService.getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
         var examHistory = userExamHistoryService.findAllUserExamHistoryByUser(profile);
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(examHistory)
+                .message(SUCCESS)
+                .build();
+    }
+
+    @GetMapping("/my-detail/{examId}")
+    public ResponseVO findByUserIdAndExamId(HttpServletRequest request, @PathVariable("examId") String examId) {
+        var profile = userService.getProfile(request)
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
+        var examHistory = userExamHistoryService.findUserExamHistoryByUserIdAndExamId(profile, Integer.parseInt(examId));
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)

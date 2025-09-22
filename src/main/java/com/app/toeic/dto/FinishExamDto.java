@@ -17,6 +17,9 @@ public class FinishExamDto implements Serializable {
     Integer totalTime;
     Integer timeRemaining;
     Integer totalQuestion;
+    Boolean isFullTest;
+    Boolean isDone;
+    String listPart;
 
     @Getter
     @Setter

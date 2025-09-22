@@ -2,6 +2,7 @@ package com.app.toeic.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -44,6 +45,9 @@ public class UserExamHistory implements Serializable {
     private Integer totalScoreListening;
     private Integer timeToDoExam;       // calculate by second
     private Integer timeRemaining;      // calculate by second
+    private Boolean isDone = false;
+    private Boolean isFullTest = false;
+    private String listPart;
 
     @CreationTimestamp
     private LocalDateTime examDate;
@@ -62,6 +66,7 @@ public class UserExamHistory implements Serializable {
     private Exam exam;
 
     @OneToMany(mappedBy = "userExamHistory", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonManagedReference
+    @OrderBy("userAnswerId ASC")
     private Set<UserAnswer> userAnswers = new HashSet<>();
 }

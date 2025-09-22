@@ -17,4 +17,6 @@ public interface UserExamHistoryService {
     Object findUserExamHistoryByUserId(UserAccount profile);
 
     Object findAllUserExamHistoryByUser(UserAccount profile);
+
+    Object findUserExamHistoryByUserIdAndExamId(UserAccount profile, Integer userExamHistoryId);
 }

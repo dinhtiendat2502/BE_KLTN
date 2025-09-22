@@ -29,4 +29,17 @@ public interface IUserExamHistoryRepository extends JpaRepository<UserExamHistor
             ORDER BY u.examDate DESC
              """)
     List<MyExamVO.MyExamList> findAllByUser(UserAccount user);
+
+
+    @Query("""
+                    SELECT u
+                    FROM UserExamHistory u
+                         JOIN FETCH u.exam e
+                         JOIN FETCH u.userAnswers ua
+                         JOIN FETCH ua.question q
+                    WHERE TRUE
+                        AND u.user = ?1
+                        AND u.userExamHistoryId = ?2
+            """)
+    Optional<UserExamHistoryVO.UserExamHistoryDetail> findByUserExamHistoryId(UserAccount profile, Integer userExamHistoryId);
 }

@@ -1,5 +1,6 @@
 package com.app.toeic.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,11 +21,13 @@ public class UserAnswer implements Serializable {
     private String selectedAnswer;
     private Boolean isCorrect;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "question_id")
     private Question question;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_exam_history_id")
     private UserExamHistory userExamHistory;
 }
