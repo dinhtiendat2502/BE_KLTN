@@ -34,4 +34,6 @@ public interface UserService {
     Boolean keepAlive(HttpServletRequest request);
 
     Object updateProfile(UserAccount profile);
+
+    Object loginSocial(LoginSocialDto loginSocialDto);
 }

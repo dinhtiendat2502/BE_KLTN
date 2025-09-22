@@ -32,6 +32,7 @@ public class Topic implements Serializable {
     private String topicName;
     private String topicImage;
     private String status = "ACTIVE";
+    private Boolean isFree = true;
 
     @JsonIgnore
     @CreationTimestamp

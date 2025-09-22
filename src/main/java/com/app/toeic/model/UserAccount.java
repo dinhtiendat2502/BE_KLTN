@@ -31,7 +31,6 @@ public class UserAccount implements Serializable, UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
-    @NotBlank(message = "Password is required")
     @Column(nullable = false)
     private String password;
     private String fullName;
@@ -39,7 +38,6 @@ public class UserAccount implements Serializable, UserDetails {
     private String address;
 
     @Column(unique = true, nullable = false)
-    @Email(message = "Email is invalid")
     private String email;
 
     @Column(length = 1000)
@@ -47,7 +45,7 @@ public class UserAccount implements Serializable, UserDetails {
 
     @Enumerated(EnumType.STRING)
     private EUser status = EUser.ACTIVE;
-
+    private String provider;
 
     @JsonIgnore
     @CreationTimestamp

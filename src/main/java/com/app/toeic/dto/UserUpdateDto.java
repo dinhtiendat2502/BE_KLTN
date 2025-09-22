@@ -19,4 +19,6 @@ public class UserUpdateDto implements Serializable {
 
     @NotEmpty(message = "Địa chỉ không được bỏ trống")
     String address;
+
+    String avatar;
 }

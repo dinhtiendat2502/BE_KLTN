@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -24,12 +25,24 @@ import java.io.IOException;
 public class UserRestController {
     private final UserService userService;
     private final EmailService emailService;
+    private final FirebaseStorageService firebaseStorageService;
 
     private final String NOT_FOUNT_USER = "Không tìm thấy thông tin người dùng";
 
     @PostMapping("/register")
     public ResponseVO register(@Valid @RequestBody RegisterDto registerDto) {
         return userService.register(registerDto);
+    }
+
+    @PostMapping("/login-social")
+    public ResponseVO loginSocial(@Valid @RequestBody LoginSocialDto loginSocialDto) {
+        var token = userService.loginSocial(loginSocialDto);
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(token)
+                .message("Đăng nhập thành công")
+                .build();
     }
 
     @PostMapping("/authenticate")
@@ -57,17 +70,50 @@ public class UserRestController {
                 .build();
     }
 
+//    @PatchMapping("/update-profile")
+//    public ResponseVO updateProfile(@Valid @RequestBody UserUpdateDto userUpdateDto, HttpServletRequest request) {
+//        var profile = userService.getProfile(request)
+//                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
+//        profile.setFullName(userUpdateDto.getFullName());
+//        profile.setPhone(userUpdateDto.getPhone());
+//        profile.setAddress(userUpdateDto.getAddress());
+//        if (StringUtils.isNotBlank(userUpdateDto.getAvatar())) {
+//            profile.setAvatar(userUpdateDto.getAvatar());
+//        }
+//        return ResponseVO
+//                .builder()
+//                .success(Boolean.TRUE)
+//                .data(userService.updateProfile(profile))
+//                .message("Cập nhật thông tin thành công")
+//                .build();
+//    }
+
     @PatchMapping("/update-profile")
-    public ResponseVO updateProfile(@Valid @RequestBody UserUpdateDto userUpdateDto, HttpServletRequest request) {
+    public ResponseVO updateProfile(@RequestParam("file") MultipartFile file,
+                                    @RequestParam("fullName") String fullName,
+                                    @RequestParam("phone") String phone,
+                                    @RequestParam("address") String address,
+                                    HttpServletRequest request) throws IOException {
         var profile = userService.getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
-        profile.setFullName(userUpdateDto.getFullName());
-        profile.setPhone(userUpdateDto.getPhone());
-        profile.setAddress(userUpdateDto.getAddress());
-        userService.save(profile);
+
+        if (StringUtils.isNotBlank(fullName)) {
+            profile.setFullName(fullName);
+        }
+        if (StringUtils.isNotBlank(phone)) {
+            profile.setPhone(phone);
+        }
+        if (StringUtils.isNotBlank(address)) {
+            profile.setAddress(address);
+        }
+        var avatar = firebaseStorageService.uploadFile(file);
+        if (StringUtils.isNotBlank(avatar)) {
+            profile.setAvatar(avatar);
+        }
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
+                .data(userService.updateProfile(profile))
                 .message("Cập nhật thông tin thành công")
                 .build();
     }
