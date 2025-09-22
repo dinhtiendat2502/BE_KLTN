@@ -1,9 +1,6 @@
 package com.app.toeic.service.impl;
 
-import com.app.toeic.dto.LoginDto;
-import com.app.toeic.dto.RegisterDto;
-import com.app.toeic.dto.UserDto;
-import com.app.toeic.dto.UserUpdateDto;
+import com.app.toeic.dto.*;
 import com.app.toeic.enums.ERole;
 import com.app.toeic.enums.EUser;
 import com.app.toeic.exception.AppException;
@@ -120,12 +117,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object updateProfile(UserUpdateDto userUpdateDto, UserAccount user) {
+    public Object updatePassword(UserUpdatePasswordDto userUpdateDto, UserAccount user) {
         if (!passwordEncoder.matches(userUpdateDto.getCurrentPassword(), user.getPassword())) {
             throw new AppException(HttpStatus.SEE_OTHER, "Mật khẩu hiện tại không đúng!");
         }
-        if (StringUtils.isNotEmpty(userUpdateDto.getFullName()))
-            user.setFullName(userUpdateDto.getFullName());
         user.setPassword(passwordEncoder.encode(userUpdateDto.getNewPassword()));
         iUserRepository.save(user);
         return "Cập nhật thông tin thành công!";
@@ -176,5 +171,11 @@ public class UserServiceImpl implements UserService {
             return Boolean.TRUE;
         }
         return Boolean.FALSE;
+    }
+
+    @Override
+    public Object updateProfile(UserAccount profile) {
+        iUserRepository.save(profile);
+        return null;
     }
 }

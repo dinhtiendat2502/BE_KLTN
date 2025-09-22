@@ -35,6 +35,8 @@ public class UserAccount implements Serializable, UserDetails {
     @Column(nullable = false)
     private String password;
     private String fullName;
+    private String phone;
+    private String address;
 
     @Column(unique = true, nullable = false)
     @Email(message = "Email is invalid")

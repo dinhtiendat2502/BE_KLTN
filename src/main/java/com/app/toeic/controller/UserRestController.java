@@ -14,7 +14,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
@@ -25,7 +24,8 @@ import java.io.IOException;
 public class UserRestController {
     private final UserService userService;
     private final EmailService emailService;
-    private final FirebaseStorageService firebaseStorageService;
+
+    private final String NOT_FOUNT_USER = "Không tìm thấy thông tin người dùng";
 
     @PostMapping("/register")
     public ResponseVO register(@Valid @RequestBody RegisterDto registerDto) {
@@ -42,17 +42,32 @@ public class UserRestController {
         return emailService.sendEmail(emailDto, "email-template");
     }
 
-    @PatchMapping("/update-profile")
-    public ResponseVO updateProfile(@Valid @RequestBody UserUpdateDto userUpdateDto, HttpServletRequest request) {
+    @PatchMapping("/update-password")
+    public ResponseVO updatePassword(@Valid @RequestBody UserUpdatePasswordDto userUpdatePasswordDto, HttpServletRequest request) {
         var profile = userService.getProfile(request)
-                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
-        if (StringUtils.compareIgnoreCase(userUpdateDto.getNewPassword(), userUpdateDto.getConfirmPassword()) != 0) {
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
+        if (StringUtils.compareIgnoreCase(userUpdatePasswordDto.getNewPassword(), userUpdatePasswordDto.getConfirmPassword()) != 0) {
             return ResponseVO.builder().success(Boolean.FALSE).message("Mật khẩu không khớp").build();
         }
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .data(userService.updateProfile(userUpdateDto, profile))
+                .data(userService.updatePassword(userUpdatePasswordDto, profile))
+                .message("Cập nhật mật khẩu thành công")
+                .build();
+    }
+
+    @PatchMapping("/update-profile")
+    public ResponseVO updateProfile(@Valid @RequestBody UserUpdateDto userUpdateDto, HttpServletRequest request) {
+        var profile = userService.getProfile(request)
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
+        profile.setFullName(userUpdateDto.getFullName());
+        profile.setPhone(userUpdateDto.getPhone());
+        profile.setAddress(userUpdateDto.getAddress());
+        userService.save(profile);
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
                 .message("Cập nhật thông tin thành công")
                 .build();
     }
@@ -60,7 +75,7 @@ public class UserRestController {
     @PostMapping("/update-avatar")
     public ResponseVO updateAvatar(@Valid @RequestBody UserUpdateAvatarDto updateAvatarDto, HttpServletRequest request) throws IOException {
         var profile = userService.getProfile(request)
-                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
         profile.setAvatar(updateAvatarDto.getAvatar());
         return userService.updateAvatar(profile);
     }
@@ -68,7 +83,7 @@ public class UserRestController {
     @GetMapping("/get-profile")
     public ResponseVO getProfile(HttpServletRequest request) {
         var profile = userService.getProfile(request)
-                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)

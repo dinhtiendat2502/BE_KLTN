@@ -11,17 +11,12 @@ import java.io.Serializable;
 @Data
 @Builder
 public class UserUpdateDto implements Serializable {
+    @NotEmpty(message = "Tên không được bỏ trống")
     String fullName;
 
-    @NotEmpty(message = "Mật khẩu cũ không được bỏ trống")
-    @Size(min = 8, message = "Mật khẩu phải có ít nhất 8 ký tự")
-    String currentPassword;
+    @NotEmpty(message = "Số điện thoại không được bỏ trống")
+    String phone;
 
-    @NotEmpty(message = "Mật khẩu mới không được bỏ trống")
-    @Size(min = 8, message = "Mật khẩu phải có ít nhất 8 ký tự")
-    String newPassword;
-
-    @NotEmpty(message = "Mật khẩu mới không được bỏ trống")
-    @Size(min = 8, message = "Mật khẩu phải có ít nhất 8 ký tự")
-    String confirmPassword;
+    @NotEmpty(message = "Địa chỉ không được bỏ trống")
+    String address;
 }

@@ -12,7 +12,6 @@ import java.io.Serializable;
 @Data
 @Builder
 public class UserUpdatePasswordDto implements Serializable {
-    String token;
     @NotEmpty(message = "Mật khẩu cũ không được bỏ trống")
     @Size(min = 8, message = "Mật khẩu phải có ít nhất 8 ký tự")
     String currentPassword;
