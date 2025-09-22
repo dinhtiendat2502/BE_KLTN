@@ -48,16 +48,17 @@ public class UserExamHistory implements Serializable {
     @CreationTimestamp
     private LocalDateTime examDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private UserAccount user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "exam_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
+    @OrderBy("examId ASC")
     private Exam exam;
 
     @OneToMany(mappedBy = "userExamHistory", cascade = CascadeType.ALL)

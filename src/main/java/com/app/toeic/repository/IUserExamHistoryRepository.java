@@ -2,11 +2,13 @@ package com.app.toeic.repository;
 
 import com.app.toeic.model.UserAccount;
 import com.app.toeic.model.UserExamHistory;
+import com.app.toeic.response.MyExamVO;
 import com.app.toeic.response.UserExamHistoryVO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -17,4 +19,14 @@ public interface IUserExamHistoryRepository extends JpaRepository<UserExamHistor
 
     @Query("SELECT u FROM UserExamHistory u JOIN FETCH u.exam WHERE u = ?1")
     Optional<UserExamHistoryVO.UserExamHistoryGeneral> findUserExamHistoryByUser(UserAccount user);
+
+
+    @Query("""
+            SELECT u
+            FROM UserExamHistory u
+                 JOIN FETCH u.exam e
+            WHERE u.user = ?1
+            ORDER BY u.examDate DESC
+             """)
+    List<MyExamVO.MyExamList> findAllByUser(UserAccount user);
 }

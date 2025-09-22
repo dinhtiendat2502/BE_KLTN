@@ -1,5 +1,6 @@
 package com.app.toeic.service;
 
+import com.app.toeic.model.UserAccount;
 import com.app.toeic.model.UserExamHistory;
 
 import java.util.Optional;
@@ -12,4 +13,8 @@ public interface UserExamHistoryService {
     Integer calculateScoreReading(Integer numberCorrectAnswer);
 
     Object findUserExamHistoryByExamHistoryId(Integer userExamHistoryId);
+
+    Object findUserExamHistoryByUserId(UserAccount profile);
+
+    Object findAllUserExamHistoryByUser(UserAccount profile);
 }

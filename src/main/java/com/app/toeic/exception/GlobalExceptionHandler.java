@@ -90,6 +90,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseVO handleUnwantedException(Exception e) {
         log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException: {}", e.getClass().getSimpleName());
+        log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException: {}", e.getMessage());
         return ResponseVO.builder().success(Boolean.FALSE).message("Hệ thống đang bị lỗi, vui lòng thử lại sau!").build();
     }
 }

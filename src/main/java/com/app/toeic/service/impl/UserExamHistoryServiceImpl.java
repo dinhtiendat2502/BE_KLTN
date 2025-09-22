@@ -1,7 +1,9 @@
 package com.app.toeic.service.impl;
 
 import com.app.toeic.exception.AppException;
+import com.app.toeic.model.UserAccount;
 import com.app.toeic.model.UserExamHistory;
+import com.app.toeic.repository.ITopicRepository;
 import com.app.toeic.repository.IUserExamHistoryRepository;
 import com.app.toeic.service.UserExamHistoryService;
 import com.app.toeic.util.HttpStatus;
@@ -40,6 +42,17 @@ public class UserExamHistoryServiceImpl implements UserExamHistoryService {
                 .findUserExamHistoryByExamHistoryId(userExamHistoryId)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy lịch sử thi"));
     }
+
+    @Override
+    public Object findUserExamHistoryByUserId(UserAccount profile) {
+        return userExamHistoryRepository.findAllByUser(profile);
+    }
+
+    @Override
+    public Object findAllUserExamHistoryByUser(UserAccount profile) {
+        return userExamHistoryRepository.findAllByUser(profile);
+    }
+
 
     @Getter
     @Setter
