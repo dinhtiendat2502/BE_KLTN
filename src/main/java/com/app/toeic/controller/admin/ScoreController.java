@@ -22,6 +22,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+
+import software.amazon.awssdk.core.SdkBytes;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.textract.TextractClient;
+import software.amazon.awssdk.services.textract.model.AnalyzeDocumentRequest;
+import software.amazon.awssdk.services.textract.model.Document;
+import software.amazon.awssdk.services.textract.model.FeatureType;
+import software.amazon.awssdk.services.textract.model.AnalyzeDocumentResponse;
+import software.amazon.awssdk.services.textract.model.Block;
+import software.amazon.awssdk.services.textract.model.TextractException;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/score")
@@ -76,6 +87,39 @@ public class ScoreController {
                 .success(Boolean.TRUE)
                 .message("OK")
                 .build();
+    }
+
+    @PostMapping("detect-from-image")
+    public ResponseVO detectFromImage(@RequestParam("file") MultipartFile file) throws IOException {
+        Region region = Region.US_EAST_2;
+        var rs = new StringBuilder();
+        try (TextractClient textractClient = TextractClient.builder()
+                .region(region)
+                .build()) {
+            SdkBytes sourceBytes = SdkBytes.fromInputStream(file.getInputStream());
+            Document myDoc = Document.builder()
+                    .bytes(sourceBytes)
+                    .build();
+            List<FeatureType> featureTypes = new ArrayList<FeatureType>();
+//            featureTypes.add(FeatureType.FORMS);
+            featureTypes.add(FeatureType.TABLES);
+
+            AnalyzeDocumentRequest analyzeDocumentRequest = AnalyzeDocumentRequest.builder()
+                    .featureTypes(featureTypes)
+                    .document(myDoc)
+                    .build();
+
+            AnalyzeDocumentResponse analyzeDocument = textractClient.analyzeDocument(analyzeDocumentRequest);
+            List<Block> docInfo = analyzeDocument.blocks();
+
+            for (Block block : docInfo) {
+                System.out.println("The block type is " + block.blockType().toString());
+                rs.append(block.text()).append("\n");
+            }
+        } catch (TextractException e) {
+            throw new AppException(HttpStatus.SEE_OTHER, "FILE_INVALID");
+        }
+        return ResponseVO.builder().success(Boolean.TRUE).data(rs).message("OK").build();
     }
 
     @PostMapping("import-file-score")
