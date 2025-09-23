@@ -48,7 +48,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question findById(Integer id) {
-        return questionRepository.findById(id)
+        return questionRepository
+                .findById(id)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy câu hỏi!"));
     }
 

@@ -31,26 +31,51 @@ public class ScoreController {
     @GetMapping("/init")
     public ResponseVO initScore() {
         calculateScoreRepository.deleteAll();
-        var initList = IntStream.range(0, 101).mapToObj(i -> CalculateScore.builder().totalQuestion(i).scoreListening(0).scoreReading(0).build()).toList();
+        var initList = IntStream
+                .range(0, 101)
+                .mapToObj(i -> CalculateScore
+                        .builder()
+                        .totalQuestion(i)
+                        .scoreListening(0)
+                        .scoreReading(0)
+                        .build())
+                .toList();
         calculateScoreRepository.saveAll(initList);
-        return ResponseVO.builder().success(Boolean.TRUE).message("OK").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .message("OK")
+                .build();
     }
 
     @GetMapping("/list")
     public ResponseVO findAll() {
-        return ResponseVO.builder().success(Boolean.TRUE).data(calculateScoreRepository.findAll()).message("OK").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(calculateScoreRepository.findAll())
+                .message("OK")
+                .build();
     }
 
     @PatchMapping("/update")
     public ResponseVO updateScore(@RequestBody CalculateScore calculateScore) {
         calculateScoreRepository.save(calculateScore);
-        return ResponseVO.builder().success(Boolean.TRUE).message("OK").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .message("OK")
+                .build();
     }
 
     @PatchMapping("update-all")
     public ResponseVO updateAllScore(@RequestBody List<CalculateScore> calculateScoreList) {
         calculateScoreRepository.saveAll(calculateScoreList);
-        return ResponseVO.builder().success(Boolean.TRUE).message("OK").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .message("OK")
+                .build();
     }
 
     @PostMapping("import-file-score")
@@ -81,7 +106,11 @@ public class ScoreController {
         }
         workbook.close();
         calculateScoreRepository.saveAll(list);
-        return ResponseVO.builder().success(Boolean.TRUE).message("OK").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .message("OK")
+                .build();
     }
 
 }

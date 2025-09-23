@@ -28,7 +28,12 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public ResponseVO getAllExam() {
-        return ResponseVO.builder().success(Boolean.TRUE).data(examRepository.findAllByStatus("ACTIVE")).message("Lấy danh sách đề thi thành công").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(examRepository.findAllByStatus("ACTIVE"))
+                .message("Lấy danh sách đề thi thành công")
+                .build();
     }
 
     @Override
@@ -39,7 +44,12 @@ public class ExamServiceImpl implements ExamService {
         }
         var returnExam = examRepository.save(exam);
         partService.init7PartForExam(returnExam);
-        return ResponseVO.builder().success(Boolean.TRUE).data(null).message("Thêm đề thi thành công!").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(null)
+                .message("Thêm đề thi thành công!")
+                .build();
     }
 
     @Override
@@ -49,15 +59,26 @@ public class ExamServiceImpl implements ExamService {
             throw new AppException(HttpStatus.SEE_OTHER, "Đề thi đã tồn tại!");
         }
         examRepository.save(exam);
-        return ResponseVO.builder().success(Boolean.TRUE).data("").message("Cập nhật đề thi thành công!").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data("")
+                .message("Cập nhật đề thi thành công!")
+                .build();
     }
 
     @Override
     public ResponseVO removeExam(Integer examId) {
-        var exam = examRepository.findById(examId).orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
+        var exam = examRepository
+                .findById(examId)
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
         exam.setStatus("INACTIVE");
         examRepository.save(exam);
-        return ResponseVO.builder().success(Boolean.TRUE).message(String.format("Xóa đề thi %s thành công!", exam.getExamName())).build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .message(String.format("Xóa đề thi %s thành công!", exam.getExamName()))
+                .build();
     }
 
     @Override
@@ -101,7 +122,9 @@ public class ExamServiceImpl implements ExamService {
         return examFullQuestionWithAnswer
                 .getParts()
                 .stream()
-                .flatMap(part -> part.getQuestions().stream())
+                .flatMap(part -> part
+                        .getQuestions()
+                        .stream())
                 .filter(question -> Objects.equals(question.getQuestionId(), questionId))
                 .map(ExamVO.ExamFullQuestionWithAnswer.Part.Question::getCorrectAnswer)
                 .findFirst()

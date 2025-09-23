@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("*")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/exam-history")
@@ -32,7 +31,8 @@ public class ExamHistoryController {
 
     @GetMapping("/my-exam")
     public ResponseVO findByUserId(HttpServletRequest request) {
-        var profile = userService.getProfile(request)
+        var profile = userService
+                .getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
         var examHistory = userExamHistoryService.findAllUserExamHistoryByUser(profile);
         return ResponseVO
@@ -45,9 +45,11 @@ public class ExamHistoryController {
 
     @GetMapping("/my-detail/{userExamHistoryId}")
     public ResponseVO findByUserIdAndExamId(HttpServletRequest request, @PathVariable("userExamHistoryId") String userExamHistoryId) {
-        var profile = userService.getProfile(request)
+        var profile = userService
+                .getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
-        var examHistory = userExamHistoryService.findUserExamHistoryByUserIdAndExamId(profile, Integer.parseInt(userExamHistoryId));
+        var examHistory = userExamHistoryService.findUserExamHistoryByUserIdAndExamId(profile, Integer.parseInt(
+                userExamHistoryId));
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)

@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
-@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/exam")
@@ -40,25 +38,48 @@ public class ExamRestController {
 
     @GetMapping("/list-by-topic/{topicId}")
     public ResponseVO getAllExamByTopic(@PathVariable String topicId) {
-        return ResponseVO.builder().success(Boolean.TRUE).data(examService.getAllExamByTopic(Integer.parseInt(topicId))).message("Lấy danh sách đề thi theo chủ đề thành công").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(examService.getAllExamByTopic(Integer.parseInt(topicId)))
+                .message("Lấy danh sách đề thi theo chủ đề thành công")
+                .build();
     }
 
     @GetMapping("/find-by-id/{examId}")
     public ResponseVO findById(@PathVariable("examId") String examId) {
-        var exam = examService.findExamByExamId(Integer.parseInt(examId)).orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
-        return ResponseVO.builder().success(Boolean.TRUE).data(exam).message("Lấy đề thi thành công").build();
+        var exam = examService
+                .findExamByExamId(Integer.parseInt(examId))
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(exam)
+                .message("Lấy đề thi thành công")
+                .build();
     }
 
     @GetMapping("/find-full-question/{examId}")
     public ResponseVO findFullQuestion(@PathVariable("examId") String examId) {
-        var exam = examService.findExamWithFullQuestion(Integer.parseInt(examId)).orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
-        return ResponseVO.builder().success(Boolean.TRUE).data(exam).message("Lấy đề thi thành công").build();
+        var exam = examService
+                .findExamWithFullQuestion(Integer.parseInt(examId))
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(exam)
+                .message("Lấy đề thi thành công")
+                .build();
     }
 
     @PostMapping("/finish-exam")
     public ResponseVO finishExam(HttpServletRequest request, @RequestBody FinishExamDto finishExamDto) {
-        var user = userService.getProfile(request).orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
-        var examHasFullQuestionAnswer = examService.findExamFullQuestionWithAnswer(finishExamDto.getExamId()).orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
+        var user = userService
+                .getProfile(request)
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
+        var examHasFullQuestionAnswer = examService
+                .findExamFullQuestionWithAnswer(finishExamDto.getExamId())
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
         var userExamHistory = UserExamHistory
                 .builder()
                 .isDone(finishExamDto.getIsDone())
@@ -84,7 +105,10 @@ public class ExamRestController {
                 .totalScore(0)
                 .totalScoreReading(0)
                 .totalScoreListening(0)
-                .exam(Exam.builder().examId(examHasFullQuestionAnswer.getExamId()).build())
+                .exam(Exam
+                              .builder()
+                              .examId(examHasFullQuestionAnswer.getExamId())
+                              .build())
                 .user(user)
                 .build();
 
@@ -103,61 +127,74 @@ public class ExamRestController {
         AtomicInteger numberOfWrongListeningAnswer = new AtomicInteger();
         AtomicInteger numberOfCorrectReadingAnswer = new AtomicInteger();
         AtomicInteger numberOfWrongReadingAnswer = new AtomicInteger();
-        var listAnswer = finishExamDto.getAnswers().stream().map(asw -> {
-            Question question = Question.builder().questionId(asw.getQuestionId()).build();
-            var userAnswer = UserAnswer.builder()
-                    .selectedAnswer(asw.getAnswer()).question(question)
-                    .userExamHistory(returnUserExamHistory)
-                    .build();
+        var listAnswer = finishExamDto
+                .getAnswers()
+                .stream()
+                .map(asw -> {
+                    Question question = Question
+                            .builder()
+                            .questionId(asw.getQuestionId())
+                            .build();
+                    var userAnswer = UserAnswer
+                            .builder()
+                            .selectedAnswer(asw.getAnswer())
+                            .question(question)
+                            .userExamHistory(returnUserExamHistory)
+                            .build();
 
-            var correctAnswer = examService.findCorrectAnswer(examHasFullQuestionAnswer, asw.getQuestionId());
-            boolean isCorrect = Objects.equals(asw.getAnswer(), correctAnswer);
-            userAnswer.setIsCorrect(isCorrect);
-            if (StringUtils.isEmpty(asw.getAnswer()) || asw.getAnswer() == null) {
-                numberOfNotAnswer.incrementAndGet();
-            }
-            String partCode = asw.getPartCode();
-            if (!isCorrect) {
-                numberOfWrongAnswer.incrementAndGet();
-                switch (partCode) {
-                    case "PART1", "PART4", "PART2", "PART3" -> numberOfWrongListeningAnswer.incrementAndGet();
-                    case "PART5", "PART6", "PART7" -> numberOfWrongReadingAnswer.incrementAndGet();
-                }
-            } else {
-                numberOfCorrectAnswer.incrementAndGet();
-                switch (partCode) {
-                    case "PART1" -> {
-                        numberOfCorrectAnswerPart1.incrementAndGet();
-                        numberOfCorrectListeningAnswer.incrementAndGet();
+                    var correctAnswer = examService.findCorrectAnswer(examHasFullQuestionAnswer, asw.getQuestionId());
+                    boolean isCorrect = Objects.equals(asw.getAnswer(), correctAnswer);
+                    userAnswer.setIsCorrect(isCorrect);
+                    if (StringUtils.isEmpty(asw.getAnswer()) || asw.getAnswer() == null) {
+                        numberOfNotAnswer.incrementAndGet();
                     }
-                    case "PART2" -> {
-                        numberOfCorrectAnswerPart2.incrementAndGet();
-                        numberOfCorrectListeningAnswer.incrementAndGet();
+                    String partCode = asw.getPartCode();
+                    if (!isCorrect) {
+                        numberOfWrongAnswer.incrementAndGet();
+                        switch (partCode) {
+                            case "PART1", "PART4", "PART2", "PART3" -> numberOfWrongListeningAnswer.incrementAndGet();
+                            case "PART5", "PART6", "PART7" -> numberOfWrongReadingAnswer.incrementAndGet();
+                            default -> {
+                            }
+                        }
+                    } else {
+                        numberOfCorrectAnswer.incrementAndGet();
+                        switch (partCode) {
+                            case "PART1" -> {
+                                numberOfCorrectAnswerPart1.incrementAndGet();
+                                numberOfCorrectListeningAnswer.incrementAndGet();
+                            }
+                            case "PART2" -> {
+                                numberOfCorrectAnswerPart2.incrementAndGet();
+                                numberOfCorrectListeningAnswer.incrementAndGet();
+                            }
+                            case "PART3" -> {
+                                numberOfCorrectAnswerPart3.incrementAndGet();
+                                numberOfCorrectListeningAnswer.incrementAndGet();
+                            }
+                            case "PART4" -> {
+                                numberOfCorrectAnswerPart4.incrementAndGet();
+                                numberOfCorrectListeningAnswer.incrementAndGet();
+                            }
+                            case "PART5" -> {
+                                numberOfCorrectAnswerPart5.incrementAndGet();
+                                numberOfCorrectReadingAnswer.incrementAndGet();
+                            }
+                            case "PART6" -> {
+                                numberOfCorrectAnswerPart6.incrementAndGet();
+                                numberOfCorrectReadingAnswer.incrementAndGet();
+                            }
+                            case "PART7" -> {
+                                numberOfCorrectAnswerPart7.incrementAndGet();
+                                numberOfCorrectReadingAnswer.incrementAndGet();
+                            }
+                            default -> {
+                            }
+                        }
                     }
-                    case "PART3" -> {
-                        numberOfCorrectAnswerPart3.incrementAndGet();
-                        numberOfCorrectListeningAnswer.incrementAndGet();
-                    }
-                    case "PART4" -> {
-                        numberOfCorrectAnswerPart4.incrementAndGet();
-                        numberOfCorrectListeningAnswer.incrementAndGet();
-                    }
-                    case "PART5" -> {
-                        numberOfCorrectAnswerPart5.incrementAndGet();
-                        numberOfCorrectReadingAnswer.incrementAndGet();
-                    }
-                    case "PART6" -> {
-                        numberOfCorrectAnswerPart6.incrementAndGet();
-                        numberOfCorrectReadingAnswer.incrementAndGet();
-                    }
-                    case "PART7" -> {
-                        numberOfCorrectAnswerPart7.incrementAndGet();
-                        numberOfCorrectReadingAnswer.incrementAndGet();
-                    }
-                }
-            }
-            return userAnswer;
-        }).toList();
+                    return userAnswer;
+                })
+                .toList();
         userAnswerService.saveAll(listAnswer);
         returnUserExamHistory.setNumberOfCorrectAnswer(numberOfCorrectAnswer.get());
         returnUserExamHistory.setNumberOfWrongAnswer(numberOfWrongAnswer.get());
@@ -173,9 +210,13 @@ public class ExamRestController {
         returnUserExamHistory.setNumberOfWrongListeningAnswer(numberOfWrongListeningAnswer.get());
         returnUserExamHistory.setNumberOfCorrectReadingAnswer(numberOfCorrectReadingAnswer.get());
         returnUserExamHistory.setNumberOfWrongReadingAnswer(numberOfWrongReadingAnswer.get());
-        returnUserExamHistory.setTotalScore(userExamHistoryService.calculateScoreListening(numberOfCorrectListeningAnswer.get()) + userExamHistoryService.calculateScoreReading(numberOfCorrectReadingAnswer.get()));
-        returnUserExamHistory.setTotalScoreListening(userExamHistoryService.calculateScoreListening(numberOfCorrectListeningAnswer.get()));
-        returnUserExamHistory.setTotalScoreReading(userExamHistoryService.calculateScoreReading(numberOfCorrectReadingAnswer.get()));
+        returnUserExamHistory.setTotalScore(userExamHistoryService.calculateScoreListening(
+                numberOfCorrectListeningAnswer.get()) + userExamHistoryService.calculateScoreReading(
+                numberOfCorrectReadingAnswer.get()));
+        returnUserExamHistory.setTotalScoreListening(
+                userExamHistoryService.calculateScoreListening(numberOfCorrectListeningAnswer.get()));
+        returnUserExamHistory.setTotalScoreReading(
+                userExamHistoryService.calculateScoreReading(numberOfCorrectReadingAnswer.get()));
         userExamHistoryService.save(returnUserExamHistory);
         return ResponseVO
                 .builder()
@@ -190,7 +231,12 @@ public class ExamRestController {
         var exam = examService
                 .findExamPractice(Integer.parseInt(examId), listPartDto.getListPart())
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
-        return ResponseVO.builder().success(Boolean.TRUE).data(exam).message("Lấy đề thi thành công").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(exam)
+                .message("Lấy đề thi thành công")
+                .build();
     }
 
 }

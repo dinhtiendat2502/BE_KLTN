@@ -41,7 +41,9 @@ public class JwtTokenProvider {
     }
 
     public List<String> extractRoles(String token) {
-        return Collections.singletonList(extractClaim(token, claims -> claims.get("role").toString()));
+        return Collections.singletonList(extractClaim(token, claims -> claims
+                .get("role")
+                .toString()));
     }
 
     public Claims extractAllClaims(String token) {
@@ -75,19 +77,26 @@ public class JwtTokenProvider {
     }
 
     public String generateToken(String email, String password, List<String> roles) {
-        return Jwts.builder()
+        return Jwts
+                .builder()
                 .setSubject(email)
                 .claim("role", roles)
                 .claim("password", password)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(Date.from(Instant.now().plus(jwtExpiration, ChronoUnit.MILLIS)))
+                .setExpiration(Date.from(Instant
+                                                 .now()
+                                                 .plus(jwtExpiration, ChronoUnit.MILLIS)))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(token);
+            Jwts
+                    .parserBuilder()
+                    .setSigningKey(getSignInKey())
+                    .build()
+                    .parseClaimsJws(token);
             return true;
         } catch (SignatureException e) {
             log.info("Invalid JWT signature.");

@@ -23,7 +23,8 @@ public class ExcelServiceImpl implements ExcelService {
     String SHEET = "Sheet1";
 
     @Override
-    public List<Question> excelToPart1(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws IOException {
+    public List<Question> excelToPart1(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws
+                                                                                                         IOException {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(SHEET);
         Iterator<Row> rows = sheet.iterator();
@@ -45,7 +46,12 @@ public class ExcelServiceImpl implements ExcelService {
                 int columnIndex = currentCell.getColumnIndex();
                 if (columnIndex == 10) {
                     if (isAddNew) {
-                        var question = Question.builder().questionNumber(questionNumber + "").correctAnswer(currentCell.getStringCellValue()).part(part).build();
+                        var question = Question
+                                .builder()
+                                .questionNumber(questionNumber + "")
+                                .correctAnswer(currentCell.getStringCellValue())
+                                .part(part)
+                                .build();
                         questionList.add(question);
                     } else {
                         var question = questionList.get(questionNumber - 1);
@@ -60,7 +66,8 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public List<Question> excelToPart2(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws IOException {
+    public List<Question> excelToPart2(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws
+                                                                                                         IOException {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(SHEET);
         Iterator<Row> rows = sheet.iterator();
@@ -82,7 +89,12 @@ public class ExcelServiceImpl implements ExcelService {
                 int columnIndex = currentCell.getColumnIndex();
                 if (columnIndex == 10) {
                     if (isAddNew) {
-                        var question = Question.builder().questionNumber(questionNumber + "").correctAnswer(currentCell.getStringCellValue()).part(part).build();
+                        var question = Question
+                                .builder()
+                                .questionNumber(questionNumber + "")
+                                .correctAnswer(currentCell.getStringCellValue())
+                                .part(part)
+                                .build();
                         questionList.add(question);
                     } else {
                         var question = questionList.get(rowNumber - 1);
@@ -98,7 +110,8 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public List<Question> excelToPart3(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws IOException {
+    public List<Question> excelToPart3(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws
+                                                                                                         IOException {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(SHEET);
         Iterator<Row> rows = sheet.iterator();
@@ -114,7 +127,11 @@ public class ExcelServiceImpl implements ExcelService {
                 rowNumber++;
                 continue;
             }
-            var question = isAddNew ? Question.builder().questionNumber(questionNumber + "").part(part).build() : questionList.get(rowNumber - 1);
+            var question = isAddNew ? Question
+                    .builder()
+                    .questionNumber(questionNumber + "")
+                    .part(part)
+                    .build() : questionList.get(rowNumber - 1);
             Iterator<Cell> cellsInRow = currentRow.iterator();
             while (cellsInRow.hasNext()) {
                 Cell currentCell = cellsInRow.next();
@@ -144,7 +161,8 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public List<Question> excelToPart4(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws IOException {
+    public List<Question> excelToPart4(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws
+                                                                                                         IOException {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(SHEET);
         Iterator<Row> rows = sheet.iterator();
@@ -160,7 +178,11 @@ public class ExcelServiceImpl implements ExcelService {
                 rowNumber++;
                 continue;
             }
-            var question = isAddNew ? Question.builder().questionNumber(questionNumber + "").part(part).build() : questionList.get(rowNumber - 1);
+            var question = isAddNew ? Question
+                    .builder()
+                    .questionNumber(questionNumber + "")
+                    .part(part)
+                    .build() : questionList.get(rowNumber - 1);
             Iterator<Cell> cellsInRow = currentRow.iterator();
             while (cellsInRow.hasNext()) {
                 Cell currentCell = cellsInRow.next();
@@ -190,7 +212,8 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public List<Question> excelToPart5(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws IOException {
+    public List<Question> excelToPart5(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws
+                                                                                                         IOException {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(SHEET);
         Iterator<Row> rows = sheet.iterator();
@@ -206,7 +229,11 @@ public class ExcelServiceImpl implements ExcelService {
                 rowNumber++;
                 continue;
             }
-            var question = isAddNew ? Question.builder().questionNumber(questionNumber + "").part(part).build() : questionList.get(rowNumber - 1);
+            var question = isAddNew ? Question
+                    .builder()
+                    .questionNumber(questionNumber + "")
+                    .part(part)
+                    .build() : questionList.get(rowNumber - 1);
             Iterator<Cell> cellsInRow = currentRow.iterator();
             while (cellsInRow.hasNext()) {
                 Cell currentCell = cellsInRow.next();
@@ -236,7 +263,8 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public List<Question> excelToPart6(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws IOException {
+    public List<Question> excelToPart6(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws
+                                                                                                         IOException {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(SHEET);
         Iterator<Row> rows = sheet.iterator();
@@ -252,7 +280,11 @@ public class ExcelServiceImpl implements ExcelService {
                 rowNumber++;
                 continue;
             }
-            var question = isAddNew ? Question.builder().questionNumber(questionNumber + "").part(part).build() : questionList.get(rowNumber - 1);
+            var question = isAddNew ? Question
+                    .builder()
+                    .questionNumber(questionNumber + "")
+                    .part(part)
+                    .build() : questionList.get(rowNumber - 1);
             for (Cell currentCell : currentRow) {
                 int columnIndex = currentCell.getColumnIndex();
                 var cellType = currentCell.getCellType();
@@ -288,7 +320,8 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public List<Question> excelToPart7(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws IOException {
+    public List<Question> excelToPart7(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws
+                                                                                                         IOException {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(SHEET);
         Iterator<Row> rows = sheet.iterator();
@@ -304,7 +337,11 @@ public class ExcelServiceImpl implements ExcelService {
                 rowNumber++;
                 continue;
             }
-            var question = isAddNew ? Question.builder().questionNumber(questionNumber + "").part(part).build() : questionList.get(rowNumber - 1);
+            var question = isAddNew ? Question
+                    .builder()
+                    .questionNumber(questionNumber + "")
+                    .part(part)
+                    .build() : questionList.get(rowNumber - 1);
             Iterator<Cell> cellsInRow = currentRow.iterator();
             while (cellsInRow.hasNext()) {
                 Cell currentCell = cellsInRow.next();

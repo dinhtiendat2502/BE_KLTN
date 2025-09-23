@@ -22,7 +22,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AppException.class)
     public ResponseVO handleAppException(AppException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleAppException: {}", e.getMessage());
-        return ResponseVO.builder().success(Boolean.FALSE).message(e.getMessage()).build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message(e.getMessage())
+                .build();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -30,39 +34,68 @@ public class GlobalExceptionHandler {
         log.error("Exception >> GlobalExceptionHandler >> handleValidationException: {}", e.getMessage());
 
         BindingResult bindingResult = e.getBindingResult();
-        var errorMessages = bindingResult.getFieldErrors().stream().map(fieldError -> fieldError.getDefaultMessage() != null ? fieldError.getDefaultMessage() : "").findFirst().orElse("");
+        var errorMessages = bindingResult
+                .getFieldErrors()
+                .stream()
+                .map(fieldError -> fieldError.getDefaultMessage() != null ? fieldError.getDefaultMessage() : "")
+                .findFirst()
+                .orElse("");
 
-        return ResponseVO.builder().success(Boolean.FALSE).message(errorMessages).build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message(errorMessages)
+                .build();
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseVO handleResourceNotFoundException(ResourceNotFoundException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleResourceNotFoundException: {}", e.getMessage());
-        return ResponseVO.builder().success(Boolean.FALSE).message("Không tìm thấy tài nguyên").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message("Không tìm thấy tài nguyên")
+                .build();
     }
 
     @ExceptionHandler(FileSizeLimitExceededException.class)
     public ResponseVO handleFileSizeLimitExceededException(FileSizeLimitExceededException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleFileSizeLimitExceededException: {}", e.getMessage());
-        return ResponseVO.builder().success(Boolean.FALSE).message("Kích thước file quá lớn").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message("Kích thước file quá lớn")
+                .build();
     }
 
     @ExceptionHandler(MultipartException.class)
     public ResponseVO handleMultipartException(MultipartException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleMultipartException: {}", e.getMessage());
-        return ResponseVO.builder().success(Boolean.FALSE).message("Kích thước file quá lớn").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message("Kích thước file quá lớn")
+                .build();
     }
 
     @ExceptionHandler(IOException.class)
     public ResponseVO handleIOException(IOException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleIOException: {}", e.getMessage());
-        return ResponseVO.builder().success(Boolean.FALSE).message("Có lỗi xảy ra khi đọc file").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message("Có lỗi xảy ra khi đọc file")
+                .build();
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseVO handleNotFoundException(NoHandlerFoundException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleNotFoundException: {}", e.getMessage());
-        return ResponseVO.builder().success(Boolean.FALSE).message("Không tìm thấy đường dẫn").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message("Không tìm thấy đường dẫn")
+                .build();
     }
 
     @ExceptionHandler(BadCredentialsException.class)
@@ -72,25 +105,45 @@ public class GlobalExceptionHandler {
         if (message.contains("Bad credentials")) {
             message = "Tên đăng nhập hoặc mật khẩu không đúng";
         }
-        return ResponseVO.builder().success(Boolean.FALSE).message(message).build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message(message)
+                .build();
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseVO handleUsernameNotFoundException(UsernameNotFoundException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleUsernameNotFoundException: {}", e.getMessage());
-        return ResponseVO.builder().success(Boolean.FALSE).message(e.getMessage()).build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message(e.getMessage())
+                .build();
     }
 
     @ExceptionHandler(InternalAuthenticationServiceException.class)
     public ResponseVO handleInternalAuthenticationServiceException(InternalAuthenticationServiceException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleInternalAuthenticationServiceException: {}", e.getMessage());
-        return ResponseVO.builder().success(Boolean.FALSE).message(e.getMessage()).build();
+        log.error("Exception >> GlobalExceptionHandler >> handleInternalAuthenticationServiceException: {}",
+                  e.getMessage()
+        );
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message(e.getMessage())
+                .build();
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseVO handleUnwantedException(Exception e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException: {}", e.getClass().getSimpleName());
+        log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException: {}", e
+                .getClass()
+                .getSimpleName());
         log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException: {}", e.getMessage());
-        return ResponseVO.builder().success(Boolean.FALSE).message("Hệ thống đang bị lỗi, vui lòng thử lại sau!").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message("Hệ thống đang bị lỗi, vui lòng thử lại sau!")
+                .build();
     }
 }

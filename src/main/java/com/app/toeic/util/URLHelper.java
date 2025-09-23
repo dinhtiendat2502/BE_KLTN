@@ -1,14 +1,18 @@
 package com.app.toeic.util;
 
+import lombok.experimental.UtilityClass;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 
+@UtilityClass
 public class URLHelper {
     public static String replacer(String data) throws UnsupportedEncodingException {
         StringBuilder tempBuffer = getStringBuilder(data);
         data = tempBuffer.toString();
-        data = URLDecoder.decode(data.replace("<percentage>", "%").replace("<plus>", "+"), "UTF-8");
+        data = URLDecoder.decode(data
+                                         .replace("<percentage>", "%")
+                                         .replace("<plus>", "+"), "UTF-8");
         return data;
     }
 

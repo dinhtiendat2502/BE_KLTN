@@ -12,7 +12,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("*")
 @RequestMapping("/admin/exam")
 @RestController
 @RequiredArgsConstructor
@@ -28,7 +27,8 @@ public class ExamController {
 
     @PostMapping("/create-exam")
     public ResponseVO createExam(@Valid @RequestBody ExamDto examDto) {
-        var exam = Exam.builder()
+        var exam = Exam
+                .builder()
                 .examName(examDto.getExamName())
                 .audioPart1(examDto.getAudioPart1())
                 .audioPart2(examDto.getAudioPart2())
@@ -36,31 +36,40 @@ public class ExamController {
                 .audioPart4(examDto.getAudioPart4())
                 .examImage(examDto.getExamImage())
                 .status("ACTIVE")
-                .topic(examDto.getTopicId() != null ? topicService.findById(examDto.getTopicId()).orElse(null) : null)
+                .topic(examDto.getTopicId() != null ? topicService
+                        .findById(examDto.getTopicId())
+                        .orElse(null) : null)
                 .build();
         return examService.addExam(exam);
     }
 
     @PatchMapping("/update-exam")
     public ResponseVO updateExam(@Valid @RequestBody ExamDto examDto) {
-        var exam = examService.findById(examDto.getExamId()).orElse(null);
+        var exam = examService
+                .findById(examDto.getExamId())
+                .orElse(null);
         if (exam == null) {
-            return ResponseVO.builder()
+            return ResponseVO
+                    .builder()
                     .success(Boolean.FALSE)
                     .message("Không tìm thấy đề thi")
                     .build();
         }
         exam.setExamName(examDto.getExamName());
-        exam.setTopic(examDto.getTopicId() != null ? topicService.findById(examDto.getTopicId()).orElse(null) : null);
+        exam.setTopic(examDto.getTopicId() != null ? topicService
+                .findById(examDto.getTopicId())
+                .orElse(null) : null);
         return examService.updateExam(exam);
     }
 
     @GetMapping("/find-by-id")
     public ResponseVO findById(@RequestParam Integer examId) {
-        var exam = examService.findExamWithPart(examId)
+        var exam = examService
+                .findExamWithPart(examId)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
 
-        return ResponseVO.builder()
+        return ResponseVO
+                .builder()
                 .success(Boolean.TRUE)
                 .data(exam)
                 .message("Lấy đề thi thành công")

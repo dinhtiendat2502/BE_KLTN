@@ -21,7 +21,6 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin("*")
 @RequiredArgsConstructor
 public class UserRestController {
     private final UserService userService;
@@ -59,10 +58,17 @@ public class UserRestController {
 
     @PatchMapping("/update-password")
     public ResponseVO updatePassword(@Valid @RequestBody UserUpdatePasswordDto userUpdatePasswordDto, HttpServletRequest request) {
-        var profile = userService.getProfile(request)
+        var profile = userService
+                .getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
-        if (StringUtils.compareIgnoreCase(userUpdatePasswordDto.getNewPassword(), userUpdatePasswordDto.getConfirmPassword()) != 0) {
-            return ResponseVO.builder().success(Boolean.FALSE).message("Mật khẩu không khớp").build();
+        if (StringUtils.compareIgnoreCase(userUpdatePasswordDto.getNewPassword(),
+                                          userUpdatePasswordDto.getConfirmPassword()
+        ) != 0) {
+            return ResponseVO
+                    .builder()
+                    .success(Boolean.FALSE)
+                    .message("Mật khẩu không khớp")
+                    .build();
         }
         return ResponseVO
                 .builder()
@@ -73,12 +79,10 @@ public class UserRestController {
     }
 
     @PatchMapping("/update-profile")
-    public ResponseVO updateProfile(@RequestParam("file") MultipartFile file,
-                                    @RequestParam("fullName") String fullName,
-                                    @RequestParam("phone") String phone,
-                                    @RequestParam("address") String address,
-                                    HttpServletRequest request) throws IOException {
-        var profile = userService.getProfile(request)
+    public ResponseVO updateProfile(@RequestParam("file") MultipartFile file, @RequestParam("fullName") String fullName, @RequestParam("phone") String phone, @RequestParam("address") String address, HttpServletRequest request) throws
+                                                                                                                                                                                                                                   IOException {
+        var profile = userService
+                .getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
 
         if (StringUtils.isNotBlank(fullName)) {
@@ -103,8 +107,10 @@ public class UserRestController {
     }
 
     @PostMapping("/update-avatar")
-    public ResponseVO updateAvatar(@Valid @RequestBody UserUpdateAvatarDto updateAvatarDto, HttpServletRequest request) throws IOException {
-        var profile = userService.getProfile(request)
+    public ResponseVO updateAvatar(@Valid @RequestBody UserUpdateAvatarDto updateAvatarDto, HttpServletRequest request) throws
+                                                                                                                        IOException {
+        var profile = userService
+                .getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
         profile.setAvatar(updateAvatarDto.getAvatar());
         return userService.updateAvatar(profile);
@@ -112,7 +118,8 @@ public class UserRestController {
 
     @GetMapping("/get-profile")
     public ResponseVO getProfile(HttpServletRequest request) {
-        var profile = userService.getProfile(request)
+        var profile = userService
+                .getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
         return ResponseVO
                 .builder()
@@ -145,7 +152,12 @@ public class UserRestController {
         var user = userService.findByEmail(email);
         user.setStatus(EUser.ACTIVE);
         userService.save(user);
-        return ResponseVO.builder().success(Boolean.TRUE).data(null).message("Xác thực tài khoản thành công!").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(null)
+                .message("Xác thực tài khoản thành công!")
+                .build();
     }
 
     @GetMapping("/test")

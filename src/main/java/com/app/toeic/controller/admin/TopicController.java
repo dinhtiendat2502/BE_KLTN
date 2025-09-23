@@ -8,7 +8,6 @@ import com.app.toeic.service.TopicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/topic")
@@ -19,9 +18,11 @@ public class TopicController {
     public ResponseVO getAllTopic() {
         return topicService.getAllTopic();
     }
+
     @PostMapping("/create-topic")
     public ResponseVO createTopic(@RequestBody TopicDto topic) {
-        var newTopic = Topic.builder()
+        var newTopic = Topic
+                .builder()
                 .topicName(topic.getTopicName())
                 .topicImage(topic.getTopicImage())
                 .status("ACTIVE")

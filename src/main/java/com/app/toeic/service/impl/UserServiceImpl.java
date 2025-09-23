@@ -44,19 +44,48 @@ public class UserServiceImpl implements UserService {
     public ResponseVO authenticate(LoginDto loginDto) {
         var v1 = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
         Authentication authentication = authenticationManager.authenticate(v1);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserAccount user = iUserRepository.findByEmail(authentication.getName()).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Không tìm thấy email!"));
-        if (user.getStatus().equals(EUser.INACTIVE)) {
-            return ResponseVO.builder().success(Boolean.FALSE).data(user.getStatus()).message("Tài khoản chưa được kích hoạt!").build();
-        } else if (user.getStatus().equals(EUser.BLOCKED)) {
-            return ResponseVO.builder().success(Boolean.FALSE).message("Tài khoản đã bị khóa!").build();
+        SecurityContextHolder
+                .getContext()
+                .setAuthentication(authentication);
+        UserAccount user = iUserRepository
+                .findByEmail(authentication.getName())
+                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Không tìm thấy email!"));
+        if (user
+                .getStatus()
+                .equals(EUser.INACTIVE)) {
+            return ResponseVO
+                    .builder()
+                    .success(Boolean.FALSE)
+                    .data(user.getStatus())
+                    .message("Tài khoản chưa được kích hoạt!")
+                    .build();
+        } else if (user
+                .getStatus()
+                .equals(EUser.BLOCKED)) {
+            return ResponseVO
+                    .builder()
+                    .success(Boolean.FALSE)
+                    .message("Tài khoản đã bị khóa!")
+                    .build();
         }
 
         List<String> rolesNames = new ArrayList<>();
-        user.getRoles().forEach(r -> rolesNames.add(r.getRoleName()));
+        user
+                .getRoles()
+                .forEach(r -> rolesNames.add(r.getRoleName()));
         var token = jwtUtilities.generateToken(user.getUsername(), user.getPassword(), rolesNames);
-        var res = LoginResponse.builder().token(token).email(user.getEmail()).roles(rolesNames).build();
-        return ResponseVO.builder().success(Boolean.TRUE).data(res).message("Đăng nhập thành công").build();
+        var res = LoginResponse
+                .builder()
+                .token(token)
+                .email(user.getEmail())
+                .roles(rolesNames)
+                .build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(res)
+                .message("Đăng nhập thành công")
+                .build();
     }
 
     @Override
@@ -64,35 +93,70 @@ public class UserServiceImpl implements UserService {
         if (Boolean.TRUE.equals(iUserRepository.existsByEmail(registerDto.getEmail()))) {
             throw new AppException(HttpStatus.SEE_OTHER, "Email đã được đăng ký!");
         }
-        var user = UserAccount.builder().email(registerDto.getEmail()).fullName(registerDto.getFullName()).password(passwordEncoder.encode(registerDto.getPassword())).avatar(AvatarHelper.getAvatar("")).roles(Collections.singleton(iRoleRepository.findByRoleName(ERole.USER))).status(EUser.INACTIVE).provider("TOEICUTE").build();
+        var user = UserAccount
+                .builder()
+                .email(registerDto.getEmail())
+                .fullName(registerDto.getFullName())
+                .password(passwordEncoder.encode(registerDto.getPassword()))
+                .avatar(AvatarHelper.getAvatar(""))
+                .roles(Collections.singleton(iRoleRepository.findByRoleName(ERole.USER)))
+                .status(EUser.INACTIVE)
+                .provider("TOEICUTE")
+                .build();
 
         iUserRepository.save(user);
-        return ResponseVO.builder().success(Boolean.TRUE).data(null).message("Đăng kí tài khoản thành công").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(null)
+                .message("Đăng kí tài khoản thành công")
+                .build();
     }
 
     @Override
     public ResponseVO getAllUser() {
-        return ResponseVO.builder().success(Boolean.TRUE).data(iUserRepository.findAllByRolesNotContains(iRoleRepository.findByRoleName(ERole.ADMIN))).message("Lấy danh sách user thành công").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(iUserRepository.findAllByRolesNotContains(iRoleRepository.findByRoleName(ERole.ADMIN)))
+                .message("Lấy danh sách user thành công")
+                .build();
     }
 
     @Override
     public ResponseVO updateUser(UserDto user) {
-        var u = iUserRepository.findById(user.getId()).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "User not found"));
+        var u = iUserRepository
+                .findById(user.getId())
+                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "User not found"));
         u.setStatus(user.getStatus());
-        return ResponseVO.builder().success(Boolean.TRUE).data(iUserRepository.save(u)).message("Cập nhật user thành công").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(iUserRepository.save(u))
+                .message("Cập nhật user thành công")
+                .build();
     }
 
     @Override
     public UserAccount findByEmail(String email) {
-        return iUserRepository.findByEmail(email).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
+        return iUserRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
     }
 
     @Override
     public ResponseVO updatePassword(String email, String newPassword) {
-        var user = iUserRepository.findByEmail(email).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
+        var user = iUserRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
         user.setPassword(passwordEncoder.encode(newPassword));
         iUserRepository.save(user);
-        return ResponseVO.builder().success(Boolean.TRUE).data(null).message("Cập nhật mật khẩu thành công!").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(null)
+                .message("Cập nhật mật khẩu thành công!")
+                .build();
     }
 
     @Override
@@ -108,7 +172,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseVO updateAvatar(UserAccount userAccount) {
         iUserRepository.save(userAccount);
-        return ResponseVO.builder().success(Boolean.TRUE).data(null).message("Cập nhật avatar thành công!").build();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(null)
+                .message("Cập nhật avatar thành công!")
+                .build();
     }
 
     @Override
@@ -119,7 +188,9 @@ public class UserServiceImpl implements UserService {
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(email);
             if (Boolean.TRUE.equals(jwtUtilities.validateToken(token, userDetails))) {
-                var user = iUserRepository.findByEmail(email).orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
+                var user = iUserRepository
+                        .findByEmail(email)
+                        .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
                 return Optional.of(user);
             }
         }
@@ -162,24 +233,45 @@ public class UserServiceImpl implements UserService {
         var user = iUserRepository.findByEmail(loginSocialDto.getEmail());
         List<String> tokens = new ArrayList<>();
         user.ifPresentOrElse(u -> {
-            if (u.getStatus().equals(EUser.INACTIVE)) {
+            if (u
+                    .getStatus()
+                    .equals(EUser.INACTIVE)) {
                 throw new AppException(HttpStatus.SEE_OTHER, "Tài khoản chưa được kích hoạt!");
-            } else if (u.getStatus().equals(EUser.BLOCKED)) {
+            } else if (u
+                    .getStatus()
+                    .equals(EUser.BLOCKED)) {
                 throw new AppException(HttpStatus.SEE_OTHER, "Tài khoản đã bị khóa!");
             }
-            if (!u.getProvider().equals(loginSocialDto.getProvider())) {
-                throw new AppException(HttpStatus.SEE_OTHER, "Tài khoản đã được đăng ký. Vui lòng đăng nhập bằng email và mật khẩu!");
+            if (!u
+                    .getProvider()
+                    .equals(loginSocialDto.getProvider())) {
+                throw new AppException(HttpStatus.SEE_OTHER,
+                                       "Tài khoản đã được đăng ký. Vui lòng đăng nhập bằng email và mật khẩu!"
+                );
             }
             List<String> rolesNames = new ArrayList<>();
-            u.getRoles().forEach(r -> rolesNames.add(r.getRoleName()));
+            u
+                    .getRoles()
+                    .forEach(r -> rolesNames.add(r.getRoleName()));
             final var token = jwtUtilities.generateToken(u.getUsername(), u.getPassword(), rolesNames);
             tokens.add(token);
         }, () -> {
             var password = randomPassword();
-            var newUser = UserAccount.builder().email(loginSocialDto.getEmail()).fullName(loginSocialDto.getFullName()).avatar(loginSocialDto.getAvatar()).roles(Collections.singleton(iRoleRepository.findByRoleName(ERole.USER))).status(EUser.ACTIVE).provider(loginSocialDto.getProvider()).password(passwordEncoder.encode(password)).build();
+            var newUser = UserAccount
+                    .builder()
+                    .email(loginSocialDto.getEmail())
+                    .fullName(loginSocialDto.getFullName())
+                    .avatar(loginSocialDto.getAvatar())
+                    .roles(Collections.singleton(iRoleRepository.findByRoleName(ERole.USER)))
+                    .status(EUser.ACTIVE)
+                    .provider(loginSocialDto.getProvider())
+                    .password(passwordEncoder.encode(password))
+                    .build();
             iUserRepository.save(newUser);
             List<String> rolesNames = new ArrayList<>();
-            newUser.getRoles().forEach(r -> rolesNames.add(r.getRoleName()));
+            newUser
+                    .getRoles()
+                    .forEach(r -> rolesNames.add(r.getRoleName()));
             final var token = jwtUtilities.generateToken(newUser.getUsername(), newUser.getPassword(), rolesNames);
             tokens.add(token);
             emailService.sendEmailAccount(loginSocialDto, password, "email-account");
@@ -210,6 +302,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public String randomPassword() {
-        return UUID.randomUUID().toString();
+        return UUID
+                .randomUUID()
+                .toString();
     }
 }
