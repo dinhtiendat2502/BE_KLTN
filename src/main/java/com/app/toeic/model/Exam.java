@@ -41,6 +41,7 @@ public class Exam implements Serializable {
     private String audioPart4;
     private String status = "ACTIVE";
     private Integer numberOfUserDoExam = 0;
+    private Double price = 0.0;
 
     @JsonIgnore
     @CreationTimestamp

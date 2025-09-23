@@ -27,7 +27,7 @@ public class UserRestController {
     private final EmailService emailService;
     private final FirebaseStorageService firebaseStorageService;
 
-    private final String NOT_FOUNT_USER = "Không tìm thấy thông tin người dùng";
+    private static final String NOT_FOUNT_USER = "Không tìm thấy thông tin người dùng";
 
     @PostMapping("/register")
     public ResponseVO register(@Valid @RequestBody RegisterDto registerDto) {

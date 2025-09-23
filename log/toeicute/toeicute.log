@@ -5018,3 +5018,1056 @@ Caused by: java.lang.ClassNotFoundException: com.app.toeic.dto.FinishExamDto$Ans
 2024-01-03T14:56:58.869+07:00  INFO 19220 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat-1].[localhost].[/api]  : Initializing Spring DispatcherServlet 'dispatcherServlet'
 2024-01-03T14:56:58.869+07:00  INFO 19220 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2024-01-03T14:56:58.872+07:00  INFO 19220 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2024-01-03T17:04:07.014+07:00  INFO 13440 --- [restartedMain] com.app.toeic.BeApplication              : Starting BeApplication using Java 17 with PID 13440 (C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE\target\classes started by Kira.Intern in C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE)
+2024-01-03T17:04:07.017+07:00  INFO 13440 --- [restartedMain] com.app.toeic.BeApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-01-03T17:04:07.074+07:00  INFO 13440 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\Kira.Intern\.m2\repository\io\grpc\grpc-netty-shaded\1.39.0\grpc-netty-shaded-1.39.0.jar referenced one or more files that do not exist: file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/grpc-core-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/grpc-api-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/guava-30.1-android.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/error_prone_annotations-2.4.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/perfmark-api-0.23.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/failureaccess-1.0.1.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/jsr305-3.0.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/j2objc-annotations-1.3.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/gson-2.8.6.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/annotations-4.1.1.4.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/animal-sniffer-annotations-1.19.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/grpc-context-1.39.0.jar
+2024-01-03T17:04:07.074+07:00  INFO 13440 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\Kira.Intern\.m2\repository\io\grpc\grpc-alts\1.39.0\grpc-alts-1.39.0.jar referenced one or more files that do not exist: file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-auth-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-grpclb-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-protobuf-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-stub-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/protobuf-java-util-3.17.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/proto-google-common-protos-2.0.1.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/protobuf-java-3.17.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/conscrypt-openjdk-uber-2.5.1.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/google-auth-library-oauth2-http-0.22.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-netty-shaded-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-core-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-protobuf-lite-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-api-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/google-http-client-jackson2-1.38.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/google-http-client-1.38.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/opencensus-contrib-http-util-0.24.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/guava-30.1-android.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/google-auth-library-credentials-0.22.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/error_prone_annotations-2.4.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/jsr305-3.0.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/failureaccess-1.0.1.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/j2objc-annotations-1.3.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/auto-value-annotations-1.7.4.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/perfmark-api-0.23.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/opencensus-api-0.24.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-context-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/gson-2.8.6.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/annotations-4.1.1.4.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/animal-sniffer-annotations-1.19.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/httpclient-4.5.13.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/httpcore-4.4.13.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/jackson-core-2.11.3.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/commons-logging-1.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/commons-codec-1.11.jar
+2024-01-03T17:04:07.075+07:00  INFO 13440 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-01-03T17:04:07.075+07:00  INFO 13440 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-01-03T17:04:08.560+07:00  INFO 13440 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-03T17:04:08.563+07:00  INFO 13440 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-01-03T17:04:08.618+07:00  INFO 13440 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IExamRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:04:08.620+07:00  INFO 13440 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IPartRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:04:08.622+07:00  INFO 13440 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IQuestionRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:04:08.624+07:00  INFO 13440 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IRoleRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:04:08.627+07:00  INFO 13440 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.ITopicRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:04:08.629+07:00  INFO 13440 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAccountRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:04:08.631+07:00  INFO 13440 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAnswerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:04:08.633+07:00  INFO 13440 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserExamHistoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:04:08.634+07:00  INFO 13440 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 65 ms. Found 0 JDBC repository interfaces.
+2024-01-03T17:04:08.646+07:00  INFO 13440 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-03T17:04:08.647+07:00  INFO 13440 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-03T17:04:08.723+07:00  INFO 13440 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 70 ms. Found 8 JPA repository interfaces.
+2024-01-03T17:04:09.952+07:00  INFO 13440 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-01-03T17:04:09.962+07:00  INFO 13440 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-03T17:04:09.962+07:00  INFO 13440 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2024-01-03T17:04:10.111+07:00  INFO 13440 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2024-01-03T17:04:10.111+07:00  INFO 13440 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 3036 ms
+2024-01-03T17:04:10.303+07:00  INFO 13440 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-03T17:04:10.372+07:00  INFO 13440 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.13.Final
+2024-01-03T17:04:10.376+07:00  INFO 13440 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2024-01-03T17:04:10.784+07:00  INFO 13440 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-03T17:04:10.820+07:00  INFO 13440 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-01-03T17:04:11.944+07:00 ERROR 13440 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Exception during pool initialization.
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:175) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:64) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:446) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:239) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:188) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-5.0.1.jar:na]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:437) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:61) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:279) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:193) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:69) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:119) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:264) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:239) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:216) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:45) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:231) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:199) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:169) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1383) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1454) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:688) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:512) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1332) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1162) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1682) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:597) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1417) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:910) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1352) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1417) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:910) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1352) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:210) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:173) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:168) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:153) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:86) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:261) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:235) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4850) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:845) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:240) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:433) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:917) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:488) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:123) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:104) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:489) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:211) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:183) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:161) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:610) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:738) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:440) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
+	at com.app.toeic.BeApplication.main(BeApplication.java:10) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.1.5.jar:3.1.5]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:105) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:150) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:166) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:89) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:121) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:945) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:815) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	... 141 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:597) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:633) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:153) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:63) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	... 144 common frames omitted
+
+2024-01-03T17:04:11.980+07:00  WARN 13440 --- [restartedMain] o.h.e.j.e.i.JdbcEnvironmentInitiator     : HHH000342: Could not obtain connection to query metadata
+
+java.lang.NullPointerException: Cannot invoke "org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(java.sql.SQLException, String)" because the return value of "org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.sqlExceptionHelper()" is null
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:116) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:279) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:193) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:69) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:119) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:264) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:239) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:216) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:45) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:231) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:199) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:169) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1383) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1454) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:688) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:512) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1332) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1162) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1682) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:597) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1417) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:910) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1352) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1417) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:910) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1352) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:210) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:173) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:168) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:153) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:86) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:261) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:235) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4850) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:845) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:240) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:433) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:917) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:488) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:123) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:104) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:489) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:211) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:183) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:161) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:610) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:738) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:440) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
+	at com.app.toeic.BeApplication.main(BeApplication.java:10) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.1.5.jar:3.1.5]
+
+2024-01-03T17:04:12.008+07:00  WARN 13440 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-01-03T17:04:13.836+07:00  INFO 13440 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-01-03T17:04:13.866+07:00  INFO 13440 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-01-03T17:04:14.885+07:00 ERROR 13440 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Exception during pool initialization.
+
+com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:175) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:64) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:446) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:239) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:188) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-5.0.1.jar:na]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:437) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:46) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:39) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcConnection(ImprovedExtractionContextImpl.java:63) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcDatabaseMetaData(ImprovedExtractionContextImpl.java:70) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.extract.internal.InformationExtractorJdbcDatabaseMetaDataImpl.processTableResultSet(InformationExtractorJdbcDatabaseMetaDataImpl.java:64) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.extract.internal.AbstractInformationExtractorImpl.getTables(AbstractInformationExtractorImpl.java:570) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.getTablesInformation(DatabaseInformationImpl.java:122) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:72) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:232) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:117) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:284) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:143) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at java.base/java.util.HashMap.forEach(HashMap.java:1420) ~[na:na]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:140) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:293) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:444) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1458) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:688) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:512) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1332) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1162) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1682) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:597) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1417) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:910) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1352) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1417) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:910) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1352) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:210) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:173) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:168) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:153) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:86) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:261) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:235) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4850) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:845) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:240) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:433) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:917) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:488) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:123) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:104) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:489) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:211) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:183) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:161) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:610) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:738) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:440) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
+	at com.app.toeic.BeApplication.main(BeApplication.java:10) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.1.5.jar:3.1.5]
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:105) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:150) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:166) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:89) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:121) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:945) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:815) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	... 146 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:597) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:633) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:153) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:63) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	... 149 common frames omitted
+
+2024-01-03T17:04:14.890+07:00  WARN 13440 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 08S01
+2024-01-03T17:04:14.890+07:00 ERROR 13440 --- [restartedMain] o.h.engine.jdbc.spi.SqlExceptionHelper   : Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+2024-01-03T17:04:14.895+07:00 ERROR 13440 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
+2024-01-03T17:04:14.897+07:00 ERROR 13440 --- [restartedMain] o.s.b.web.embedded.tomcat.TomcatStarter  : Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtAuthenticationFilter' defined in file [C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE\target\classes\com\app\toeic\jwt\JwtAuthenticationFilter.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'customerUserDetailsService' defined in file [C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE\target\classes\com\app\toeic\service\impl\CustomerUserDetailsService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'IUserAccountRepository' defined in com.app.toeic.repository.IUserAccountRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2024-01-03T17:04:14.927+07:00  INFO 13440 --- [restartedMain] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-01-03T17:04:14.932+07:00  WARN 13440 --- [restartedMain] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2024-01-03T17:04:14.944+07:00  INFO 13440 --- [restartedMain] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-01-03T17:04:14.972+07:00 ERROR 13440 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.context.ApplicationContextException: Unable to start web server
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:164) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:610) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:738) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:440) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
+	at com.app.toeic.BeApplication.main(BeApplication.java:10) ~[classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:50) ~[spring-boot-devtools-3.1.5.jar:3.1.5]
+Caused by: org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:142) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:104) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:489) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:211) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:183) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:161) ~[spring-boot-3.1.5.jar:3.1.5]
+	... 13 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jwtAuthenticationFilter' defined in file [C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE\target\classes\com\app\toeic\jwt\JwtAuthenticationFilter.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'customerUserDetailsService' defined in file [C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE\target\classes\com\app\toeic\service\impl\CustomerUserDetailsService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'IUserAccountRepository' defined in com.app.toeic.repository.IUserAccountRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:801) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1352) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:210) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:173) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:168) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:153) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:86) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:261) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:235) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4850) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:845) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java) ~[na:na]
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145) ~[na:na]
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:240) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:433) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:917) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:488) ~[tomcat-embed-core-10.1.15.jar:10.1.15]
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:123) ~[spring-boot-3.1.5.jar:3.1.5]
+	... 18 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'customerUserDetailsService' defined in file [C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE\target\classes\com\app\toeic\service\impl\CustomerUserDetailsService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'IUserAccountRepository' defined in com.app.toeic.repository.IUserAccountRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:801) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1352) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1189) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1417) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:910) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 61 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'IUserAccountRepository' defined in com.app.toeic.repository.IUserAccountRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1682) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1431) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:597) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1417) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1337) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:910) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:788) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 75 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jpaSharedEM_entityManagerFactory': Cannot resolve reference to bean 'entityManagerFactory' while setting constructor argument
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:688) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:512) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1332) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1162) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:560) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 89 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1770) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 101 common frames omitted
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 108 common frames omitted
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.] [n/a]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:98) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:56) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:94) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:74) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:39) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcConnection(ImprovedExtractionContextImpl.java:63) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcDatabaseMetaData(ImprovedExtractionContextImpl.java:70) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.extract.internal.InformationExtractorJdbcDatabaseMetaDataImpl.processTableResultSet(InformationExtractorJdbcDatabaseMetaDataImpl.java:64) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.extract.internal.AbstractInformationExtractorImpl.getTables(AbstractInformationExtractorImpl.java:570) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.getTablesInformation(DatabaseInformationImpl.java:122) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.internal.GroupedSchemaMigratorImpl.performTablesMigration(GroupedSchemaMigratorImpl.java:72) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.performMigration(AbstractSchemaMigrator.java:232) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:117) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:284) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:143) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at java.base/java.util.HashMap.forEach(HashMap.java:1420) ~[na:na]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:140) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:293) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:444) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1458) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.0.13.jar:6.0.13]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.0.13.jar:6.0.13]
+	... 112 common frames omitted
+Caused by: com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at com.mysql.cj.jdbc.exceptions.SQLError.createCommunicationsException(SQLError.java:175) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:64) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:446) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:239) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:188) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-5.0.1.jar:na]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:437) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:46) ~[hibernate-core-6.2.13.Final.jar:6.2.13.Final]
+	... 133 common frames omitted
+Caused by: com.mysql.cj.exceptions.CJCommunicationsException: Communications link failure
+
+The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499) ~[na:na]
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480) ~[na:na]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:62) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:105) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createException(ExceptionFactory.java:150) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.exceptions.ExceptionFactory.createCommunicationsException(ExceptionFactory.java:166) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:89) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.NativeSession.connect(NativeSession.java:121) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.connectOneTryOnly(ConnectionImpl.java:945) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:815) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	... 146 common frames omitted
+Caused by: java.net.ConnectException: Connection refused: no further information
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:542) ~[na:na]
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:597) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:633) ~[na:na]
+	at com.mysql.cj.protocol.StandardSocketFactory.connect(StandardSocketFactory.java:153) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.protocol.a.NativeSocketConnection.connect(NativeSocketConnection.java:63) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	... 149 common frames omitted
+
+2024-01-03T17:12:25.731+07:00  INFO 11136 --- [restartedMain] com.app.toeic.BeApplication              : Starting BeApplication using Java 17 with PID 11136 (C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE\target\classes started by Kira.Intern in C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE)
+2024-01-03T17:12:25.734+07:00  INFO 11136 --- [restartedMain] com.app.toeic.BeApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-01-03T17:12:25.790+07:00  INFO 11136 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\Kira.Intern\.m2\repository\io\grpc\grpc-netty-shaded\1.39.0\grpc-netty-shaded-1.39.0.jar referenced one or more files that do not exist: file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/grpc-core-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/grpc-api-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/guava-30.1-android.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/error_prone_annotations-2.4.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/perfmark-api-0.23.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/failureaccess-1.0.1.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/jsr305-3.0.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/j2objc-annotations-1.3.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/gson-2.8.6.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/annotations-4.1.1.4.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/animal-sniffer-annotations-1.19.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/grpc-context-1.39.0.jar
+2024-01-03T17:12:25.791+07:00  INFO 11136 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\Kira.Intern\.m2\repository\io\grpc\grpc-alts\1.39.0\grpc-alts-1.39.0.jar referenced one or more files that do not exist: file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-auth-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-grpclb-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-protobuf-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-stub-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/protobuf-java-util-3.17.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/proto-google-common-protos-2.0.1.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/protobuf-java-3.17.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/conscrypt-openjdk-uber-2.5.1.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/google-auth-library-oauth2-http-0.22.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-netty-shaded-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-core-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-protobuf-lite-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-api-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/google-http-client-jackson2-1.38.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/google-http-client-1.38.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/opencensus-contrib-http-util-0.24.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/guava-30.1-android.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/google-auth-library-credentials-0.22.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/error_prone_annotations-2.4.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/jsr305-3.0.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/failureaccess-1.0.1.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/j2objc-annotations-1.3.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/auto-value-annotations-1.7.4.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/perfmark-api-0.23.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/opencensus-api-0.24.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-context-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/gson-2.8.6.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/annotations-4.1.1.4.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/animal-sniffer-annotations-1.19.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/httpclient-4.5.13.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/httpcore-4.4.13.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/jackson-core-2.11.3.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/commons-logging-1.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/commons-codec-1.11.jar
+2024-01-03T17:12:25.791+07:00  INFO 11136 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-01-03T17:12:25.792+07:00  INFO 11136 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-01-03T17:12:26.811+07:00  INFO 11136 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-03T17:12:26.812+07:00  INFO 11136 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-01-03T17:12:26.865+07:00  INFO 11136 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IExamRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:12:26.867+07:00  INFO 11136 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IPartRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:12:26.869+07:00  INFO 11136 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IQuestionRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:12:26.871+07:00  INFO 11136 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IRoleRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:12:26.873+07:00  INFO 11136 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.ITopicRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:12:26.876+07:00  INFO 11136 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAccountRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:12:26.877+07:00  INFO 11136 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAnswerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:12:26.879+07:00  INFO 11136 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserExamHistoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:12:26.880+07:00  INFO 11136 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 63 ms. Found 0 JDBC repository interfaces.
+2024-01-03T17:12:26.893+07:00  INFO 11136 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-03T17:12:26.894+07:00  INFO 11136 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-03T17:12:26.966+07:00  INFO 11136 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 68 ms. Found 8 JPA repository interfaces.
+2024-01-03T17:12:27.920+07:00  INFO 11136 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-01-03T17:12:27.931+07:00  INFO 11136 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-03T17:12:27.931+07:00  INFO 11136 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2024-01-03T17:12:28.071+07:00  INFO 11136 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2024-01-03T17:12:28.072+07:00  INFO 11136 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2279 ms
+2024-01-03T17:12:28.284+07:00  INFO 11136 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-03T17:12:28.361+07:00  INFO 11136 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.13.Final
+2024-01-03T17:12:28.365+07:00  INFO 11136 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2024-01-03T17:12:28.724+07:00  INFO 11136 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-03T17:12:28.761+07:00  INFO 11136 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-01-03T17:12:29.209+07:00  INFO 11136 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5fa3de5b
+2024-01-03T17:12:29.212+07:00  INFO 11136 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-01-03T17:12:29.280+07:00  WARN 11136 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-01-03T17:12:30.983+07:00  INFO 11136 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-01-03T17:12:32.122+07:00  INFO 11136 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-03T17:12:32.761+07:00  INFO 11136 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-01-03T17:12:34.298+07:00  INFO 11136 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@72f6041c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@572469cc, org.springframework.security.web.context.SecurityContextHolderFilter@2ed9fb3d, org.springframework.security.web.header.HeaderWriterFilter@24abd8cd, org.springframework.web.filter.CorsFilter@21604b0e, org.springframework.security.web.authentication.logout.LogoutFilter@c5314df, com.app.toeic.jwt.JwtAuthenticationFilter@5bb37e55, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@50a68239, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@46a32577, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6d196f8e, org.springframework.security.web.session.SessionManagementFilter@634f1f16, org.springframework.security.web.access.ExceptionTranslationFilter@1c28bf50, org.springframework.security.web.access.intercept.AuthorizationFilter@1fd7441a]
+2024-01-03T17:12:35.493+07:00  INFO 11136 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-03T17:12:35.555+07:00  INFO 11136 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2024-01-03T17:12:35.568+07:00  INFO 11136 --- [restartedMain] com.app.toeic.BeApplication              : Started BeApplication in 10.405 seconds (process running for 11.802)
+2024-01-03T17:12:50.978+07:00  INFO 11136 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-03T17:12:50.983+07:00  INFO 11136 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-01-03T17:12:51.013+07:00  INFO 11136 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-01-03T17:12:59.585+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : Starting BeApplication using Java 17 with PID 11500 (C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE\target\classes started by Kira.Intern in C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE)
+2024-01-03T17:12:59.588+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-01-03T17:12:59.644+07:00  INFO 11500 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\Kira.Intern\.m2\repository\io\grpc\grpc-netty-shaded\1.39.0\grpc-netty-shaded-1.39.0.jar referenced one or more files that do not exist: file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/grpc-core-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/grpc-api-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/guava-30.1-android.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/error_prone_annotations-2.4.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/perfmark-api-0.23.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/failureaccess-1.0.1.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/jsr305-3.0.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/j2objc-annotations-1.3.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/gson-2.8.6.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/annotations-4.1.1.4.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/animal-sniffer-annotations-1.19.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-netty-shaded/1.39.0/grpc-context-1.39.0.jar
+2024-01-03T17:12:59.644+07:00  INFO 11500 --- [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\Kira.Intern\.m2\repository\io\grpc\grpc-alts\1.39.0\grpc-alts-1.39.0.jar referenced one or more files that do not exist: file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-auth-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-grpclb-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-protobuf-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-stub-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/protobuf-java-util-3.17.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/proto-google-common-protos-2.0.1.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/protobuf-java-3.17.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/conscrypt-openjdk-uber-2.5.1.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/google-auth-library-oauth2-http-0.22.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-netty-shaded-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-core-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-protobuf-lite-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-api-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/google-http-client-jackson2-1.38.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/google-http-client-1.38.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/opencensus-contrib-http-util-0.24.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/guava-30.1-android.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/google-auth-library-credentials-0.22.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/error_prone_annotations-2.4.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/jsr305-3.0.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/failureaccess-1.0.1.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/checker-compat-qual-2.5.5.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/j2objc-annotations-1.3.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/auto-value-annotations-1.7.4.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/perfmark-api-0.23.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/opencensus-api-0.24.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/grpc-context-1.39.0.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/gson-2.8.6.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/annotations-4.1.1.4.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/animal-sniffer-annotations-1.19.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/httpclient-4.5.13.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/httpcore-4.4.13.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/jackson-core-2.11.3.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/commons-logging-1.2.jar,file:/C:/Users/Kira.Intern/.m2/repository/io/grpc/grpc-alts/1.39.0/commons-codec-1.11.jar
+2024-01-03T17:12:59.645+07:00  INFO 11500 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-01-03T17:12:59.645+07:00  INFO 11500 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-01-03T17:13:00.690+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-03T17:13:00.692+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-01-03T17:13:00.741+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IExamRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:13:00.743+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IPartRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:13:00.745+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IQuestionRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:13:00.746+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IRoleRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:13:00.748+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.ITopicRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:13:00.751+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAccountRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:13:00.752+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAnswerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:13:00.754+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserExamHistoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:13:00.756+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 58 ms. Found 0 JDBC repository interfaces.
+2024-01-03T17:13:00.767+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-03T17:13:00.769+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-03T17:13:00.845+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 71 ms. Found 8 JPA repository interfaces.
+2024-01-03T17:13:01.751+07:00  INFO 11500 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-01-03T17:13:01.762+07:00  INFO 11500 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-03T17:13:01.762+07:00  INFO 11500 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2024-01-03T17:13:01.894+07:00  INFO 11500 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2024-01-03T17:13:01.895+07:00  INFO 11500 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2250 ms
+2024-01-03T17:13:02.082+07:00  INFO 11500 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-03T17:13:02.148+07:00  INFO 11500 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.2.13.Final
+2024-01-03T17:13:02.152+07:00  INFO 11500 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000406: Using bytecode reflection optimizer
+2024-01-03T17:13:02.514+07:00  INFO 11500 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-03T17:13:02.550+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-01-03T17:13:02.904+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6327f77e
+2024-01-03T17:13:02.907+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-01-03T17:13:02.968+07:00  WARN 11500 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-01-03T17:13:04.614+07:00  INFO 11500 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-01-03T17:13:04.902+07:00  INFO 11500 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-03T17:13:05.446+07:00  INFO 11500 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-01-03T17:13:06.625+07:00  INFO 11500 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@ad8ddb9, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@72f6041c, org.springframework.security.web.context.SecurityContextHolderFilter@43294945, org.springframework.security.web.header.HeaderWriterFilter@2c4ee6b2, org.springframework.web.filter.CorsFilter@572469cc, org.springframework.security.web.authentication.logout.LogoutFilter@5d845036, com.app.toeic.jwt.JwtAuthenticationFilter@686c1a79, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3575e65f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@22f0cc5a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@21604b0e, org.springframework.security.web.session.SessionManagementFilter@4a24f73a, org.springframework.security.web.access.ExceptionTranslationFilter@38ed0d51, org.springframework.security.web.access.intercept.AuthorizationFilter@70211ee0]
+2024-01-03T17:13:07.518+07:00  INFO 11500 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-03T17:13:07.566+07:00  INFO 11500 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2024-01-03T17:13:07.577+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : Started BeApplication in 8.535 seconds (process running for 9.888)
+2024-01-03T17:17:58.609+07:00  INFO 11500 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (2 additions, 0 deletions, 0 modifications)
+2024-01-03T17:17:58.636+07:00  INFO 11500 --- [Thread-5] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-01-03T17:17:58.643+07:00  WARN 11500 --- [Thread-5] o.a.c.loader.WebappClassLoaderBase       : The web application [api] appears to have started a thread named [HikariPool-1 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@17/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17/java.lang.Thread.run(Thread.java:833)
+2024-01-03T17:17:58.662+07:00  INFO 11500 --- [Thread-5] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-03T17:17:58.667+07:00  INFO 11500 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-01-03T17:17:58.720+07:00  INFO 11500 --- [Thread-5] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-01-03T17:17:58.851+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : Starting BeApplication using Java 17 with PID 11500 (C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE\target\classes started by Kira.Intern in C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE)
+2024-01-03T17:17:58.852+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-01-03T17:17:59.266+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-03T17:17:59.267+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-01-03T17:17:59.318+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IExamRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:17:59.322+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IPartRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:17:59.327+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IQuestionRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:17:59.330+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IRoleRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:17:59.332+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.ITopicRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:17:59.336+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAccountLogRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:17:59.338+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAccountRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:17:59.342+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAnswerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:17:59.346+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserExamHistoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:17:59.348+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:17:59.348+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 79 ms. Found 0 JDBC repository interfaces.
+2024-01-03T17:17:59.353+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-03T17:17:59.353+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-03T17:17:59.406+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 52 ms. Found 10 JPA repository interfaces.
+2024-01-03T17:17:59.618+07:00  INFO 11500 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-01-03T17:17:59.620+07:00  INFO 11500 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-03T17:17:59.620+07:00  INFO 11500 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2024-01-03T17:17:59.863+07:00  INFO 11500 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2024-01-03T17:17:59.867+07:00  INFO 11500 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1009 ms
+2024-01-03T17:18:00.069+07:00  INFO 11500 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-03T17:18:00.364+07:00  INFO 11500 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-03T17:18:00.370+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2024-01-03T17:18:00.671+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6f8e8267
+2024-01-03T17:18:00.671+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2024-01-03T17:18:00.678+07:00  WARN 11500 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-01-03T17:18:01.146+07:00  INFO 11500 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-01-03T17:18:01.410+07:00  INFO 11500 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-03T17:18:01.954+07:00  INFO 11500 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@72e455de, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2a3fd7c9, org.springframework.security.web.context.SecurityContextHolderFilter@3c6ba05c, org.springframework.security.web.header.HeaderWriterFilter@7f69ba2, org.springframework.web.filter.CorsFilter@226925d6, org.springframework.security.web.authentication.logout.LogoutFilter@3ccd7545, com.app.toeic.jwt.JwtAuthenticationFilter@462777b9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@38b111ea, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@ba9a6d5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4a63351e, org.springframework.security.web.session.SessionManagementFilter@79a3f4ef, org.springframework.security.web.access.ExceptionTranslationFilter@67dc6043, org.springframework.security.web.access.intercept.AuthorizationFilter@63916e73]
+2024-01-03T17:18:02.238+07:00  INFO 11500 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-03T17:18:02.255+07:00  INFO 11500 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2024-01-03T17:18:02.260+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : Started BeApplication in 3.464 seconds (process running for 304.569)
+2024-01-03T17:18:02.263+07:00  INFO 11500 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-01-03T17:19:59.373+07:00  INFO 11500 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 4 class path changes (4 additions, 0 deletions, 0 modifications)
+2024-01-03T17:19:59.384+07:00  INFO 11500 --- [Thread-7] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-01-03T17:19:59.387+07:00  WARN 11500 --- [Thread-7] o.a.c.loader.WebappClassLoaderBase       : The web application [api] appears to have started a thread named [HikariPool-2 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@17/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17/java.lang.Thread.run(Thread.java:833)
+2024-01-03T17:19:59.390+07:00  INFO 11500 --- [Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-03T17:19:59.391+07:00  INFO 11500 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2024-01-03T17:19:59.409+07:00  INFO 11500 --- [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2024-01-03T17:19:59.526+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : Starting BeApplication using Java 17 with PID 11500 (C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE\target\classes started by Kira.Intern in C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE)
+2024-01-03T17:19:59.526+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-01-03T17:19:59.938+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-03T17:19:59.939+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-01-03T17:19:59.958+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IExamRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:19:59.959+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IPartRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:19:59.961+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IQuestionRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:19:59.963+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IRoleRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:19:59.965+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.ITopicRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:19:59.966+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAccountLogRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:19:59.968+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAccountRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:19:59.970+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAnswerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:19:59.972+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserExamHistoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:19:59.974+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:19:59.974+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 35 ms. Found 0 JDBC repository interfaces.
+2024-01-03T17:19:59.978+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-03T17:19:59.978+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-03T17:20:00.026+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 47 ms. Found 10 JPA repository interfaces.
+2024-01-03T17:20:00.198+07:00  INFO 11500 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-01-03T17:20:00.199+07:00  INFO 11500 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-03T17:20:00.199+07:00  INFO 11500 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2024-01-03T17:20:00.284+07:00  INFO 11500 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2024-01-03T17:20:00.284+07:00  INFO 11500 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 754 ms
+2024-01-03T17:20:00.338+07:00  INFO 11500 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-03T17:20:00.351+07:00  INFO 11500 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-03T17:20:00.353+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+2024-01-03T17:20:00.381+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6b15fe6d
+2024-01-03T17:20:00.381+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+2024-01-03T17:20:00.383+07:00  WARN 11500 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-01-03T17:20:00.600+07:00  INFO 11500 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-01-03T17:20:00.733+07:00  INFO 11500 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-03T17:20:01.156+07:00  INFO 11500 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1b205e5f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@41056502, org.springframework.security.web.context.SecurityContextHolderFilter@1e958bf5, org.springframework.security.web.header.HeaderWriterFilter@742705fe, org.springframework.web.filter.CorsFilter@413e6908, org.springframework.security.web.authentication.logout.LogoutFilter@5fc0a7ee, com.app.toeic.jwt.JwtAuthenticationFilter@2f5f6f4f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2cddeba8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@60191338, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2b44c6f6, org.springframework.security.web.session.SessionManagementFilter@5b2ac0d4, org.springframework.security.web.access.ExceptionTranslationFilter@736a996, org.springframework.security.web.access.intercept.AuthorizationFilter@342bc76e]
+2024-01-03T17:20:01.374+07:00  INFO 11500 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-03T17:20:01.390+07:00  INFO 11500 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2024-01-03T17:20:01.395+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : Started BeApplication in 1.915 seconds (process running for 423.7)
+2024-01-03T17:20:01.397+07:00  INFO 11500 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-01-03T17:24:35.500+07:00  INFO 11500 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 2 class path changes (0 additions, 2 deletions, 0 modifications)
+2024-01-03T17:24:35.514+07:00  INFO 11500 --- [Thread-11] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-01-03T17:24:35.518+07:00  WARN 11500 --- [Thread-11] o.a.c.loader.WebappClassLoaderBase       : The web application [api] appears to have started a thread named [HikariPool-3 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@17/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17/java.lang.Thread.run(Thread.java:833)
+2024-01-03T17:24:35.523+07:00  INFO 11500 --- [Thread-11] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-03T17:24:35.524+07:00  INFO 11500 --- [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown initiated...
+2024-01-03T17:24:35.539+07:00  INFO 11500 --- [Thread-11] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Shutdown completed.
+2024-01-03T17:24:35.908+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : Starting BeApplication using Java 17 with PID 11500 (C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE\target\classes started by Kira.Intern in C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE)
+2024-01-03T17:24:35.910+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-01-03T17:24:36.344+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-03T17:24:36.344+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-01-03T17:24:36.362+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IExamRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:36.364+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IPartRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:36.366+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IQuestionRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:36.368+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IRoleRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:36.370+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.ITopicRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:36.372+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAccountLogRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:36.374+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAccountRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:36.376+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAnswerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:36.379+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserExamHistoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:36.381+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:36.381+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 36 ms. Found 0 JDBC repository interfaces.
+2024-01-03T17:24:36.385+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-03T17:24:36.386+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-03T17:24:36.435+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 49 ms. Found 10 JPA repository interfaces.
+2024-01-03T17:24:36.656+07:00  INFO 11500 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-01-03T17:24:36.657+07:00  INFO 11500 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-03T17:24:36.657+07:00  INFO 11500 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2024-01-03T17:24:36.743+07:00  INFO 11500 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2024-01-03T17:24:36.744+07:00  INFO 11500 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 827 ms
+2024-01-03T17:24:36.805+07:00  INFO 11500 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-03T17:24:36.820+07:00  INFO 11500 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-03T17:24:36.822+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Starting...
+2024-01-03T17:24:36.856+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-4 - Added connection com.mysql.cj.jdbc.ConnectionImpl@47c048e4
+2024-01-03T17:24:36.857+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Start completed.
+2024-01-03T17:24:36.859+07:00  WARN 11500 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-01-03T17:24:37.121+07:00  INFO 11500 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-01-03T17:24:37.382+07:00  INFO 11500 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-03T17:24:37.894+07:00  INFO 11500 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3e8e2169, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@534d3469, org.springframework.security.web.context.SecurityContextHolderFilter@3263c12f, org.springframework.security.web.header.HeaderWriterFilter@73816eac, org.springframework.web.filter.CorsFilter@b452dc2, org.springframework.security.web.authentication.logout.LogoutFilter@5f5b68ef, com.app.toeic.jwt.JwtAuthenticationFilter@13f6142, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@34cb1a03, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4c47e638, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4fc10452, org.springframework.security.web.session.SessionManagementFilter@3f4d8676, org.springframework.security.web.access.ExceptionTranslationFilter@31f6eb13, org.springframework.security.web.access.intercept.AuthorizationFilter@47806810]
+2024-01-03T17:24:38.223+07:00  INFO 11500 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-03T17:24:38.242+07:00  INFO 11500 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2024-01-03T17:24:38.248+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : Started BeApplication in 2.585 seconds (process running for 700.549)
+2024-01-03T17:24:38.250+07:00  INFO 11500 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-01-03T17:24:41.203+07:00  INFO 11500 --- [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2024-01-03T17:24:41.213+07:00  INFO 11500 --- [Thread-15] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2024-01-03T17:24:41.216+07:00  WARN 11500 --- [Thread-15] o.a.c.loader.WebappClassLoaderBase       : The web application [api] appears to have started a thread named [HikariPool-4 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@17/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17/java.lang.Thread.run(Thread.java:833)
+2024-01-03T17:24:41.216+07:00  WARN 11500 --- [Thread-15] o.a.c.loader.WebappClassLoaderBase       : The web application [api] appears to have started a thread named [HikariPool-4 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17/java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:460)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1061)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17/java.lang.Thread.run(Thread.java:833)
+2024-01-03T17:24:41.219+07:00  INFO 11500 --- [Thread-15] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-01-03T17:24:41.220+07:00  INFO 11500 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown initiated...
+2024-01-03T17:24:41.235+07:00  INFO 11500 --- [Thread-15] com.zaxxer.hikari.HikariDataSource       : HikariPool-4 - Shutdown completed.
+2024-01-03T17:24:41.347+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : Starting BeApplication using Java 17 with PID 11500 (C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE\target\classes started by Kira.Intern in C:\Users\Kira.Intern\Hao\TLCN\TLCN-BE)
+2024-01-03T17:24:41.348+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-01-03T17:24:41.727+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-03T17:24:41.728+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+2024-01-03T17:24:41.746+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IExamRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:41.748+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IPartRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:41.750+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IQuestionRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:41.752+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IRoleRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:41.753+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.ITopicRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:41.755+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAccountLogRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:41.757+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAccountRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:41.759+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserAnswerRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:41.761+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserExamHistoryRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:41.762+07:00  INFO 11500 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.app.toeic.repository.IUserPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+2024-01-03T17:24:41.762+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 34 ms. Found 0 JDBC repository interfaces.
+2024-01-03T17:24:41.766+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-01-03T17:24:41.766+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-01-03T17:24:41.812+07:00  INFO 11500 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 45 ms. Found 10 JPA repository interfaces.
+2024-01-03T17:24:42.036+07:00  INFO 11500 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2024-01-03T17:24:42.036+07:00  INFO 11500 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-01-03T17:24:42.037+07:00  INFO 11500 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2024-01-03T17:24:42.124+07:00  INFO 11500 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2024-01-03T17:24:42.124+07:00  INFO 11500 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 773 ms
+2024-01-03T17:24:42.190+07:00  INFO 11500 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-01-03T17:24:42.204+07:00  INFO 11500 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-01-03T17:24:42.206+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Starting...
+2024-01-03T17:24:42.238+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-5 - Added connection com.mysql.cj.jdbc.ConnectionImpl@59b39e02
+2024-01-03T17:24:42.239+07:00  INFO 11500 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-5 - Start completed.
+2024-01-03T17:24:42.242+07:00  WARN 11500 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-01-03T17:24:42.492+07:00  INFO 11500 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-01-03T17:24:42.674+07:00  INFO 11500 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-01-03T17:24:43.122+07:00  INFO 11500 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3064f500, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5995a0a7, org.springframework.security.web.context.SecurityContextHolderFilter@132cacbb, org.springframework.security.web.header.HeaderWriterFilter@71020373, org.springframework.web.filter.CorsFilter@281c67b3, org.springframework.security.web.authentication.logout.LogoutFilter@73435b70, com.app.toeic.jwt.JwtAuthenticationFilter@2def62fa, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@47f40183, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@268c9b95, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@85fac22, org.springframework.security.web.session.SessionManagementFilter@584daee, org.springframework.security.web.access.ExceptionTranslationFilter@6e97436e, org.springframework.security.web.access.intercept.AuthorizationFilter@564ed5bf]
+2024-01-03T17:24:43.363+07:00  INFO 11500 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-01-03T17:24:43.379+07:00  INFO 11500 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2024-01-03T17:24:43.383+07:00  INFO 11500 --- [restartedMain] com.app.toeic.BeApplication              : Started BeApplication in 2.074 seconds (process running for 705.684)
+2024-01-03T17:24:43.385+07:00  INFO 11500 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged

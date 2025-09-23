@@ -61,6 +61,9 @@ public class ExamRestController {
         var examHasFullQuestionAnswer = examService.findExamFullQuestionWithAnswer(finishExamDto.getExamId()).orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
         var userExamHistory = UserExamHistory
                 .builder()
+                .isDone(finishExamDto.getIsDone())
+                .isFullTest(finishExamDto.getIsFullTest())
+                .listPart(finishExamDto.getListPart())
                 .timeToDoExam(finishExamDto.getTotalTime())
                 .timeRemaining(finishExamDto.getTimeRemaining())
                 .totalQuestion(finishExamDto.getTotalQuestion())
