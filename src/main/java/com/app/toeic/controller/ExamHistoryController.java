@@ -43,11 +43,11 @@ public class ExamHistoryController {
                 .build();
     }
 
-    @GetMapping("/my-detail/{examId}")
-    public ResponseVO findByUserIdAndExamId(HttpServletRequest request, @PathVariable("examId") String examId) {
+    @GetMapping("/my-detail/{userExamHistoryId}")
+    public ResponseVO findByUserIdAndExamId(HttpServletRequest request, @PathVariable("userExamHistoryId") String userExamHistoryId) {
         var profile = userService.getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
-        var examHistory = userExamHistoryService.findUserExamHistoryByUserIdAndExamId(profile, Integer.parseInt(examId));
+        var examHistory = userExamHistoryService.findUserExamHistoryByUserIdAndExamId(profile, Integer.parseInt(userExamHistoryId));
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
