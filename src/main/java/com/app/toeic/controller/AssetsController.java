@@ -9,9 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import io.ipinfo.api.IPinfo;
-import io.ipinfo.api.errors.RateLimitedException;
-import io.ipinfo.api.model.IPResponse;
 
 import java.io.IOException;
 
@@ -25,15 +22,7 @@ public class AssetsController {
 
     @GetMapping("/test")
     public ResponseVO test(HttpServletRequest request) {
-        var ipInfo = new IPinfo.Builder().setToken(IP_TOKEN).build();
-        var ipAddress = ServerHelper.getClientIpAddr(request);
-        System.out.println(ipAddress);
-        try {
-            var response = ipInfo.lookupIP(ipAddress);
-            return new ResponseVO(Boolean.TRUE, response, "Get assets successfully");
-        } catch (RateLimitedException e) {
-            throw new RuntimeException(e);
-        }
+        return new ResponseVO(Boolean.TRUE, null, "Get assets successfully");
     }
 
     @PostMapping("/upload-file")
