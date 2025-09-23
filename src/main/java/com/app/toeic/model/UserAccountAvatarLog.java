@@ -1,32 +1,30 @@
 package com.app.toeic.model;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_account_log")
+@Table(name = "user_account_avatar_log")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserAccountLog implements Serializable {
+public class UserAccountAvatarLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userAccountLogId;
+    private Long userAccountAvatarLogId;
 
     @Lob
-    @Column(name = "old_data", length = 1000)
-    private String oldData;
+    @Column(name = "old_avatar_data", length = 1000)
+    private String oldAvatarData;
 
     @Lob
-    @Column(name = "new_data", length = 1000)
-    private String newData;
+    @Column(name = "new_avatar_data", length = 1000)
+    private String newAvatarData;
 
     private String country;
     private String action;

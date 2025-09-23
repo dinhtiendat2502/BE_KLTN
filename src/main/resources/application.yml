@@ -46,3 +46,5 @@ firebase:
   project-id: "${FIREBASE_PROJECT_ID:toeicute-70460}"
   token-key: "${FIREBASE_TOKEN_KEY:toeicute-upload}"
   bucket-name: "${FIREBASE_BUCKET_NAME:toeicute-70460.appspot.com}"
+ipinfo:
+  token: "${IPINFO_TOKEN:b1324b9ae149de}"

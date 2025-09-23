@@ -9,33 +9,32 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_account_log")
+@Table(name = "user_account_password_log")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserAccountLog implements Serializable {
+@NoArgsConstructor
+public class UserAccountPasswordLog implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userAccountLogId;
-
-    @Lob
-    @Column(name = "old_data", length = 1000)
-    private String oldData;
-
-    @Lob
-    @Column(name = "new_data", length = 1000)
-    private String newData;
-
-    private String country;
-    private String action;
-    private String lastUpdatedBy;
-    private String lastIpAddress;
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private UserAccount userAccount;
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserAccount user;
+
+    @Column(nullable = false)
+    private String oldPassword;
+
+    @Column(nullable = false)
+    private String newPassword;
+
+    private String action;
+    private String country;
+    private String lastUpdatedBy;
+    private String lastIpAddress;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

@@ -7,6 +7,7 @@ import com.app.toeic.exception.AppException;
 import com.app.toeic.response.ResponseVO;
 import com.app.toeic.service.EmailService;
 import com.app.toeic.service.FirebaseStorageService;
+import com.app.toeic.service.UserPasswordLogService;
 import com.app.toeic.service.UserService;
 import com.app.toeic.util.HttpStatus;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ public class UserRestController {
     private final UserService userService;
     private final EmailService emailService;
     private final FirebaseStorageService firebaseStorageService;
+    private final UserPasswordLogService userPasswordLogService;
 
     private static final String NOT_FOUNT_USER = "Không tìm thấy thông tin người dùng";
 
