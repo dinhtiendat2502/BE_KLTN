@@ -48,3 +48,5 @@ firebase:
   bucket-name: "${FIREBASE_BUCKET_NAME:toeicute-70460.appspot.com}"
 ipinfo:
   token: "${IPINFO_TOKEN:b1324b9ae149de}"
+
+BOT_AI_URL: "${API_AI:https://llamastudio.dev/api/cls40w5460001l2087o43vxsy}"

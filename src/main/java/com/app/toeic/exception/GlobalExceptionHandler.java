@@ -2,7 +2,6 @@ package com.app.toeic.exception;
 
 import com.app.toeic.response.ResponseVO;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -11,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -58,8 +58,8 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
-    @ExceptionHandler(FileSizeLimitExceededException.class)
-    public ResponseVO handleFileSizeLimitExceededException(FileSizeLimitExceededException e) {
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseVO handleFileSizeLimitExceededException(MaxUploadSizeExceededException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleFileSizeLimitExceededException: {}", e.getMessage());
         return ResponseVO
                 .builder()
@@ -124,8 +124,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InternalAuthenticationServiceException.class)
     public ResponseVO handleInternalAuthenticationServiceException(InternalAuthenticationServiceException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleInternalAuthenticationServiceException: {}",
-                  e.getMessage()
+        log.error(
+                "Exception >> GlobalExceptionHandler >> handleInternalAuthenticationServiceException: {}",
+                e.getMessage()
         );
         return ResponseVO
                 .builder()

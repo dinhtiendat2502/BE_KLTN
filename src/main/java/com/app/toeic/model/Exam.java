@@ -31,6 +31,9 @@ public class Exam implements Serializable {
     private Integer examId;
     private String examName;
     private String examImage;
+    
+    @Column(columnDefinition = "TEXT")
+    private String examAudio;
     @Column(columnDefinition = "TEXT")
     private String audioPart1;
     @Column(columnDefinition = "TEXT")

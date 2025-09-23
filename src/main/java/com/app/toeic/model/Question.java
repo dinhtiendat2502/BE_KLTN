@@ -3,15 +3,17 @@ package com.app.toeic.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Table;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "question")
@@ -41,6 +43,9 @@ public class Question implements Serializable {
     private String answerD;
     private String correctAnswer;
 
+    private String transcript;
+    private String transcriptAudio;
+
     @JsonIgnore
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -55,4 +60,10 @@ public class Question implements Serializable {
     @org.hibernate.annotations.Index(name = "part_id_index")
     @JsonBackReference
     private Part part;
+
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @org.hibernate.annotations.IndexColumn(name = "question_image_index")
+    @JsonManagedReference
+    private Set<QuestionImage> questionImages = new HashSet<>();
 }

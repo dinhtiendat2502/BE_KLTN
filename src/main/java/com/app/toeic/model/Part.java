@@ -54,7 +54,6 @@ public class Part {
 
     @OneToMany(mappedBy = "part", cascade = CascadeType.ALL)
     @JsonManagedReference
-    @JsonIgnore
     @OrderBy("questionNumber ASC")
     private Set<Question> questions = new HashSet<>();
 }
