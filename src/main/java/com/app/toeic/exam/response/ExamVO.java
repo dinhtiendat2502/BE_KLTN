@@ -57,6 +57,26 @@ public class ExamVO implements Serializable {
         String getAudioPart4();
 
         String getStatus();
+
+        Set<PartResponse> getParts();
+
+        interface PartResponse {
+            Integer getPartId();
+
+            String getPartName();
+
+            String getPartCode();
+
+            String getPartImage();
+
+            String getPartAudio();
+
+            String getPartContent();
+
+            int getNumberOfQuestion();
+
+            String getStatus();
+        }
     }
 
     public interface ExamFullQuestion {

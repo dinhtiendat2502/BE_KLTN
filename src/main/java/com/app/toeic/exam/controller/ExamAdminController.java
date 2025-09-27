@@ -35,6 +35,8 @@ public class ExamAdminController {
                 .audioPart3(examDto.getAudioPart3())
                 .audioPart4(examDto.getAudioPart4())
                 .examImage(examDto.getExamImage())
+                .numberOfUserDoExam(0)
+                .price(0.0)
                 .status("ACTIVE")
                 .topic(examDto.getTopicId() != null ? topicService
                         .findById(examDto.getTopicId())
@@ -65,7 +67,7 @@ public class ExamAdminController {
     @GetMapping("/find-by-id")
     public ResponseVO findById(@RequestParam Integer examId) {
         var exam = examService
-                .findExamWithPart(examId)
+                .findExamByExamId(examId)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
 
         return ResponseVO
