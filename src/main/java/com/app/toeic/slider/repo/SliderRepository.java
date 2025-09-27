@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -14,4 +15,7 @@ public interface SliderRepository extends JpaRepository<Slider, Long> {
 
     @Query("SELECT s FROM Slider s ORDER BY s.position DESC LIMIT 1")
     Optional<Slider> findLastByPosition();
+
+    @Query("SELECT s FROM Slider s WHERE s.position > ?1 ORDER BY s.position")
+    List<Slider> findAllByPositionGreaterThanOrderByPosition(Integer position);
 }
