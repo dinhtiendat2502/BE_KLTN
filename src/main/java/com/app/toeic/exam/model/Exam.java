@@ -3,6 +3,7 @@ package com.app.toeic.exam.model;
 
 import com.app.toeic.part.model.Part;
 import com.app.toeic.topic.model.Topic;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -62,7 +63,7 @@ public class Exam implements Serializable {
     private Topic topic;
 
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference
     @OrderBy("partId ASC")
     private Set<Part> parts = new HashSet<>();
 }

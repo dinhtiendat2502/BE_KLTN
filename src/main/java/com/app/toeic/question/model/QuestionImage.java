@@ -21,6 +21,5 @@ public class QuestionImage {
     @ManyToOne
     @JoinColumn(name = "question_id")
     @org.hibernate.annotations.Index(name = "question_id_index")
-    @JsonBackReference
     private Question question;
 }
