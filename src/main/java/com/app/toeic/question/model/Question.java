@@ -59,13 +59,12 @@ public class Question implements Serializable {
     @JoinColumn(name = "part_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @org.hibernate.annotations.Index(name = "part_id_index")
-    @JsonBackReference
     private Part part;
 
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @org.hibernate.annotations.IndexColumn(name = "question_image_index")
-    @JsonManagedReference
+    @JsonBackReference
     @Builder.Default
     private Set<QuestionImage> questionImages = new HashSet<>();
 }

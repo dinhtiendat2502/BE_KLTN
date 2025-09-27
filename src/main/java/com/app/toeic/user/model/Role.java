@@ -2,6 +2,7 @@ package com.app.toeic.user.model;
 
 
 import com.app.toeic.user.enums.ERole;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,6 +26,7 @@ public class Role implements Serializable {
 
     @ManyToMany(mappedBy = "roles")
     @JsonIgnore
+    @JsonBackReference
     private Set<UserAccount> users;
 
     public Role(ERole roleName) {

@@ -51,11 +51,10 @@ public class Part {
     @JoinColumn(name = "exam_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @org.hibernate.annotations.Index(name = "exam_id_index")
-    @JsonBackReference
     private Exam exam;
 
     @OneToMany(mappedBy = "part", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference
     @OrderBy("questionNumber ASC")
     private Set<Question> questions = new HashSet<>();
 }
