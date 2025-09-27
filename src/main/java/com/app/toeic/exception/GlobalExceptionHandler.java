@@ -1,8 +1,7 @@
 package com.app.toeic.exception;
 
-import com.app.toeic.response.ResponseVO;
+import com.app.toeic.external.response.ResponseVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -45,16 +44,6 @@ public class GlobalExceptionHandler {
                 .builder()
                 .success(Boolean.FALSE)
                 .message(errorMessages)
-                .build();
-    }
-
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseVO handleResourceNotFoundException(ResourceNotFoundException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleResourceNotFoundException: {}", e.getMessage());
-        return ResponseVO
-                .builder()
-                .success(Boolean.FALSE)
-                .message("Không tìm thấy tài nguyên")
                 .build();
     }
 

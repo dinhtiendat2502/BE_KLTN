@@ -1,8 +1,7 @@
 package com.app.toeic.config;
 
 
-import com.app.toeic.service.impl.CustomerUserDetailsService;
-import lombok.RequiredArgsConstructor;
+import com.app.toeic.user.service.impl.CustomerUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,9 +12,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@RequiredArgsConstructor
 public class ApplicationConfig {
     private final CustomerUserDetailsService customerUserDetailsService;
+
+    public ApplicationConfig(CustomerUserDetailsService customerUserDetailsService) {
+        this.customerUserDetailsService = customerUserDetailsService;
+    }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
