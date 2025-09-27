@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @Builder
-public class TopicDTO implements Serializable {
+public class TopicDto implements Serializable {
     Integer topicId;
     String topicName;
     String topicImage;

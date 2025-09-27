@@ -30,7 +30,7 @@ public class CrawlServiceImpl implements CrawlService {
                                         .getElementsByTag("a")
                                         .remove();
                             });
-                    question.transcriptAudio(firstSibling
+                    question.transcript(firstSibling
                                                      .getElementsByClass("context-transcript")
                                                      .html());
                     var answerList = element.getElementsByClass("form-check-label");

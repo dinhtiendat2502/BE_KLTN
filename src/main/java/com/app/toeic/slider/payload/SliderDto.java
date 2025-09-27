@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SliderDTO {
+public class SliderDto {
     Long id;
     String image;
     Integer position;

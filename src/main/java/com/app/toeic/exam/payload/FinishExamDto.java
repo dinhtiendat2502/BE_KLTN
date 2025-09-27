@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class FinishExamDTO {
+public class FinishExamDto {
     Integer examId;
     List<Answer> answers;
     Integer totalTime;

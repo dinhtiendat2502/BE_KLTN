@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class LoginSocialDTO {
+public class LoginSocialDto {
     @NotEmpty(message = "Email không được bỏ trống")
     @Email(message = "Email không hợp lệ")
     String email;

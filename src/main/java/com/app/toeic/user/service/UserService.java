@@ -8,20 +8,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 public interface UserService {
-    ResponseVO authenticate(LoginDTO loginDto);
+    ResponseVO authenticate(LoginDto loginDto);
 
-    ResponseVO register(RegisterDTO registerDto);
+    ResponseVO register(RegisterDto registerDto);
 
     ResponseVO getAllUser();
 
-    ResponseVO updateUser(UserDTO user);
+    ResponseVO updateUser(UserDto user);
 
 
     UserAccount findByEmail(String email);
 
     ResponseVO updatePassword(String email, String newPassword);
 
-    Object updatePassword(UserUpdatePasswordDTO userUpdateDto, UserAccount user);
+    Object updatePassword(UserUpdatePasswordDto userUpdateDto, UserAccount user);
 
     ResponseVO updateAvatar(UserAccount userAccount);
 
@@ -35,7 +35,7 @@ public interface UserService {
 
     Object updateProfile(UserAccount profile);
 
-    Object loginSocial(LoginSocialDTO loginSocialDto);
+    Object loginSocial(LoginSocialDto loginSocialDto);
 
     Object isAdminLogin(HttpServletRequest request);
 }

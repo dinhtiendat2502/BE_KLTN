@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RegisterDTO implements Serializable {
+public class RegisterDto implements Serializable {
     @NotEmpty(message = "Email không được bỏ trống")
     @Email(message = "Email không hợp lệ")
     String email;

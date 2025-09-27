@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginDTO implements Serializable {
+public class LoginDto implements Serializable {
     @NotEmpty(message = "Email không được bỏ trống")
     String email;
 

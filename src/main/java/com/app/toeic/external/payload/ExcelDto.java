@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ExcelDTO {
+public class ExcelDto {
     Integer partId;
 
 }
