@@ -1,7 +1,7 @@
 package com.app.toeic.slider.controller;
 
 import com.app.toeic.slider.model.Slider;
-import com.app.toeic.slider.payload.SliderDto;
+import com.app.toeic.slider.payload.SliderDTO;
 import com.app.toeic.slider.repo.SliderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +25,7 @@ public class SliderController {
     }
 
     @PostMapping("/add")
-    public Object addSlider(@RequestBody SliderDto slider) {
+    public Object addSlider(@RequestBody SliderDTO slider) {
         var lastSlider = sliderRepository
                 .findLastByPosition();
         var position = 1;

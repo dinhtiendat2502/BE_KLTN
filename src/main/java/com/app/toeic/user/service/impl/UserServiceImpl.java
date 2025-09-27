@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     private final EmailServiceImpl emailService;
 
     @Override
-    public ResponseVO authenticate(LoginDto loginDto) {
+    public ResponseVO authenticate(LoginDTO loginDto) {
         var v1 = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
         Authentication authentication = authenticationManager.authenticate(v1);
         SecurityContextHolder
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseVO register(RegisterDto registerDto) {
+    public ResponseVO register(RegisterDTO registerDto) {
         if (Boolean.TRUE.equals(iUserRepository.existsByEmail(registerDto.getEmail()))) {
             throw new AppException(HttpStatus.SEE_OTHER, "Email đã được đăng ký!");
         }
@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseVO updateUser(UserDto user) {
+    public ResponseVO updateUser(UserDTO user) {
         var u = iUserRepository
                 .findById(user.getId())
                 .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "User not found"));
@@ -161,7 +161,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object updatePassword(UserUpdatePasswordDto userUpdateDto, UserAccount user) {
+    public Object updatePassword(UserUpdatePasswordDTO userUpdateDto, UserAccount user) {
         if (!passwordEncoder.matches(userUpdateDto.getCurrentPassword(), user.getPassword())) {
             throw new AppException(HttpStatus.SEE_OTHER, "Mật khẩu hiện tại không đúng!");
         }
@@ -230,7 +230,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object loginSocial(LoginSocialDto loginSocialDto) {
+    public Object loginSocial(LoginSocialDTO loginSocialDto) {
         var user = iUserRepository.findByEmail(loginSocialDto.getEmail());
         List<String> tokens = new ArrayList<>();
         user.ifPresentOrElse(u -> {

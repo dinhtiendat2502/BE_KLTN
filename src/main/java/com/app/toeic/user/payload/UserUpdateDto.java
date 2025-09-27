@@ -2,7 +2,6 @@ package com.app.toeic.user.payload;
 
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,7 +9,7 @@ import java.io.Serializable;
 
 @Data
 @Builder
-public class UserUpdateDto implements Serializable {
+public class UserUpdateDTO implements Serializable {
     @NotEmpty(message = "Tên không được bỏ trống")
     String fullName;
 

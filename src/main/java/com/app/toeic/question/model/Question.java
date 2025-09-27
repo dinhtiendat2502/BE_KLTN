@@ -43,9 +43,12 @@ public class Question implements Serializable {
     private String answerC;
     private String answerD;
     private String correctAnswer;
+    private Boolean questionHaveTranscript;
 
+    @Column(columnDefinition = "TEXT")
     private String transcript;
-    private String transcriptAudio;
+    @Column(columnDefinition = "TEXT")
+    private String translateTranscript;
 
     @JsonIgnore
     @CreationTimestamp

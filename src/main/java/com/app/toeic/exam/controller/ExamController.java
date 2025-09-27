@@ -1,7 +1,7 @@
 package com.app.toeic.exam.controller;
 
 
-import com.app.toeic.exam.payload.FinishExamDto;
+import com.app.toeic.exam.payload.FinishExamDTO;
 import com.app.toeic.part.payload.ListPartDto;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.exam.model.Exam;
@@ -73,7 +73,7 @@ public class ExamController {
     }
 
     @PostMapping("/finish-exam")
-    public ResponseVO finishExam(HttpServletRequest request, @RequestBody FinishExamDto finishExamDto) {
+    public ResponseVO finishExam(HttpServletRequest request, @RequestBody FinishExamDTO finishExamDto) {
         var user = userService
                 .getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));

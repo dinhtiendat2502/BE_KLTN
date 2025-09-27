@@ -1,7 +1,7 @@
 package com.app.toeic.user.controller;
 
 
-import com.app.toeic.external.payload.EmailDto;
+import com.app.toeic.external.payload.EmailDTO;
 import com.app.toeic.user.enums.EUser;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.external.response.ResponseVO;
@@ -30,12 +30,12 @@ public class UserController {
     private static final String NOT_FOUNT_USER = "Không tìm thấy thông tin người dùng";
 
     @PostMapping("/register")
-    public ResponseVO register(@Valid @RequestBody RegisterDto registerDto) {
+    public ResponseVO register(@Valid @RequestBody RegisterDTO registerDto) {
         return userService.register(registerDto);
     }
 
     @PostMapping("/login-social")
-    public ResponseVO loginSocial(@Valid @RequestBody LoginSocialDto loginSocialDto) {
+    public ResponseVO loginSocial(@Valid @RequestBody LoginSocialDTO loginSocialDto) {
         var token = userService.loginSocial(loginSocialDto);
         return ResponseVO
                 .builder()
@@ -46,18 +46,18 @@ public class UserController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseVO authenticate(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseVO authenticate(@Valid @RequestBody LoginDTO loginDto) {
         return userService.authenticate(loginDto);
     }
 
     @PostMapping("/send-email")
-    public ResponseVO sendEmail(@Valid @RequestBody EmailDto emailDto) {
+    public ResponseVO sendEmail(@Valid @RequestBody EmailDTO emailDto) {
         return emailService.sendEmail(emailDto, "email-template");
     }
 
     @PatchMapping("/update-password")
     public ResponseVO updatePassword(
-            @Valid @RequestBody UserUpdatePasswordDto userUpdatePasswordDto,
+            @Valid @RequestBody UserUpdatePasswordDTO userUpdatePasswordDto,
             HttpServletRequest request
     ) {
         var profile = userService
@@ -116,7 +116,7 @@ public class UserController {
 
     @PostMapping("/update-avatar")
     public ResponseVO updateAvatar(
-            @Valid @RequestBody UserUpdateAvatarDto updateAvatarDto,
+            @Valid @RequestBody UserUpdateAvatarDTO updateAvatarDto,
             HttpServletRequest request
     ) {
         var profile = userService

@@ -1,7 +1,7 @@
 package com.app.toeic.exam.controller;
 
 
-import com.app.toeic.exam.payload.ExamDto;
+import com.app.toeic.exam.payload.ExamDTO;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.topic.repo.ITopicRepository;
@@ -26,7 +26,7 @@ public class ExamAdminController {
 
 
     @PostMapping("/create-exam")
-    public ResponseVO createExam(@Valid @RequestBody ExamDto examDto) {
+    public ResponseVO createExam(@Valid @RequestBody ExamDTO examDto) {
         var exam = Exam
                 .builder()
                 .examName(examDto.getExamName())
@@ -46,7 +46,7 @@ public class ExamAdminController {
     }
 
     @PatchMapping("/update-exam")
-    public ResponseVO updateExam(@Valid @RequestBody ExamDto examDto) {
+    public ResponseVO updateExam(@Valid @RequestBody ExamDTO examDto) {
         var exam = examService
                 .findById(examDto.getExamId())
                 .orElse(null);

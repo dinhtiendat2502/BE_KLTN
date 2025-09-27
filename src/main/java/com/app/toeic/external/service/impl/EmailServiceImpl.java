@@ -1,10 +1,10 @@
 package com.app.toeic.external.service.impl;
 
 
-import com.app.toeic.external.payload.EmailDto;
+import com.app.toeic.external.payload.EmailDTO;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.external.service.EmailService;
-import com.app.toeic.user.payload.LoginSocialDto;
+import com.app.toeic.user.payload.LoginSocialDTO;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.util.HttpStatus;
 import jakarta.mail.MessagingException;
@@ -36,7 +36,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public ResponseVO sendEmail(EmailDto emailDto, String templateName) {
+    public ResponseVO sendEmail(EmailDTO emailDto, String templateName) {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
         var otpCode = this.generateOTP();
@@ -56,7 +56,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public Object sendEmailAccount(LoginSocialDto loginSocialDto, String password, String templateName) {
+    public Object sendEmailAccount(LoginSocialDTO loginSocialDto, String password, String templateName) {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
         var otpCode = this.generateOTP();

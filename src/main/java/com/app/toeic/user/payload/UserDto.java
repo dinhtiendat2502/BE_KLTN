@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserDto {
+public class UserDTO {
     Integer id;
     EUser status;
 }

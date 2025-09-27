@@ -5,7 +5,7 @@ import com.app.toeic.question.model.Question;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.external.service.ExcelService;
 import com.app.toeic.part.service.PartService;
-import com.app.toeic.question.payload.QuestionDto;
+import com.app.toeic.question.payload.QuestionDTO;
 import com.app.toeic.question.service.QuestionService;
 import com.app.toeic.util.ExcelHelper;
 import lombok.RequiredArgsConstructor;
@@ -94,7 +94,7 @@ public class QuestionController {
     }
 
     @PatchMapping("/update-question")
-    public ResponseVO updateResponseVO(@RequestBody QuestionDto questionDto) {
+    public ResponseVO updateResponseVO(@RequestBody QuestionDTO questionDto) {
         var question = questionService.findById(questionDto.getQuestionId());
         if (StringUtils.isNotBlank(questionDto.getQuestionContent()))
             question.setQuestionContent(questionDto.getQuestionContent());
