@@ -1346,3 +1346,155 @@ Caused by: org.hibernate.TransientPropertyValueException: object references an u
 2024-04-03T16:45:50.414+07:00  INFO 23256 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-04-03T16:45:50.416+07:00  INFO 23256 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2024-04-03T16:45:50.437+07:00  INFO 23256 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-04-03T16:45:52.535+07:00  INFO 22716 --- [main] com.app.toeic.BeApplication              : Starting BeApplication using Java 21.0.2 with PID 22716 (D:\workspace\TLCN-BE\target\classes started by Kira.Pham in D:\workspace\TLCN-BE)
+2024-04-03T16:45:52.538+07:00  INFO 22716 --- [main] com.app.toeic.BeApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-04-03T16:45:53.772+07:00  INFO 22716 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-03T16:45:53.881+07:00  INFO 22716 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 100 ms. Found 13 JPA repository interfaces.
+2024-04-03T16:45:54.642+07:00  WARN 22716 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2024-04-03T16:45:54.663+07:00  INFO 22716 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2024-04-03T16:45:54.663+07:00  INFO 22716 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2084 ms
+2024-04-03T16:45:54.926+07:00  INFO 22716 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-03T16:45:54.979+07:00  INFO 22716 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-04-03T16:45:55.016+07:00  INFO 22716 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-04-03T16:45:55.256+07:00  INFO 22716 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-04-03T16:45:55.283+07:00  INFO 22716 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-04-03T16:45:55.643+07:00  INFO 22716 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3c271988
+2024-04-03T16:45:55.645+07:00  INFO 22716 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-04-03T16:45:55.694+07:00  WARN 22716 --- [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-04-03T16:45:57.110+07:00  INFO 22716 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-04-03T16:45:57.263+07:00  INFO 22716 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-03T16:45:57.754+07:00  INFO 22716 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-04-03T16:45:59.174+07:00  INFO 22716 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-04-03T16:45:59.265+07:00  INFO 22716 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5e0fbfb6, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1eea09a4, org.springframework.security.web.context.SecurityContextHolderFilter@197cf24e, org.springframework.security.web.header.HeaderWriterFilter@15cd990c, org.springframework.web.filter.CorsFilter@769e025c, org.springframework.security.web.authentication.logout.LogoutFilter@12619285, com.app.toeic.jwt.JwtAuthenticationFilter@5f0c04d2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@236ec69, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@633c9699, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@53279691, org.springframework.security.web.session.SessionManagementFilter@3c79c7fa, org.springframework.security.web.access.ExceptionTranslationFilter@30427a3f, org.springframework.security.web.access.intercept.AuthorizationFilter@b625b00]
+2024-04-03T16:46:00.054+07:00  INFO 22716 --- [main] io.undertow                              : starting server: Undertow - 2.3.12.Final
+2024-04-03T16:46:00.065+07:00  INFO 22716 --- [main] org.xnio                                 : XNIO version 3.8.8.Final
+2024-04-03T16:46:00.076+07:00  INFO 22716 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.8.8.Final
+2024-04-03T16:46:00.122+07:00  INFO 22716 --- [main] org.jboss.threads                        : JBoss Threads version 3.5.0.Final
+2024-04-03T16:46:00.220+07:00  INFO 22716 --- [main] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port 8080 (http) with context path '/api'
+2024-04-03T16:46:00.231+07:00  INFO 22716 --- [main] com.app.toeic.BeApplication              : Started BeApplication in 8.133 seconds (process running for 8.791)
+2024-04-03T16:46:00.767+07:00  INFO 22716 --- [RMI TCP Connection(1)-192.168.10.122] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-04-03T16:46:00.768+07:00  INFO 22716 --- [RMI TCP Connection(1)-192.168.10.122] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-04-03T16:46:00.772+07:00  INFO 22716 --- [RMI TCP Connection(1)-192.168.10.122] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2024-04-03T16:53:00.257+07:00  INFO 22716 --- [SpringApplicationShutdownHook] io.undertow                              : stopping server: Undertow - 2.3.12.Final
+2024-04-03T16:53:00.264+07:00  INFO 22716 --- [SpringApplicationShutdownHook] io.undertow.servlet                      : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2024-04-03T16:53:00.272+07:00  INFO 22716 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-03T16:53:00.276+07:00  INFO 22716 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-04-03T16:53:00.300+07:00  INFO 22716 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-04-03T17:46:58.557+07:00  INFO 19716 --- [main] com.app.toeic.BeApplication              : Starting BeApplication using Java 21.0.2 with PID 19716 (D:\workspace\TLCN-BE\target\classes started by Kira.Pham in D:\workspace\TLCN-BE)
+2024-04-03T17:46:58.559+07:00  INFO 19716 --- [main] com.app.toeic.BeApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-04-03T17:46:59.588+07:00  INFO 19716 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-03T17:46:59.674+07:00  INFO 19716 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 78 ms. Found 14 JPA repository interfaces.
+2024-04-03T17:47:00.310+07:00  WARN 19716 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2024-04-03T17:47:00.325+07:00  INFO 19716 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2024-04-03T17:47:00.325+07:00  INFO 19716 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1716 ms
+2024-04-03T17:47:00.554+07:00  INFO 19716 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-03T17:47:00.598+07:00  INFO 19716 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-04-03T17:47:00.628+07:00  INFO 19716 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-04-03T17:47:00.827+07:00  INFO 19716 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-04-03T17:47:00.860+07:00  INFO 19716 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-04-03T17:47:01.161+07:00  INFO 19716 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6c4786af
+2024-04-03T17:47:01.181+07:00  INFO 19716 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-04-03T17:47:01.230+07:00  WARN 19716 --- [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-04-03T17:47:02.475+07:00  INFO 19716 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-04-03T17:47:02.745+07:00  INFO 19716 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-03T17:47:03.543+07:00  INFO 19716 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-04-03T17:47:05.403+07:00  WARN 19716 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'firebaseController' defined in file [D:\workspace\TLCN-BE\target\classes\com\app\toeic\firebase\controller\FirebaseController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'firebaseRepository' defined in com.app.toeic.firebase.repo.FirebaseRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Not a managed type: interface com.app.toeic.firebase.repo.FirebaseRepository
+2024-04-03T17:47:05.403+07:00  INFO 19716 --- [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-03T17:47:05.405+07:00  INFO 19716 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-04-03T17:47:05.417+07:00  INFO 19716 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-04-03T17:47:05.424+07:00  INFO 19716 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-04-03T17:47:05.435+07:00 ERROR 19716 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'firebaseController' defined in file [D:\workspace\TLCN-BE\target\classes\com\app\toeic\firebase\controller\FirebaseController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'firebaseRepository' defined in com.app.toeic.firebase.repo.FirebaseRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Not a managed type: interface com.app.toeic.firebase.repo.FirebaseRepository
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:795) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:237) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1355) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1192) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:562) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:975) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:962) ~[spring-context-6.1.5.jar:6.1.5]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:624) ~[spring-context-6.1.5.jar:6.1.5]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:754) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:456) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:334) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-3.2.4.jar:3.2.4]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1343) ~[spring-boot-3.2.4.jar:3.2.4]
+	at com.app.toeic.BeApplication.main(BeApplication.java:12) ~[classes/:na]
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'firebaseRepository' defined in com.app.toeic.firebase.repo.FirebaseRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Not a managed type: interface com.app.toeic.firebase.repo.FirebaseRepository
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1786) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:522) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:326) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:324) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:200) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1443) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1353) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:904) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:782) ~[spring-beans-6.1.5.jar:6.1.5]
+	... 19 common frames omitted
+Caused by: java.lang.IllegalArgumentException: Not a managed type: interface com.app.toeic.firebase.repo.FirebaseRepository
+	at org.hibernate.metamodel.model.domain.internal.JpaMetamodelImpl.managedType(JpaMetamodelImpl.java:193) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
+	at org.hibernate.metamodel.model.domain.internal.MappingMetamodelImpl.managedType(MappingMetamodelImpl.java:468) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
+	at org.hibernate.metamodel.model.domain.internal.MappingMetamodelImpl.managedType(MappingMetamodelImpl.java:98) ~[hibernate-core-6.4.4.Final.jar:6.4.4.Final]
+	at org.springframework.data.jpa.repository.support.JpaMetamodelEntityInformation.<init>(JpaMetamodelEntityInformation.java:82) ~[spring-data-jpa-3.2.4.jar:3.2.4]
+	at org.springframework.data.jpa.repository.support.JpaEntityInformationSupport.getEntityInformation(JpaEntityInformationSupport.java:69) ~[spring-data-jpa-3.2.4.jar:3.2.4]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactory.getEntityInformation(JpaRepositoryFactory.java:246) ~[spring-data-jpa-3.2.4.jar:3.2.4]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactory.getTargetRepository(JpaRepositoryFactory.java:211) ~[spring-data-jpa-3.2.4.jar:3.2.4]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactory.getTargetRepository(JpaRepositoryFactory.java:194) ~[spring-data-jpa-3.2.4.jar:3.2.4]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactory.getTargetRepository(JpaRepositoryFactory.java:1) ~[spring-data-jpa-3.2.4.jar:3.2.4]
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport.getRepository(RepositoryFactorySupport.java:317) ~[spring-data-commons-3.2.4.jar:3.2.4]
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.lambda$afterPropertiesSet$5(RepositoryFactoryBeanSupport.java:279) ~[spring-data-commons-3.2.4.jar:3.2.4]
+	at org.springframework.data.util.Lazy.getNullable(Lazy.java:135) ~[spring-data-commons-3.2.4.jar:3.2.4]
+	at org.springframework.data.util.Lazy.get(Lazy.java:113) ~[spring-data-commons-3.2.4.jar:3.2.4]
+	at org.springframework.data.repository.core.support.RepositoryFactoryBeanSupport.afterPropertiesSet(RepositoryFactoryBeanSupport.java:285) ~[spring-data-commons-3.2.4.jar:3.2.4]
+	at org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean.afterPropertiesSet(JpaRepositoryFactoryBean.java:132) ~[spring-data-jpa-3.2.4.jar:3.2.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1833) ~[spring-beans-6.1.5.jar:6.1.5]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782) ~[spring-beans-6.1.5.jar:6.1.5]
+	... 30 common frames omitted
+
+2024-04-03T17:48:21.553+07:00  INFO 27728 --- [main] com.app.toeic.BeApplication              : Starting BeApplication using Java 21.0.2 with PID 27728 (D:\workspace\TLCN-BE\target\classes started by Kira.Pham in D:\workspace\TLCN-BE)
+2024-04-03T17:48:21.555+07:00  INFO 27728 --- [main] com.app.toeic.BeApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-04-03T17:48:22.229+07:00  INFO 27728 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-03T17:48:22.296+07:00  INFO 27728 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 62 ms. Found 14 JPA repository interfaces.
+2024-04-03T17:48:22.860+07:00  WARN 27728 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2024-04-03T17:48:22.877+07:00  INFO 27728 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2024-04-03T17:48:22.877+07:00  INFO 27728 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1292 ms
+2024-04-03T17:48:23.116+07:00  INFO 27728 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-03T17:48:23.160+07:00  INFO 27728 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-04-03T17:48:23.189+07:00  INFO 27728 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-04-03T17:48:23.408+07:00  INFO 27728 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-04-03T17:48:23.435+07:00  INFO 27728 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-04-03T17:48:23.842+07:00  INFO 27728 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@49de1505
+2024-04-03T17:48:23.844+07:00  INFO 27728 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-04-03T17:48:23.893+07:00  WARN 27728 --- [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-04-03T17:48:25.384+07:00  INFO 27728 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-04-03T17:48:25.552+07:00  INFO 27728 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-03T17:48:26.084+07:00  INFO 27728 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-04-03T17:48:27.516+07:00  INFO 27728 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-04-03T17:48:27.578+07:00  INFO 27728 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@18115fdf, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@52ed0d8e, org.springframework.security.web.context.SecurityContextHolderFilter@7acb4a51, org.springframework.security.web.header.HeaderWriterFilter@5521f423, org.springframework.web.filter.CorsFilter@23184551, org.springframework.security.web.authentication.logout.LogoutFilter@47bdfc41, com.app.toeic.jwt.JwtAuthenticationFilter@7e544223, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@51512c6c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@75bbaef2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@482f1b64, org.springframework.security.web.session.SessionManagementFilter@3c6d6cb3, org.springframework.security.web.access.ExceptionTranslationFilter@4c57b0e7, org.springframework.security.web.access.intercept.AuthorizationFilter@7aeb3664]
+2024-04-03T17:48:28.033+07:00  INFO 27728 --- [main] io.undertow                              : starting server: Undertow - 2.3.12.Final
+2024-04-03T17:48:28.040+07:00  INFO 27728 --- [main] org.xnio                                 : XNIO version 3.8.8.Final
+2024-04-03T17:48:28.047+07:00  INFO 27728 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.8.8.Final
+2024-04-03T17:48:28.078+07:00  INFO 27728 --- [main] org.jboss.threads                        : JBoss Threads version 3.5.0.Final
+2024-04-03T17:48:28.146+07:00  INFO 27728 --- [main] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port 8080 (http) with context path '/api'
+2024-04-03T17:48:28.155+07:00  INFO 27728 --- [main] com.app.toeic.BeApplication              : Started BeApplication in 6.915 seconds (process running for 7.412)
+2024-04-03T17:48:28.484+07:00  INFO 27728 --- [RMI TCP Connection(2)-192.168.10.122] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-04-03T17:48:28.484+07:00  INFO 27728 --- [RMI TCP Connection(2)-192.168.10.122] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-04-03T17:48:28.486+07:00  INFO 27728 --- [RMI TCP Connection(2)-192.168.10.122] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-04-03T17:48:42.080+07:00  INFO 27728 --- [XNIO-1 task-2] com.app.toeic.jwt.JwtTokenProvider       : Expired JWT token.
+2024-04-03T17:49:21.559+07:00  INFO 27728 --- [XNIO-1 task-2] com.app.toeic.jwt.JwtTokenProvider       : Expired JWT token.
+2024-04-03T17:50:06.420+07:00  INFO 27728 --- [SpringApplicationShutdownHook] io.undertow                              : stopping server: Undertow - 2.3.12.Final
+2024-04-03T17:50:06.422+07:00  INFO 27728 --- [SpringApplicationShutdownHook] io.undertow.servlet                      : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2024-04-03T17:50:06.426+07:00  INFO 27728 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-03T17:50:06.427+07:00  INFO 27728 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-04-03T17:50:06.441+07:00  INFO 27728 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

@@ -30,7 +30,7 @@ public interface IExamRepository extends JpaRepository<Exam, Integer> {
     @Query("SELECT e FROM Exam e JOIN fetch e.parts WHERE e.examId = ?1")
     Optional<ExamVO.ExamList> findExamByExamId(Integer examId);
 
-    @Query("SELECT e FROM Exam e JOIN FETCH e.parts p JOIN FETCH p.questions q WHERE e.examId = ?1 ORDER BY p.partId ASC, q.questionId ASC")
+    @Query("SELECT e FROM Exam e JOIN FETCH e.parts p JOIN FETCH p.questions q WHERE e.examId = ?1 ORDER BY p.partCode ASC, q.questionNumber ASC")
     Optional<ExamVO.ExamFullQuestion> findExamWithFullQuestion(Integer examId);
 
     @Query("SELECT e FROM Exam e JOIN FETCH e.parts p JOIN FETCH p.questions q WHERE e.examId = ?1 ORDER BY p.partId ASC, q.questionId ASC")

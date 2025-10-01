@@ -6,11 +6,8 @@ import com.app.toeic.crawl.model.JobCrawl;
 import com.app.toeic.crawl.payload.CrawlDTO;
 import com.app.toeic.crawl.repo.CrawlConfigRepository;
 import com.app.toeic.crawl.repo.JobCrawlRepository;
-import com.app.toeic.crawl.response.ExamResponse;
-import com.app.toeic.crawl.response.PartResponse;
 import com.app.toeic.crawl.service.CrawlService;
 import com.app.toeic.exam.model.Exam;
-import com.app.toeic.part.model.Part;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.collections4.CollectionUtils;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
-import java.util.*;
 import java.util.regex.Pattern;
 
 @RestController
@@ -37,6 +33,13 @@ public class CrawlController {
         String url = "http://localhost:8080/api/admin/crawl/get-data";
         var body = CrawlDTO.builder().url("https://study4.com/tests/4692/results/13263452/details/").build();
         return restTemplate.postForObject(url, body, Object.class);
+    }
+
+    @PostMapping("is-crawl")
+    public Object isCrawl(@RequestBody CrawlDTO crawl) {
+        String pattern = "(https://study4\\.com/tests/\\d+/results).*";
+        String desiredUrl = crawl.getUrl().replaceAll(pattern, "$1");
+        return "OK";
     }
 
     @PostMapping("get-data")

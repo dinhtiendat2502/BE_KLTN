@@ -17,6 +17,8 @@ public class CrawlConfig {
 
     @Column(columnDefinition = "TEXT")
     private String token;
+
+    @Column(unique = true)
     private String email;
 
     @Builder.Default
