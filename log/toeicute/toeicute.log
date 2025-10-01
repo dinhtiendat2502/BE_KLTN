@@ -1528,3 +1528,8 @@ Caused by: java.lang.IllegalArgumentException: Not a managed type: interface com
 2024-04-03T17:50:16.859+07:00  INFO 12020 --- [RMI TCP Connection(2)-192.168.10.122] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
 2024-04-03T17:50:16.862+07:00  INFO 12020 --- [RMI TCP Connection(2)-192.168.10.122] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
 2024-04-03T17:50:18.079+07:00  INFO 12020 --- [XNIO-1 task-2] com.app.toeic.jwt.JwtTokenProvider       : Expired JWT token.
+2024-04-03T17:59:51.271+07:00  INFO 12020 --- [SpringApplicationShutdownHook] io.undertow                              : stopping server: Undertow - 2.3.12.Final
+2024-04-03T17:59:51.274+07:00  INFO 12020 --- [SpringApplicationShutdownHook] io.undertow.servlet                      : Destroying Spring FrameworkServlet 'dispatcherServlet'
+2024-04-03T17:59:51.277+07:00  INFO 12020 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-04-03T17:59:51.279+07:00  INFO 12020 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-04-03T17:59:51.291+07:00  INFO 12020 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
