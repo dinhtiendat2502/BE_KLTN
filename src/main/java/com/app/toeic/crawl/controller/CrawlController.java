@@ -47,9 +47,8 @@ public class CrawlController {
             return "URL_NOT_MATCH";
         }
         var connection = Jsoup.connect(crawl.getUrl());
-        var config = crawlConfigRepository.findById(1).orElse(CrawlConfig.builder().token(
-                "csrftoken=taoxMpbf7FKoFHoZGyNqfdoKcwD0elEJgIKsrel28Pc7cEKWiO5XB9Tc8Lw4r0ge; sessionid=11wlkenrvfpsrris51vl9aqbixlvcvfq; cf_clearance=.UxZwpQCxxLgA3nOPuc8.XCIZ3pXEIYNPBVDEK1r_r8-1711956447-1.0.1.1-MTG7UGOio0vwN9itKBMXt3e8nMGDHKmXBgnQfft.DVHqFqok0rtyy.QQ9imW79wiElSwe8jX0eKt8vHd9HyijQ").agentUser(
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36").build());
+        var config = crawlConfigRepository.findByEmail(crawl.getEmail()).orElse(CrawlConfig.builder().token(
+                "csrftoken=taoxMpbf7FKoFHoZGyNqfdoKcwD0elEJgIKsrel28Pc7cEKWiO5XB9Tc8Lw4r0ge; sessionid=11wlkenrvfpsrris51vl9aqbixlvcvfq; cf_clearance=.UxZwpQCxxLgA3nOPuc8.XCIZ3pXEIYNPBVDEK1r_r8-1711956447-1.0.1.1-MTG7UGOio0vwN9itKBMXt3e8nMGDHKmXBgnQfft.DVHqFqok0rtyy.QQ9imW79wiElSwe8jX0eKt8vHd9HyijQ").build());
         connection.header("Cookie", config.getToken());
         var doc = connection
                 .userAgent(config.getAgentUser())
@@ -70,7 +69,7 @@ public class CrawlController {
             exam.examAudio(audio.child(0).absUrl("src"));
         }
         var listPart = new ArrayList<PartResponse>();
-        for (int i = totalPart; i > 0; i--) {
+        for (int i = 1; i <= totalPart; i++) {
             var part = PartResponse.builder().partCode("PART" + i).partName("Part " + i);
             switch (i) {
                 case 1 -> {

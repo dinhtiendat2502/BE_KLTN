@@ -17,5 +17,8 @@ public class CrawlConfig {
 
     @Column(columnDefinition = "TEXT")
     private String token;
-    private String agentUser;
+    private String email;
+
+    @Builder.Default
+    private String agentUser = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
 }

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CrawlDTO {
     String url;
+    String email;
     String providerCode;
     String agent = "";
 }

@@ -301,51 +301,49 @@ public class CrawlServiceImpl implements CrawlService {
         for (int i = 1; i <= totalElement; i++) {
             questionList.add(QuestionResponse.builder().build());
         }
+        var index = 0;
         var questionTwoCols = element.getElementsByClass("question-twocols");
-        for (int i = 0; i < questionTwoCols.size(); i++) {
-            var questionGroup = questionTwoCols.get(i);
+        for (Element questionGroup : questionTwoCols) {
             var listQuestion = questionGroup.getElementsByClass("question-wrapper");
             var lisTranscript = questionGroup.getElementsByClass("question-explanation-wrapper");
             var listImage = questionGroup.getElementsByTag("img");
-
-            int totalQuestionInGroup = listQuestion.size();
-            var indexStart = i * totalQuestionInGroup;
-            questionList.get(indexStart).setHaveMultiImage(true);
+            var indexQuestion = 0;
+            questionList.get(index).setHaveMultiImage(true);
             for (Element value : listImage) {
-                questionList.get(indexStart).getQuestionImages().add(value.absUrl("src"));
+                questionList.get(index).getQuestionImages().add(value.absUrl("src"));
             }
-            questionList.get(indexStart).setQuestionHaveTranscript(true);
+            questionList.get(index).setQuestionHaveTranscript(true);
             var transcript = questionGroup.getElementsByClass("context-transcript").getFirst();
-            questionList.get(indexStart).setTranscript(transcript.getElementsByClass("collapse").removeAttr("id").html());
+            questionList.get(index).setTranscript(transcript.getElementsByClass("collapse").removeAttr("id").html());
 
-            for (int j = 0; j < listQuestion.size(); j++) {
-                var questionContent = listQuestion.get(j);
+            for (Element questionContent : listQuestion) {
                 var questionNumber = questionContent.getElementsByTag("strong").getFirst().text();
-                questionList.get(indexStart + j).setQuestionNumber(questionNumber);
-                questionList.get(indexStart + j).setQuestionContent(questionContent.getElementsByClass("question-text").getFirst().text());
+                questionList.get(index).setQuestionNumber(questionNumber);
+                questionList.get(index).setQuestionContent(questionContent.getElementsByClass("question-text").getFirst().text());
                 var listAnswer = questionContent.getElementsByClass("form-check-label");
-                questionList.get(indexStart + j).setAnswerA(listAnswer.getFirst().text());
-                questionList.get(indexStart + j).setAnswerB(listAnswer.get(1).text());
-                questionList.get(indexStart + j).setAnswerC(listAnswer.get(2).text());
-                questionList.get(indexStart + j).setAnswerD(listAnswer.get(3).text());
+                questionList.get(index).setAnswerA(listAnswer.getFirst().text());
+                questionList.get(index).setAnswerB(listAnswer.get(1).text());
+                questionList.get(index).setAnswerC(listAnswer.get(2).text());
+                questionList.get(index).setAnswerD(listAnswer.get(3).text());
 
                 var correctAnswer = listAnswer.stream().filter(aws -> aws.hasClass("correct")).findFirst();
                 if (correctAnswer.isPresent()) {
-                    questionList.get(indexStart + j).setCorrectAnswer(correctAnswer.get().val());
+                    questionList.get(index).setCorrectAnswer(correctAnswer.get().val());
                 } else {
                     var otherCorrectAnswerElement = questionContent.getElementsByClass("text-success").getFirst();
                     if (otherCorrectAnswerElement != null) {
-                        questionList.get(indexStart + j).setCorrectAnswer(otherCorrectAnswerElement.text().replace(
+                        questionList.get(index).setCorrectAnswer(otherCorrectAnswerElement.text().replace(
                                 "Đáp án đúng:",
                                 ""
                         ));
                     } else {
-                        questionList.get(indexStart + j).setCorrectAnswer("A");
+                        questionList.get(index).setCorrectAnswer("A");
                     }
                 }
-                var questionExplain = lisTranscript.get(indexStart + j);
-                questionList.get(indexStart + j).setTranslateTranscript(questionExplain.getElementsByClass("collapse").getFirst().removeAttr(
+                var questionExplain = lisTranscript.get(indexQuestion);
+                questionList.get(index).setTranslateTranscript(questionExplain.getElementsByClass("collapse").getFirst().removeAttr(
                         "id").html());
+                index++;
             }
         }
         return questionList;
