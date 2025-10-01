@@ -44,8 +44,14 @@ public class Exam implements Serializable {
     private String audioPart3;
     @Column(columnDefinition = "TEXT")
     private String audioPart4;
+
+    @Builder.Default
     private String status = "ACTIVE";
+
+    @Builder.Default
     private Integer numberOfUserDoExam = 0;
+
+    @Builder.Default
     private Double price = 0.0;
 
     @JsonIgnore

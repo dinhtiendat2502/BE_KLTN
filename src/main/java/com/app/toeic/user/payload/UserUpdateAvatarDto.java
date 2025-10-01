@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Data
 @Builder
-public class UserUpdateAvatarDto implements Serializable {
+public class UserUpdateAvatarDTO implements Serializable {
     @NotEmpty(message = "Ảnh đại diện không được để trống")
     String avatar;
     Integer userId;

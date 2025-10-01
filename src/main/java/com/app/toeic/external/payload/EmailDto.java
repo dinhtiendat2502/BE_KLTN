@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailDto {
+public class EmailDTO {
     @Email(message = "Địa chỉ email không hợp lệ")
     String to;
 }

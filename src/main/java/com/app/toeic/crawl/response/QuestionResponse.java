@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @Builder
@@ -23,5 +26,10 @@ public class QuestionResponse {
 
     private String transcript;
     private String translateTranscript;
-    private Boolean questionHaveTranscript;
+    @Builder.Default
+    private Boolean questionHaveTranscript = false;
+    @Builder.Default
+    private Boolean haveMultiImage = false;
+    @Builder.Default
+    private List<String> questionImages = new ArrayList<>();
 }

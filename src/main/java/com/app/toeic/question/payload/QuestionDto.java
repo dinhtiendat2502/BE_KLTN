@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class QuestionDto implements Serializable {
+public class QuestionDTO implements Serializable {
     private Integer questionId;
     private String questionContent;
     private String paragraph1;

@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Data
 @Builder
-public class UserUpdateDto implements Serializable {
+public class UserUpdateDTO implements Serializable {
     @NotEmpty(message = "Tên không được bỏ trống")
     String fullName;
 

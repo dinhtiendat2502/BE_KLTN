@@ -48,7 +48,9 @@ public class UserExamHistory implements Serializable {
     private Integer totalScoreListening;
     private Integer timeToDoExam;       // calculate by second
     private Integer timeRemaining;      // calculate by second
+    @Builder.Default
     private Boolean isDone = false;
+    @Builder.Default
     private Boolean isFullTest = false;
     private String listPart;
 

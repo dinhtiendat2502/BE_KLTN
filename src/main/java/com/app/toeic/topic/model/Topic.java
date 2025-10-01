@@ -29,7 +29,9 @@ public class Topic implements Serializable {
 
     private String topicName;
     private String topicImage;
+    @Builder.Default
     private String status = "ACTIVE";
+    @Builder.Default
     private Boolean isFree = true;
 
     @JsonIgnore

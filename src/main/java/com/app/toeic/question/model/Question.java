@@ -43,7 +43,12 @@ public class Question implements Serializable {
     private String answerC;
     private String answerD;
     private String correctAnswer;
-    private Boolean questionHaveTranscript;
+
+    @Builder.Default
+    private Boolean questionHaveTranscript = false;
+
+    @Builder.Default
+    private Boolean haveMultiImage = false;
 
     @Column(columnDefinition = "TEXT")
     private String transcript;

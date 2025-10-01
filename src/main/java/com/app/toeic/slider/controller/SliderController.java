@@ -3,7 +3,7 @@ package com.app.toeic.slider.controller;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.external.service.FirebaseStorageService;
 import com.app.toeic.slider.model.Slider;
-import com.app.toeic.slider.payload.SliderDto;
+import com.app.toeic.slider.payload.SliderDTO;
 import com.app.toeic.slider.repo.SliderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;

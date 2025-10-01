@@ -1,7 +1,7 @@
 package com.app.toeic.topic.controller;
 
 
-import com.app.toeic.topic.payload.TopicDto;
+import com.app.toeic.topic.payload.TopicDTO;
 import com.app.toeic.topic.model.Topic;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.topic.service.TopicService;
@@ -20,7 +20,7 @@ public class TopicAdminController {
     }
 
     @PostMapping("/create-topic")
-    public ResponseVO createTopic(@RequestBody TopicDto topic) {
+    public ResponseVO createTopic(@RequestBody TopicDTO topic) {
         var newTopic = Topic
                 .builder()
                 .topicName(topic.getTopicName())

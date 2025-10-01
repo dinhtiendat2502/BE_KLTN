@@ -70,7 +70,7 @@ public class CrawlController {
             exam.examAudio(audio.child(0).absUrl("src"));
         }
         var listPart = new ArrayList<PartResponse>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = totalPart; i > 0; i--) {
             var part = PartResponse.builder().partCode("PART" + i).partName("Part " + i);
             switch (i) {
                 case 1 -> {

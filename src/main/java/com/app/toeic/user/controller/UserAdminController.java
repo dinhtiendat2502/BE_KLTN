@@ -1,7 +1,7 @@
 package com.app.toeic.user.controller;
 
 
-import com.app.toeic.user.payload.UserDto;
+import com.app.toeic.user.payload.UserDTO;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class UserAdminController {
     }
 
     @PostMapping("/update-user")
-    public ResponseVO updateUser(@RequestBody UserDto user) {
+    public ResponseVO updateUser(@RequestBody UserDTO user) {
         return userService.updateUser(user);
     }
 }
