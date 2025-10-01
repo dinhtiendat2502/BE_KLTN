@@ -21,6 +21,7 @@ public class JobCrawl {
     private Long id;
 
     private String jobName;
+    private String examName;
     private String jobLink;
     @Column(length = 50)
     private String jobStatus;

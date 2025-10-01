@@ -134,11 +134,6 @@
             <artifactId>openpdf</artifactId>
             <version>1.4.2</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.apache.commons</groupId>-->
-<!--            <artifactId>commons-text</artifactId>-->
-<!--            <version>1.11.0</version>-->
-<!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -153,6 +148,15 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>21</source>
+                    <target>21</target>
+                    <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>
         </plugins>

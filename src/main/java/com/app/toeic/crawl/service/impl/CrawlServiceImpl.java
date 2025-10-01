@@ -160,10 +160,12 @@ public class CrawlServiceImpl implements CrawlService {
         var questionGroupWrapper = element1.getElementsByClass("question-group-wrapper");
         for (int i = 0; i < questionGroupWrapper.size(); i++) {
             var transcript = questionGroupWrapper.get(i).getElementsByClass("context-transcript").getFirst();
+            var questionImage = questionGroupWrapper.get(i).getElementsByTag("img").getFirst().absUrl("src");
             transcript.getElementsByTag("a").remove();
             var numberQuestionInGroup = 3;
             var indexStart = i * numberQuestionInGroup;
             questionList.get(indexStart).setTranscript(transcript.html());
+            questionList.get(indexStart).setQuestionImage(questionImage);
             for (int j = 0; j < numberQuestionInGroup; j++) {
                 var hasTranscript = (indexStart + j) == indexStart;
                 questionList.get(indexStart + j).setQuestionHaveTranscript(hasTranscript);
