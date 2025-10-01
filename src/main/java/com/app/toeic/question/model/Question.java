@@ -4,7 +4,6 @@ package com.app.toeic.question.model;
 import com.app.toeic.part.model.Part;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Table;
@@ -65,12 +64,11 @@ public class Question implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "part_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @org.hibernate.annotations.Index(name = "part_id_index")
     private Part part;
 
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     @org.hibernate.annotations.IndexColumn(name = "question_image_index")
     @JsonBackReference
     @Builder.Default

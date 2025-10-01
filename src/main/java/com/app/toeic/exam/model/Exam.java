@@ -5,7 +5,6 @@ import com.app.toeic.part.model.Part;
 import com.app.toeic.topic.model.Topic;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -65,11 +64,11 @@ public class Exam implements Serializable {
     @ManyToOne
     @JoinColumn(name = "topic_id")
     @Index(name = "topic_id_index")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Topic topic;
 
-    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     @OrderBy("partId ASC")
+    @Builder.Default
     private Set<Part> parts = new HashSet<>();
 }

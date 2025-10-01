@@ -5,7 +5,6 @@ import com.app.toeic.exam.model.Exam;
 import com.app.toeic.question.model.Question;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -49,12 +48,12 @@ public class Part {
 
     @ManyToOne
     @JoinColumn(name = "exam_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @org.hibernate.annotations.Index(name = "exam_id_index")
     private Exam exam;
 
-    @OneToMany(mappedBy = "part", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     @OrderBy("questionNumber ASC")
+    @Builder.Default
     private Set<Question> questions = new HashSet<>();
 }

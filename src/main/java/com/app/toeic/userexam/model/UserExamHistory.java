@@ -5,7 +5,6 @@ import com.app.toeic.exam.model.Exam;
 import com.app.toeic.user.model.UserAccount;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -73,5 +72,6 @@ public class UserExamHistory implements Serializable {
     @OneToMany(mappedBy = "userExamHistory", cascade = CascadeType.ALL)
     @JsonBackReference
     @OrderBy("userAnswerId ASC")
+    @Builder.Default
     private Set<UserAnswer> userAnswers = new HashSet<>();
 }

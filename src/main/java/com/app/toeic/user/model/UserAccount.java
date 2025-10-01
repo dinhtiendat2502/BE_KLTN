@@ -41,6 +41,7 @@ public class UserAccount implements Serializable, UserDetails {
     @Column(length = 1000)
     private String avatar;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     private EUser status = EUser.ACTIVE;
     private String provider;
@@ -57,10 +58,12 @@ public class UserAccount implements Serializable, UserDetails {
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
+    @Builder.Default
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference
+    @Builder.Default
     private Set<UserExamHistory> userExamHistories = new HashSet<>();
 
 

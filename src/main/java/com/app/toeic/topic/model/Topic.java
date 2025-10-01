@@ -42,7 +42,8 @@ public class Topic implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "topic")
     @JsonBackReference
+    @Builder.Default
     private Set<Exam> exams = new HashSet<>();
 }
