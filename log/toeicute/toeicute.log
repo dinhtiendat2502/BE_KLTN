@@ -1498,3 +1498,33 @@ Caused by: java.lang.IllegalArgumentException: Not a managed type: interface com
 2024-04-03T17:50:06.426+07:00  INFO 27728 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-04-03T17:50:06.427+07:00  INFO 27728 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2024-04-03T17:50:06.441+07:00  INFO 27728 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-04-03T17:50:09.354+07:00  INFO 12020 --- [main] com.app.toeic.BeApplication              : Starting BeApplication using Java 21.0.2 with PID 12020 (D:\workspace\TLCN-BE\target\classes started by Kira.Pham in D:\workspace\TLCN-BE)
+2024-04-03T17:50:09.355+07:00  INFO 12020 --- [main] com.app.toeic.BeApplication              : No active profile set, falling back to 1 default profile: "default"
+2024-04-03T17:50:10.058+07:00  INFO 12020 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-04-03T17:50:10.136+07:00  INFO 12020 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 73 ms. Found 14 JPA repository interfaces.
+2024-04-03T17:50:10.698+07:00  WARN 12020 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2024-04-03T17:50:10.711+07:00  INFO 12020 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2024-04-03T17:50:10.712+07:00  INFO 12020 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1326 ms
+2024-04-03T17:50:10.903+07:00  INFO 12020 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-04-03T17:50:10.935+07:00  INFO 12020 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-04-03T17:50:10.968+07:00  INFO 12020 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-04-03T17:50:11.124+07:00  INFO 12020 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-04-03T17:50:11.142+07:00  INFO 12020 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-04-03T17:50:11.393+07:00  INFO 12020 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4850d66b
+2024-04-03T17:50:11.395+07:00  INFO 12020 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-04-03T17:50:11.434+07:00  WARN 12020 --- [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-04-03T17:50:13.542+07:00  INFO 12020 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-04-03T17:50:13.787+07:00  INFO 12020 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-04-03T17:50:14.326+07:00  INFO 12020 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-04-03T17:50:15.836+07:00  INFO 12020 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2024-04-03T17:50:15.906+07:00  INFO 12020 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@74f782a5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3f608bde, org.springframework.security.web.context.SecurityContextHolderFilter@351c4384, org.springframework.security.web.header.HeaderWriterFilter@6115b4a0, org.springframework.web.filter.CorsFilter@49c3f97e, org.springframework.security.web.authentication.logout.LogoutFilter@322733e, com.app.toeic.jwt.JwtAuthenticationFilter@12b0440b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@50f77755, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6bb500fa, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@36152513, org.springframework.security.web.session.SessionManagementFilter@248f1090, org.springframework.security.web.access.ExceptionTranslationFilter@555bb408, org.springframework.security.web.access.intercept.AuthorizationFilter@7852d8ed]
+2024-04-03T17:50:16.332+07:00  INFO 12020 --- [main] io.undertow                              : starting server: Undertow - 2.3.12.Final
+2024-04-03T17:50:16.339+07:00  INFO 12020 --- [main] org.xnio                                 : XNIO version 3.8.8.Final
+2024-04-03T17:50:16.346+07:00  INFO 12020 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.8.8.Final
+2024-04-03T17:50:16.375+07:00  INFO 12020 --- [main] org.jboss.threads                        : JBoss Threads version 3.5.0.Final
+2024-04-03T17:50:16.443+07:00  INFO 12020 --- [main] o.s.b.w.e.undertow.UndertowWebServer     : Undertow started on port 8080 (http) with context path '/api'
+2024-04-03T17:50:16.452+07:00  INFO 12020 --- [main] com.app.toeic.BeApplication              : Started BeApplication in 7.368 seconds (process running for 7.875)
+2024-04-03T17:50:16.859+07:00  INFO 12020 --- [RMI TCP Connection(2)-192.168.10.122] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-04-03T17:50:16.859+07:00  INFO 12020 --- [RMI TCP Connection(2)-192.168.10.122] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-04-03T17:50:16.862+07:00  INFO 12020 --- [RMI TCP Connection(2)-192.168.10.122] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-04-03T17:50:18.079+07:00  INFO 12020 --- [XNIO-1 task-2] com.app.toeic.jwt.JwtTokenProvider       : Expired JWT token.
