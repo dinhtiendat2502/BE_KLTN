@@ -17,7 +17,14 @@ public class FirebaseConfig {
     private Integer id;
     private String tokenKey;
     private String bucketName;
+
+    @Column(unique = true)
     private String projectId;
+
+    @Column(columnDefinition = "text")
     private String fileJson;
-    private String status;
+
+    @Column(columnDefinition = "varchar(255) default 'ACTIVE'")
+    @Builder.Default
+    private String status = "INACTIVE";
 }

@@ -32,7 +32,12 @@ public class SliderController {
     @PostMapping("/add")
     public Object addSlider(@RequestParam("file") MultipartFile file) throws
             IOException {
-        if (file == null) return "FAIL";
+        if (file == null) return ResponseVO
+                .builder()
+                .success(false)
+                .message("FAILT")
+                .data(null)
+                .build();
         var image = firebaseStorageService.uploadFile(file);
         var lastSlider = sliderRepository
                 .findLastByPosition();
@@ -65,11 +70,11 @@ public class SliderController {
                 .success(false)
                 .message("FAILT")
                 .data(null)
-                .build();;
+                .build();
         var position = slider.getPosition();
         sliderRepository.deleteById(sliderId);
         var list = sliderRepository.findAllByPositionGreaterThanOrderByPosition(position);
-        for(var s : list) {
+        for (var s : list) {
             s.setPosition(s.getPosition() - 1);
             sliderRepository.save(s);
         }

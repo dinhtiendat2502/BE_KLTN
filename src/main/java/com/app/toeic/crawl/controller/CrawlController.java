@@ -28,13 +28,43 @@ public class CrawlController {
     CrawlService crawlService;
     JobCrawlRepository jobCrawlRepository;
 
-    @PostMapping("add-config")
+    @GetMapping("all-config")
+    public Object getAllConfig() {
+        return crawlConfigRepository.findAll();
+    }
+
+    @PostMapping("update-config")
     public Object addConfig(@RequestBody CrawlConfigDTO config) {
-        crawlConfigRepository.save(CrawlConfig.builder().token(config.getToken()).email(config.getEmail()).build());
+        String[] msg = new String[1];
+        crawlConfigRepository
+                .findByEmail(config.getEmail())
+                .ifPresentOrElse(crawlConfig -> {
+                    crawlConfig.setToken(config.getToken());
+                    crawlConfigRepository.save(crawlConfig);
+                    msg[0] = "UPDATE_CONFIG_SUCCESS";
+                }, () -> {
+                    crawlConfigRepository
+                            .save(CrawlConfig
+                                    .builder()
+                                    .token(config.getToken())
+                                    .email(config.getEmail())
+                                    .build());
+                    msg[0] = "ADD_CONFIG_SUCCESS";
+                });
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .message("ADD_CONFIG_SUCCESS")
+                .message(msg[0])
+                .build();
+    }
+
+    @DeleteMapping("remove-config/{id}")
+    public Object removeConfig(@PathVariable Integer id) {
+        crawlConfigRepository.deleteById(id);
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .message("REMOVE_CONFIG_SUCCESS")
                 .build();
     }
 
