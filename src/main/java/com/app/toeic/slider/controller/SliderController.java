@@ -18,6 +18,7 @@ import java.util.Objects;
 public class SliderController {
     private final SliderRepository sliderRepository;
     private final FirebaseStorageService firebaseStorageService;
+
     @GetMapping("/all")
     public Object getAllSlider(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -83,18 +84,18 @@ public class SliderController {
                 .findById(sliderId)
                 .orElseThrow();
         Slider nextSlider;
+        var tempImg = slider.getImage();
         if (action.equals("up")) {
-            slider.setPosition(slider.getPosition() - 1);
             nextSlider = sliderRepository
-                    .findByPosition(slider.getPosition() - 1)
+                    .findByPosition(position - 1)
                     .orElseThrow();
         } else {
-            slider.setPosition(slider.getPosition() + 1);
             nextSlider = sliderRepository
-                    .findByPosition(slider.getPosition() + 1)
+                    .findByPosition(position + 1)
                     .orElseThrow();
         }
-        nextSlider.setPosition(position);
+        slider.setImage(nextSlider.getImage());
+        nextSlider.setImage(tempImg);
         sliderRepository.save(nextSlider);
         sliderRepository.save(slider);
         return "OK";

@@ -106,9 +106,9 @@ public class ExamController {
                 .totalScoreReading(0)
                 .totalScoreListening(0)
                 .exam(Exam
-                              .builder()
-                              .examId(examHasFullQuestionAnswer.getExamId())
-                              .build())
+                        .builder()
+                        .examId(examHasFullQuestionAnswer.getExamId())
+                        .build())
                 .user(user)
                 .build();
 
@@ -154,6 +154,7 @@ public class ExamController {
                         switch (partCode) {
                             case "PART1", "PART4", "PART2", "PART3" -> numberOfWrongListeningAnswer.incrementAndGet();
                             case "PART5", "PART6", "PART7" -> numberOfWrongReadingAnswer.incrementAndGet();
+                            default -> {break;}
                         }
                     } else {
                         numberOfCorrectAnswer.incrementAndGet();
@@ -185,6 +186,9 @@ public class ExamController {
                             case "PART7" -> {
                                 numberOfCorrectAnswerPart7.incrementAndGet();
                                 numberOfCorrectReadingAnswer.incrementAndGet();
+                            }
+                            default -> {
+                                break;
                             }
                         }
                     }

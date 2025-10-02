@@ -150,6 +150,7 @@ public class ExcelServiceImpl implements ExcelService {
                     case 6 -> question.setAnswerC(value);
                     case 7 -> question.setAnswerD(value);
                     case 10 -> question.setCorrectAnswer(value);
+                    default -> {break;}
                 }
             }
             questionList.add(question);
