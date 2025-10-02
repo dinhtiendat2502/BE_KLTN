@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class ListPartDto {
+public class ListPartDTO {
     Integer examId;
     String examName;
     List<String> listPart;

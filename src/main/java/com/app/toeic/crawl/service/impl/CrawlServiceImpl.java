@@ -39,7 +39,7 @@ public class CrawlServiceImpl implements CrawlService {
         }
         var listQuestionNumber = element1.getElementsByClass("question-number");
         for (int i = 0; i < listQuestionNumber.size(); i++) {
-            questionList.get(i).setQuestionNumber(listQuestionNumber.get(i).text());
+            questionList.get(i).setQuestionNumber(Integer.parseInt(listQuestionNumber.get(i).text()));
         }
         var listContextTranscript = element1.getElementsByClass("context-transcript");
         for (int i = 0; i < listContextTranscript.size(); i++) {
@@ -101,7 +101,7 @@ public class CrawlServiceImpl implements CrawlService {
                 questionList.get(indexStart + j).setQuestionHaveTranscript(hasTranscript);
                 var questionContent = questionGroupWrapper.get(i).getElementsByClass("question-wrapper").get(j);
                 var questionNumber = questionContent.getElementsByTag("strong").getFirst().text();
-                getAnswerQuestion(questionList, indexStart + j, questionNumber, questionContent);
+                getAnswerQuestion(questionList, indexStart + j, Integer.parseInt(questionNumber), questionContent);
             }
         }
         getTranscriptExplanation(element1, questionList);
@@ -118,7 +118,7 @@ public class CrawlServiceImpl implements CrawlService {
         for (int i = 0; i < questionWrapper.size(); i++) {
             var questionContent = questionWrapper.get(i);
             var questionNumber = questionContent.getElementsByTag("strong").getFirst().text();
-            getAnswerQuestion(questionList, i, questionNumber, questionContent);
+            getAnswerQuestion(questionList, i, Integer.parseInt(questionNumber), questionContent);
         }
         getTranscriptExplanation(element, questionList);
         return new HashSet<>(questionList);
@@ -127,7 +127,7 @@ public class CrawlServiceImpl implements CrawlService {
     private void getAnswerQuestion(
             ArrayList<Question> questionList,
             int i,
-            String questionNumber,
+            Integer questionNumber,
             Element questionContent
     ) {
         questionList.get(i).setQuestionNumber(questionNumber);
@@ -174,7 +174,7 @@ public class CrawlServiceImpl implements CrawlService {
             for (int j = 0; j < questionWrapper.size(); j++) {
                 var questionContent = questionWrapper.get(j);
                 var questionNumber = questionContent.getElementsByTag("strong").getFirst().text();
-                questionList.get(indexStart + j).setQuestionNumber(questionNumber);
+                questionList.get(indexStart + j).setQuestionNumber(Integer.parseInt(questionNumber));
                 var listAnswer = questionContent.getElementsByClass("form-check-label");
                 questionList.get(indexStart + j).setAnswerA(listAnswer.getFirst().text());
                 questionList.get(indexStart + j).setAnswerB(listAnswer.get(1).text());
@@ -229,7 +229,7 @@ public class CrawlServiceImpl implements CrawlService {
 
             for (Element questionContent : listQuestion) {
                 var questionNumber = questionContent.getElementsByTag("strong").getFirst().text();
-                getAnswerQuestion(questionList, index, questionNumber, questionContent);
+                getAnswerQuestion(questionList, index, Integer.parseInt(questionNumber), questionContent);
                 var questionExplain = lisTranscript.get(indexQuestion);
                 questionList.get(index).setTranslateTranscript(questionExplain.getElementsByClass("collapse").getFirst().removeAttr(
                         "id").html());

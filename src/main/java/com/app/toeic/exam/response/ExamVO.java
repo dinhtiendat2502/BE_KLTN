@@ -3,13 +3,12 @@ package com.app.toeic.exam.response;
 
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.Set;
 
 @Getter
 @Setter
 @Builder
-public class ExamVO implements Serializable {
+public class ExamVO {
 
     public interface ExamListAll {
         Integer getExamId();
@@ -121,7 +120,7 @@ public class ExamVO implements Serializable {
             interface Question {
                 Integer getQuestionId();
 
-                String getQuestionNumber();
+                Integer getQuestionNumber();
 
                 String getQuestionContent();
 
@@ -170,7 +169,7 @@ public class ExamVO implements Serializable {
             interface Question {
                 Integer getQuestionId();
 
-                String getQuestionNumber();
+                Integer getQuestionNumber();
 
                 String getCorrectAnswer();
             }

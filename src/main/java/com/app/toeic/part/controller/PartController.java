@@ -1,7 +1,7 @@
 package com.app.toeic.part.controller;
 
 
-import com.app.toeic.part.payload.PartDto;
+import com.app.toeic.part.payload.PartDTO;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.part.service.PartService;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +15,13 @@ public class PartController {
     private final PartService partService;
 
     @PostMapping("/list-by-exam")
-    public ResponseVO getAllPartByExamId(@RequestBody PartDto partDto) {
+    public ResponseVO getAllPartByExamId(@RequestBody PartDTO partDto) {
         var parts = partService.getAllPartByExamId(partDto.getExamId());
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
                 .data(parts)
-                .message("Lấy danh sách part thành công!")
+                .message("GET_ALL_PART_BY_EXAM_ID_SUCCESS")
                 .build();
     }
 
@@ -32,19 +32,19 @@ public class PartController {
                 .builder()
                 .success(Boolean.TRUE)
                 .data(part)
-                .message("Lấy part thành công!")
+                .message("GET_PART_BY_ID_SUCCESS")
                 .build();
     }
 
     @PatchMapping("/update-part")
-    public ResponseVO updatePart(@RequestBody PartDto partDto) {
+    public ResponseVO updatePart(@RequestBody PartDTO partDto) {
         var part = partService.getPartById(partDto.getPartId());
         part.setPartAudio(partDto.getPartAudio());
         partService.savePart(part);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .message("Cập nhật part thành công!")
+                .message("UPDATE_PART_SUCCESS")
                 .build();
     }
 }

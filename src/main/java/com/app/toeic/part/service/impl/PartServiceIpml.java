@@ -79,6 +79,7 @@ public class PartServiceIpml implements PartService {
                                                 """);
                     part.setNumberOfQuestion(54);
                 }
+                default -> {break;}
             }
             partRepository.save(part);
         }

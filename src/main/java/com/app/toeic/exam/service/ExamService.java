@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ExamService {
-    ResponseVO getAllExam();
+    Object getAllExam();
 
-    ResponseVO addExam(Exam exam);
+    Object addExam(Exam exam);
 
-    ResponseVO updateExam(Exam exam);
+    Object updateExam(Exam exam);
 
-    ResponseVO removeExam(Integer examId);
+    Object removeExam(Integer examId);
 
     Optional<Exam> findById(Integer examId);
 

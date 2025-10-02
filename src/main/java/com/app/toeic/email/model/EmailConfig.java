@@ -20,5 +20,5 @@ public class EmailConfig {
     @Column(unique = true)
     private String username;
     private String password;
-    private String status = "INACTIVE";
+    private boolean status = false;
 }

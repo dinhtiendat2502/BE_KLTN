@@ -41,7 +41,7 @@ public class UserController {
                 .builder()
                 .success(Boolean.TRUE)
                 .data(token)
-                .message("Đăng nhập thành công")
+                .message("LOGIN_SUCCESS")
                 .build();
     }
 
@@ -70,14 +70,14 @@ public class UserController {
             return ResponseVO
                     .builder()
                     .success(Boolean.FALSE)
-                    .message("Mật khẩu không khớp")
+                    .message("PASSWORD_NOT_MATCH")
                     .build();
         }
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
                 .data(userService.updatePassword(userUpdatePasswordDto, profile))
-                .message("Cập nhật mật khẩu thành công")
+                .message("UPDATE_PASSWORD_SUCCESS")
                 .build();
     }
 
@@ -110,7 +110,7 @@ public class UserController {
                 .builder()
                 .success(Boolean.TRUE)
                 .data(userService.updateProfile(profile))
-                .message("Cập nhật thông tin thành công")
+                .message("UPDATE_PROFILE_SUCCESS")
                 .build();
     }
 
@@ -135,7 +135,7 @@ public class UserController {
                 .builder()
                 .success(Boolean.TRUE)
                 .data(profile)
-                .message("Get profile successfully")
+                .message("GET_PROFILE_SUCCESS")
                 .build();
     }
 
@@ -166,7 +166,7 @@ public class UserController {
                 .builder()
                 .success(Boolean.TRUE)
                 .data(null)
-                .message("Xác thực tài khoản thành công!")
+                .message("CONFIRM_OTP_SUCCESS")
                 .build();
     }
 

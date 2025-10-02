@@ -9,6 +9,7 @@ import com.app.toeic.question.payload.QuestionDTO;
 import com.app.toeic.question.service.QuestionService;
 import com.app.toeic.util.ExcelHelper;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,10 +21,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/question")
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class QuestionController {
-    private final PartService partService;
-    private final ExcelService excelService;
-    private final QuestionService questionService;
+    PartService partService;
+    ExcelService excelService;
+    QuestionService questionService;
 
     @PostMapping("/import-part")
     public ResponseVO importQuestion(@RequestParam("file") MultipartFile file, @RequestParam("partId") Integer partId) throws
@@ -53,12 +55,13 @@ public class QuestionController {
             case "PART5" -> listQuestion = excelService.excelToPart5(file.getInputStream(), part, listQuestion, isAddNew);
             case "PART6" -> listQuestion = excelService.excelToPart6(file.getInputStream(), part, listQuestion, isAddNew);
             case "PART7" -> listQuestion = excelService.excelToPart7(file.getInputStream(), part, listQuestion, isAddNew);
+            default -> {break;}
         }
         questionService.saveAllQuestion(listQuestion);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .message("Import thành công!")
+                .message("IMPORT_SUCCESS")
                 .build();
     }
 
@@ -75,7 +78,7 @@ public class QuestionController {
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .message("Xóa thành công!")
+                .message("DELETE_ALL_QUESTION_BY_PART_SUCCESS")
                 .build();
     }
 
@@ -100,7 +103,7 @@ public class QuestionController {
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .message("Cập nhật thành công!")
+                .message("UPDATE_QUESTION_SUCCESS")
                 .build();
     }
 

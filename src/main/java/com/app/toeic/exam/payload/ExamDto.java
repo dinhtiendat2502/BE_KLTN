@@ -4,12 +4,9 @@ package com.app.toeic.exam.payload;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
-
-import java.io.Serializable;
-
 @Data
 @Builder
-public class ExamDTO implements Serializable {
+public class ExamDTO {
     Integer examId;
     @NotEmpty(message = "Tên đề thi không được để trống")
     String examName;

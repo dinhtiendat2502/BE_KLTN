@@ -51,13 +51,22 @@ public class EmailConfigController {
 
     @PatchMapping("/update/status/{username}")
     public Object updateEmailConfigStatus(@PathVariable String username) {
-        emailConfigRepo.updateAllByUsernameNot(username, "INACTIVE");
-        emailConfigRepo
-                .findByUsername(username)
-                .ifPresent(emailConfig -> {
-                    emailConfig.setStatus("ACTIVE");
-                    emailConfigRepo.save(emailConfig);
-                });
+
+        var emailConfig = emailConfigRepo.findByUsername(username).orElse(null);
+        if (emailConfig == null) {
+            return ResponseVO
+                    .builder()
+                    .success(Boolean.FALSE)
+                    .message("EMAIL_CONFIG_NOT_FOUND")
+                    .build();
+        }
+        var list = emailConfigRepo.findAllByUsernameNot(username);
+        list.forEach(item -> {
+            item.setStatus(false);
+            emailConfigRepo.save(item);
+        });
+        emailConfig.setStatus(true);
+        emailConfigRepo.save(emailConfig);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)

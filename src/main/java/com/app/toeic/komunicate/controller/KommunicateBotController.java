@@ -47,13 +47,21 @@ public class KommunicateBotController {
 
     @PatchMapping("/update/status/{appId}")
     public Object updateKommunicateBotStatus(@PathVariable String appId) {
-        kummunicateBotRepo.updateAllByAppIdNot(appId, "INACTIVE");
-        kummunicateBotRepo
-                .findByAppId(appId)
-                .ifPresent(kommunicateBot -> {
-                    kommunicateBot.setStatus("ACTIVE");
-                    kummunicateBotRepo.save(kommunicateBot);
-                });
+        var kommunicateBot = kummunicateBotRepo.findByAppId(appId).orElse(null);
+        if (kommunicateBot == null) {
+            return ResponseVO
+                    .builder()
+                    .success(Boolean.FALSE)
+                    .message("KOMMUNICATE_BOT_NOT_FOUND")
+                    .build();
+        }
+        var list = kummunicateBotRepo.findAllByAppIdNot(appId);
+        list.forEach(item -> {
+            item.setStatus(false);
+            kummunicateBotRepo.save(item);
+        });
+        kommunicateBot.setStatus(true);
+        kummunicateBotRepo.save(kommunicateBot);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)

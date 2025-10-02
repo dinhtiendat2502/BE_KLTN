@@ -44,7 +44,7 @@ public class ScoreController {
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .message("OK")
+                .message("INIT_LIST_SCORE_SUCCESS")
                 .build();
     }
 
@@ -54,7 +54,7 @@ public class ScoreController {
                 .builder()
                 .success(Boolean.TRUE)
                 .data(calculateScoreRepository.findAll())
-                .message("OK")
+                .message("GET_LIST_SCORE_SUCCESS")
                 .build();
     }
 
@@ -64,7 +64,7 @@ public class ScoreController {
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .message("OK")
+                .message("UPDATE_SCORE_SUCCESS")
                 .build();
     }
 
@@ -74,7 +74,7 @@ public class ScoreController {
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .message("OK")
+                .message("UPDATE_ALL_SCORE_SUCCESS")
                 .build();
     }
 
@@ -122,7 +122,7 @@ public class ScoreController {
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .message("OK")
+                .message("IMPORT_FILE_SCORE_SUCCESS")
                 .build();
     }
 

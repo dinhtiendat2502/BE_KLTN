@@ -23,58 +23,39 @@ public class ExamServiceImpl implements ExamService {
     private final PartService partService;
 
     @Override
-    public ResponseVO getAllExam() {
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .data(examRepository.findAllByStatus("ACTIVE"))
-                .message("Lấy danh sách đề thi thành công")
-                .build();
+    public Object getAllExam() {
+        return examRepository.findAllByStatus("ACTIVE");
     }
 
     @Override
     @Transactional
-    public ResponseVO addExam(Exam exam) {
+    public Object addExam(Exam exam) {
         if (Boolean.TRUE.equals(examRepository.existsExamByExamName(exam.getExamName(), Integer.MIN_VALUE))) {
-            throw new AppException(HttpStatus.SEE_OTHER, "Đề thi đã tồn tại!");
+            throw new AppException(HttpStatus.SEE_OTHER, "EXAM_EXISTED");
         }
         var returnExam = examRepository.save(exam);
         partService.init7PartForExam(returnExam);
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .data(null)
-                .message("Thêm đề thi thành công!")
-                .build();
+        return "CREATE_EXAM_SUCCESS";
     }
 
     @Override
     @Transactional
-    public ResponseVO updateExam(Exam exam) {
+    public Object updateExam(Exam exam) {
         if (Boolean.TRUE.equals(examRepository.existsExamByExamName(exam.getExamName(), exam.getExamId()))) {
-            throw new AppException(HttpStatus.SEE_OTHER, "Đề thi đã tồn tại!");
+            throw new AppException(HttpStatus.SEE_OTHER, "EXAM_NAME_EXISTED");
         }
         examRepository.save(exam);
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .data("")
-                .message("Cập nhật đề thi thành công!")
-                .build();
+        return "UPDATE_EXAM_SUCCESS";
     }
 
     @Override
-    public ResponseVO removeExam(Integer examId) {
+    public Object removeExam(Integer examId) {
         var exam = examRepository
                 .findById(examId)
-                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "EXAM_NOT_FOUND"));
         exam.setStatus("INACTIVE");
         examRepository.save(exam);
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .message(String.format("Xóa đề thi %s thành công!", exam.getExamName()))
-                .build();
+        return "DELETE_EXAM_SUCCESS";
     }
 
     @Override

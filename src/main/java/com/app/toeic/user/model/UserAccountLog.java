@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserAccountLog implements Serializable {
+public class UserAccountLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userAccountLogId;

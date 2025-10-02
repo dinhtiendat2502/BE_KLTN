@@ -5,6 +5,7 @@ import com.app.toeic.external.service.FirebaseStorageService;
 import com.app.toeic.slider.model.Slider;
 import com.app.toeic.slider.repo.SliderRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @CrossOrigin("*")
 @RequestMapping("/slider")
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class SliderController {
     private final SliderRepository sliderRepository;
     private final FirebaseStorageService firebaseStorageService;
@@ -54,7 +56,7 @@ public class SliderController {
         return ResponseVO
                 .builder()
                 .success(true)
-                .message("OK")
+                .message("ADD_SLIDER_SUCCESS")
                 .data(null)
                 .build();
     }
@@ -68,7 +70,7 @@ public class SliderController {
         if (slider == null) return ResponseVO
                 .builder()
                 .success(false)
-                .message("FAILT")
+                .message("DELETE_SLIDER_FAIL")
                 .data(null)
                 .build();
         var position = slider.getPosition();
@@ -81,7 +83,7 @@ public class SliderController {
         return ResponseVO
                 .builder()
                 .success(true)
-                .message("OK")
+                .message("DELETE_SLIDER_SUCCESS")
                 .data(null)
                 .build();
     }
@@ -102,7 +104,7 @@ public class SliderController {
             return ResponseVO
                     .builder()
                     .success(true)
-                    .message("OK")
+                    .message("NO_UPDATE_SLIDER_POSITION")
                     .data(null)
                     .build();
         }
@@ -111,7 +113,7 @@ public class SliderController {
             ResponseVO
                     .builder()
                     .success(true)
-                    .message("OK")
+                    .message("NO_UPDATE_SLIDER_POSITION")
                     .data(null)
                     .build();
         }
@@ -137,7 +139,7 @@ public class SliderController {
         return ResponseVO
                 .builder()
                 .success(true)
-                .message("OK")
+                .message("UPDATE_SLIDER_POSITION_SUCCESS")
                 .data(null)
                 .build();
     }

@@ -33,7 +33,7 @@ public class UserExamHistoryServiceImpl implements UserExamHistoryService {
     public Object findUserExamHistoryByExamHistoryId(Integer userExamHistoryId) {
         return userExamHistoryRepository
                 .findUserExamHistoryByExamHistoryId(userExamHistoryId)
-                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy lịch sử thi"));
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "EXAM_HISTORY_NOT_FOUND"));
     }
 
     @Override

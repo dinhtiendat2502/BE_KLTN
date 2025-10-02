@@ -37,11 +37,21 @@ public class TopicAdminController {
                 .topicImage(image)
                 .status("ACTIVE")
                 .build();
-        return topicService.addTopic(newTopic);
+        topicService.addTopic(newTopic);
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .message("CREATE_TOPIC_SUCCESS")
+                .build();
     }
 
     @DeleteMapping("/delete/{topicId}")
     public ResponseVO deleteTopic(@PathVariable("topicId") Integer topicId) {
-        return topicService.removeTopic(topicId);
+        topicService.removeTopic(topicId);
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .message("DELETE_TOPIC_SUCCESS")
+                .build();
     }
 }

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
 
 @Entity
 @Table(name = "user_answer")
@@ -14,7 +13,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Builder
-public class UserAnswer implements Serializable {
+public class UserAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userAnswerId;

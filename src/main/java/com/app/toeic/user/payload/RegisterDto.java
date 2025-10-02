@@ -7,14 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import java.io.Serializable;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RegisterDTO implements Serializable {
+public class RegisterDTO {
     @NotEmpty(message = "Email không được bỏ trống")
     @Email(message = "Email không hợp lệ")
     String email;

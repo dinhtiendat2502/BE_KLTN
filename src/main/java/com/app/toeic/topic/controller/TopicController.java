@@ -20,7 +20,7 @@ public class TopicController {
                 .builder()
                 .success(Boolean.TRUE)
                 .data(topicService.getAllTopics())
-                .message("Get all topics successfully")
+                .message("GET_ALL_TOPIC_SUCCESS")
                 .build();
     }
 }

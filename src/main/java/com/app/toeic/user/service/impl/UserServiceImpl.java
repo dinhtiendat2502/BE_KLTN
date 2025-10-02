@@ -17,6 +17,7 @@ import com.app.toeic.util.HttpStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,14 +33,17 @@ import java.util.*;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class UserServiceImpl implements UserService {
-    private final AuthenticationManager authenticationManager;
-    private final IUserAccountRepository iUserRepository;
-    private final IRoleRepository iRoleRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtUtilities;
-    private final UserDetailsService userDetailsService;
-    private final EmailServiceImpl emailService;
+    AuthenticationManager authenticationManager;
+    IUserAccountRepository iUserRepository;
+    IRoleRepository iRoleRepository;
+    PasswordEncoder passwordEncoder;
+    JwtTokenProvider jwtUtilities;
+    UserDetailsService userDetailsService;
+    EmailServiceImpl emailService;
+
+    private static final String EMAIL_NOT_REGISTERED = "EMAIL_NOT_REGISTERED";
 
     @Override
     public ResponseVO authenticate(LoginDTO loginDto) {
@@ -50,7 +54,7 @@ public class UserServiceImpl implements UserService {
                 .setAuthentication(authentication);
         UserAccount user = iUserRepository
                 .findByEmail(authentication.getName())
-                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Không tìm thấy email!"));
+                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, EMAIL_NOT_REGISTERED));
         if (user
                 .getStatus()
                 .equals(EUser.INACTIVE)) {
@@ -58,7 +62,7 @@ public class UserServiceImpl implements UserService {
                     .builder()
                     .success(Boolean.FALSE)
                     .data(user.getStatus())
-                    .message("Tài khoản chưa được kích hoạt!")
+                    .message("ACCOUNT_NOT_ACTIVE")
                     .build();
         } else if (user
                 .getStatus()
@@ -66,7 +70,7 @@ public class UserServiceImpl implements UserService {
             return ResponseVO
                     .builder()
                     .success(Boolean.FALSE)
-                    .message("Tài khoản đã bị khóa!")
+                    .message("ACCOUNT_BLOCKED")
                     .build();
         }
 
@@ -85,14 +89,14 @@ public class UserServiceImpl implements UserService {
                 .builder()
                 .success(Boolean.TRUE)
                 .data(res)
-                .message("Đăng nhập thành công")
+                .message("LOGIN_SUCCESS")
                 .build();
     }
 
     @Override
     public ResponseVO register(RegisterDTO registerDto) {
         if (Boolean.TRUE.equals(iUserRepository.existsByEmail(registerDto.getEmail()))) {
-            throw new AppException(HttpStatus.SEE_OTHER, "Email đã được đăng ký!");
+            throw new AppException(HttpStatus.SEE_OTHER, "EMAIL_EXISTED");
         }
         var user = UserAccount
                 .builder()
@@ -110,7 +114,7 @@ public class UserServiceImpl implements UserService {
                 .builder()
                 .success(Boolean.TRUE)
                 .data(null)
-                .message("Đăng kí tài khoản thành công")
+                .message("REGISTER_SUCCESS")
                 .build();
     }
 
@@ -120,7 +124,7 @@ public class UserServiceImpl implements UserService {
                 .builder()
                 .success(Boolean.TRUE)
                 .data(iUserRepository.findAllByRolesNotContains(iRoleRepository.findByRoleName(ERole.ADMIN)))
-                .message("Lấy danh sách user thành công")
+                .message("GET_ALL_USER_SUCCESS")
                 .build();
     }
 
@@ -128,13 +132,13 @@ public class UserServiceImpl implements UserService {
     public ResponseVO updateUser(UserDTO user) {
         var u = iUserRepository
                 .findById(user.getId())
-                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "User not found"));
+                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "USER_NOT_FOUND"));
         u.setStatus(user.getStatus());
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
                 .data(iUserRepository.save(u))
-                .message("Cập nhật user thành công")
+                .message("UPDATE_USER_SUCCESS")
                 .build();
     }
 
@@ -142,28 +146,28 @@ public class UserServiceImpl implements UserService {
     public UserAccount findByEmail(String email) {
         return iUserRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
+                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, EMAIL_NOT_REGISTERED));
     }
 
     @Override
     public ResponseVO updatePassword(String email, String newPassword) {
         var user = iUserRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
+                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, EMAIL_NOT_REGISTERED));
         user.setPassword(passwordEncoder.encode(newPassword));
         iUserRepository.save(user);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
                 .data(null)
-                .message("Cập nhật mật khẩu thành công!")
+                .message("UPDATE_PASSWORD_SUCCESS")
                 .build();
     }
 
     @Override
     public Object updatePassword(UserUpdatePasswordDTO userUpdateDto, UserAccount user) {
         if (!passwordEncoder.matches(userUpdateDto.getCurrentPassword(), user.getPassword())) {
-            throw new AppException(HttpStatus.SEE_OTHER, "Mật khẩu hiện tại không đúng!");
+            throw new AppException(HttpStatus.SEE_OTHER, "CURRENT_PASSWORD_NOT_MATCH");
         }
         user.setPassword(passwordEncoder.encode(userUpdateDto.getNewPassword()));
         iUserRepository.save(user);
@@ -177,7 +181,7 @@ public class UserServiceImpl implements UserService {
                 .builder()
                 .success(Boolean.TRUE)
                 .data(null)
-                .message("Cập nhật avatar thành công!")
+                .message("UPDATE_AVATAR_SUCCESS")
                 .build();
     }
 
@@ -191,7 +195,7 @@ public class UserServiceImpl implements UserService {
             if (Boolean.TRUE.equals(jwtUtilities.validateToken(token, userDetails))) {
                 var user = iUserRepository
                         .findByEmail(email)
-                        .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "Email này chưa đăng ký tài khoản!"));
+                        .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, EMAIL_NOT_REGISTERED));
                 return Optional.of(user);
             }
         }
@@ -237,18 +241,18 @@ public class UserServiceImpl implements UserService {
             if (u
                     .getStatus()
                     .equals(EUser.INACTIVE)) {
-                throw new AppException(HttpStatus.SEE_OTHER, "Tài khoản chưa được kích hoạt!");
+                throw new AppException(HttpStatus.SEE_OTHER, "ACCOUNT_NOT_ACTIVE");
             } else if (u
                     .getStatus()
                     .equals(EUser.BLOCKED)) {
-                throw new AppException(HttpStatus.SEE_OTHER, "Tài khoản đã bị khóa!");
+                throw new AppException(HttpStatus.SEE_OTHER, "ACCOUNT_BLOCKED");
             }
             if (!u
                     .getProvider()
                     .equals(loginSocialDto.getProvider())) {
                 throw new AppException(
                         HttpStatus.SEE_OTHER,
-                        "Tài khoản đã được đăng ký. Vui lòng đăng nhập bằng email và mật khẩu!"
+                        "EMAIL_EXISTED_WITH_OTHER_PROVIDER"
                 );
             }
             List<String> rolesNames = new ArrayList<>();

@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
-                .message("Kích thước file quá lớn")
+                .message("SIZE_LIMIT_EXCEEDED")
                 .build();
     }
 
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
-                .message("Kích thước file quá lớn")
+                .message("SIZE_LIMIT_EXCEEDED")
                 .build();
     }
 
@@ -73,7 +73,7 @@ public class GlobalExceptionHandler {
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
-                .message("Có lỗi xảy ra khi đọc file")
+                .message("READ_FILE_ERROR")
                 .build();
     }
 
@@ -83,7 +83,7 @@ public class GlobalExceptionHandler {
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
-                .message("Không tìm thấy đường dẫn")
+                .message("NOT_FOUND")
                 .build();
     }
 
@@ -92,7 +92,7 @@ public class GlobalExceptionHandler {
         log.error("Exception >> GlobalExceptionHandler >> handleBadCredentialsException: {}", e.getMessage());
         var message = e.getMessage();
         if (message.contains("Bad credentials")) {
-            message = "Tên đăng nhập hoặc mật khẩu không đúng";
+            message = "EMAIL_OR_PASSWORD_INCORRECT";
         }
         return ResponseVO
                 .builder()
@@ -129,11 +129,11 @@ public class GlobalExceptionHandler {
         log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException: {}", e
                 .getClass()
                 .getSimpleName());
-        log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException: {}", e.getMessage());
+        log.error(STR."Exception >> GlobalExceptionHandler >> handleUnwantedException: \{e.getMessage()} >> \{e.getCause().getMessage()}");
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
-                .message("Hệ thống đang bị lỗi, vui lòng thử lại sau!")
+                .message("SERVER_ERROR")
                 .build();
     }
 }

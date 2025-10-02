@@ -5,11 +5,10 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
 
-import java.io.Serializable;
 
 @Data
 @Builder
-public class UserUpdateDTO implements Serializable {
+public class UserUpdateDTO {
     @NotEmpty(message = "Tên không được bỏ trống")
     String fullName;
 

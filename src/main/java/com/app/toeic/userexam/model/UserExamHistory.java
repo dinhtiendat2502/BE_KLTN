@@ -11,7 +11,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +22,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
-public class UserExamHistory implements Serializable {
+public class UserExamHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userExamHistoryId;

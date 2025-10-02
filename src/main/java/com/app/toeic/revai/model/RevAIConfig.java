@@ -17,5 +17,5 @@ public class RevAIConfig {
     private String accessToken;
 
     @Builder.Default
-    private String status = "INACTIVE";
+    private boolean status = false;
 }

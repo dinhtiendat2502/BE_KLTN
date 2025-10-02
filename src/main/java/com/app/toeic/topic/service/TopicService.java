@@ -8,11 +8,11 @@ import java.util.List;
 public interface TopicService {
     Object getAllTopic(int page, int size);
 
-    ResponseVO getTopicById(Integer id);
+    Object getTopicById(Integer id);
 
-    ResponseVO addTopic(Topic topic);
+    Object addTopic(Topic topic);
 
-    ResponseVO removeTopic(Integer topicId);
+    Object removeTopic(Integer topicId);
 
     List<Topic> getAllTopics();
 }

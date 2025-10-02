@@ -20,16 +20,16 @@ import java.util.Iterator;
 
 @Service
 public class ExcelServiceImpl implements ExcelService {
-    String SHEET = "Sheet1";
+    private final String nameSheet = "Sheet1";
 
     @Override
     public List<Question> excelToPart1(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
-                                                                                                         IOException {
+            IOException {
         Workbook workbook = new XSSFWorkbook(is);
-        Sheet sheet = workbook.getSheet(SHEET);
+        Sheet sheet = workbook.getSheet(nameSheet);
         Iterator<Row> rows = sheet.iterator();
         if (sheet.getPhysicalNumberOfRows() - 1 != 6) {
-            throw new AppException(HttpStatus.SEE_OTHER, "File excel không đúng định dạng!");
+            throw new AppException(HttpStatus.SEE_OTHER, "EXCEL_FILE_NOT_CORRECT_FORMAT");
         }
         List<Question> questionList = isAddNew ? new ArrayList<>() : list;
         int rowNumber = 0;
@@ -48,7 +48,7 @@ public class ExcelServiceImpl implements ExcelService {
                     if (isAddNew) {
                         var question = Question
                                 .builder()
-                                .questionNumber(questionNumber + "")
+                                .questionNumber(questionNumber)
                                 .correctAnswer(currentCell.getStringCellValue())
                                 .part(part)
                                 .build();
@@ -67,12 +67,12 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Override
     public List<Question> excelToPart2(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
-                                                                                                         IOException {
+            IOException {
         Workbook workbook = new XSSFWorkbook(is);
-        Sheet sheet = workbook.getSheet(SHEET);
+        Sheet sheet = workbook.getSheet(nameSheet);
         Iterator<Row> rows = sheet.iterator();
         if (sheet.getPhysicalNumberOfRows() - 1 != 25) {
-            throw new AppException(HttpStatus.SEE_OTHER, "File excel không đúng định dạng!");
+            throw new AppException(HttpStatus.SEE_OTHER, "EXCEL_FILE_NOT_CORRECT_FORMAT");
         }
         List<Question> questionList = isAddNew ? new ArrayList<>() : list;
         int rowNumber = 0;
@@ -91,7 +91,7 @@ public class ExcelServiceImpl implements ExcelService {
                     if (isAddNew) {
                         var question = Question
                                 .builder()
-                                .questionNumber(questionNumber + "")
+                                .questionNumber(questionNumber)
                                 .correctAnswer(currentCell.getStringCellValue())
                                 .part(part)
                                 .build();
@@ -111,12 +111,12 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Override
     public List<Question> excelToPart3(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
-                                                                                                         IOException {
+            IOException {
         Workbook workbook = new XSSFWorkbook(is);
-        Sheet sheet = workbook.getSheet(SHEET);
+        Sheet sheet = workbook.getSheet(nameSheet);
         Iterator<Row> rows = sheet.iterator();
         if (sheet.getPhysicalNumberOfRows() - 1 != 39) {
-            throw new AppException(HttpStatus.SEE_OTHER, "File excel không đúng định dạng!");
+            throw new AppException(HttpStatus.SEE_OTHER, "EXCEL_FILE_NOT_CORRECT_FORMAT");
         }
         List<Question> questionList = isAddNew ? new ArrayList<>() : list;
         int rowNumber = 0;
@@ -129,12 +129,10 @@ public class ExcelServiceImpl implements ExcelService {
             }
             var question = isAddNew ? Question
                     .builder()
-                    .questionNumber(questionNumber + "")
+                    .questionNumber(questionNumber)
                     .part(part)
                     .build() : questionList.get(rowNumber - 1);
-            Iterator<Cell> cellsInRow = currentRow.iterator();
-            while (cellsInRow.hasNext()) {
-                Cell currentCell = cellsInRow.next();
+            for (Cell currentCell : currentRow) {
                 int columnIndex = currentCell.getColumnIndex();
                 var cellType = currentCell.getCellType();
                 String value;
@@ -150,7 +148,9 @@ public class ExcelServiceImpl implements ExcelService {
                     case 6 -> question.setAnswerC(value);
                     case 7 -> question.setAnswerD(value);
                     case 10 -> question.setCorrectAnswer(value);
-                    default -> {break;}
+                    default -> {
+                        break;
+                    }
                 }
             }
             questionList.add(question);
@@ -163,12 +163,12 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Override
     public List<Question> excelToPart4(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
-                                                                                                         IOException {
+            IOException {
         Workbook workbook = new XSSFWorkbook(is);
-        Sheet sheet = workbook.getSheet(SHEET);
+        Sheet sheet = workbook.getSheet(nameSheet);
         Iterator<Row> rows = sheet.iterator();
         if (sheet.getPhysicalNumberOfRows() - 1 != 30) {
-            throw new AppException(HttpStatus.SEE_OTHER, "File excel không đúng định dạng!");
+            throw new AppException(HttpStatus.SEE_OTHER, "EXCEL_FILE_NOT_CORRECT_FORMAT");
         }
         List<Question> questionList = isAddNew ? new ArrayList<>() : list;
         int rowNumber = 0;
@@ -181,7 +181,7 @@ public class ExcelServiceImpl implements ExcelService {
             }
             var question = isAddNew ? Question
                     .builder()
-                    .questionNumber(questionNumber + "")
+                    .questionNumber(questionNumber)
                     .part(part)
                     .build() : questionList.get(rowNumber - 1);
             Iterator<Cell> cellsInRow = currentRow.iterator();
@@ -202,6 +202,9 @@ public class ExcelServiceImpl implements ExcelService {
                     case 6 -> question.setAnswerC(value);
                     case 7 -> question.setAnswerD(value);
                     case 10 -> question.setCorrectAnswer(value);
+                    default -> {
+                        break;
+                    }
                 }
             }
             questionList.add(question);
@@ -214,12 +217,12 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Override
     public List<Question> excelToPart5(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
-                                                                                                         IOException {
+            IOException {
         Workbook workbook = new XSSFWorkbook(is);
-        Sheet sheet = workbook.getSheet(SHEET);
+        Sheet sheet = workbook.getSheet(nameSheet);
         Iterator<Row> rows = sheet.iterator();
         if (sheet.getPhysicalNumberOfRows() - 1 != 30) {
-            throw new AppException(HttpStatus.SEE_OTHER, "File excel không đúng định dạng!");
+            throw new AppException(HttpStatus.SEE_OTHER, "EXCEL_FILE_NOT_CORRECT_FORMAT");
         }
         List<Question> questionList = isAddNew ? new ArrayList<>() : list;
         int rowNumber = 0;
@@ -232,12 +235,10 @@ public class ExcelServiceImpl implements ExcelService {
             }
             var question = isAddNew ? Question
                     .builder()
-                    .questionNumber(questionNumber + "")
+                    .questionNumber(questionNumber)
                     .part(part)
                     .build() : questionList.get(rowNumber - 1);
-            Iterator<Cell> cellsInRow = currentRow.iterator();
-            while (cellsInRow.hasNext()) {
-                Cell currentCell = cellsInRow.next();
+            for (Cell currentCell : currentRow) {
                 int columnIndex = currentCell.getColumnIndex();
                 var cellType = currentCell.getCellType();
                 String value;
@@ -253,6 +254,9 @@ public class ExcelServiceImpl implements ExcelService {
                     case 6 -> question.setAnswerC(value);
                     case 7 -> question.setAnswerD(value);
                     case 10 -> question.setCorrectAnswer(value);
+                    default -> {
+                        break;
+                    }
                 }
             }
             questionList.add(question);
@@ -265,12 +269,12 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Override
     public List<Question> excelToPart6(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
-                                                                                                         IOException {
+            IOException {
         Workbook workbook = new XSSFWorkbook(is);
-        Sheet sheet = workbook.getSheet(SHEET);
+        Sheet sheet = workbook.getSheet(nameSheet);
         Iterator<Row> rows = sheet.iterator();
         if (sheet.getPhysicalNumberOfRows() - 1 != 16) {
-            throw new AppException(HttpStatus.SEE_OTHER, "File excel không đúng định dạng!");
+            throw new AppException(HttpStatus.SEE_OTHER, "EXCEL_FILE_NOT_CORRECT_FORMAT");
         }
         List<Question> questionList = isAddNew ? new ArrayList<>() : list;
         int rowNumber = 0;
@@ -283,7 +287,7 @@ public class ExcelServiceImpl implements ExcelService {
             }
             var question = isAddNew ? Question
                     .builder()
-                    .questionNumber(questionNumber + "")
+                    .questionNumber(questionNumber)
                     .part(part)
                     .build() : questionList.get(rowNumber - 1);
             for (Cell currentCell : currentRow) {
@@ -306,6 +310,9 @@ public class ExcelServiceImpl implements ExcelService {
                     case 6 -> question.setAnswerC(value);
                     case 7 -> question.setAnswerD(value);
                     case 10 -> question.setCorrectAnswer(value);
+                    default -> {
+                        break;
+                    }
                 }
             }
             questionList.add(question);
@@ -322,9 +329,9 @@ public class ExcelServiceImpl implements ExcelService {
 
     @Override
     public List<Question> excelToPart7(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
-                                                                                                         IOException {
+            IOException {
         Workbook workbook = new XSSFWorkbook(is);
-        Sheet sheet = workbook.getSheet(SHEET);
+        Sheet sheet = workbook.getSheet(nameSheet);
         Iterator<Row> rows = sheet.iterator();
         if (sheet.getPhysicalNumberOfRows() - 1 != 54) {
             throw new AppException(HttpStatus.SEE_OTHER, "File excel không đúng định dạng!");
@@ -340,7 +347,7 @@ public class ExcelServiceImpl implements ExcelService {
             }
             var question = isAddNew ? Question
                     .builder()
-                    .questionNumber(questionNumber + "")
+                    .questionNumber(questionNumber)
                     .part(part)
                     .build() : questionList.get(rowNumber - 1);
             Iterator<Cell> cellsInRow = currentRow.iterator();
@@ -363,6 +370,9 @@ public class ExcelServiceImpl implements ExcelService {
                     case 6 -> question.setAnswerC(value);
                     case 7 -> question.setAnswerD(value);
                     case 10 -> question.setCorrectAnswer(value);
+                    default -> {
+                        break;
+                    }
                 }
             }
             questionList.add(question);

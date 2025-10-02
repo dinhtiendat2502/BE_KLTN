@@ -10,7 +10,6 @@ import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.*;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,11 +21,11 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Question implements Serializable {
+public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionId;
-    private String questionNumber;
+    private Integer questionNumber;
     @Column(columnDefinition = "TEXT")
     private String questionContent;
     @Column(columnDefinition = "TEXT")

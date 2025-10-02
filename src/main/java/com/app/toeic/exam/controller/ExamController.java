@@ -2,7 +2,7 @@ package com.app.toeic.exam.controller;
 
 
 import com.app.toeic.exam.payload.FinishExamDTO;
-import com.app.toeic.part.payload.ListPartDto;
+import com.app.toeic.part.payload.ListPartDTO;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.question.model.Question;
@@ -15,7 +15,9 @@ import com.app.toeic.userexam.service.UserExamHistoryService;
 import com.app.toeic.user.service.UserService;
 import com.app.toeic.util.HttpStatus;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +27,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/exam")
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ExamController {
-    private final ExamService examService;
-    private final UserService userService;
-    private final UserExamHistoryService userExamHistoryService;
-    private final UserAnswerService userAnswerService;
+    ExamService examService;
+    UserService userService;
+    UserExamHistoryService userExamHistoryService;
+    UserAnswerService userAnswerService;
+    String EXAM_NOT_FOUND = "EXAM_NOT_FOUND";
+    String GET_EXAM_SUCCESS = "GET_EXAM_SUCCESS";
 
     @GetMapping("/list")
     public ResponseVO getAllExams() {
@@ -42,7 +47,7 @@ public class ExamController {
                 .builder()
                 .success(Boolean.TRUE)
                 .data(examService.getAllExamByTopic(Integer.parseInt(topicId)))
-                .message("Lấy danh sách đề thi theo chủ đề thành công")
+                .message(GET_EXAM_SUCCESS)
                 .build();
     }
 
@@ -50,12 +55,12 @@ public class ExamController {
     public ResponseVO findById(@PathVariable("examId") String examId) {
         var exam = examService
                 .findExamByExamId(Integer.parseInt(examId))
-                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, EXAM_NOT_FOUND));
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
                 .data(exam)
-                .message("Lấy đề thi thành công")
+                .message(GET_EXAM_SUCCESS)
                 .build();
     }
 
@@ -63,12 +68,12 @@ public class ExamController {
     public ResponseVO findFullQuestion(@PathVariable("examId") String examId) {
         var exam = examService
                 .findExamWithFullQuestion(Integer.parseInt(examId))
-                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, EXAM_NOT_FOUND));
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
                 .data(exam)
-                .message("Lấy đề thi thành công")
+                .message(GET_EXAM_SUCCESS)
                 .build();
     }
 
@@ -79,7 +84,7 @@ public class ExamController {
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
         var examHasFullQuestionAnswer = examService
                 .findExamFullQuestionWithAnswer(finishExamDto.getExamId())
-                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, EXAM_NOT_FOUND));
         var userExamHistory = UserExamHistory
                 .builder()
                 .isDone(finishExamDto.getIsDone())
@@ -154,7 +159,9 @@ public class ExamController {
                         switch (partCode) {
                             case "PART1", "PART4", "PART2", "PART3" -> numberOfWrongListeningAnswer.incrementAndGet();
                             case "PART5", "PART6", "PART7" -> numberOfWrongReadingAnswer.incrementAndGet();
-                            default -> {break;}
+                            default -> {
+                                break;
+                            }
                         }
                     } else {
                         numberOfCorrectAnswer.incrementAndGet();
@@ -222,20 +229,20 @@ public class ExamController {
                 .builder()
                 .success(Boolean.TRUE)
                 .data(returnUserExamHistory.getUserExamHistoryId())
-                .message("Nộp bài thành công")
+                .message("FINISH_EXAM_SUCCESS")
                 .build();
     }
 
     @PostMapping("/find-exam-practice/{examId}")
-    public ResponseVO findExamPractice(@PathVariable("examId") String examId, @RequestBody ListPartDto listPartDto) {
+    public ResponseVO findExamPractice(@PathVariable("examId") String examId, @RequestBody ListPartDTO listPartDto) {
         var exam = examService
                 .findExamPractice(Integer.parseInt(examId), listPartDto.getListPart())
-                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy đề thi"));
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, EXAM_NOT_FOUND));
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
                 .data(exam)
-                .message("Lấy đề thi thành công")
+                .message(GET_EXAM_SUCCESS)
                 .build();
     }
 

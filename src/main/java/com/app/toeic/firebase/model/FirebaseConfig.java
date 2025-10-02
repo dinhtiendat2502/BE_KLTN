@@ -24,7 +24,6 @@ public class FirebaseConfig {
     @Column(columnDefinition = "text")
     private String fileJson;
 
-    @Column(columnDefinition = "varchar(255) default 'ACTIVE'")
     @Builder.Default
-    private String status = "INACTIVE";
+    private boolean status = false;
 }

@@ -20,5 +20,5 @@ public class KommunicateBot {
     private String apiKey;
 
     @Builder.Default
-    private String status = "INACTIVE";
+    private boolean status = false;
 }
