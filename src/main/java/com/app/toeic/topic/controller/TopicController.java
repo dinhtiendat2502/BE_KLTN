@@ -16,6 +16,11 @@ public class TopicController {
 
     @GetMapping("/list")
     public ResponseVO getAllTopics() {
-        return topicService.getAllTopic();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(topicService.getAllTopics())
+                .message("Get all topics successfully")
+                .build();
     }
 }

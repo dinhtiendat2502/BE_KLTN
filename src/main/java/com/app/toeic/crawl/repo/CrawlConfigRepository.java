@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface CrawlConfigRepository extends JpaRepository<CrawlConfig, Integer> {
     Optional<CrawlConfig> findByEmail(String email);
+    void deleteByEmail(String email);
 }

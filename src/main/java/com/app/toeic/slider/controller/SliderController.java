@@ -57,12 +57,7 @@ public class SliderController {
         var position = slider.getPosition();
         sliderRepository.deleteById(sliderId);
         // update position of all slider after deleted slider
-        var sliders = sliderRepository
-                .findAllByPositionGreaterThanOrderByPosition(position);
-        for (var s : sliders) {
-            s.setPosition(s.getPosition() - 1);
-            sliderRepository.save(s);
-        }
+        sliderRepository.updateAllByPositionGreaterThanOrderByPosition(position);
         return "OK";
     }
 

@@ -6,7 +6,7 @@ import com.app.toeic.external.response.ResponseVO;
 import java.util.List;
 
 public interface TopicService {
-    ResponseVO getAllTopic();
+    Object getAllTopic(int page, int size);
 
     ResponseVO getTopicById(Integer id);
 

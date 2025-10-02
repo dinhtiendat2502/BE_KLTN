@@ -18,4 +18,7 @@ public interface SliderRepository extends JpaRepository<Slider, Long> {
 
     @Query("SELECT s FROM Slider s WHERE s.position > ?1 ORDER BY s.position")
     List<Slider> findAllByPositionGreaterThanOrderByPosition(Integer position);
+
+    @Query("UPDATE Slider s SET s.position = s.position - 1 WHERE s.position > ?1")
+    void updateAllByPositionGreaterThanOrderByPosition(Integer position);
 }

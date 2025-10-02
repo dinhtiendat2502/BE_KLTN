@@ -3,6 +3,8 @@ package com.app.toeic.topic.repo;
 import com.app.toeic.topic.model.Topic;
 import com.app.toeic.user.model.UserAccount;
 import com.app.toeic.topic.response.TopicUserExam;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -12,7 +14,7 @@ import java.util.List;
 
 @Repository
 public interface ITopicRepository extends JpaRepository<Topic, Integer> {
-    List<Topic> findAllByStatus(String status);
+    Page<Topic> findAllByStatus(String status, Pageable pageable);
 
     List<Topic> findAllByStatusOrderByExamsDesc(String status);
 

@@ -8,6 +8,7 @@ import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.topic.service.TopicService;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,13 +20,8 @@ public class TopicServiceImpl implements TopicService {
     private final ITopicRepository iTopicRepository;
 
     @Override
-    public ResponseVO getAllTopic() {
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .data(iTopicRepository.findAllByStatus("ACTIVE"))
-                .message("Lấy danh sách bộ đề thi thành công")
-                .build();
+    public Object getAllTopic(int page, int size) {
+        return iTopicRepository.findAllByStatus("ACTIVE", PageRequest.of(page, size));
     }
 
     @Override
