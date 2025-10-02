@@ -1,9 +1,6 @@
 package com.app.toeic.userexam.response;
 
 
-import jakarta.persistence.Column;
-import org.hibernate.annotations.CreationTimestamp;
-
 import java.time.LocalDateTime;
 import java.util.Set;
 

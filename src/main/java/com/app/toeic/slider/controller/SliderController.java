@@ -1,9 +1,7 @@
 package com.app.toeic.slider.controller;
 
-import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.external.service.FirebaseStorageService;
 import com.app.toeic.slider.model.Slider;
-import com.app.toeic.slider.payload.SliderDTO;
 import com.app.toeic.slider.repo.SliderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -75,7 +73,8 @@ public class SliderController {
                 && "down".equals(action)
                 && Objects.equals(lastSlider.get().getPosition(), position)) {
             return "OK";
-        } else if ("up".equals(action)
+        }
+        if ("up".equals(action)
                 && Objects.equals(1, position)) {
             return "OK";
         }

@@ -64,12 +64,10 @@ public class Question implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "part_id")
-    @org.hibernate.annotations.Index(name = "part_id_index")
     private Part part;
 
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    @org.hibernate.annotations.IndexColumn(name = "question_image_index")
     @JsonBackReference
     @Builder.Default
     private Set<QuestionImage> questionImages = new HashSet<>();

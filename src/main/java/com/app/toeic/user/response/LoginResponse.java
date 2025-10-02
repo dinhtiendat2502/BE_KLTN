@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class LoginResponse implements Serializable {
+public class LoginResponse {
     String token;
     String email;
     List<String> roles;

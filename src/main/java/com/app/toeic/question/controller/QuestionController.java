@@ -36,9 +36,9 @@ public class QuestionController {
                     .build();
         }
         var part = partService.getPartById(partId);
-        var isAddNew = !part
+        var isAddNew = part
                 .getQuestions()
-                .isEmpty() ? Boolean.FALSE : Boolean.TRUE;
+                .isEmpty();
         List<Question> listQuestion = !part
                 .getQuestions()
                 .isEmpty() ? part
@@ -46,27 +46,13 @@ public class QuestionController {
                 .stream()
                 .toList() : new ArrayList<>();
         switch (part.getPartCode()) {
-            case "PART1" -> {
-                listQuestion = excelService.excelToPart1(file.getInputStream(), part, listQuestion, isAddNew);
-            }
-            case "PART2" -> {
-                listQuestion = excelService.excelToPart2(file.getInputStream(), part, listQuestion, isAddNew);
-            }
-            case "PART3" -> {
-                listQuestion = excelService.excelToPart3(file.getInputStream(), part, listQuestion, isAddNew);
-            }
-            case "PART4" -> {
-                listQuestion = excelService.excelToPart4(file.getInputStream(), part, listQuestion, isAddNew);
-            }
-            case "PART5" -> {
-                listQuestion = excelService.excelToPart5(file.getInputStream(), part, listQuestion, isAddNew);
-            }
-            case "PART6" -> {
-                listQuestion = excelService.excelToPart6(file.getInputStream(), part, listQuestion, isAddNew);
-            }
-            case "PART7" -> {
-                listQuestion = excelService.excelToPart7(file.getInputStream(), part, listQuestion, isAddNew);
-            }
+            case "PART1" -> listQuestion = excelService.excelToPart1(file.getInputStream(), part, listQuestion, isAddNew);
+            case "PART2" -> listQuestion = excelService.excelToPart2(file.getInputStream(), part, listQuestion, isAddNew);
+            case "PART3" -> listQuestion = excelService.excelToPart3(file.getInputStream(), part, listQuestion, isAddNew);
+            case "PART4" -> listQuestion = excelService.excelToPart4(file.getInputStream(), part, listQuestion, isAddNew);
+            case "PART5" -> listQuestion = excelService.excelToPart5(file.getInputStream(), part, listQuestion, isAddNew);
+            case "PART6" -> listQuestion = excelService.excelToPart6(file.getInputStream(), part, listQuestion, isAddNew);
+            case "PART7" -> listQuestion = excelService.excelToPart7(file.getInputStream(), part, listQuestion, isAddNew);
         }
         questionService.saveAllQuestion(listQuestion);
         return ResponseVO

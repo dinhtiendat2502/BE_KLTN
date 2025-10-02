@@ -23,7 +23,7 @@ public class ExcelServiceImpl implements ExcelService {
     String SHEET = "Sheet1";
 
     @Override
-    public List<Question> excelToPart1(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws
+    public List<Question> excelToPart1(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
                                                                                                          IOException {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(SHEET);
@@ -66,7 +66,7 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public List<Question> excelToPart2(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws
+    public List<Question> excelToPart2(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
                                                                                                          IOException {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(SHEET);
@@ -110,7 +110,7 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public List<Question> excelToPart3(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws
+    public List<Question> excelToPart3(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
                                                                                                          IOException {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(SHEET);
@@ -161,7 +161,7 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public List<Question> excelToPart4(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws
+    public List<Question> excelToPart4(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
                                                                                                          IOException {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(SHEET);
@@ -212,7 +212,7 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public List<Question> excelToPart5(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws
+    public List<Question> excelToPart5(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
                                                                                                          IOException {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(SHEET);
@@ -263,7 +263,7 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public List<Question> excelToPart6(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws
+    public List<Question> excelToPart6(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
                                                                                                          IOException {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(SHEET);
@@ -320,7 +320,7 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public List<Question> excelToPart7(InputStream is, Part part, List<Question> list, Boolean isAddNew) throws
+    public List<Question> excelToPart7(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
                                                                                                          IOException {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(SHEET);
