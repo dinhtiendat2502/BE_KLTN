@@ -1,10 +1,12 @@
 package com.app.toeic.slider.controller;
 
+import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.external.service.FirebaseStorageService;
 import com.app.toeic.slider.model.Slider;
 import com.app.toeic.slider.repo.SliderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +26,7 @@ public class SliderController {
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size
     ) {
-        return sliderRepository.findAll(PageRequest.of(page - 1, size));
+        return sliderRepository.findAllOrderByPosition(PageRequest.of(page - 1, size));
     }
 
     @PostMapping("/add")
@@ -44,20 +46,39 @@ public class SliderController {
                 .position(position)
                 .build();
         sliderRepository.save(newSlider);
-        return "OK";
+        return ResponseVO
+                .builder()
+                .success(true)
+                .message("OK")
+                .data(null)
+                .build();
     }
 
     @DeleteMapping("/delete/{sliderId}")
+    @Transactional
     public Object deleteSlider(@PathVariable("sliderId") Long sliderId) {
         var slider = sliderRepository
                 .findById(sliderId)
                 .orElse(null);
-        if (slider == null) return "FAIL";
+        if (slider == null) return ResponseVO
+                .builder()
+                .success(false)
+                .message("FAILT")
+                .data(null)
+                .build();;
         var position = slider.getPosition();
         sliderRepository.deleteById(sliderId);
-        // update position of all slider after deleted slider
-        sliderRepository.updateAllByPositionGreaterThanOrderByPosition(position);
-        return "OK";
+        var list = sliderRepository.findAllByPositionGreaterThanOrderByPosition(position);
+        for(var s : list) {
+            s.setPosition(s.getPosition() - 1);
+            sliderRepository.save(s);
+        }
+        return ResponseVO
+                .builder()
+                .success(true)
+                .message("OK")
+                .data(null)
+                .build();
     }
 
     // action = up | down
@@ -73,11 +94,21 @@ public class SliderController {
         if (lastSlider.isPresent()
                 && "down".equals(action)
                 && Objects.equals(lastSlider.get().getPosition(), position)) {
-            return "OK";
+            return ResponseVO
+                    .builder()
+                    .success(true)
+                    .message("OK")
+                    .data(null)
+                    .build();
         }
         if ("up".equals(action)
                 && Objects.equals(1, position)) {
-            return "OK";
+            ResponseVO
+                    .builder()
+                    .success(true)
+                    .message("OK")
+                    .data(null)
+                    .build();
         }
 
         var slider = sliderRepository
@@ -98,6 +129,11 @@ public class SliderController {
         nextSlider.setImage(tempImg);
         sliderRepository.save(nextSlider);
         sliderRepository.save(slider);
-        return "OK";
+        return ResponseVO
+                .builder()
+                .success(true)
+                .message("OK")
+                .data(null)
+                .build();
     }
 }
