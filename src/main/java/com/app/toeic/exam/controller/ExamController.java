@@ -38,7 +38,12 @@ public class ExamController {
 
     @GetMapping("/list")
     public Object getAllExams() {
-        return examService.getAllExam();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(examService.getAllExam())
+                .message(GET_EXAM_SUCCESS)
+                .build();
     }
 
     @GetMapping("/list-by-topic/{topicId}")

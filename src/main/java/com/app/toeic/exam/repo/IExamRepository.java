@@ -21,7 +21,12 @@ public interface IExamRepository extends JpaRepository<Exam, Integer> {
     @Query("SELECT e FROM Exam e LEFT JOIN FETCH e.topic t WHERE e.status = 'ACTIVE' AND t.topicId = ?1 ORDER BY t.topicId DESC, e.examName ASC")
     List<ExamVO.ExamListAll> findAllByStatusAndTopicId(Integer topicId);
 
-    @Query("SELECT e FROM Exam e LEFT JOIN FETCH e.topic t WHERE e.status = 'ACTIVE' AND t = NULL ORDER BY e.examName ASC")
+    @Query("""
+            SELECT e
+            FROM Exam e
+            WHERE e.status = 'ACTIVE' AND e.topic is NULL
+            ORDER BY e.examName ASC
+            """)
     List<ExamVO.ExamListAll> findAllByTopicIsNull();
 
     @Query("SELECT e FROM Exam e JOIN FETCH e.parts p WHERE e.examId = ?1")
@@ -30,7 +35,15 @@ public interface IExamRepository extends JpaRepository<Exam, Integer> {
     @Query("SELECT e FROM Exam e JOIN fetch e.parts WHERE e.examId = ?1")
     Optional<ExamVO.ExamList> findExamByExamId(Integer examId);
 
-    @Query("SELECT e FROM Exam e JOIN FETCH e.parts p JOIN FETCH p.questions q WHERE e.examId = ?1 ORDER BY p.partCode ASC, q.questionNumber ASC")
+    @Query("""
+            SELECT e
+            FROM Exam e
+            JOIN FETCH e.parts p
+            JOIN FETCH p.questions q
+            LEFT JOIN FETCH q.questionImages
+            WHERE e.examId = ?1 AND e.status = 'ACTIVE'
+            ORDER BY p.partCode ASC, q.questionNumber ASC
+            """)
     Optional<ExamVO.ExamFullQuestion> findExamWithFullQuestion(Integer examId);
 
     @Query("SELECT e FROM Exam e JOIN FETCH e.parts p JOIN FETCH p.questions q WHERE e.examId = ?1 ORDER BY p.partCode ASC, q.questionNumber ASC")

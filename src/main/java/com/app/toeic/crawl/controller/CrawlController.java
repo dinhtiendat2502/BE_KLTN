@@ -98,18 +98,24 @@ public class CrawlController {
 
     @PostMapping("get-data")
     public Object crawl(@RequestBody CrawlDTO crawl) throws IOException {
-        String regex = "^https:\\/\\/study4\\.com\\/tests\\/(\\d+)\\/results\\/(\\d+)\\/details\\/$";
+        String regex = "^https://study4\\.com/tests/(\\d+)/results/(\\d+)/details/$";
         Pattern pattern = Pattern.compile(regex);
         if (!pattern.matcher(crawl.getUrl()).matches()) {
             return ResponseVO
                     .builder()
                     .success(Boolean.FALSE)
-                    .message("URL_NOT_MATCH")
+                    .message("URL_CRAWL_NOT_MATCH")
                     .build();
         }
         var connection = Jsoup.connect(crawl.getUrl());
-        var config = crawlConfigRepository.findByEmail(crawl.getEmail()).orElse(CrawlConfig.builder().token(
-                "csrftoken=taoxMpbf7FKoFHoZGyNqfdoKcwD0elEJgIKsrel28Pc7cEKWiO5XB9Tc8Lw4r0ge; sessionid=11wlkenrvfpsrris51vl9aqbixlvcvfq; cf_clearance=.UxZwpQCxxLgA3nOPuc8.XCIZ3pXEIYNPBVDEK1r_r8-1711956447-1.0.1.1-MTG7UGOio0vwN9itKBMXt3e8nMGDHKmXBgnQfft.DVHqFqok0rtyy.QQ9imW79wiElSwe8jX0eKt8vHd9HyijQ").build());
+        var config = crawlConfigRepository.findByEmail(crawl.getEmail()).orElse(null);
+        if (config == null) {
+            return ResponseVO
+                    .builder()
+                    .success(Boolean.FALSE)
+                    .message("CRAWL_CONFIG_NOT_FOUND")
+                    .build();
+        }
         connection.header("Cookie", config.getToken());
         var doc = connection.userAgent(config.getAgentUser()).get();
         var listPartContent = doc.getElementsByClass("test-questions-wrapper");

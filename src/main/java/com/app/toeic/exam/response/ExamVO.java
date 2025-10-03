@@ -25,6 +25,10 @@ public class ExamVO {
 
         String getAudioPart4();
 
+        Integer getNumberOfUserDoExam();
+
+        Double getPrice();
+
         Topic getTopic();
 
         String getStatus();
@@ -54,6 +58,10 @@ public class ExamVO {
         String getAudioPart3();
 
         String getAudioPart4();
+
+        Integer getNumberOfUserDoExam();
+
+        Double getPrice();
 
         String getStatus();
 
@@ -85,6 +93,8 @@ public class ExamVO {
 
         String getExamImage();
 
+        String getExamAudio();
+
         String getAudioPart1();
 
         String getAudioPart2();
@@ -92,6 +102,10 @@ public class ExamVO {
         String getAudioPart3();
 
         String getAudioPart4();
+
+        Integer getNumberOfUserDoExam();
+
+        Double getPrice();
 
         String getStatus();
 
@@ -139,6 +153,18 @@ public class ExamVO {
                 String getAnswerC();
 
                 String getAnswerD();
+
+                Boolean getQuestionHaveTranscript();
+
+                Boolean getHaveMultiImage();
+
+                Set<QuestionImage> getQuestionImages();
+
+                interface QuestionImage {
+                    Integer getQuestionImageId();
+
+                    String getQuestionImage();
+                }
             }
         }
     }

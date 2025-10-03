@@ -15,6 +15,7 @@ public class QuestionImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer questionImageId;
+    @Column(columnDefinition = "TEXT")
     private String questionImage;
 
     @ManyToOne

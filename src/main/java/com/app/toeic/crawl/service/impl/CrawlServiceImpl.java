@@ -9,6 +9,7 @@ import com.app.toeic.part.model.Part;
 import com.app.toeic.question.model.Question;
 import com.app.toeic.question.model.QuestionImage;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.apache.commons.collections4.CollectionUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,9 +23,11 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class CrawlServiceImpl implements CrawlService {
-    private final JobCrawlRepository jobCrawlRepository;
-    private final IExamRepository examRepository;
+    JobCrawlRepository jobCrawlRepository;
+    IExamRepository examRepository;
+
     public Set<Question> mCrawlPart12(Element element1, boolean element2, Part part) {
         var questionList = new ArrayList<Question>();
         int totalQuestion = element2 ? 6 : 25;
@@ -93,7 +96,8 @@ public class CrawlServiceImpl implements CrawlService {
             var numberQuestionInGroup = 3;
             var indexStart = i * numberQuestionInGroup;
             questionList.get(indexStart).setTranscript(transcript.html());
-            if(CollectionUtils.isNotEmpty(questionImage)) {
+            questionList.get(indexStart).setNumberQuestionInGroup(numberQuestionInGroup);
+            if (CollectionUtils.isNotEmpty(questionImage)) {
                 questionList.get(indexStart).setQuestionImage(questionImage.getFirst().absUrl("src"));
             }
             for (int j = 0; j < numberQuestionInGroup; j++) {
@@ -171,6 +175,7 @@ public class CrawlServiceImpl implements CrawlService {
             questionList.get(indexStart).setQuestionHaveTranscript(true);
             var questionWrapper = questionGroupWrapper.get(i).getElementsByClass("question-wrapper");
             var questionExplain = questionGroupWrapper.get(i).getElementsByClass("question-explanation-wrapper");
+            questionList.get(indexStart).setNumberQuestionInGroup(questionWrapper.size());
             for (int j = 0; j < questionWrapper.size(); j++) {
                 var questionContent = questionWrapper.get(j);
                 var questionNumber = questionContent.getElementsByTag("strong").getFirst().text();
@@ -187,17 +192,25 @@ public class CrawlServiceImpl implements CrawlService {
                 } else {
                     var otherCorrectAnswerElement = questionContent.getElementsByClass("text-success").getFirst();
                     if (otherCorrectAnswerElement != null) {
-                        questionList.get(indexStart + j).setCorrectAnswer(otherCorrectAnswerElement.text().replace(
-                                "Đáp án đúng:",
-                                ""
-                        ));
+                        questionList
+                                .get(indexStart + j)
+                                .setCorrectAnswer(otherCorrectAnswerElement
+                                        .text()
+                                        .replace("Đáp án đúng:", "")
+                                );
                     } else {
                         questionList.get(indexStart + j).setCorrectAnswer("A");
                     }
                 }
-                questionList.get(indexStart + j).setTranslateTranscript(questionExplain.get(j).getElementsByClass(
-                        "collapse").getFirst().removeAttr(
-                        "id").html());
+                questionList
+                        .get(indexStart + j)
+                        .setTranslateTranscript(questionExplain
+                                .get(j)
+                                .getElementsByClass("collapse")
+                                .getFirst()
+                                .removeAttr("id")
+                                .html()
+                        );
             }
         }
         return new HashSet<>(questionList);
@@ -226,7 +239,7 @@ public class CrawlServiceImpl implements CrawlService {
             questionList.get(index).setQuestionHaveTranscript(true);
             var transcript = questionGroup.getElementsByClass("context-transcript").getFirst();
             questionList.get(index).setTranscript(transcript.getElementsByClass("collapse").removeAttr("id").html());
-
+            questionList.get(index).setNumberQuestionInGroup(listQuestion.size());
             for (Element questionContent : listQuestion) {
                 var questionNumber = questionContent.getElementsByTag("strong").getFirst().text();
                 getAnswerQuestion(questionList, index, Integer.parseInt(questionNumber), questionContent);
@@ -247,30 +260,47 @@ public class CrawlServiceImpl implements CrawlService {
             switch (i) {
                 case 1 -> {
                     part.setNumberOfQuestion(6);
+                    part.setPartContent("Directions : For each question in this part, you will hear four statements about a picture in your test book. When you hear the statements, you must select the one statement that best describes what you see in the picture. Then find the number of the question on your answer sheet and mark your answer. The statements will not be printed in your test book and will be spoken only one time.");
                     part.setQuestions(this.mCrawlPart12(listPartContent.getFirst(), true, part));
                 }
                 case 2 -> {
                     part.setNumberOfQuestion(25);
+                    part.setPartContent("Directions : You will hear a question or statement and three responses spoken in English. They will not be printed in your test book and will be spoken only one time. Select the best response to the question or statement and mark the letter (A), (B), or (C) on your answer sheet.");
                     part.setQuestions(this.mCrawlPart12(listPartContent.get(1), false, part));
                 }
                 case 3 -> {
                     part.setNumberOfQuestion(39);
+                    part.setPartContent("""
+                            Directions : You will hear some conversations between two or more people. You will be asked to answer three questions about what the speakers say in each conversation. Select the best response to each question and mark the letter (A), (B), (C), or (D) on your answer sheet. The conversations will not be printed in your test book and will be spoken only one time.
+                            """);
                     part.setQuestions(this.mCrawlPart34(listPartContent.get(2), true, part));
                 }
                 case 4 -> {
                     part.setNumberOfQuestion(30);
+                    part.setPartContent("""
+                            Directions : You will hear some talks given by a single speaker. You will be asked to answer three questions about what the speaker says in each talk. Select the best response to each question and mark the letter (A), (B), (C), or (D) on your answer sheet. The talks will not be printed in your test book and will be spoken only one time.
+                            """);
                     part.setQuestions(this.mCrawlPart34(listPartContent.get(3), false, part));
                 }
                 case 5 -> {
                     part.setNumberOfQuestion(30);
+                    part.setPartContent("""
+                            Directions: A word or phrase is missing in each of the sentences below. Four answer choices are given below each sentence. Select the best answer to complete the sentence. Then mark the letter (A), (B), (C), or (D) on your answer sheet.
+                            """);
                     part.setQuestions(this.mCrawlPart5(listPartContent.get(4), part));
                 }
                 case 6 -> {
                     part.setNumberOfQuestion(16);
+                    part.setPartContent("""
+                            Directions : Read the texts that follow. A word, phrase, or sentence is missing in parts of each text. Four answer choices for each question are given below the text. Select the best answer to complete the text. Then mark the letter (A), (B), (C), or (D) on your answer sheet.
+                            """);
                     part.setQuestions(this.mCrawlPart6(listPartContent.get(5), part));
                 }
                 case 7 -> {
                     part.setNumberOfQuestion(54);
+                    part.setPartContent("""
+                            Directions: In this part you will read a selection of texts, such as magazine and newspaper articles, e-mails, and instant messages. Each text or set of texts is followed by several questions. Select the best answer for each question and mark the letter (A), (B), (C), or (D) on your answer sheet.
+                            """);
                     part.setQuestions(this.mCrawlPart7(listPartContent.get(6), part));
                 }
             }
@@ -278,7 +308,6 @@ public class CrawlServiceImpl implements CrawlService {
             exam.getParts().add(part);
         }
         examRepository.save(exam);
-
         job.setJobStatus("DONE");
         jobCrawlRepository.save(job);
     }

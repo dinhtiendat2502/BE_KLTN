@@ -9,6 +9,7 @@ import com.app.toeic.exam.service.ExamService;
 import com.app.toeic.part.service.PartService;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +19,10 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class ExamServiceImpl implements ExamService {
-    private final IExamRepository examRepository;
-    private final PartService partService;
+    IExamRepository examRepository;
+    PartService partService;
 
     @Override
     public Object getAllExam() {
@@ -105,7 +107,7 @@ public class ExamServiceImpl implements ExamService {
                 .filter(question -> Objects.equals(question.getQuestionId(), questionId))
                 .map(ExamVO.ExamFullQuestionWithAnswer.Part.Question::getCorrectAnswer)
                 .findFirst()
-                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy câu hỏi"));
+                .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "NOT_FOUND_QUESTION"));
     }
 
     @Override

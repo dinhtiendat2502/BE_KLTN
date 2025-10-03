@@ -48,6 +48,9 @@ public class Question {
     @Builder.Default
     private Boolean haveMultiImage = false;
 
+    @Builder.Default
+    private Integer numberQuestionInGroup = 1;
+
     @Column(columnDefinition = "TEXT")
     private String transcript;
     @Column(columnDefinition = "TEXT")
