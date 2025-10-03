@@ -12,24 +12,24 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 @RequiredArgsConstructor
 public class KommunicateAccountController {
-    private final KommunicateAccountRepo kummunicateAccountRepo;
+    private final KommunicateAccountRepo kommunicateAccountRepo;
 
     @GetMapping("/all")
     public Object getAll() {
-        return kummunicateAccountRepo.findAll();
+        return kommunicateAccountRepo.findAll();
     }
 
     @PostMapping("/update")
     public Object updateKommunicateAccount(@RequestBody KommunicateAccountDTO payload) {
         String[] msg = new String[1];
-        kummunicateAccountRepo
+        kommunicateAccountRepo
                 .findByEmail(payload.getEmail())
                 .ifPresentOrElse(kommunicateAccount -> {
                     kommunicateAccount.setPassword(payload.getPassword());
-                    kummunicateAccountRepo.save(kommunicateAccount);
+                    kommunicateAccountRepo.save(kommunicateAccount);
                     msg[0] = "UPDATE_KOMMUNICATE_ACCOUNT_SUCCESS";
                 }, () -> {
-                    kummunicateAccountRepo
+                    kommunicateAccountRepo
                             .save(KommunicateAccount
                                     .builder()
                                     .email(payload.getEmail())
@@ -46,7 +46,7 @@ public class KommunicateAccountController {
 
     @DeleteMapping("/delete/{id}")
     public Object deleteKommunicateAccount(@PathVariable Integer id) {
-        kummunicateAccountRepo.deleteById(id);
+        kommunicateAccountRepo.deleteById(id);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)

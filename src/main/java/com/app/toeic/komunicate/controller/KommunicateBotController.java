@@ -4,7 +4,7 @@ package com.app.toeic.komunicate.controller;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.komunicate.model.KommunicateBot;
 import com.app.toeic.komunicate.payload.KommunicateBotDTO;
-import com.app.toeic.komunicate.repo.KummunicateBotRepo;
+import com.app.toeic.komunicate.repo.KommunicateBotRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,24 +13,24 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 @RequiredArgsConstructor
 public class KommunicateBotController {
-    private final KummunicateBotRepo kummunicateBotRepo;
+    private final KommunicateBotRepo kommunicateBotRepo;
 
     @GetMapping("/all")
     public Object getAll() {
-        return kummunicateBotRepo.findAll();
+        return kommunicateBotRepo.findAll();
     }
 
     @PostMapping("/update")
     public Object updateKommunicateBot(@RequestBody KommunicateBotDTO payload) {
         String[] msg = new String[1];
-        kummunicateBotRepo
+        kommunicateBotRepo
                 .findByAppId(payload.getAppId())
                 .ifPresentOrElse(kommunicateBot -> {
                     kommunicateBot.setApiKey(payload.getApiKey());
-                    kummunicateBotRepo.save(kommunicateBot);
+                    kommunicateBotRepo.save(kommunicateBot);
                     msg[0] = "UPDATE_KOMMUNICATE_BOT_SUCCESS";
                 }, () -> {
-                    kummunicateBotRepo
+                    kommunicateBotRepo
                             .save(KommunicateBot
                                     .builder()
                                     .appId(payload.getAppId())
@@ -47,7 +47,7 @@ public class KommunicateBotController {
 
     @PatchMapping("/update/status/{appId}")
     public Object updateKommunicateBotStatus(@PathVariable String appId) {
-        var kommunicateBot = kummunicateBotRepo.findByAppId(appId).orElse(null);
+        var kommunicateBot = kommunicateBotRepo.findByAppId(appId).orElse(null);
         if (kommunicateBot == null) {
             return ResponseVO
                     .builder()
@@ -55,13 +55,13 @@ public class KommunicateBotController {
                     .message("KOMMUNICATE_BOT_NOT_FOUND")
                     .build();
         }
-        var list = kummunicateBotRepo.findAllByAppIdNot(appId);
+        var list = kommunicateBotRepo.findAllByAppIdNot(appId);
         list.forEach(item -> {
             item.setStatus(false);
-            kummunicateBotRepo.save(item);
+            kommunicateBotRepo.save(item);
         });
         kommunicateBot.setStatus(true);
-        kummunicateBotRepo.save(kommunicateBot);
+        kommunicateBotRepo.save(kommunicateBot);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
@@ -71,9 +71,9 @@ public class KommunicateBotController {
 
     @DeleteMapping("/delete/{id}")
     public Object deleteKommunicateBot(@PathVariable Integer id) {
-        kummunicateBotRepo
+        kommunicateBotRepo
                 .findById(id)
-                .ifPresent(kummunicateBotRepo::delete);
+                .ifPresent(kommunicateBotRepo::delete);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
