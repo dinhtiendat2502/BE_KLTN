@@ -1,12 +1,14 @@
-package com.app.toeic.user.payload;
+package com.app.toeic.chatai.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class ResetPasswordDTO {
-    String email;
+public class Message {
+    private String role;
+    private String content;
+
 }

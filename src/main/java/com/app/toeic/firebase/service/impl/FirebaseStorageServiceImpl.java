@@ -61,7 +61,7 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
     }
 
     private String generateFileName(String originalFileName) {
-        return UUID.randomUUID() + "." + getExtension(originalFileName);
+        return STR."\{UUID.randomUUID()}.\{getExtension(originalFileName)}";
     }
 
     private String getExtension(String originalFileName) {

@@ -50,3 +50,8 @@ ipinfo:
   token: "${IPINFO_TOKEN:b1324b9ae149de}"
 
 BOT_AI_URL: "${API_AI:https://llamastudio.dev/api/cls40w5460001l2087o43vxsy}"
+openai:
+  model: gpt-3.5-turbo
+  api:
+    url: https://api.openai.com/v1/chat/completions
+    key: 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
