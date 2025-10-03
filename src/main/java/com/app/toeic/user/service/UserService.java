@@ -38,4 +38,6 @@ public interface UserService {
     Object loginSocial(LoginSocialDTO loginSocialDto);
 
     Object isAdminLogin(HttpServletRequest request);
+
+    Object forgotPassword(String email);
 }

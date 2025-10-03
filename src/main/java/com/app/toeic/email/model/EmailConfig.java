@@ -20,5 +20,6 @@ public class EmailConfig {
     @Column(unique = true)
     private String username;
     private String password;
+
     private boolean status = false;
 }

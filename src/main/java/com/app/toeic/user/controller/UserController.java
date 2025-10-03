@@ -5,8 +5,8 @@ import com.app.toeic.external.payload.EmailDTO;
 import com.app.toeic.user.enums.EUser;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.external.response.ResponseVO;
-import com.app.toeic.external.service.EmailService;
-import com.app.toeic.external.service.FirebaseStorageService;
+import com.app.toeic.email.service.EmailService;
+import com.app.toeic.firebase.service.FirebaseStorageService;
 import com.app.toeic.user.payload.*;
 import com.app.toeic.user.service.UserService;
 import com.app.toeic.util.HttpStatus;
@@ -52,7 +52,23 @@ public class UserController {
 
     @PostMapping("/send-email")
     public ResponseVO sendEmail(@Valid @RequestBody EmailDTO emailDto) {
-        return emailService.sendEmail(emailDto, "email-template");
+        emailService.sendEmail(emailDto.getTo(), emailDto.getTemplateCode());
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(null)
+                .message("SEND_EMAIL_SUCCESS")
+                .build();
+    }
+    @PostMapping("/send-email-social")
+    public Object sendEmailSocial(@Valid @RequestBody LoginSocialDTO emailDto) {
+        return userService.loginSocial(emailDto);
+    }
+
+    @PostMapping("/forgot-password/{email}")
+    public Object forgotPassword(@PathVariable("email") String email){
+        return userService.forgotPassword(email);
+
     }
 
     @PatchMapping("/update-password")

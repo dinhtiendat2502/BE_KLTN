@@ -16,4 +16,5 @@ public class LoginSocialDTO {
     String fullName;
     String avatar;
     String provider;
+    String url;
 }

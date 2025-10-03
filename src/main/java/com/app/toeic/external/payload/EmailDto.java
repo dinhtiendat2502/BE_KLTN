@@ -14,4 +14,6 @@ import lombok.NoArgsConstructor;
 public class EmailDTO {
     @Email(message = "Địa chỉ email không hợp lệ")
     String to;
+
+    String templateCode;
 }

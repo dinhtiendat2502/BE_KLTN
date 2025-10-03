@@ -16,7 +16,9 @@ public class EmailTemplate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(unique = true)
     private String name;
+
     private String subject;
 
     @Column(unique = true)

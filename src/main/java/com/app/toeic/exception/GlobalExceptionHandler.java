@@ -129,7 +129,7 @@ public class GlobalExceptionHandler {
         log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException: {}", e
                 .getClass()
                 .getSimpleName());
-        log.error(STR."Exception >> GlobalExceptionHandler >> handleUnwantedException: \{e.getMessage()} >> \{e.getCause().getMessage()}");
+        log.error(STR."Exception >> GlobalExceptionHandler >> handleUnwantedException: \{e.getMessage()}");
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)

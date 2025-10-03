@@ -1,6 +1,6 @@
 package com.app.toeic.user.service.impl;
 
-import com.app.toeic.external.service.impl.EmailServiceImpl;
+import com.app.toeic.email.service.impl.EmailServiceImpl;
 import com.app.toeic.user.enums.ERole;
 import com.app.toeic.user.enums.EUser;
 import com.app.toeic.exception.AppException;
@@ -98,6 +98,7 @@ public class UserServiceImpl implements UserService {
         if (Boolean.TRUE.equals(iUserRepository.existsByEmail(registerDto.getEmail()))) {
             throw new AppException(HttpStatus.SEE_OTHER, "EMAIL_EXISTED");
         }
+        emailService.sendEmail(registerDto.getEmail(), "AUTHENTICATION_AFTER_REGISTER");
         var user = UserAccount
                 .builder()
                 .email(registerDto.getEmail())
@@ -108,7 +109,6 @@ public class UserServiceImpl implements UserService {
                 .status(EUser.INACTIVE)
                 .provider("TOEICUTE")
                 .build();
-
         iUserRepository.save(user);
         return ResponseVO
                 .builder()
@@ -238,17 +238,13 @@ public class UserServiceImpl implements UserService {
         var user = iUserRepository.findByEmail(loginSocialDto.getEmail());
         List<String> tokens = new ArrayList<>();
         user.ifPresentOrElse(u -> {
-            if (u
-                    .getStatus()
+            if (u.getStatus()
                     .equals(EUser.INACTIVE)) {
                 throw new AppException(HttpStatus.SEE_OTHER, "ACCOUNT_NOT_ACTIVE");
-            } else if (u
-                    .getStatus()
+            } else if (u.getStatus()
                     .equals(EUser.BLOCKED)) {
                 throw new AppException(HttpStatus.SEE_OTHER, "ACCOUNT_BLOCKED");
-            }
-            if (!u
-                    .getProvider()
+            } else if (!u.getProvider()
                     .equals(loginSocialDto.getProvider())) {
                 throw new AppException(
                         HttpStatus.SEE_OTHER,
@@ -256,9 +252,7 @@ public class UserServiceImpl implements UserService {
                 );
             }
             List<String> rolesNames = new ArrayList<>();
-            u
-                    .getRoles()
-                    .forEach(r -> rolesNames.add(r.getRoleName()));
+            u.getRoles().forEach(r -> rolesNames.add(r.getRoleName()));
             final var token = jwtUtilities.generateToken(u.getUsername(), u.getPassword(), rolesNames);
             tokens.add(token);
         }, () -> {
@@ -275,12 +269,11 @@ public class UserServiceImpl implements UserService {
                     .build();
             iUserRepository.save(newUser);
             List<String> rolesNames = new ArrayList<>();
-            newUser
-                    .getRoles()
+            newUser.getRoles()
                     .forEach(r -> rolesNames.add(r.getRoleName()));
             final var token = jwtUtilities.generateToken(newUser.getUsername(), newUser.getPassword(), rolesNames);
             tokens.add(token);
-            emailService.sendEmailAccount(loginSocialDto, password, "email-account");
+            emailService.sendEmailAccount(loginSocialDto, password, "LOGIN_SOCIAL");
         });
         return tokens.getFirst();
     }
@@ -305,6 +298,12 @@ public class UserServiceImpl implements UserService {
             }
         }
         return Boolean.FALSE;
+    }
+
+    @Override
+    public Object forgotPassword(String email) {
+        emailService.sendEmail(email, "FORGOT_PASSWORD");
+        return "SEND_EMAIL_SUCCESS";
     }
 
     public String randomPassword() {

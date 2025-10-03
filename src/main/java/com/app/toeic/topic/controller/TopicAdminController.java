@@ -1,6 +1,6 @@
 package com.app.toeic.topic.controller;
 
-import com.app.toeic.external.service.FirebaseStorageService;
+import com.app.toeic.firebase.service.FirebaseStorageService;
 import com.app.toeic.topic.model.Topic;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.topic.service.TopicService;

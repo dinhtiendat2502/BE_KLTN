@@ -21,18 +21,18 @@ spring:
     multipart:
       max-file-size: 20MB
       max-request-size: 20MB
-  mail:
-    host: "${MAIL_HOST:smtp.gmail.com}"
-    port: "${MAIL_PORT:587}"
-    username: "${MAIL_USERNAME:hideonbush8405}"
-    password: "${MAIL_PASSWORD:okcu xvrk eblg accw}"
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
+#  mail:
+#    host: "${MAIL_HOST:smtp.gmail.com}"
+#    port: "${MAIL_PORT:587}"
+#    username: "${MAIL_USERNAME:hideonbush8405}"
+#    password: "${MAIL_PASSWORD:okcu xvrk eblg accw}"
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#            required: true
 jwt:
   secret: "${JWT_SECRET:872c871a1ab996919a3e97145ece2418bb837cadbd69387d96cd45eef831f239}"
   expiration: "${JWT_EXPIRATION:86400000}"

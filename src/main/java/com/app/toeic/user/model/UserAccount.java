@@ -32,12 +32,14 @@ public class UserAccount implements UserDetails {
     private String password;
     private String fullName;
     private String phone;
+
+    @Column(length = 3000)
     private String address;
 
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(length = 1000)
+    @Column(columnDefinition = "TEXT")
     private String avatar;
 
     @Builder.Default

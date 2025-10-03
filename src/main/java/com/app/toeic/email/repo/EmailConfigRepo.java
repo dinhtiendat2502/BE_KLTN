@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface EmailConfigRepo extends JpaRepository<EmailConfig, Integer> {
     Optional<EmailConfig> findByUsername(String username);
     List<EmailConfig> findAllByUsernameNot(String username);
+    Optional<EmailConfig> findByStatus(boolean status);
 }
