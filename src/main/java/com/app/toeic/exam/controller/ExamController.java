@@ -37,7 +37,7 @@ public class ExamController {
     String GET_EXAM_SUCCESS = "GET_EXAM_SUCCESS";
 
     @GetMapping("/list")
-    public ResponseVO getAllExams() {
+    public Object getAllExams() {
         return examService.getAllExam();
     }
 
