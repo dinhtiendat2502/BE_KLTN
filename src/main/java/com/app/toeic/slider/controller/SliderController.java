@@ -31,7 +31,7 @@ public class SliderController {
         return sliderRepository.findAllOrderByPosition(PageRequest.of(page - 1, size));
     }
 
-    @PostMapping("/add")
+    @PostMapping(value = "/add", consumes = {"multipart/form-data"})
     public Object addSlider(@RequestParam("file") MultipartFile file) throws
             IOException {
         if (file == null) return ResponseVO

@@ -25,7 +25,7 @@ public class TopicAdminController {
         return topicService.getAllTopic(page, size);
     }
 
-    @PostMapping("/create-topic")
+    @PostMapping(value = "/create-topic", consumes = {"multipart/form-data"})
     public ResponseVO createTopic(
             @RequestParam("topicName") String topicName,
             @RequestParam("file") MultipartFile file

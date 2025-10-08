@@ -30,7 +30,7 @@ public class FirebaseConfigController {
         return firebaseRepository.findAll();
     }
 
-    @PostMapping("/add")
+    @PostMapping(value = "/add", consumes = {"multipart/form-data"})
     @Transactional
     public Object add(
             @RequestParam("tokenKey") String tokenKey,

@@ -27,7 +27,7 @@ public class QuestionController {
     ExcelService excelService;
     QuestionService questionService;
 
-    @PostMapping("/import-part")
+    @PostMapping(value = "/import-part", consumes = {"multipart/form-data"})
     public ResponseVO importQuestion(@RequestParam("file") MultipartFile file, @RequestParam("partId") Integer partId) throws
                                                                                                                        IOException {
         if (!ExcelHelper.hasExcelFormat(file)) {

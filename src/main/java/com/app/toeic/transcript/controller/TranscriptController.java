@@ -28,7 +28,7 @@ import java.util.Objects;
 public class TranscriptController {
     FirebaseRepository firebaseRepository;
 
-    @PostMapping("v1/get")
+    @PostMapping(value = "v1/get", consumes = {"multipart/form-data"})
     public Object getTranscript(
             @RequestParam(value = "file", required = false) MultipartFile file,
             @RequestParam(value = "link", required = false) String link

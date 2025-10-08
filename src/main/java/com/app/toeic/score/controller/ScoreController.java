@@ -78,7 +78,7 @@ public class ScoreController {
                 .build();
     }
 
-    @PostMapping("import-file-score")
+    @PostMapping(value = "import-file-score", consumes = {"multipart/form-data"})
     public ResponseVO importFileScore(@RequestParam("file") MultipartFile file) throws IOException {
         if (file == null) return new ResponseVO(Boolean.FALSE, "", "FILE_IS_NULL");
         var list = calculateScoreRepository.findAll();

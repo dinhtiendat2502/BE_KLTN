@@ -97,7 +97,7 @@ public class UserController {
                 .build();
     }
 
-    @PatchMapping("/update-profile")
+    @PatchMapping(value = "/update-profile", consumes = {"multipart/form-data"})
     public ResponseVO updateProfile(
             @RequestParam("file") MultipartFile file,
             @RequestParam("fullName") String fullName,
