@@ -1,5 +1,6 @@
 package com.app.toeic.config;
 
+import com.app.toeic.email.model.EmailConfig;
 import com.app.toeic.email.repo.EmailConfigRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -16,10 +17,7 @@ public class JavaMailConfig {
 
     @Bean
     public JavaMailSender javaMailSender() {
-        var emailConfig = emailConfigRepo.findByStatus(true).orElse(null);
-        if (emailConfig == null) {
-            throw new RuntimeException("EMAIL_CONFIG_NOT_FOUND");
-        }
+        var emailConfig = emailConfigRepo.findByStatus(true).orElse(new EmailConfig());
         var mailSender = new JavaMailSenderImpl();
         var mailProperties = buildJavaMailProperties();
         mailSender.setJavaMailProperties(mailProperties);
@@ -39,6 +37,7 @@ public class JavaMailConfig {
         mailProperties.put("mail.smtp.starttls.required", true);
         mailProperties.put("mail.smtp.socketFactory.port", 465);
         mailProperties.put("mail.smtp.debug", true);
+        mailProperties.put("mail.smtp.ssl.checkserveridentity", true);
         mailProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         mailProperties.put("mail.smtp.socketFactory.fallback", false);
         return mailProperties;

@@ -33,8 +33,8 @@ public class ExamController {
     UserService userService;
     UserExamHistoryService userExamHistoryService;
     UserAnswerService userAnswerService;
-    String EXAM_NOT_FOUND = "EXAM_NOT_FOUND";
-    String GET_EXAM_SUCCESS = "GET_EXAM_SUCCESS";
+    static final String EXAM_NOT_FOUND = "EXAM_NOT_FOUND";
+    static final String GET_EXAM_SUCCESS = "GET_EXAM_SUCCESS";
 
     @GetMapping("/list")
     public Object getAllExams() {

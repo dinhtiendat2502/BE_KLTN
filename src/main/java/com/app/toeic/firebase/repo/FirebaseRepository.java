@@ -12,4 +12,6 @@ public interface FirebaseRepository extends JpaRepository<FirebaseConfig, Intege
     List<FirebaseConfig> findAllByIdNot(Integer id);
 
     Optional<FirebaseConfig> findByProjectId(String projectId);
+
+    Optional<FirebaseConfig> findByStatus(boolean status);
 }

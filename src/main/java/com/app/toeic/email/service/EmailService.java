@@ -1,7 +1,6 @@
 package com.app.toeic.email.service;
 
 import com.app.toeic.user.payload.LoginSocialDTO;
-import com.app.toeic.external.response.ResponseVO;
 
 public interface EmailService {
     String generateOTP();

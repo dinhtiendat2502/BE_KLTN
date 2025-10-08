@@ -4,7 +4,6 @@ import com.app.toeic.exception.AppException;
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.exam.repo.IExamRepository;
 import com.app.toeic.exam.response.ExamVO;
-import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.exam.service.ExamService;
 import com.app.toeic.part.service.PartService;
 import com.app.toeic.util.HttpStatus;

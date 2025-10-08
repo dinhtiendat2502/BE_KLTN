@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class ExamAdminController {
     ExamService examService;
     ITopicRepository topicService;
-    String EXAM_NOT_FOUND = "EXAM_NOT_FOUND";
+    static final String EXAM_NOT_FOUND = "EXAM_NOT_FOUND";
 
     @GetMapping("/list")
     public Object getAllExam() {

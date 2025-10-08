@@ -4,7 +4,7 @@ server:
     context-path: /api
 spring:
   datasource:
-    url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+    url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true"
     username: "${DB_USERNAME:root}"
     password: "${DB_PASSWORD:1234}"
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -32,9 +32,6 @@ jwt:
 logging:
   file:
     name: log/toeicute/toeicute.log
-  logback:
-    rollingPolicy:
-      max-history: 2
 firebase:
   project-id: "${FIREBASE_PROJECT_ID:toeicute-70460}"
   token-key: "${FIREBASE_TOKEN_KEY:toeicute-upload}"

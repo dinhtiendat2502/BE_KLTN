@@ -20,16 +20,17 @@ import java.util.Iterator;
 
 @Service
 public class ExcelServiceImpl implements ExcelService {
-    private final String nameSheet = "Sheet1";
+    private static final String NAME_SHEET = "Sheet1";
+    private static final String EXCEL_FILE_NOT_CORRECT_FORMAT = "EXCEL_FILE_NOT_CORRECT_FORMAT";
 
     @Override
     public List<Question> excelToPart1(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
             IOException {
         Workbook workbook = new XSSFWorkbook(is);
-        Sheet sheet = workbook.getSheet(nameSheet);
+        Sheet sheet = workbook.getSheet(NAME_SHEET);
         Iterator<Row> rows = sheet.iterator();
         if (sheet.getPhysicalNumberOfRows() - 1 != 6) {
-            throw new AppException(HttpStatus.SEE_OTHER, "EXCEL_FILE_NOT_CORRECT_FORMAT");
+            throw new AppException(HttpStatus.SEE_OTHER, EXCEL_FILE_NOT_CORRECT_FORMAT);
         }
         List<Question> questionList = isAddNew ? new ArrayList<>() : list;
         int rowNumber = 0;
@@ -69,10 +70,10 @@ public class ExcelServiceImpl implements ExcelService {
     public List<Question> excelToPart2(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
             IOException {
         Workbook workbook = new XSSFWorkbook(is);
-        Sheet sheet = workbook.getSheet(nameSheet);
+        Sheet sheet = workbook.getSheet(NAME_SHEET);
         Iterator<Row> rows = sheet.iterator();
         if (sheet.getPhysicalNumberOfRows() - 1 != 25) {
-            throw new AppException(HttpStatus.SEE_OTHER, "EXCEL_FILE_NOT_CORRECT_FORMAT");
+            throw new AppException(HttpStatus.SEE_OTHER, EXCEL_FILE_NOT_CORRECT_FORMAT);
         }
         List<Question> questionList = isAddNew ? new ArrayList<>() : list;
         int rowNumber = 0;
@@ -113,10 +114,10 @@ public class ExcelServiceImpl implements ExcelService {
     public List<Question> excelToPart3(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
             IOException {
         Workbook workbook = new XSSFWorkbook(is);
-        Sheet sheet = workbook.getSheet(nameSheet);
+        Sheet sheet = workbook.getSheet(NAME_SHEET);
         Iterator<Row> rows = sheet.iterator();
         if (sheet.getPhysicalNumberOfRows() - 1 != 39) {
-            throw new AppException(HttpStatus.SEE_OTHER, "EXCEL_FILE_NOT_CORRECT_FORMAT");
+            throw new AppException(HttpStatus.SEE_OTHER, EXCEL_FILE_NOT_CORRECT_FORMAT);
         }
         List<Question> questionList = isAddNew ? new ArrayList<>() : list;
         int rowNumber = 0;
@@ -165,10 +166,10 @@ public class ExcelServiceImpl implements ExcelService {
     public List<Question> excelToPart4(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
             IOException {
         Workbook workbook = new XSSFWorkbook(is);
-        Sheet sheet = workbook.getSheet(nameSheet);
+        Sheet sheet = workbook.getSheet(NAME_SHEET);
         Iterator<Row> rows = sheet.iterator();
         if (sheet.getPhysicalNumberOfRows() - 1 != 30) {
-            throw new AppException(HttpStatus.SEE_OTHER, "EXCEL_FILE_NOT_CORRECT_FORMAT");
+            throw new AppException(HttpStatus.SEE_OTHER, EXCEL_FILE_NOT_CORRECT_FORMAT);
         }
         List<Question> questionList = isAddNew ? new ArrayList<>() : list;
         int rowNumber = 0;
@@ -219,10 +220,10 @@ public class ExcelServiceImpl implements ExcelService {
     public List<Question> excelToPart5(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
             IOException {
         Workbook workbook = new XSSFWorkbook(is);
-        Sheet sheet = workbook.getSheet(nameSheet);
+        Sheet sheet = workbook.getSheet(NAME_SHEET);
         Iterator<Row> rows = sheet.iterator();
         if (sheet.getPhysicalNumberOfRows() - 1 != 30) {
-            throw new AppException(HttpStatus.SEE_OTHER, "EXCEL_FILE_NOT_CORRECT_FORMAT");
+            throw new AppException(HttpStatus.SEE_OTHER, EXCEL_FILE_NOT_CORRECT_FORMAT);
         }
         List<Question> questionList = isAddNew ? new ArrayList<>() : list;
         int rowNumber = 0;
@@ -271,10 +272,10 @@ public class ExcelServiceImpl implements ExcelService {
     public List<Question> excelToPart6(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
             IOException {
         Workbook workbook = new XSSFWorkbook(is);
-        Sheet sheet = workbook.getSheet(nameSheet);
+        Sheet sheet = workbook.getSheet(NAME_SHEET);
         Iterator<Row> rows = sheet.iterator();
         if (sheet.getPhysicalNumberOfRows() - 1 != 16) {
-            throw new AppException(HttpStatus.SEE_OTHER, "EXCEL_FILE_NOT_CORRECT_FORMAT");
+            throw new AppException(HttpStatus.SEE_OTHER, EXCEL_FILE_NOT_CORRECT_FORMAT);
         }
         List<Question> questionList = isAddNew ? new ArrayList<>() : list;
         int rowNumber = 0;
@@ -331,7 +332,7 @@ public class ExcelServiceImpl implements ExcelService {
     public List<Question> excelToPart7(InputStream is, Part part, List<Question> list, boolean isAddNew) throws
             IOException {
         Workbook workbook = new XSSFWorkbook(is);
-        Sheet sheet = workbook.getSheet(nameSheet);
+        Sheet sheet = workbook.getSheet(NAME_SHEET);
         Iterator<Row> rows = sheet.iterator();
         if (sheet.getPhysicalNumberOfRows() - 1 != 54) {
             throw new AppException(HttpStatus.SEE_OTHER, "File excel không đúng định dạng!");

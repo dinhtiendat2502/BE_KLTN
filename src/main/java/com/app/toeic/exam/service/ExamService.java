@@ -2,7 +2,6 @@ package com.app.toeic.exam.service;
 
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.exam.response.ExamVO;
-import com.app.toeic.external.response.ResponseVO;
 
 import java.util.List;
 import java.util.Optional;
