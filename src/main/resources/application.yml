@@ -3,6 +3,17 @@ server:
   servlet:
     context-path: /api
 spring:
+  ai:
+    openai:
+      api-key: "${OPENAI_API_KEY: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}"
+      audio:
+        speech:
+          options:
+            model: tts-1
+      chat:
+        options:
+          model: gpt-3.5-turbo
+          temperature: 0.7
   application:
     name: toeicute-api
   boot:
@@ -51,6 +62,12 @@ logging:
     root: info
   file:
     name: target/toeicute.log
+
+
+
+
+
+
 firebase:
   project-id: "${FIREBASE_PROJECT_ID:toeicute-70460}"
   token-key: "${FIREBASE_TOKEN_KEY:toeicute-upload}"
