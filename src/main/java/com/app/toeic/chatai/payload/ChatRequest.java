@@ -1,6 +1,5 @@
 package com.app.toeic.chatai.payload;
 
-import com.app.toeic.chatai.model.Message;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

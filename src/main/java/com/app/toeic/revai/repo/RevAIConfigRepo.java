@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface RevAIConfigRepo extends JpaRepository<RevAIConfig, Integer>{
     List<RevAIConfig> findAllByAccessTokenNot(String accessToken);
+
+    List<RevAIConfig> findAllByStatus(boolean status);
 }

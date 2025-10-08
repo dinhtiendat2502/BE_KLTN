@@ -1,6 +1,6 @@
 package com.app.toeic.chatai.response;
 
-import com.app.toeic.chatai.model.Message;
+import com.app.toeic.chatai.payload.Message;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

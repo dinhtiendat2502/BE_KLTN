@@ -12,9 +12,9 @@ public class AsyncConfig {
     @Bean(name = "crawlDataExecutor")
     public Executor taskExecutor() {
         var executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(5);
+        executor.setCorePoolSize(10);
         executor.setMaxPoolSize(10);
-        executor.setQueueCapacity(500);
+        executor.setQueueCapacity(20);
         executor.setThreadNamePrefix("Async-");
         executor.initialize();
         return executor;

@@ -46,13 +46,6 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
-      group:
-        custom:
-          include: "diskSpace,ping"
-    env:
-      enabled: false
-    configprops:
-      enabled: false
 logging:
   level:
     root: info
@@ -71,3 +64,11 @@ openai:
   api:
     url: https://api.openai.com/v1/chat/completions
     key: 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
+
+GOOGLE_TRANSLATE_API: "${GOOGLE_TRANSLATE_URL:https://translate.google.com/translate_a/single?client=at&dt=t&dt=ld&dt=qca&dt=rm&dt=bd&dj=1&hl=%25s&ie=UTF-8&oe=UTF-8&inputm=2&otf=2&iid=1dd3b944-fa62-4b55-b330-74909a99969e&}"
+REV_AI_TOKEN: "${REVAI_ACCESS_TOKEN:02x7qBPWLMBrrDZPKWallLiYEyxJ8Hz_JdqqVWgIaracvN8t9jtP_Xypu7QKlEDKDaXHwHN7_ArTSTKnsULjDqHKNQFtw}"
+
+TWLIIO_ACCOUNT_SID: "${TWILIO_ACCOUNT_SID:AC1df831ee034c57eff6e804dd57683db4}"
+TWILIO_AUTH_TOKEN: "${TWILIO_AUTH_TOKEN:79287f208f1057facf553eca59e14515}"
+
+

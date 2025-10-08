@@ -1,6 +1,6 @@
 package com.app.toeic.chatai.controller;
 
-import com.app.toeic.chatai.model.Message;
+import com.app.toeic.chatai.payload.Message;
 import com.app.toeic.chatai.payload.ChatRequest;
 import com.app.toeic.chatai.payload.ChatRequestBody;
 import com.app.toeic.chatai.response.ChatResponse;

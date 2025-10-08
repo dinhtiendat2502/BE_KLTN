@@ -3,17 +3,18 @@ package com.app.toeic.transcript.controller;
 
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.firebase.repo.FirebaseRepository;
+import com.app.toeic.revai.repo.RevAIConfigRepo;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.speech.v1p1beta1.*;
 import com.google.protobuf.ByteString;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import ai.rev.speechtotext.ApiClient;
+import ai.rev.speechtotext.models.asynchronous.*;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
@@ -26,22 +27,21 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class TranscriptController {
+    RevAIConfigRepo revAIConfigRepo;
+
     FirebaseRepository firebaseRepository;
 
-    @PostMapping(value = "v1/get", consumes = {"multipart/form-data"})
+    @PostMapping(value = "get/v1", consumes = {"multipart/form-data"})
     public Object getTranscript(
-            @RequestParam(value = "file", required = false) MultipartFile file,
-            @RequestParam(value = "link", required = false) String link
+            @RequestParam(value = "file") MultipartFile file
     ) throws IOException {
-        // check file is mp3 or mp4
-        if (file != null && !file.isEmpty()) {
-            if (!file.getContentType().startsWith("audio/") || file.getContentType().startsWith("video/")) {
-                return ResponseVO.builder()
-                        .data(null)
-                        .success(false)
-                        .message("FILE_NOT_SUPPORT")
-                        .build();
-            }
+        // check file is mp3
+        if (!Objects.requireNonNull(file.getContentType()).startsWith("audio/")) {
+            return ResponseVO.builder()
+                    .data(null)
+                    .success(false)
+                    .message("FILE_NOT_SUPPORT")
+                    .build();
         }
 
         var firebaseConfig = firebaseRepository.findByStatus(true);
@@ -61,30 +61,20 @@ public class TranscriptController {
                         .setCredentialsProvider(FixedCredentialsProvider.create(credentials))
                         .build()
         )) {
-            RecognitionAudio recognitionAudio;
-            if (StringUtils.isNotBlank(link)) {
-                recognitionAudio = RecognitionAudio
-                        .newBuilder()
-                        .setUri(link)
-                        .build();
-            } else {
-                recognitionAudio =
-                        RecognitionAudio
-                                .newBuilder()
-                                .setContent(ByteString.copyFrom(file.getBytes()))
-                                .build();
-            }
+            RecognitionAudio recognitionAudio =
+                    RecognitionAudio
+                            .newBuilder()
+                            .setContent(ByteString.copyFrom(file.getBytes()))
+                            .build();
             var audioEncoding = Objects.requireNonNull(file.getContentType()).startsWith("audio/")
                     ? RecognitionConfig.AudioEncoding.MP3
                     : RecognitionConfig.AudioEncoding.LINEAR16;
-            RecognitionConfig config =
+            var config =
                     RecognitionConfig
                             .newBuilder()
                             .setEncoding(audioEncoding)
                             .setSampleRateHertz(16000)
                             .setLanguageCode("en-US")
-                            .setEnableWordConfidence(true)
-                            .setModel(Objects.requireNonNull(file.getContentType()).startsWith("video/") ? "video" : "Long")
                             .build();
             var recognizeResponse = speechClient.longRunningRecognizeAsync(config, recognitionAudio);
 
@@ -111,4 +101,89 @@ public class TranscriptController {
     }
 
 
+    @PostMapping(value = "get/v2", consumes = {"multipart/form-data"})
+    public Object getTranscriptV2(@RequestParam(value = "file") MultipartFile file) throws IOException {
+        if (!Objects.requireNonNull(file.getContentType()).startsWith("audio/")) {
+            return ResponseVO.builder()
+                    .data(null)
+                    .success(false)
+                    .message("FILE_NOT_SUPPORT")
+                    .build();
+        }
+        var revAiConfig = revAIConfigRepo.findAllByStatus(true);
+        if (CollectionUtils.isEmpty(revAiConfig) || StringUtils.isBlank(revAiConfig.getFirst().getAccessToken())) {
+            return ResponseVO.builder()
+                    .data(null)
+                    .success(false)
+                    .message("REV_AI_CONFIG_NOT_FOUND")
+                    .build();
+        }
+
+        var apiClient = new ApiClient(revAiConfig.getFirst().getAccessToken());
+        var revAiJob = apiClient.submitJobLocalFile(file.getInputStream());
+        var newlyRefreshedRevAiJob = apiClient.getJobDetails(revAiJob.getJobId());
+        return ResponseVO.builder()
+                .data(newlyRefreshedRevAiJob)
+                .success(true)
+                .message("TRANSCRIPT_SUCCESS")
+                .build();
+    }
+
+    @GetMapping("get-revai-job")
+    public Object getRevAIJob(@RequestParam(value = "jobId") String jobId) throws IOException {
+        var revAiConfig = revAIConfigRepo.findAllByStatus(true);
+        if (CollectionUtils.isEmpty(revAiConfig) || StringUtils.isBlank(revAiConfig.getFirst().getAccessToken())) {
+            return ResponseVO.builder()
+                    .data(null)
+                    .success(false)
+                    .message("REV_AI_CONFIG_NOT_FOUND")
+                    .build();
+        }
+
+        var apiClient = new ApiClient(revAiConfig.getFirst().getAccessToken());
+        var revAiJob = apiClient.getJobDetails(jobId);
+        return ResponseVO.builder()
+                .data(revAiJob)
+                .success(true)
+                .message("GET_REV_AI_JOB_SUCCESS")
+                .build();
+    }
+
+    @GetMapping("get-transcript-revai")
+    public Object getTrancriptRevai(@RequestParam(value = "jobId") String jobId) throws IOException {
+        var revAiConfig = revAIConfigRepo.findAllByStatus(true);
+        if (CollectionUtils.isEmpty(revAiConfig) || StringUtils.isBlank(revAiConfig.getFirst().getAccessToken())) {
+            return ResponseVO.builder()
+                    .data(null)
+                    .success(false)
+                    .message("REV_AI_CONFIG_NOT_FOUND")
+                    .build();
+        }
+
+        var apiClient = new ApiClient(revAiConfig.getFirst().getAccessToken());
+        var transcript = apiClient.getTranscriptText(jobId);
+        transcript = transcript.replace("\n","").replaceAll("Speaker \\d+\\s+\\d+:\\d+:\\d+\\s+", "");
+        return ResponseVO.builder()
+                .data(transcript)
+                .success(true)
+                .message("GET_REV_AI_JOB_SUCCESS")
+                .build();
+    }
+
+
+
+    private RevAiJobOptions buildRevAiJobOptions(String link) {
+        RevAiJobOptions revAiJobOptions = new RevAiJobOptions();
+        revAiJobOptions.setSourceConfig(link);
+        revAiJobOptions.setMetadata("My first submission");
+        revAiJobOptions.setSkipPunctuation(false);
+        revAiJobOptions.setSkipDiarization(false);
+        revAiJobOptions.setFilterProfanity(true);
+        revAiJobOptions.setRemoveDisfluencies(true);
+        revAiJobOptions.setSpeakerChannelsCount(null);
+        revAiJobOptions.setDeleteAfterSeconds(259200); // 30 days in seconds
+        revAiJobOptions.setLanguage("en");
+        revAiJobOptions.setTranscriber("machine_v2");
+        return revAiJobOptions;
+    }
 }
