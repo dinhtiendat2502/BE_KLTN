@@ -3,6 +3,14 @@ server:
   servlet:
     context-path: /api
 spring:
+  application:
+    name: toeicute-api
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080/api
+        instance:
+          service-base-url: http://localhost:8080
   datasource:
     url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true"
     username: "${DB_USERNAME:root}"
@@ -29,9 +37,27 @@ springdoc:
 jwt:
   secret: "${JWT_SECRET:872c871a1ab996919a3e97145ece2418bb837cadbd69387d96cd45eef831f239}"
   expiration: "${JWT_EXPIRATION:86400000}"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+      group:
+        custom:
+          include: "diskSpace,ping"
+    env:
+      enabled: false
+    configprops:
+      enabled: false
 logging:
+  level:
+    root: info
   file:
-    name: log/toeicute/toeicute.log
+    name: target/toeicute.log
 firebase:
   project-id: "${FIREBASE_PROJECT_ID:toeicute-70460}"
   token-key: "${FIREBASE_TOKEN_KEY:toeicute-upload}"
