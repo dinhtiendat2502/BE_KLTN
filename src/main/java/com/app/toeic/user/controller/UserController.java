@@ -9,7 +9,11 @@ import com.app.toeic.email.service.EmailService;
 import com.app.toeic.firebase.service.FirebaseStorageService;
 import com.app.toeic.user.payload.*;
 import com.app.toeic.user.service.UserService;
+import com.app.toeic.util.AvatarHelper;
 import com.app.toeic.util.HttpStatus;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -109,15 +113,10 @@ public class UserController {
                 .getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
 
-        if (StringUtils.isNotBlank(fullName)) {
-            profile.setFullName(fullName);
-        }
-        if (StringUtils.isNotBlank(phone)) {
-            profile.setPhone(phone);
-        }
-        if (StringUtils.isNotBlank(address)) {
-            profile.setAddress(address);
-        }
+        profile.setFullName(StringUtils.defaultIfBlank(fullName, profile.getFullName()));
+        profile.setPhone(StringUtils.defaultIfBlank(phone, profile.getPhone()));
+        profile.setAddress(StringUtils.defaultIfBlank(address, profile.getAddress()));
+
         var avatar = firebaseStorageService.uploadFile(file);
         if (StringUtils.isNotBlank(avatar)) {
             profile.setAvatar(avatar);
@@ -142,6 +141,7 @@ public class UserController {
         return userService.updateAvatar(profile);
     }
 
+    @Operation(security = {@SecurityRequirement(name = "openApiSecurityScheme")})
     @GetMapping("/get-profile")
     public ResponseVO getProfile(HttpServletRequest request) {
         var profile = userService
