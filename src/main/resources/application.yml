@@ -20,6 +20,9 @@ spring:
     admin:
       client:
         url: http://localhost:8080/api
+        instance:
+          service-url: http://localhost:8080/api
+
   datasource:
     url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true"
     username: "${DB_USERNAME:root}"

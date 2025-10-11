@@ -8,30 +8,37 @@ import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.email.service.EmailService;
 import com.app.toeic.firebase.service.FirebaseStorageService;
 import com.app.toeic.user.payload.*;
+import com.app.toeic.user.repo.IOtpRepository;
 import com.app.toeic.user.service.UserService;
-import com.app.toeic.util.AvatarHelper;
 import com.app.toeic.util.HttpStatus;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @RestController
 @RequestMapping("/user")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserController {
-    private final UserService userService;
-    private final EmailService emailService;
-    private final FirebaseStorageService firebaseStorageService;
+    UserService userService;
+    EmailService emailService;
+    FirebaseStorageService firebaseStorageService;
+    IOtpRepository otpRepository;
 
-    private static final String NOT_FOUNT_USER = "Không tìm thấy thông tin người dùng";
+    private static final String NOT_FOUNT_USER = "NOT_FOUNT_USER";
 
     @PostMapping("/register")
     public ResponseVO register(@Valid @RequestBody RegisterDTO registerDto) {
@@ -64,13 +71,14 @@ public class UserController {
                 .message("SEND_EMAIL_SUCCESS")
                 .build();
     }
+
     @PostMapping("/send-email-social")
     public Object sendEmailSocial(@Valid @RequestBody LoginSocialDTO emailDto) {
         return userService.loginSocial(emailDto);
     }
 
     @PostMapping("/forgot-password/{email}")
-    public Object forgotPassword(@PathVariable("email") String email){
+    public Object forgotPassword(@PathVariable("email") String email) {
         return userService.forgotPassword(email);
 
     }
@@ -174,20 +182,46 @@ public class UserController {
     }
 
     @PostMapping("/confirm-otp")
-    public ResponseVO confirmOtp(String email) {
-        var user = userService.findByEmail(email);
-        user.setStatus(EUser.ACTIVE);
-        userService.save(user);
+    public ResponseVO confirmOtp(@RequestBody ConfirmEmail payload) {
+        final String[] msg = new String[1];
+        AtomicBoolean success = new AtomicBoolean(false);
+        var otp = otpRepository.findByEmailAndAction(payload.email, "REGISTER");
+        otp.ifPresentOrElse(e -> {
+            // check if otp was sent over 5 minutes
+            var otpCreationTime = e.getCreatedAt();
+            var currentTime = LocalDateTime.now();
+            var minutesElapsed = Duration.between(otpCreationTime, currentTime).toMinutes();
+            var isOtpExpired = minutesElapsed > 5;
+            if(isOtpExpired) {
+                msg[0] = "OTP_EXPIRED";
+            } else {
+                var otpCorrect = e.getOtpCode().equalsIgnoreCase(payload.otp);
+                if(otpCorrect) {
+                    var user = userService.findByEmail(payload.email);
+                    user.setStatus(EUser.ACTIVE);
+                    userService.save(user);
+                    msg[0] = "CONFIRM_OTP_SUCCESS";
+                    success.set(true);
+                }else {
+                    msg[0] = "OTP_INCORRECT";
+                }
+            }
+            otpRepository.delete(e);
+        }, () -> msg[0] = "OTP_INCORRECT");
+
         return ResponseVO
                 .builder()
-                .success(Boolean.TRUE)
+                .success(success.get())
                 .data(null)
-                .message("CONFIRM_OTP_SUCCESS")
+                .message(msg[0])
                 .build();
     }
 
     @GetMapping("/test")
     public ResponseVO test() {
         return new ResponseVO(Boolean.TRUE, "test", "Get assets successfully");
+    }
+
+    public record ConfirmEmail(String email, String otp) {
     }
 }

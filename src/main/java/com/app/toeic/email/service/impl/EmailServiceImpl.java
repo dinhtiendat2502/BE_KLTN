@@ -17,9 +17,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 @Service
@@ -75,12 +77,16 @@ public class EmailServiceImpl implements EmailService {
         return switch (templateCode) {
             case "AUTHENTICATION_AFTER_REGISTER" -> {
                 var otp = this.generateOTP();
-                var otpObj = Otp
-                        .builder()
-                        .otpCode(otp)
-                        .action("REGISTER")
-                        .email(emailTo)
-                        .build();
+
+                var otpObj = otpRepository
+                        .findByEmailAndAction(emailTo, "REGISTER")
+                        .orElse(Otp
+                                .builder()
+                                .action("REGISTER")
+                                .email(emailTo)
+                                .build());
+                otpObj.setOtpCode(otp);
+                otpObj.setCreatedAt(LocalDateTime.now());
                 otpRepository.save(otpObj);
                 yield templateContent.formatted(emailTo, otp);
             }
@@ -94,14 +100,20 @@ public class EmailServiceImpl implements EmailService {
                     sb.append(String.format("%02x", b));
                 }
                 otp = sb.toString();
-                var otpObj = Otp
-                        .builder()
-                        .otpCode(otp)
-                        .action("FORGOT_PASSWORD")
-                        .email(emailTo)
-                        .build();
+                var otpObj = otpRepository
+                        .findByEmailAndAction(emailTo, "FORGOT_PASSWORD")
+                        .orElse(Otp
+                                .builder()
+                                .action("FORGOT_PASSWORD")
+                                .email(emailTo)
+                                .build());
+                otpObj.setOtpCode(otp);
+                otpObj.setCreatedAt(LocalDateTime.now());
                 otpRepository.save(otpObj);
-                yield templateContent.formatted("http://localhost:4200", STR."http://localhost:4200/reset-password/\{otp}");
+                yield templateContent.formatted(
+                        "http://localhost:4200",
+                        STR."http://localhost:4200/reset-password/\{otp}"
+                );
             }
             case "LOGIN_SOCIAL" -> {
                 String url = StringUtils.isEmpty(loginSocialDto.getUrl()) ? "http://localhost:4200" : loginSocialDto.getUrl();
