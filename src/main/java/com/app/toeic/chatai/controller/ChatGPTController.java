@@ -1,13 +1,15 @@
 package com.app.toeic.chatai.controller;
 
+import com.app.toeic.chatai.model.ChatAI;
 import com.app.toeic.chatai.payload.Message;
 import com.app.toeic.chatai.payload.ChatRequestBody;
 import com.app.toeic.chatai.payload.TextToSpeechPayload;
+import com.app.toeic.chatai.repo.ChatAiRepository;
 import com.app.toeic.chatai.response.ChatResponse;
 import com.app.toeic.external.response.ResponseVO;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.openai.OpenAiChatClient;
+import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -19,35 +21,24 @@ import org.springframework.web.client.RestTemplate;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequestMapping("chat-gpt")
 public class ChatGPTController {
-    private final RestTemplate restTemplate;
-    private final OpenAiChatClient openAiChatClient;
-    @Value("${openai.model}")
-    private String model;
-
-    @Value("${openai.api.url}")
-    private String apiUrl;
-
-
-    @PostMapping("chat-gpt-v2")
-    public Object chatGPTV2(@RequestParam(value = "message", defaultValue = "Tell me a joke") String message) {
-        return Map.of("generation", openAiChatClient.call(message));
-    }
-
+    RestTemplate restTemplate;
+    ChatAiRepository chatAiRepository;
 
     @PostMapping("/chat")
     public Object chat(@RequestBody ChatRequestBody req) {
-        HttpHeaders headers = createHeaders();
-        req.getChatRequest().addMessage(new Message("user", req.getPrompt()));
-        // create a request
+        var chatGptConfig = chatAiRepository.findAllByStatusAndType(true, "GPT").getFirst();
+        HttpHeaders headers = createHeaders(chatGptConfig);
+        req.getChatRequest().addMessage(new Message("user", chatGptConfig.getPrompt().formatted(req.getPrompt())));
         var httpEntity = new HttpEntity<>(req.getChatRequest(), headers);
         var responseEntity = restTemplate.postForEntity(
-                apiUrl,
+                chatGptConfig.getUrl(),
                 httpEntity,
                 ChatResponse.class
         );
@@ -56,8 +47,9 @@ public class ChatGPTController {
 
     @PostMapping("text-to-speech")
     public Object textToSpeech(@RequestBody TextToSpeechPayload payload) {
+        var chatGptConfig = chatAiRepository.findAllByStatusAndType(true, "GPT").getFirst();
         String url = "https://api.openai.com/v1/audio/speech";
-        var headers = createHeaders();
+        var headers = createHeaders(chatGptConfig);
         payload.setModel("tts-1");
         var httpEntity = new HttpEntity<>(payload, headers);
         var responseEntity = restTemplate.postForEntity(url, httpEntity, byte[].class);
@@ -80,11 +72,11 @@ public class ChatGPTController {
                 .build();
     }
 
-    private HttpHeaders createHeaders() {
+    private HttpHeaders createHeaders(ChatAI config) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-        headers.setBearerAuth("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");
+        headers.setBearerAuth(config.getToken());
         return headers;
     }
 }

@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseVO handleValidationException(MethodArgumentNotValidException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleValidationException: {}", e.getMessage());
+        log.error("Exception >> GlobalExceptionHandler >> handleValidationException: %s".formatted(e.getMessage()), e);
 
         BindingResult bindingResult = e.getBindingResult();
         var errorMessages = bindingResult
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseVO handleFileSizeLimitExceededException(MaxUploadSizeExceededException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleFileSizeLimitExceededException: {}", e.getMessage());
+        log.error("Exception >> GlobalExceptionHandler >> handleFileSizeLimitExceededException: %s".formatted(e.getMessage()), e);
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MultipartException.class)
     public ResponseVO handleMultipartException(MultipartException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleMultipartException: {}", e.getMessage());
+        log.error("Exception >> GlobalExceptionHandler >> handleMultipartException: %s".formatted(e.getMessage()), e);
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IOException.class)
     public ResponseVO handleIOException(IOException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleIOException: {}", e.getMessage());
+        log.error("Exception >> GlobalExceptionHandler >> handleIOException: %s".formatted(e.getMessage()), e);
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
@@ -79,7 +79,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseVO handleNotFoundException(NoHandlerFoundException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleNotFoundException: {}", e.getMessage());
+        log.error("Exception >> GlobalExceptionHandler >> handleNotFoundException: %s".formatted(e.getMessage()), e);
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
@@ -89,7 +89,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseVO handleBadCredentialsException(BadCredentialsException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleBadCredentialsException: {}", e.getMessage());
+        log.error("Exception >> GlobalExceptionHandler >> handleBadCredentialsException: %s".formatted(e.getMessage()), e);
         var message = e.getMessage();
         if (message.contains("Bad credentials")) {
             message = "EMAIL_OR_PASSWORD_INCORRECT";
@@ -103,7 +103,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseVO handleUsernameNotFoundException(UsernameNotFoundException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleUsernameNotFoundException: {}", e.getMessage());
+        log.error("Exception >> GlobalExceptionHandler >> handleUsernameNotFoundException: %s".formatted(e.getMessage()), e);
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
@@ -114,8 +114,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InternalAuthenticationServiceException.class)
     public ResponseVO handleInternalAuthenticationServiceException(InternalAuthenticationServiceException e) {
         log.error(
-                "Exception >> GlobalExceptionHandler >> handleInternalAuthenticationServiceException: {}",
-                e.getMessage()
+                "Exception >> GlobalExceptionHandler >> handleInternalAuthenticationServiceException: %s".formatted(e.getMessage()),
+                e
         );
         return ResponseVO
                 .builder()
@@ -129,7 +129,7 @@ public class GlobalExceptionHandler {
         log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException: {}", e
                 .getClass()
                 .getSimpleName());
-        log.error(STR."Exception >> GlobalExceptionHandler >> handleUnwantedException: \{e.getMessage()}");
+        log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException:", e);
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)

@@ -55,7 +55,7 @@ public class TranscriptController {
         }
         var rs = new StringBuilder();
         var jsonContent = firebaseConfig.get().getFileJson();
-        GoogleCredentials credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(jsonContent.getBytes()));
+        var credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(jsonContent.getBytes()));
         try (SpeechClient speechClient = SpeechClient.create(
                 SpeechSettings.newBuilder()
                         .setCredentialsProvider(FixedCredentialsProvider.create(credentials))

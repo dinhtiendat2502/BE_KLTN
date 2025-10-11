@@ -3,6 +3,7 @@ package com.app.toeic.firebase.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "firebase_config")
@@ -11,19 +12,20 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class FirebaseConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String tokenKey;
-    private String bucketName;
+    Integer id;
+    String tokenKey;
+    String bucketName;
 
     @Column(unique = true)
-    private String projectId;
+    String projectId;
 
     @Column(columnDefinition = "text")
-    private String fileJson;
+    String fileJson;
 
     @Builder.Default
-    private boolean status = false;
+    boolean status = false;
 }

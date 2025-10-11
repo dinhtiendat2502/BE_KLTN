@@ -14,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.*;
+import java.text.MessageFormat;
 import java.util.logging.Level;
 
 @RestController
@@ -68,7 +69,7 @@ public class FirebaseConfigController {
                 FirebaseConfig firebaseConfig = FirebaseConfig
                         .builder()
                         .tokenKey(tokenKey)
-                        .bucketName(STR."\{projectId}.appspot.com")
+                        .bucketName(MessageFormat.format("{0}.appspot.com", projectId))
                         .projectId(projectId)
                         .fileJson(jsonString)
                         .build();

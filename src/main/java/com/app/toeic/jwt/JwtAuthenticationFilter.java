@@ -39,15 +39,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws
             ServletException,
             IOException {
-
-        String token = jwtUtilities.getToken(request);
+        var token = jwtUtilities.getToken(request);
 
         if (token != null && jwtUtilities.validateToken(token)) {
-            String username = jwtUtilities.extractUsername(token);
+            var username = jwtUtilities.extractUsername(token);
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            var userDetails = userDetailsService.loadUserByUsername(username);
             if (Boolean.TRUE.equals(jwtUtilities.validateToken(token, userDetails))) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                var authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
                         userDetails.getAuthorities()

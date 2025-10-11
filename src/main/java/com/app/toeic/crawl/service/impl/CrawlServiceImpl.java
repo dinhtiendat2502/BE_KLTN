@@ -256,16 +256,18 @@ public class CrawlServiceImpl implements CrawlService {
     @Async("crawlDataExecutor")
     public void crawlData(Elements listPartContent, Document doc, JobCrawl job, Exam exam) {
         for (int i = 1; i <= listPartContent.size(); i++) {
-            var part = Part.builder().partCode(STR."PART\{i}").partName(STR."Part \{i}").build();
+            var part = Part.builder().partCode("PART%d".formatted(i)).partName("Part %d".formatted(i)).build();
             switch (i) {
                 case 1 -> {
                     part.setNumberOfQuestion(6);
-                    part.setPartContent("Directions : For each question in this part, you will hear four statements about a picture in your test book. When you hear the statements, you must select the one statement that best describes what you see in the picture. Then find the number of the question on your answer sheet and mark your answer. The statements will not be printed in your test book and will be spoken only one time.");
+                    part.setPartContent(
+                            "Directions : For each question in this part, you will hear four statements about a picture in your test book. When you hear the statements, you must select the one statement that best describes what you see in the picture. Then find the number of the question on your answer sheet and mark your answer. The statements will not be printed in your test book and will be spoken only one time.");
                     part.setQuestions(this.mCrawlPart12(listPartContent.getFirst(), true, part));
                 }
                 case 2 -> {
                     part.setNumberOfQuestion(25);
-                    part.setPartContent("Directions : You will hear a question or statement and three responses spoken in English. They will not be printed in your test book and will be spoken only one time. Select the best response to the question or statement and mark the letter (A), (B), or (C) on your answer sheet.");
+                    part.setPartContent(
+                            "Directions : You will hear a question or statement and three responses spoken in English. They will not be printed in your test book and will be spoken only one time. Select the best response to the question or statement and mark the letter (A), (B), or (C) on your answer sheet.");
                     part.setQuestions(this.mCrawlPart12(listPartContent.get(1), false, part));
                 }
                 case 3 -> {

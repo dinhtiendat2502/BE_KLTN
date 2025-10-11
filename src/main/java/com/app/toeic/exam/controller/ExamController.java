@@ -123,20 +123,20 @@ public class ExamController {
                 .build();
 
         var returnUserExamHistory = userExamHistoryService.save(userExamHistory);
-        AtomicInteger numberOfCorrectAnswer = new AtomicInteger();
-        AtomicInteger numberOfWrongAnswer = new AtomicInteger();
-        AtomicInteger numberOfNotAnswer = new AtomicInteger();
-        AtomicInteger numberOfCorrectAnswerPart1 = new AtomicInteger();
-        AtomicInteger numberOfCorrectAnswerPart2 = new AtomicInteger();
-        AtomicInteger numberOfCorrectAnswerPart3 = new AtomicInteger();
-        AtomicInteger numberOfCorrectAnswerPart4 = new AtomicInteger();
-        AtomicInteger numberOfCorrectAnswerPart5 = new AtomicInteger();
-        AtomicInteger numberOfCorrectAnswerPart6 = new AtomicInteger();
-        AtomicInteger numberOfCorrectAnswerPart7 = new AtomicInteger();
-        AtomicInteger numberOfCorrectListeningAnswer = new AtomicInteger();
-        AtomicInteger numberOfWrongListeningAnswer = new AtomicInteger();
-        AtomicInteger numberOfCorrectReadingAnswer = new AtomicInteger();
-        AtomicInteger numberOfWrongReadingAnswer = new AtomicInteger();
+        var numberOfCorrectAnswer = new AtomicInteger();
+        var numberOfWrongAnswer = new AtomicInteger();
+        var numberOfNotAnswer = new AtomicInteger();
+        var numberOfCorrectAnswerPart1 = new AtomicInteger();
+        var numberOfCorrectAnswerPart2 = new AtomicInteger();
+        var numberOfCorrectAnswerPart3 = new AtomicInteger();
+        var numberOfCorrectAnswerPart4 = new AtomicInteger();
+        var numberOfCorrectAnswerPart5 = new AtomicInteger();
+        var numberOfCorrectAnswerPart6 = new AtomicInteger();
+        var numberOfCorrectAnswerPart7 = new AtomicInteger();
+        var numberOfCorrectListeningAnswer = new AtomicInteger();
+        var numberOfWrongListeningAnswer = new AtomicInteger();
+        var numberOfCorrectReadingAnswer = new AtomicInteger();
+        var numberOfWrongReadingAnswer = new AtomicInteger();
         var listAnswer = finishExamDto
                 .getAnswers()
                 .stream()
