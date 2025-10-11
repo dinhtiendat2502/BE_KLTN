@@ -20,8 +20,6 @@ spring:
     admin:
       client:
         url: http://localhost:8080/api
-        instance:
-          service-base-url: http://localhost:8080
   datasource:
     url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true"
     username: "${DB_USERNAME:root}"
@@ -63,11 +61,6 @@ logging:
   file:
     name: target/toeicute.log
 
-
-
-
-
-
 firebase:
   project-id: "${FIREBASE_PROJECT_ID:toeicute-70460}"
   token-key: "${FIREBASE_TOKEN_KEY:toeicute-upload}"
@@ -84,8 +77,5 @@ openai:
 
 GOOGLE_TRANSLATE_API: "${GOOGLE_TRANSLATE_URL:https://translate.google.com/translate_a/single?client=at&dt=t&dt=ld&dt=qca&dt=rm&dt=bd&dj=1&hl=%25s&ie=UTF-8&oe=UTF-8&inputm=2&otf=2&iid=1dd3b944-fa62-4b55-b330-74909a99969e&}"
 REV_AI_TOKEN: "${REVAI_ACCESS_TOKEN:02x7qBPWLMBrrDZPKWallLiYEyxJ8Hz_JdqqVWgIaracvN8t9jtP_Xypu7QKlEDKDaXHwHN7_ArTSTKnsULjDqHKNQFtw}"
-
-TWLIIO_ACCOUNT_SID: "${TWILIO_ACCOUNT_SID:AC1df831ee034c57eff6e804dd57683db4}"
-TWILIO_AUTH_TOKEN: "${TWILIO_AUTH_TOKEN:79287f208f1057facf553eca59e14515}"
 
 

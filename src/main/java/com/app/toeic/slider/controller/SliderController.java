@@ -88,6 +88,31 @@ public class SliderController {
                 .build();
     }
 
+    @PostMapping(value = "/update/{sliderId}", consumes = {"multipart/form-data"})
+    public Object updateSlider(
+            @PathVariable("sliderId") String sliderId,
+            @RequestParam("file") MultipartFile file
+    ) throws IOException {
+        var slider = sliderRepository
+                .findById(Long.parseLong(sliderId))
+                .orElse(null);
+        if (slider == null) return ResponseVO
+                .builder()
+                .success(false)
+                .message("NOT_FOUND_SLIDER")
+                .data(null)
+                .build();
+        var image = firebaseStorageService.uploadFile(file);
+        slider.setImage(image);
+        sliderRepository.save(slider);
+        return ResponseVO
+                .builder()
+                .success(true)
+                .message("UPDATE_SLIDER_SUCCESS")
+                .data(null)
+                .build();
+    }
+
     // action = up | down
     @PatchMapping("/update/{sliderId}/{position}/{action}")
     public Object updateSlider(

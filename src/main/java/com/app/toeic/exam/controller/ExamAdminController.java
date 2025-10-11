@@ -24,7 +24,13 @@ public class ExamAdminController {
 
     @GetMapping("/list")
     public Object getAllExam() {
-        return examService.getAllExam();
+        var list =  examService.getAllExam();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(list)
+                .message("GET_ALL_EXAM_SUCCESS")
+                .build();
     }
 
 

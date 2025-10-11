@@ -19,7 +19,7 @@ public class TopicAdminController {
 
     @GetMapping("/list")
     public Object getAllTopic(
-            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size
     ) {
         return topicService.getAllTopic(page, size);
