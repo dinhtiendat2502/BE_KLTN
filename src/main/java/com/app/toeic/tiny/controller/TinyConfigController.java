@@ -39,7 +39,7 @@ public class TinyConfigController {
                 .build();
     }
 
-    @PatchMapping("update/{id}")
+    @PostMapping("update/{id}")
     public Object updateTinyConfig(@PathVariable("id") Long id, @RequestParam("apiKey") String apiKey) {
         var tinyConfig = tinyConfigRepo.findById(id);
         tinyConfig.ifPresent(tiny -> {

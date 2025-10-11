@@ -68,15 +68,6 @@ public class CrawlController {
                 .build();
     }
 
-    @DeleteMapping("remove-config/{email}")
-    public Object removeConfig(@PathVariable String email) {
-        crawlConfigRepository.deleteByEmail(email);
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .message("REMOVE_CONFIG_SUCCESS")
-                .build();
-    }
 
     @PostMapping("is-crawl")
     public Object isCrawl(@RequestBody CrawlDTO crawl) {

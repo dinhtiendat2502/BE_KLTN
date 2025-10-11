@@ -111,10 +111,10 @@ public class UserController {
 
     @PatchMapping(value = "/update-profile", consumes = {"multipart/form-data"})
     public ResponseVO updateProfile(
-            @RequestParam("file") MultipartFile file,
-            @RequestParam("fullName") String fullName,
-            @RequestParam("phone") String phone,
-            @RequestParam("address") String address,
+            @RequestParam(value = "file", required = false) MultipartFile file,
+            @RequestParam(value = "fullName", required = false) String fullName,
+            @RequestParam(value = "phone", required = false) String phone,
+            @RequestParam(value = "address", required = false) String address,
             HttpServletRequest request
     ) throws IOException {
         var profile = userService
@@ -124,10 +124,11 @@ public class UserController {
         profile.setFullName(StringUtils.defaultIfBlank(fullName, profile.getFullName()));
         profile.setPhone(StringUtils.defaultIfBlank(phone, profile.getPhone()));
         profile.setAddress(StringUtils.defaultIfBlank(address, profile.getAddress()));
-
-        var avatar = firebaseStorageService.uploadFile(file);
-        if (StringUtils.isNotBlank(avatar)) {
-            profile.setAvatar(avatar);
+        if(file != null && !file.isEmpty()) {
+            var avatar = firebaseStorageService.uploadFile(file);
+            if (StringUtils.isNotBlank(avatar)) {
+                profile.setAvatar(avatar);
+            }
         }
         return ResponseVO
                 .builder()
