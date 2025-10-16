@@ -301,7 +301,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object forgotPassword(String email) {
+    public String forgotPassword(String email) {
         emailService.sendEmail(email, "FORGOT_PASSWORD");
         return "SEND_EMAIL_SUCCESS";
     }

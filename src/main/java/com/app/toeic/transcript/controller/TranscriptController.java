@@ -9,6 +9,7 @@ import com.app.toeic.transcript.model.TranscriptHistory;
 import com.app.toeic.transcript.repo.TranscriptRepo;
 import com.app.toeic.transcript.service.RevAITranscriptService;
 import com.app.toeic.translate.service.TranslateService;
+import com.app.toeic.util.DatetimeUtils;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.speech.v1p1beta1.*;
@@ -19,13 +20,13 @@ import lombok.extern.java.Log;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import ai.rev.speechtotext.ApiClient;
-import ai.rev.speechtotext.models.asynchronous.*;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.List;
+import java.text.MessageFormat;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -40,6 +41,7 @@ public class TranscriptController {
     TranscriptRepo transcriptRepo;
     FirebaseStorageService firebaseStorageService;
     RevAITranscriptService revAITranscriptService;
+    TranslateService translateService;
 
     @PostMapping(value = "get/google", consumes = {"multipart/form-data"})
     public Object getTranscript(
@@ -119,7 +121,7 @@ public class TranscriptController {
             @RequestParam(value = "file", required = false) MultipartFile file,
             @RequestParam(value = "name") String name
     ) throws IOException {
-        if(file == null || file.isEmpty()) {
+        if (file == null || file.isEmpty()) {
             return ResponseVO.builder()
                     .data(null)
                     .success(false)
@@ -186,6 +188,45 @@ public class TranscriptController {
                 .data(transcript)
                 .success(true)
                 .message("GET_REV_AI_JOB_SUCCESS")
+                .build();
+    }
+
+    @GetMapping("/history")
+    public Object getTranscriptHistory(
+            @RequestParam(value = "dateFrom", defaultValue = "") String dateFrom,
+            @RequestParam(value = "dateTo", defaultValue = "") String dateTo,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        log.log(Level.INFO, MessageFormat.format("TranscriptController >> getTranscriptHistory >> dateFrom: {0}, dateTo: {1}, page: {2}, size: {3}", dateFrom, dateTo, page, size));
+        var startDateTime = DatetimeUtils.getFromDate(dateFrom);
+        var endDateTime = DatetimeUtils.getToDate(dateTo);
+        var result = transcriptRepo.findAllByCreatedAtBetween(startDateTime, endDateTime, PageRequest.of(page, size));
+        return ResponseVO.builder()
+                .data(result)
+                .success(true)
+                .message("GET_TRANSCRIPT_HISTORY_SUCCESS")
+                .build();
+    }
+
+    @GetMapping("translate/{id}")
+    public Object getTranslate(@PathVariable("id") Long id) {
+        var transcriptHistory = transcriptRepo.findById(id);
+        final var msg = new String[1];
+
+        transcriptHistory.ifPresentOrElse(e -> {
+            if (StringUtils.isBlank(e.getTranscriptContent())) {
+                msg[0] = "TRANSCRIPT_NOT_FOUND";
+            } else {
+                var translate = translateService.translate(e.getTranscriptContent());
+                e.setTranscriptContentTranslate(translate.toString());
+                transcriptRepo.save(e);
+                msg[0] = "TRANSLATE_SUCCESS";
+            }
+        }, () -> msg[0] = "TRANSCRIPT_NOT_FOUND");
+        return ResponseVO.builder()
+                .success(true)
+                .message(msg[0])
                 .build();
     }
 

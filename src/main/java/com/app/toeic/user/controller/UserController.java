@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,8 +38,9 @@ public class UserController {
     EmailService emailService;
     FirebaseStorageService firebaseStorageService;
     IOtpRepository otpRepository;
-
+    private static final int OTP_EXPIRED = 48;
     private static final String NOT_FOUNT_USER = "NOT_FOUNT_USER";
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     public ResponseVO register(@Valid @RequestBody RegisterDTO registerDto) {
@@ -77,9 +79,14 @@ public class UserController {
         return userService.loginSocial(emailDto);
     }
 
-    @PostMapping("/forgot-password/{email}")
-    public Object forgotPassword(@PathVariable("email") String email) {
-        return userService.forgotPassword(email);
+    @PostMapping("/forgot-password")
+    public Object forgotPassword(@RequestBody String email) {
+        userService.findByEmail(email);
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .message(userService.forgotPassword(email))
+                .build();
 
     }
 
@@ -184,15 +191,16 @@ public class UserController {
 
     @PostMapping("/confirm-otp")
     public ResponseVO confirmOtp(@RequestBody ConfirmEmail payload) {
-        final String[] msg = new String[1];
-        AtomicBoolean success = new AtomicBoolean(false);
+        final var msg = new String[1];
+        var success = new AtomicBoolean(false);
         var otp = otpRepository.findByEmailAndAction(payload.email, "REGISTER");
         otp.ifPresentOrElse(e -> {
             // check if otp was sent over 5 minutes
             var otpCreationTime = e.getCreatedAt();
             var currentTime = LocalDateTime.now();
             var minutesElapsed = Duration.between(otpCreationTime, currentTime).toMinutes();
-            var isOtpExpired = minutesElapsed > 5;
+            var timeExpired = 5;
+            var isOtpExpired = minutesElapsed > timeExpired;
             if(isOtpExpired) {
                 msg[0] = "OTP_EXPIRED";
             } else {
@@ -218,11 +226,41 @@ public class UserController {
                 .build();
     }
 
+    @PostMapping("reset-password")
+    public Object resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO) {
+        var otp = otpRepository.findByOtpCodeAndAction(resetPasswordDTO.otp, "FORGOT_PASSWORD");
+        final var msg = new String[1];
+        final var success = new AtomicBoolean(false);
+        otp.ifPresentOrElse(e -> {
+            var otpCreationTime = e.getCreatedAt();
+            var currentTime = LocalDateTime.now();
+            var minutesElapsed = Duration.between(otpCreationTime, currentTime).toHours();
+            var isOtpExpired = minutesElapsed > OTP_EXPIRED;
+            if(isOtpExpired) {
+                msg[0] = "OTP_EXPIRED";
+            } else {
+                var user = userService.findByEmail(e.getEmail());
+                user.setPassword(passwordEncoder.encode(resetPasswordDTO.password));
+                userService.save(user);
+                msg[0] = "RESET_PASSWORD_SUCCESS";
+                success.set(true);
+            }
+            otpRepository.delete(e);
+        }, () -> msg[0] = "OTP_INCORRECT");
+        return ResponseVO
+                .builder()
+                .success(success.get())
+                .message(msg[0])
+                .build();
+    }
+
     @GetMapping("/test")
     public ResponseVO test() {
         return new ResponseVO(Boolean.TRUE, "test", "Get assets successfully");
     }
 
     public record ConfirmEmail(String email, String otp) {
+    }
+    public record ResetPasswordDTO(String otp, String password) {
     }
 }

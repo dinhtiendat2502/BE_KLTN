@@ -15,13 +15,15 @@ import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.time.DateTimeException;
 
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(AppException.class)
     public ResponseVO handleAppException(AppException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleAppException: {}", e.getMessage());
+        log.error(MessageFormat.format("Exception >> GlobalExceptionHandler >> handleAppException: {0}", e.getMessage()), e);
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
@@ -135,6 +137,15 @@ public class GlobalExceptionHandler {
                 .builder()
                 .success(Boolean.FALSE)
                 .message(e.getMessage())
+                .build();
+    }
+    @ExceptionHandler(DateTimeException.class)
+    public ResponseVO handleDateTimeException(DateTimeException e) {
+        log.error("Exception >> GlobalExceptionHandler >> handleDateTimeException: %s".formatted(e.getMessage()), e);
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message("INVALID_DATE_FORMAT")
                 .build();
     }
 

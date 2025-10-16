@@ -39,5 +39,5 @@ public interface UserService {
 
     Object isAdminLogin(HttpServletRequest request);
 
-    Object forgotPassword(String email);
+    String forgotPassword(String email);
 }

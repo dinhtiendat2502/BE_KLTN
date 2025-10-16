@@ -48,7 +48,7 @@ public class TopicAdminController {
                 .build();
     }
 
-    @PatchMapping("/update/{topicId}")
+    @PatchMapping(value = "/update/{topicId}", consumes = {"multipart/form-data"})
     public ResponseVO updateTopic(
             @PathVariable("topicId") Integer topicId,
             @RequestParam("topicName") String topicName,

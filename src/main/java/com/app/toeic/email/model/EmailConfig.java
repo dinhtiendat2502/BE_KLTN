@@ -21,5 +21,6 @@ public class EmailConfig {
     private String username;
     private String password;
 
+    @Builder.Default
     private boolean status = false;
 }

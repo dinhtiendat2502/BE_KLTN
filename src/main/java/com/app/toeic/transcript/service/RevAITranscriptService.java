@@ -75,9 +75,9 @@ public class RevAITranscriptService {
         revAiJobOptions.setSourceConfig(link);
         revAiJobOptions.setMetadata(name);
         revAiJobOptions.setSkipPunctuation(false);
-        revAiJobOptions.setSkipDiarization(false);
+        revAiJobOptions.setSkipDiarization(true);
         revAiJobOptions.setFilterProfanity(true);
-        revAiJobOptions.setRemoveDisfluencies(true);
+        revAiJobOptions.setRemoveDisfluencies(false);
         revAiJobOptions.setSpeakerChannelsCount(null);
         revAiJobOptions.setDeleteAfterSeconds(2592000);
         revAiJobOptions.setLanguage("en");

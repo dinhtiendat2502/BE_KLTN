@@ -10,6 +10,7 @@ import com.app.toeic.crawl.repo.JobCrawlRepository;
 import com.app.toeic.crawl.service.CrawlService;
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.external.response.ResponseVO;
+import com.app.toeic.util.DatetimeUtils;
 import com.app.toeic.util.JsonConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -79,12 +80,16 @@ public class CrawlController {
     public Object getAllJob(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "size", defaultValue = "10") Integer size,
-            @RequestParam(value = "status", defaultValue = "ALL") String status
+            @RequestParam(value = "status", defaultValue = "ALL") String status,
+            @RequestParam(value = "dateFrom", defaultValue = "") String dateFrom,
+            @RequestParam(value = "dateTo", defaultValue = "") String dateTo
     ) {
-        if("ALL".equalsIgnoreCase(status)){
-            return jobCrawlRepository.findAll(PageRequest.of(page, size));
+        var startDateTime = DatetimeUtils.getFromDate(dateFrom);
+        var endDateTime = DatetimeUtils.getToDate(dateTo);
+        if ("ALL".equalsIgnoreCase(status)) {
+            return jobCrawlRepository.findAllByStartTimeBetween(startDateTime, endDateTime, PageRequest.of(page, size));
         } else {
-            return jobCrawlRepository.findAllByJobStatus(status, PageRequest.of(page, size));
+            return jobCrawlRepository.findAllByJobStatusAndStartTimeBetween(status, startDateTime, endDateTime, PageRequest.of(page, size));
         }
     }
 
@@ -95,7 +100,7 @@ public class CrawlController {
         String desiredUrl = crawl.getUrl().replaceAll(pattern, "$1");
         var list = jobCrawlRepository.findByJobLink(desiredUrl);
         if (CollectionUtils.isNotEmpty(list)
-         || !list.isEmpty()) {
+                || !list.isEmpty()) {
             return ResponseVO
                     .builder()
                     .success(true)
