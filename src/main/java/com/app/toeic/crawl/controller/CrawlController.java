@@ -1,6 +1,5 @@
 package com.app.toeic.crawl.controller;
 
-
 import com.app.toeic.crawl.model.CrawlConfig;
 import com.app.toeic.crawl.model.JobCrawl;
 import com.app.toeic.crawl.payload.CrawlConfigDTO;

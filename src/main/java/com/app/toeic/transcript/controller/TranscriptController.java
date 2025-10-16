@@ -21,6 +21,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import ai.rev.speechtotext.ApiClient;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -196,12 +197,20 @@ public class TranscriptController {
             @RequestParam(value = "dateFrom", defaultValue = "") String dateFrom,
             @RequestParam(value = "dateTo", defaultValue = "") String dateTo,
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "status", defaultValue = "all") String status,
+            @RequestParam(value = "sort", defaultValue = "desc") String sort
     ) {
         log.log(Level.INFO, MessageFormat.format("TranscriptController >> getTranscriptHistory >> dateFrom: {0}, dateTo: {1}, page: {2}, size: {3}", dateFrom, dateTo, page, size));
         var startDateTime = DatetimeUtils.getFromDate(dateFrom);
         var endDateTime = DatetimeUtils.getToDate(dateTo);
-        var result = transcriptRepo.findAllByCreatedAtBetween(startDateTime, endDateTime, PageRequest.of(page, size));
+        var sortRequest = "asc".equalsIgnoreCase(sort)
+                ? Sort.by("createdAt").ascending()
+                : Sort.by("createdAt").descending();
+        var pageRequest = PageRequest.of(page, size, sortRequest);
+        var result = "all".equalsIgnoreCase(status)
+                ? transcriptRepo.findAllByCreatedAtBetween(startDateTime, endDateTime, pageRequest)
+                : transcriptRepo.findAllByCreatedAtBetweenAndStatus(startDateTime, endDateTime, status, pageRequest);
         return ResponseVO.builder()
                 .data(result)
                 .success(true)
@@ -213,7 +222,8 @@ public class TranscriptController {
     public Object getTranslate(@PathVariable("id") Long id) {
         var transcriptHistory = transcriptRepo.findById(id);
         final var msg = new String[1];
-
+        final var success = new Boolean[1];
+        success[0] = false;
         transcriptHistory.ifPresentOrElse(e -> {
             if (StringUtils.isBlank(e.getTranscriptContent())) {
                 msg[0] = "TRANSCRIPT_NOT_FOUND";
@@ -222,10 +232,11 @@ public class TranscriptController {
                 e.setTranscriptContentTranslate(translate.toString());
                 transcriptRepo.save(e);
                 msg[0] = "TRANSLATE_SUCCESS";
+                success[0] = true;
             }
         }, () -> msg[0] = "TRANSCRIPT_NOT_FOUND");
         return ResponseVO.builder()
-                .success(true)
+                .success(success[0])
                 .message(msg[0])
                 .build();
     }

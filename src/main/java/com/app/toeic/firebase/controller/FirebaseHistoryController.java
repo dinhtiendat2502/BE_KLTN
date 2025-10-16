@@ -4,6 +4,7 @@ import com.app.toeic.exception.AppException;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.firebase.repo.FirebaseUploadHistoryRepo;
 import com.app.toeic.firebase.service.FirebaseStorageService;
+import com.app.toeic.util.DatetimeUtils;
 import com.app.toeic.util.FileSizeUtils;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
@@ -33,18 +34,24 @@ public class FirebaseHistoryController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "sort", defaultValue = "desc") String sort,
-            @RequestParam(value = "type", defaultValue = "all") String type
+            @RequestParam(value = "type", defaultValue = "all") String type,
+            @RequestParam(value = "dateFrom", defaultValue = "") String dateFrom,
+            @RequestParam(value = "dateTo", defaultValue = "") String dateTo
     ) {
         log.info(MessageFormat.format("FirebaseHistoryController >> getAll >> page: {0}, size: {1}, sort: {2}, type: {3}", page, size, sort, type));
-        var sortRequest = "asc".equalsIgnoreCase(sort) ? Sort.by("uploadDate").ascending() : Sort.by("uploadDate").descending();
+        var sortRequest = "asc".equalsIgnoreCase(sort)
+                ? Sort.by("uploadDate").ascending()
+                : Sort.by("uploadDate").descending();
         var result = new Object();
         var totalSize = BigInteger.ZERO;
+        var startDateTime = DatetimeUtils.getFromDate(dateFrom);
+        var endDateTime = DatetimeUtils.getToDate(dateTo);
         if ("all".equalsIgnoreCase(type)) {
-            result = firebaseUploadHistoryRepo.findAll(PageRequest.of(page, size, sortRequest));
-            totalSize = firebaseUploadHistoryRepo.sumByFileSize();
+            result = firebaseUploadHistoryRepo.findAllByUploadDateBetween(startDateTime, endDateTime, PageRequest.of(page, size, sortRequest));
+            totalSize = firebaseUploadHistoryRepo.sumByFileSizeAndUploadDateBetween(startDateTime, endDateTime);
         } else {
-            result = firebaseUploadHistoryRepo.findAllByFileType(type, PageRequest.of(page, size, sortRequest));
-            totalSize = firebaseUploadHistoryRepo.sumByFileSize(type);
+            result = firebaseUploadHistoryRepo.findAllByFileTypeAndUploadDateBetween(type, startDateTime, endDateTime, PageRequest.of(page, size, sortRequest));
+            totalSize = firebaseUploadHistoryRepo.sumByFileSizeAndUploadDateBetween(type, startDateTime, endDateTime);
         }
         return ResponseVO
                 .builder()

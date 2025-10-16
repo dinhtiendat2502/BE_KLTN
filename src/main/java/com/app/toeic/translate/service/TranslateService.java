@@ -51,7 +51,7 @@ public class TranslateService {
                         if (sentence instanceof Map<?, ?> sentenceMap) {
                             if (sentenceMap.containsKey("trans")) {
                                 var trans = (String) sentenceMap.get("trans");
-                                resultBuilder.append(trans).append(" ");
+                                resultBuilder.append(trans.trim()).append("\n");
                             }
                         }
                     }

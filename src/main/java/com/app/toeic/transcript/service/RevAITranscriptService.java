@@ -47,24 +47,29 @@ public class RevAITranscriptService {
             }
         }, executorService).thenAccept(jobId -> {
             boolean isJobComplete = false;
-            while (!isJobComplete) {
-                try {
-                    var jobDetails = apiClient.getJobDetails(jobId);
+            try {
+                var jobDetails = apiClient.getJobDetails(jobId);
+                transcriptHistory.setJobRevAIId(jobDetails.getJobId());
+                while (!isJobComplete) {
+                    jobDetails = apiClient.getJobDetails(jobId);
                     log.log(Level.INFO, MessageFormat.format("RevAITranscriptService >> getTranscript >> Job is not complete yet {0}", jobDetails.getJobStatus()));
                     if ("transcribed".equalsIgnoreCase(jobDetails.getJobStatus().name())
                             || "failed".equalsIgnoreCase(jobDetails.getJobStatus().name())) {
                         isJobComplete = true;
                         transcriptHistory.setStatus(jobDetails.getJobStatus().name());
-                        transcriptHistory.setJobRevAIId(jobDetails.getJobId());
                         transcriptHistory.setTranscriptContent(apiClient.getTranscriptText(jobDetails.getJobId()));
                         transcriptRepo.save(transcriptHistory);
                     }
                     Thread.sleep(3000);
-                } catch (Exception e) {
-                    log.log(Level.SEVERE, "RevAITranscriptService >> getTranscript >> thenAccept >> Error: {}", e);
                 }
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "RevAITranscriptService >> getTranscript >> thenAccept >> Error: {}", e);
+                transcriptHistory.setStatus("FAILED");
+                transcriptRepo.save(transcriptHistory);
             }
         }).exceptionally(e -> {
+            transcriptHistory.setStatus("FAILED");
+            transcriptRepo.save(transcriptHistory);
             log.log(Level.SEVERE, "RevAITranscriptService >> getTranscript >> exceptionally >> Error: {}", e);
             return null;
         });

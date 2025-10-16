@@ -11,4 +11,6 @@ import java.time.LocalDateTime;
 @Repository
 public interface TranscriptRepo extends JpaRepository<TranscriptHistory, Long> {
     Page<TranscriptHistory> findAllByCreatedAtBetween(LocalDateTime start, LocalDateTime end, Pageable pageable);
+
+    Page<TranscriptHistory> findAllByCreatedAtBetweenAndStatus(LocalDateTime start, LocalDateTime end, String status, Pageable pageable);
 }
