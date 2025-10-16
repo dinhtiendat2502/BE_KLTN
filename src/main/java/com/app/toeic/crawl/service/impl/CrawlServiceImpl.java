@@ -8,25 +8,33 @@ import com.app.toeic.exam.repo.IExamRepository;
 import com.app.toeic.part.model.Part;
 import com.app.toeic.question.model.Question;
 import com.app.toeic.question.model.QuestionImage;
+import com.app.toeic.util.Constant;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
 import org.apache.commons.collections4.CollectionUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.*;
+import java.util.logging.Level;
 
+@Log
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class CrawlServiceImpl implements CrawlService {
     JobCrawlRepository jobCrawlRepository;
     IExamRepository examRepository;
+    ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     public Set<Question> mCrawlPart12(Element element1, boolean element2, Part part) {
         var questionList = new ArrayList<Question>();
@@ -255,62 +263,89 @@ public class CrawlServiceImpl implements CrawlService {
     @Override
     @Async("crawlDataExecutor")
     public void crawlData(Elements listPartContent, Document doc, JobCrawl job, Exam exam) {
+        var futures = new ArrayList<CompletableFuture<Void>>();
         for (int i = 1; i <= listPartContent.size(); i++) {
-            var part = Part.builder().partCode("PART%d".formatted(i)).partName("Part %d".formatted(i)).build();
-            switch (i) {
-                case 1 -> {
-                    part.setNumberOfQuestion(6);
-                    part.setPartContent(
-                            "Directions : For each question in this part, you will hear four statements about a picture in your test book. When you hear the statements, you must select the one statement that best describes what you see in the picture. Then find the number of the question on your answer sheet and mark your answer. The statements will not be printed in your test book and will be spoken only one time.");
-                    part.setQuestions(this.mCrawlPart12(listPartContent.getFirst(), true, part));
-                }
-                case 2 -> {
-                    part.setNumberOfQuestion(25);
-                    part.setPartContent(
-                            "Directions : You will hear a question or statement and three responses spoken in English. They will not be printed in your test book and will be spoken only one time. Select the best response to the question or statement and mark the letter (A), (B), or (C) on your answer sheet.");
-                    part.setQuestions(this.mCrawlPart12(listPartContent.get(1), false, part));
-                }
-                case 3 -> {
-                    part.setNumberOfQuestion(39);
-                    part.setPartContent("""
-                            Directions : You will hear some conversations between two or more people. You will be asked to answer three questions about what the speakers say in each conversation. Select the best response to each question and mark the letter (A), (B), (C), or (D) on your answer sheet. The conversations will not be printed in your test book and will be spoken only one time.
-                            """);
-                    part.setQuestions(this.mCrawlPart34(listPartContent.get(2), true, part));
-                }
-                case 4 -> {
-                    part.setNumberOfQuestion(30);
-                    part.setPartContent("""
-                            Directions : You will hear some talks given by a single speaker. You will be asked to answer three questions about what the speaker says in each talk. Select the best response to each question and mark the letter (A), (B), (C), or (D) on your answer sheet. The talks will not be printed in your test book and will be spoken only one time.
-                            """);
-                    part.setQuestions(this.mCrawlPart34(listPartContent.get(3), false, part));
-                }
-                case 5 -> {
-                    part.setNumberOfQuestion(30);
-                    part.setPartContent("""
-                            Directions: A word or phrase is missing in each of the sentences below. Four answer choices are given below each sentence. Select the best answer to complete the sentence. Then mark the letter (A), (B), (C), or (D) on your answer sheet.
-                            """);
-                    part.setQuestions(this.mCrawlPart5(listPartContent.get(4), part));
-                }
-                case 6 -> {
-                    part.setNumberOfQuestion(16);
-                    part.setPartContent("""
-                            Directions : Read the texts that follow. A word, phrase, or sentence is missing in parts of each text. Four answer choices for each question are given below the text. Select the best answer to complete the text. Then mark the letter (A), (B), (C), or (D) on your answer sheet.
-                            """);
-                    part.setQuestions(this.mCrawlPart6(listPartContent.get(5), part));
-                }
-                case 7 -> {
-                    part.setNumberOfQuestion(54);
-                    part.setPartContent("""
-                            Directions: In this part you will read a selection of texts, such as magazine and newspaper articles, e-mails, and instant messages. Each text or set of texts is followed by several questions. Select the best answer for each question and mark the letter (A), (B), (C), or (D) on your answer sheet.
-                            """);
-                    part.setQuestions(this.mCrawlPart7(listPartContent.get(6), part));
-                }
-            }
-            part.setExam(exam);
-            exam.getParts().add(part);
+            int finalI = i;
+            var future = CompletableFuture.runAsync(() -> {
+                var part = createPart(finalI, listPartContent.get(finalI - 1), exam);
+                exam.getParts().add(part);
+            }, executorService);
+            futures.add(future);
         }
-        examRepository.save(exam);
-        job.setJobStatus("DONE");
-        jobCrawlRepository.save(job);
+        var allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+
+        allFutures.thenRun(() -> {
+            log.log(Level.INFO, "CrawlServiceImpl >> crawlData >> status: DONE");
+            examRepository.save(exam);
+            job.setJobStatus("DONE");
+            jobCrawlRepository.save(job);
+        }).exceptionally(e -> {
+            log.log(Level.SEVERE, "CrawlServiceImpl >> crawlData >> Error: {}", e);
+            return null;
+        });
     }
+
+    private Part createPart(int i, Element partElement, Exam exam) {
+        var part = Part.builder().partCode("PART%d".formatted(i)).partName("Part %d".formatted(i)).build();
+        switch (i) {
+            case 1 -> {
+                part.setNumberOfQuestion(Constant.NUMBER_QUESTION_PART_1);
+                part.setPartContent(
+                        "Directions : For each question in this part, you will hear four statements about a picture in your test book. When you hear the statements, you must select the one statement that best describes what you see in the picture. Then find the number of the question on your answer sheet and mark your answer. The statements will not be printed in your test book and will be spoken only one time.");
+                part.setQuestions(this.mCrawlPart12(partElement, true, part));
+                log.log(Level.INFO, "CrawlServiceImpl >> crawlData >> Part 1 >> status: IN_PROGRESS");
+            }
+            case 2 -> {
+                part.setNumberOfQuestion(Constant.NUMBER_QUESTION_PART_2);
+                part.setPartContent(
+                        "Directions : You will hear a question or statement and three responses spoken in English. They will not be printed in your test book and will be spoken only one time. Select the best response to the question or statement and mark the letter (A), (B), or (C) on your answer sheet.");
+                part.setQuestions(this.mCrawlPart12(partElement, false, part));
+                log.log(Level.INFO, "CrawlServiceImpl >> crawlData >> Part 2 >> status: IN_PROGRESS");
+            }
+            case 3 -> {
+                part.setNumberOfQuestion(Constant.NUMBER_QUESTION_PART_3);
+                part.setPartContent("""
+                        Directions : You will hear some conversations between two or more people. You will be asked to answer three questions about what the speakers say in each conversation. Select the best response to each question and mark the letter (A), (B), (C), or (D) on your answer sheet. The conversations will not be printed in your test book and will be spoken only one time.
+                        """);
+                part.setQuestions(this.mCrawlPart34(partElement, true, part));
+                log.log(Level.INFO, "CrawlServiceImpl >> crawlData >> Part 3 >> status: IN_PROGRESS");
+            }
+            case 4 -> {
+                part.setNumberOfQuestion(Constant.NUMBER_QUESTION_PART_4);
+                part.setPartContent("""
+                        Directions : You will hear some talks given by a single speaker. You will be asked to answer three questions about what the speaker says in each talk. Select the best response to each question and mark the letter (A), (B), (C), or (D) on your answer sheet. The talks will not be printed in your test book and will be spoken only one time.
+                        """);
+                part.setQuestions(this.mCrawlPart34(partElement, false, part));
+                log.log(Level.INFO, "CrawlServiceImpl >> crawlData >> Part 4 >> status: IN_PROGRESS");
+            }
+            case 5 -> {
+                part.setNumberOfQuestion(Constant.NUMBER_QUESTION_PART_5);
+                part.setPartContent("""
+                        Directions: A word or phrase is missing in each of the sentences below. Four answer choices are given below each sentence. Select the best answer to complete the sentence. Then mark the letter (A), (B), (C), or (D) on your answer sheet.
+                        """);
+                part.setQuestions(this.mCrawlPart5(partElement, part));
+                log.log(Level.INFO, "CrawlServiceImpl >> crawlData >> Part 5 >> status: IN_PROGRESS");
+            }
+            case 6 -> {
+                part.setNumberOfQuestion(Constant.NUMBER_QUESTION_PART_6);
+                part.setPartContent("""
+                        Directions : Read the texts that follow. A word, phrase, or sentence is missing in parts of each text. Four answer choices for each question are given below the text. Select the best answer to complete the text. Then mark the letter (A), (B), (C), or (D) on your answer sheet.
+                        """);
+                part.setQuestions(this.mCrawlPart6(partElement, part));
+                log.log(Level.INFO, "CrawlServiceImpl >> crawlData >> Part 6 >> status: IN_PROGRESS");
+            }
+            case 7 -> {
+                part.setNumberOfQuestion(Constant.NUMBER_QUESTION_PART_7);
+                part.setPartContent("""
+                        Directions: In this part you will read a selection of texts, such as magazine and newspaper articles, e-mails, and instant messages. Each text or set of texts is followed by several questions. Select the best answer for each question and mark the letter (A), (B), (C), or (D) on your answer sheet.
+                        """);
+                part.setQuestions(this.mCrawlPart7(partElement, part));
+                log.log(Level.INFO, "CrawlServiceImpl >> crawlData >> Part 7 >> status: IN_PROGRESS");
+            }
+        }
+        part.setExam(exam);
+        return part;
+    }
+
+
 }

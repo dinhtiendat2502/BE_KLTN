@@ -55,7 +55,7 @@ public class TranscriptController {
                     .build();
         }
 
-        var firebaseConfig = firebaseRepository.findByStatus(true);
+        var firebaseConfig = firebaseRepository.findAllByStatus(true).stream().findFirst();
         if (firebaseConfig.isEmpty()) {
             return ResponseVO
                     .builder()
@@ -94,7 +94,7 @@ public class TranscriptController {
                 var alternative = result.getAlternativesList().getFirst();
                 rs.append(alternative.getTranscript());
             }
-//            var translate = translateService.translate(rs.toString());
+            //            var translate = translateService.translate(rs.toString());
 
             return ResponseVO
                     .builder()
@@ -115,8 +115,18 @@ public class TranscriptController {
 
 
     @PostMapping(value = "get/revai", consumes = {"multipart/form-data"})
-    public Object getTranscriptV2(@RequestParam(value = "file") MultipartFile file,
-                                  @RequestParam(value = "name") String name) throws IOException {
+    public Object getTranscriptV2(
+            @RequestParam(value = "file", required = false) MultipartFile file,
+            @RequestParam(value = "name") String name
+    ) throws IOException {
+        if(file == null || file.isEmpty()) {
+            return ResponseVO.builder()
+                    .data(null)
+                    .success(false)
+                    .message("FILE_NOT_PRESENT")
+                    .build();
+        }
+
         if (!Objects.requireNonNull(file.getContentType()).startsWith("audio/")) {
             return ResponseVO.builder()
                     .data(null)

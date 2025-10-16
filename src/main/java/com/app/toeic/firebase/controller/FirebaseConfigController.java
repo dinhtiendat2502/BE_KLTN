@@ -15,6 +15,7 @@ import org.json.simple.parser.JSONParser;
 
 import java.io.*;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 
 @RestController
@@ -126,10 +127,12 @@ public class FirebaseConfigController {
             firebaseConfig.setStatus(true);
             firebaseRepository.save(firebaseConfig);
         });
+        var configsToUpdate = new ArrayList<FirebaseConfig>();
         firebaseRepository.findAllByIdNot(id).forEach(firebaseConfig -> {
             firebaseConfig.setStatus(false);
-            firebaseRepository.save(firebaseConfig);
+            configsToUpdate.add(firebaseConfig);
         });
+        firebaseRepository.saveAll(configsToUpdate);
         return ResponseVO
                 .builder()
                 .success(true)

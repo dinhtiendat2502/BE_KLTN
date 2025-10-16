@@ -33,7 +33,7 @@ public class ChatGPTController {
     @PostMapping("/chat")
     public Object chat(@RequestBody ChatRequestBody req) {
         var chatGptConfig = chatAiRepository.findAllByStatusAndType(true, "GPT").getFirst();
-        HttpHeaders headers = createHeaders(chatGptConfig);
+        var headers = createHeaders(chatGptConfig);
         req.getChatRequest().addMessage(new Message("user", chatGptConfig.getPrompt().formatted(req.getPrompt())));
         var httpEntity = new HttpEntity<>(req.getChatRequest(), headers);
         var responseEntity = restTemplate.postForEntity(
@@ -47,13 +47,13 @@ public class ChatGPTController {
     @PostMapping("text-to-speech")
     public Object textToSpeech(@RequestBody TextToSpeechPayload payload) {
         var chatGptConfig = chatAiRepository.findAllByStatusAndType(true, "GPT").getFirst();
-        String url = "https://api.openai.com/v1/audio/speech";
+        var url = "https://api.openai.com/v1/audio/speech";
         var headers = createHeaders(chatGptConfig);
         payload.setModel("tts-1");
         var httpEntity = new HttpEntity<>(payload, headers);
         var responseEntity = restTemplate.postForEntity(url, httpEntity, byte[].class);
         var audioData = responseEntity.getBody();
-        final String[] rs = new String[2];
+        final var rs = new String[2];
         if (audioData != null) {
             try (var fos = new FileOutputStream("audio.mp3")) {
                 fos.write(audioData);
@@ -72,7 +72,7 @@ public class ChatGPTController {
     }
 
     private HttpHeaders createHeaders(ChatAI config) {
-        HttpHeaders headers = new HttpHeaders();
+        var headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         headers.setBearerAuth(config.getToken());

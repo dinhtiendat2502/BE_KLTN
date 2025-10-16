@@ -10,19 +10,25 @@ import com.app.toeic.crawl.repo.JobCrawlRepository;
 import com.app.toeic.crawl.service.CrawlService;
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.external.response.ResponseVO;
+import com.app.toeic.util.JsonConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
 import org.apache.commons.collections4.CollectionUtils;
 import org.jsoup.Jsoup;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.logging.Level;
 import java.util.regex.Pattern;
 
+@Log
 @RestController
 @RequestMapping("/admin/crawl")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class CrawlController {
     CrawlConfigRepository crawlConfigRepository;
@@ -146,6 +152,12 @@ public class CrawlController {
             var examTitleName = title.text().replace("Đáp án chi tiết: ", "");
             exam.examName(examTitleName);
             job.examName(examTitleName);
+        } else {
+            return ResponseVO
+                    .builder()
+                    .success(Boolean.FALSE)
+                    .message("NOT_FOUND_EXAM_TO_CRAWL")
+                    .build();
         }
         var rsJob = jobCrawlRepository.save(job.build());
         var audio = doc.getElementsByClass("post-audio-item").first();
@@ -153,6 +165,7 @@ public class CrawlController {
             exam.examAudio(audio.child(0).absUrl("src"));
         }
         crawlService.crawlData(listPartContent, doc, rsJob, exam.build());
+        log.log(Level.INFO, MessageFormat.format("CrawlController >> crawl >> body: {0}", JsonConverter.convertObjectToJson(crawl)));
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)

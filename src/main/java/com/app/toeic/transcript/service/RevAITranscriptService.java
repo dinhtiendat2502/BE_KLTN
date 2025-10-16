@@ -19,7 +19,10 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 
 @Log
@@ -27,25 +30,26 @@ import java.util.logging.Level;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class RevAITranscriptService {
-    RevAIConfigRepo revAIConfigRepo;
+    ApiClient apiClient;
     TranscriptRepo transcriptRepo;
-    Executor crawlDataExecutor;
+    ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     @Async("crawlDataExecutor")
-    public void getTranscript(String url, TranscriptHistory transcriptHistory) throws IOException {
-        var revAiConfig = revAIConfigRepo.findAllByStatus(true);
-        if (CollectionUtils.isEmpty(revAiConfig) || StringUtils.isBlank(revAiConfig.getFirst().getAccessToken())) {
-            throw new AppException(HttpStatus.NOT_FOUND, "REV_AI_CONFIG_NOT_FOUND");
-        }
-
-        crawlDataExecutor.execute(() -> {
+    public void getTranscript(String url, TranscriptHistory transcriptHistory) {
+        CompletableFuture.supplyAsync(() -> {
             try {
-                var apiClient = new ApiClient(revAiConfig.getFirst().getAccessToken());
                 var revAiOptions = buildRevAiJobOptions(url, transcriptHistory.getTranscriptName());
                 var submittedJob = apiClient.submitJobUrl(revAiOptions);
-                boolean isJobComplete = false;
-                while (!isJobComplete) {
-                    var jobDetails = apiClient.getJobDetails(submittedJob.getJobId());
+                return submittedJob.getJobId();
+            } catch (Exception e) {
+                log.log(Level.SEVERE, "RevAITranscriptService >> getTranscript >> Error: {}", e);
+                throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "REV_AI_JOB_SUBMISSION_FAILED");
+            }
+        }, executorService).thenAccept(jobId -> {
+            boolean isJobComplete = false;
+            while (!isJobComplete) {
+                try {
+                    var jobDetails = apiClient.getJobDetails(jobId);
                     log.log(Level.INFO, MessageFormat.format("RevAITranscriptService >> getTranscript >> Job is not complete yet {0}", jobDetails.getJobStatus()));
                     if ("transcribed".equalsIgnoreCase(jobDetails.getJobStatus().name())
                             || "failed".equalsIgnoreCase(jobDetails.getJobStatus().name())) {
@@ -55,11 +59,14 @@ public class RevAITranscriptService {
                         transcriptHistory.setTranscriptContent(apiClient.getTranscriptText(jobDetails.getJobId()));
                         transcriptRepo.save(transcriptHistory);
                     }
-                    Thread.sleep(2000);
+                    Thread.sleep(3000);
+                } catch (Exception e) {
+                    log.log(Level.SEVERE, "RevAITranscriptService >> getTranscript >> thenAccept >> Error: {}", e);
                 }
-            } catch (Exception e) {
-                log.log(Level.SEVERE, "RevAITranscriptService >> getTranscript >> Error: {}", e);
             }
+        }).exceptionally(e -> {
+            log.log(Level.SEVERE, "RevAITranscriptService >> getTranscript >> exceptionally >> Error: {}", e);
+            return null;
         });
     }
 

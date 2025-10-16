@@ -1,6 +1,7 @@
 package com.app.toeic.exception;
 
 import com.app.toeic.external.response.ResponseVO;
+import com.google.cloud.storage.StorageException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -115,6 +116,19 @@ public class GlobalExceptionHandler {
     public ResponseVO handleInternalAuthenticationServiceException(InternalAuthenticationServiceException e) {
         log.error(
                 "Exception >> GlobalExceptionHandler >> handleInternalAuthenticationServiceException: %s".formatted(e.getMessage()),
+                e
+        );
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message(e.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(StorageException.class)
+    public ResponseVO handleStorageException(StorageException e) {
+        log.error(
+                "Exception >> GlobalExceptionHandler >> StorageException: %s".formatted(e.getMessage()),
                 e
         );
         return ResponseVO
