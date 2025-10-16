@@ -3,6 +3,8 @@ package com.app.toeic.config;
 import com.app.toeic.email.model.EmailConfig;
 import com.app.toeic.email.repo.EmailConfigRepo;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -11,9 +13,10 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 
 @Configuration
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class JavaMailConfig {
-    private final EmailConfigRepo emailConfigRepo;
+    EmailConfigRepo emailConfigRepo;
 
     @Bean
     public JavaMailSender javaMailSender() {

@@ -8,6 +8,8 @@ import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.question.service.QuestionService;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,9 +17,10 @@ import java.util.List;
 
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class QuestionServiceImpl implements QuestionService {
-    private final IQuestionRepository questionRepository;
+    IQuestionRepository questionRepository;
 
     @Override
     @Transactional

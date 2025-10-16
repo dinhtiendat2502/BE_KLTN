@@ -30,23 +30,21 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     @Transactional
-    public Object addExam(Exam exam) {
+    public void addExam(Exam exam) {
         if (Boolean.TRUE.equals(examRepository.existsExamByExamName(exam.getExamName(), Integer.MIN_VALUE))) {
             throw new AppException(HttpStatus.SEE_OTHER, "EXAM_EXISTED");
         }
         var returnExam = examRepository.save(exam);
         partService.init7PartForExam(returnExam);
-        return "CREATE_EXAM_SUCCESS";
     }
 
     @Override
     @Transactional
-    public Object updateExam(Exam exam) {
+    public void updateExam(Exam exam) {
         if (Boolean.TRUE.equals(examRepository.existsExamByExamName(exam.getExamName(), exam.getExamId()))) {
             throw new AppException(HttpStatus.SEE_OTHER, "EXAM_NAME_EXISTED");
         }
         examRepository.save(exam);
-        return "UPDATE_EXAM_SUCCESS";
     }
 
     @Override
@@ -112,5 +110,10 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public Optional<ExamVO.ExamFullQuestion> findExamPractice(int i, List<String> listPart) {
         return examRepository.findExamPractice(i, listPart);
+    }
+
+    @Override
+    public void save(Exam exam) {
+        examRepository.save(exam);
     }
 }

@@ -3,25 +3,14 @@ server:
   servlet:
     context-path: /api
 spring:
-  ai:
-    openai:
-      api-key: "${OPENAI_API_KEY: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}"
-      audio:
-        speech:
-          options:
-            model: tts-1
-      chat:
-        options:
-          model: gpt-3.5-turbo
-          temperature: 0.7
   application:
     name: toeicute-api
   boot:
     admin:
       client:
-        url: http://localhost:8080/api
+        url: "http://${HOST:localhost}:8080/api"
         instance:
-          service-url: http://localhost:8080/api
+          service-url: "http://${HOST:localhost}:8080/api"
 
   datasource:
     url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true"

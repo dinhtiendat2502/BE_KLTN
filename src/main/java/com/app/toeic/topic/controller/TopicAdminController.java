@@ -5,6 +5,8 @@ import com.app.toeic.topic.model.Topic;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.topic.service.TopicService;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,9 +15,10 @@ import java.io.IOException;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/topic")
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class TopicAdminController {
-    private final TopicService topicService;
-    private final FirebaseStorageService firebaseStorageService;
+    TopicService topicService;
+    FirebaseStorageService firebaseStorageService;
 
     @GetMapping("/list")
     public Object getAllTopic(
@@ -37,11 +40,34 @@ public class TopicAdminController {
                 .topicImage(image)
                 .status("ACTIVE")
                 .build();
-        topicService.addTopic(newTopic);
+        topicService.saveTopic(newTopic);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
                 .message("CREATE_TOPIC_SUCCESS")
+                .build();
+    }
+
+    @PatchMapping("/update/{topicId}")
+    public ResponseVO updateTopic(
+            @PathVariable("topicId") Integer topicId,
+            @RequestParam("topicName") String topicName,
+            @RequestParam(value = "file", required = false) MultipartFile file
+    ) throws IOException {
+        var image = "";
+        if(file != null) {
+            image = firebaseStorageService.uploadFile(file);
+        }
+
+        var topic = topicService.getTopicById(topicId)
+                .orElseThrow(() -> new RuntimeException("TOPIC_NOT_FOUND"));
+        topic.setTopicName(StringUtils.defaultIfBlank(topicName, topic.getTopicName()));
+        topic.setTopicImage(StringUtils.defaultIfBlank(image, topic.getTopicImage()));
+        topicService.saveTopic(topic);
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .message("UPDATE_TOPIC_SUCCESS")
                 .build();
     }
 

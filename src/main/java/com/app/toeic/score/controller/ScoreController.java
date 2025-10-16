@@ -7,12 +7,14 @@ import com.app.toeic.score.repo.ICalculateScoreRepository;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,10 +25,11 @@ import java.util.stream.IntStream;
 
 
 @RestController
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @RequestMapping("/admin/score")
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class ScoreController {
-    private final ICalculateScoreRepository calculateScoreRepository;
+    ICalculateScoreRepository calculateScoreRepository;
 
     @GetMapping("/init")
     public ResponseVO initScore() {

@@ -1,6 +1,7 @@
 package com.app.toeic.config;
 
 import com.app.toeic.jwt.JwtAuthenticationFilter;
+import lombok.experimental.FieldDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -17,9 +18,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class WebSecurityConfig {
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final AuthenticationProvider authenticationProvider;
+    JwtAuthenticationFilter jwtAuthenticationFilter;
+    AuthenticationProvider authenticationProvider;
 
     public WebSecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, AuthenticationProvider authenticationProvider) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;

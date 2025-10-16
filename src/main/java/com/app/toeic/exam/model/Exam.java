@@ -63,7 +63,7 @@ public class Exam {
 
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
-    @OrderBy("partId ASC")
+    @OrderBy("partCode ASC")
     @Builder.Default
     private Set<Part> parts = new HashSet<>();
 }

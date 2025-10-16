@@ -4,14 +4,16 @@ import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.revai.model.RevAIConfig;
 import com.app.toeic.revai.repo.RevAIConfigRepo;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/revai/config")
-@CrossOrigin("*")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class RevAIConfigController {
-    private final RevAIConfigRepo revAIConfigRepo;
+    RevAIConfigRepo revAIConfigRepo;
     private static final String CONFIG_NOT_FOUND = "CONFIG_NOT_FOUND";
     @GetMapping("/all")
     public Object getAll() {

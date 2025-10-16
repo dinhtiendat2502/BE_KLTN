@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.collections4.CollectionUtils;
 import org.jsoup.Jsoup;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -68,21 +69,36 @@ public class CrawlController {
                 .build();
     }
 
+    @GetMapping("all-job")
+    public Object getAllJob(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "10") Integer size,
+            @RequestParam(value = "status", defaultValue = "ALL") String status
+    ) {
+        if("ALL".equalsIgnoreCase(status)){
+            return jobCrawlRepository.findAll(PageRequest.of(page, size));
+        } else {
+            return jobCrawlRepository.findAllByJobStatus(status, PageRequest.of(page, size));
+        }
+    }
+
 
     @PostMapping("is-crawl")
     public Object isCrawl(@RequestBody CrawlDTO crawl) {
         String pattern = "(https://study4\\.com/tests/\\d+/results).*";
         String desiredUrl = crawl.getUrl().replaceAll(pattern, "$1");
-        if (jobCrawlRepository.existsByJobLink(desiredUrl)) {
+        var list = jobCrawlRepository.findByJobLink(desiredUrl);
+        if (CollectionUtils.isNotEmpty(list)
+         || !list.isEmpty()) {
             return ResponseVO
                     .builder()
-                    .success(Boolean.FALSE)
+                    .success(true)
                     .message("IS_CRAWL")
                     .build();
         }
         return ResponseVO
                 .builder()
-                .success(Boolean.TRUE)
+                .success(false)
                 .message("NOT_CRAWL")
                 .build();
     }
@@ -111,7 +127,7 @@ public class CrawlController {
         var doc = connection.userAgent(config.getAgentUser()).get();
         var listPartContent = doc.getElementsByClass("test-questions-wrapper");
         int totalPart = 7;
-        if (CollectionUtils.isNotEmpty(listPartContent) && listPartContent.size() != totalPart) {
+        if (CollectionUtils.isEmpty(listPartContent) || listPartContent.size() != totalPart) {
             return ResponseVO
                     .builder()
                     .success(Boolean.FALSE)

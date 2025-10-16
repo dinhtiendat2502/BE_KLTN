@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("chat-gpt")

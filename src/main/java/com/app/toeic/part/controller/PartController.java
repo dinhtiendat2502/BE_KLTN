@@ -5,14 +5,16 @@ import com.app.toeic.part.payload.PartDTO;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.part.service.PartService;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @RequestMapping("/admin/part")
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class PartController {
-
-    private final PartService partService;
+    PartService partService;
 
     @PostMapping("/list-by-exam")
     public ResponseVO getAllPartByExamId(@RequestBody PartDTO partDto) {

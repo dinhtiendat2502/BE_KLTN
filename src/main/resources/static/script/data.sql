@@ -248,31 +248,7 @@ VALUES ('toeicute-70460.appspot.com',
 insert into revai_config(access_token, status)
     value ('02Nr61oQry1wxj-hsCiaMUmAAdfM_VWYGTcFXiNxB0RwmozYdeLpBRde7O_wmZ63pE18gsxYor7OOm8tLbunHjuKma3e0', true);
 
-insert into chatai(location, model_name, project_id, prompt, status, token, type)
-values ('', 'gpt-3.5-turbo', '', 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot''s designated purpose of assisting users with TOEIC and English language learning.
-Start a conversation like "Hello!" and encourage them like "No worries!" when you feel they do not understand. Question: %s', true, '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', 'GPT');
-
-
-insert into chatai(location, model_name, project_id, prompt, status, token, type)
-values ('us-central1', 'gemini-1.0-pro', 'toeicute-70460', 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot''s designated purpose of assisting users with TOEIC and English language learning.
-Start a conversation like "Hello!" and encourage them like "No worries!" when you feel they do not understand. Question: %s', true,
-        '{
-  "type": "service_account",
-  "project_id": "toeicute-70460",
-  "private_key_id": "8099381cf1dfc903ebc36dcbf42bc95a9391526b",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDdiBE4j1WI8SY+\n8vWPbWrzEI481q9Q/rP1qj0Dnm+uPWz6HBvCDHKOCttAuemF4JrnUngtpUOh7lZV\n3e0VAuNlNSzzlpQ+AvtPcnk1vKCaPdAZ1NcS0L9mdqjTtMSM3UOn4CRTvEEr81m0\nGb178HfcQlLqHANUTl785HVRXR/AkD6OEZTGhW0iisPTbb3oM4CqaNQfIIHMmlTS\nvA2RlMFPZew4Iut1fB5B/C7ipNHecaO1Rg4mMY9aOGSIDM35DqqW4Z0vC9qpqzpz\no1FpDZcwol8hAkKD5ov3QolPrAUhtZ/nZkmUow8T5TjJkmefiQP5ZDsPbEkeAhH5\nzAQ9oC7DAgMBAAECggEAJXcLDokzGodKBBBb1idXlIbiv0hBew2wSqZBTljfo1SR\nFxVk3mLzhrEwVlh6tWEAYYmxeGrALuUbZccz/r8vzOB62zFGndwsO0ntVNizQpKc\nnJnBy9VQ4VfFApTKPtZ2yC/ghObMEM5Fh+9oe8r1wmLXGe+l4n6kktliO+Hnak3K\nLPdAp3SwDjPZPAWNqY0zG2xHyi+keG5U9SAbDwOBR05Cg64vzgqd0MpIgWT6507e\nG91XigA7JtrWq7N7GJzrleQU6Hh8lygPIY5oJm5En6ZEhSCg6aJ953prFH9fIQQk\niJKBK1/8Kb/uUYdgcSHkgYkxraUt2//PPAPziybhkQKBgQDzVZQMVbTD8RSNw+qR\n1fF4bdnG4Cu8lzx6LCwi5VtDfqprByX4FRFAsVSy1CJgj4tCm2KY+0yW+uXR5G99\nnddbRBc8p6PkqpAe+Ggsav8FMNjVpfFMAIFFKfxllEjFHYhXI+UDL/OF0clT9aOR\nUr1/sH1RBcZH+fZFym3Skk70cQKBgQDpD/e3Jn3GkGfkag8gZ5sjZXGb9Dbq7MDC\nfeLd4rW5weohgwOLmza0DLVEVIGsa1mCnC6bd3e0VkTCjcLIVWUnUrSxePj/5uhs\nzfz2J5aCP6dw/QU0l83rHg+ssKAb2S+1U/pzK564au5yukdev2WD85ZPls+9yOBz\nLunLF15gcwKBgAg0oJNx6HCbFphZPPXCAyyOd8OPF6p6Zx2vk6VxmoxCHzkQuqUN\nANHvqO2G3cnnzUhnuQFzp/eHamyTiXbw9awsNaRj+tDhN47zzX+B9CuWpBlASUzI\nz5MngU1jnLiY8FoP6c8btNiUZHeiVuu1oJJHv1IWIcOXmEhuNRneuS7hAoGBAI7u\nO/0Wngwog46RfLVi1MHgdMwv+X4ZtB2TFo79enVxdyUWNBZqGiJRqNk++kfDjiGL\npwmxOrheL80hI1O5C1ASaL5uckZ+VgxkR76uiJ9Yalfg1FBsyNxokzRVHdv2Vkve\nNLptBeoTqiiyFRMGTjueJ5Cn7L93ci8xli/3JOoBAoGBALX9JGfPLXcXuNVBJp6f\nyv4XEhvhrlLP/mNf/LgVeoXzf75JRCYWF2bgBmlTFM8eWqGqW1MOYi8lg4PfCotr\n/UaifK/U75rFYF6rHIcvFQ/jC3NHuKxj5MSZ/T2/zz5Nub0C5R9QQvvtKPTaL/f/\nnUHQaVN+NCCWocW/aB2syt84\n-----END PRIVATE KEY-----\n",
-  "client_email": "firebase-adminsdk-ajpvp@toeicute-70460.iam.gserviceaccount.com",
-  "client_id": "109193298623065780489",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ajpvp%40toeicute-70460.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
-', 'GEMINI');
-
-
-INSERT INTO chatai (chat_ai_id, location, model_name, project_id, prompt, status, token, type, url) VALUES (1, 'us-central1', 'gemini-1.0-pro', 'toeicute-70460', 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot\'s designated purpose of assisting users with TOEIC and English language learning.
+INSERT INTO chatai (location, model_name, project_id, prompt, status, token, type, url) VALUES ('us-central1', 'gemini-1.0-pro', 'toeicute-70460', 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot\'s designated purpose of assisting users with TOEIC and English language learning.
 Start a conversation like "Hello!" and encourage them like "No worries!" when you feel they do not understand. Question: %s', true, '{
   "type": "service_account",
                                                                                                             "project_id": "toeicute-70460",
@@ -315,7 +291,7 @@ nUHQaVN+NCCWocW/aB2syt84
                                                                                                             "universe_domain": "googleapis.com"
 }
 ', 'GEMINI', null);
-INSERT INTO chatai (chat_ai_id, location, model_name, project_id, prompt, status, token, type, url) VALUES (2, '', 'gpt-3.5-turbo', '', 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot\'s designated purpose of assisting users with TOEIC and English language learning.
+INSERT INTO chatai (location, model_name, project_id, prompt, status, token, type, url) VALUES ('', 'gpt-3.5-turbo', '', 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot\'s designated purpose of assisting users with TOEIC and English language learning.
 Start a conversation like "Hello!" and encourage them like "No worries!" when you feel they do not understand. Question: %s', true, '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', 'GPT', 'https://api.openai.com/v1/chat/completions');
 
 insert into chatai(type, token, status, prompt, url) values ('GEMINI-CURL', 'AIzaSyBRL8Lz9vaftejrIqHAaHOZhuobfJFHgis', true, 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot\'s designated purpose of assisting users with TOEIC and English language learning.

@@ -3,13 +3,19 @@ package com.app.toeic.transcript.controller;
 
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.firebase.repo.FirebaseRepository;
+import com.app.toeic.firebase.service.FirebaseStorageService;
 import com.app.toeic.revai.repo.RevAIConfigRepo;
+import com.app.toeic.transcript.model.TranscriptHistory;
+import com.app.toeic.transcript.repo.TranscriptRepo;
+import com.app.toeic.transcript.service.RevAITranscriptService;
+import com.app.toeic.translate.service.TranslateService;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.speech.v1p1beta1.*;
 import com.google.protobuf.ByteString;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import ai.rev.speechtotext.ApiClient;
@@ -21,19 +27,24 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
 
+@Log
 @RestController
 @RequestMapping("transcript")
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class TranscriptController {
     RevAIConfigRepo revAIConfigRepo;
-
     FirebaseRepository firebaseRepository;
+    TranscriptRepo transcriptRepo;
+    FirebaseStorageService firebaseStorageService;
+    RevAITranscriptService revAITranscriptService;
 
-    @PostMapping(value = "get/v1", consumes = {"multipart/form-data"})
+    @PostMapping(value = "get/google", consumes = {"multipart/form-data"})
     public Object getTranscript(
-            @RequestParam(value = "file") MultipartFile file
+            @RequestParam(value = "file") MultipartFile file,
+            @RequestParam(value = "name") String name
     ) throws IOException {
         // check file is mp3
         if (!Objects.requireNonNull(file.getContentType()).startsWith("audio/")) {
@@ -78,13 +89,21 @@ public class TranscriptController {
                             .build();
             var recognizeResponse = speechClient.longRunningRecognizeAsync(config, recognitionAudio);
 
-            List<SpeechRecognitionResult> results = recognizeResponse.get().getResultsList();
-            for (SpeechRecognitionResult result : results) {
-                SpeechRecognitionAlternative alternative = result.getAlternativesList().getFirst();
+            var results = recognizeResponse.get().getResultsList();
+            for (var result : results) {
+                var alternative = result.getAlternativesList().getFirst();
                 rs.append(alternative.getTranscript());
             }
-        } catch (
-                Exception e) {
+//            var translate = translateService.translate(rs.toString());
+
+            return ResponseVO
+                    .builder()
+                    .data(rs.toString())
+                    .success(true)
+                    .message("TRANSCRIPT_SUCCESS")
+                    .build();
+        } catch (Exception e) {
+            log.log(Level.WARNING, "TranscriptController >> getTranscript >> error: {}", e);
             return ResponseVO
                     .builder()
                     .data(e.getMessage())
@@ -92,17 +111,12 @@ public class TranscriptController {
                     .message("TRANSCRIPT_FAILED")
                     .build();
         }
-        return ResponseVO
-                .builder()
-                .data(rs.toString())
-                .success(true)
-                .message("TRANSCRIPT_SUCCESS")
-                .build();
     }
 
 
-    @PostMapping(value = "get/v2", consumes = {"multipart/form-data"})
-    public Object getTranscriptV2(@RequestParam(value = "file") MultipartFile file) throws IOException {
+    @PostMapping(value = "get/revai", consumes = {"multipart/form-data"})
+    public Object getTranscriptV2(@RequestParam(value = "file") MultipartFile file,
+                                  @RequestParam(value = "name") String name) throws IOException {
         if (!Objects.requireNonNull(file.getContentType()).startsWith("audio/")) {
             return ResponseVO.builder()
                     .data(null)
@@ -110,20 +124,16 @@ public class TranscriptController {
                     .message("FILE_NOT_SUPPORT")
                     .build();
         }
-        var revAiConfig = revAIConfigRepo.findAllByStatus(true);
-        if (CollectionUtils.isEmpty(revAiConfig) || StringUtils.isBlank(revAiConfig.getFirst().getAccessToken())) {
-            return ResponseVO.builder()
-                    .data(null)
-                    .success(false)
-                    .message("REV_AI_CONFIG_NOT_FOUND")
-                    .build();
-        }
+        var fileUrl = firebaseStorageService.uploadFile(file);
 
-        var apiClient = new ApiClient(revAiConfig.getFirst().getAccessToken());
-        var revAiJob = apiClient.submitJobLocalFile(file.getInputStream());
-        var newlyRefreshedRevAiJob = apiClient.getJobDetails(revAiJob.getJobId());
+        var transcriptHistory = TranscriptHistory
+                .builder()
+                .transcriptName(name)
+                .transcriptAudio(fileUrl)
+                .build();
+        var transcriptHistory1 = transcriptRepo.save(transcriptHistory);
+        revAITranscriptService.getTranscript(fileUrl, transcriptHistory1);
         return ResponseVO.builder()
-                .data(newlyRefreshedRevAiJob)
                 .success(true)
                 .message("TRANSCRIPT_SUCCESS")
                 .build();
@@ -162,7 +172,6 @@ public class TranscriptController {
 
         var apiClient = new ApiClient(revAiConfig.getFirst().getAccessToken());
         var transcript = apiClient.getTranscriptText(jobId);
-        transcript = transcript.replace("\n","").replaceAll("Speaker \\d+\\s+\\d+:\\d+:\\d+\\s+", "");
         return ResponseVO.builder()
                 .data(transcript)
                 .success(true)
@@ -171,19 +180,4 @@ public class TranscriptController {
     }
 
 
-
-    private RevAiJobOptions buildRevAiJobOptions(String link) {
-        RevAiJobOptions revAiJobOptions = new RevAiJobOptions();
-        revAiJobOptions.setSourceConfig(link);
-        revAiJobOptions.setMetadata("My first submission");
-        revAiJobOptions.setSkipPunctuation(false);
-        revAiJobOptions.setSkipDiarization(false);
-        revAiJobOptions.setFilterProfanity(true);
-        revAiJobOptions.setRemoveDisfluencies(true);
-        revAiJobOptions.setSpeakerChannelsCount(null);
-        revAiJobOptions.setDeleteAfterSeconds(259200); // 30 days in seconds
-        revAiJobOptions.setLanguage("en");
-        revAiJobOptions.setTranscriber("machine_v2");
-        return revAiJobOptions;
-    }
 }

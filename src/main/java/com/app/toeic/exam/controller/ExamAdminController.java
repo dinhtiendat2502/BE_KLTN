@@ -11,6 +11,7 @@ import com.app.toeic.util.HttpStatus;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/admin/exam")
@@ -71,15 +72,30 @@ public class ExamAdminController {
                     .message(EXAM_NOT_FOUND)
                     .build();
         }
-        exam.setExamName(examDto.getExamName());
+        exam.setExamName(StringUtils.defaultIfBlank(examDto.getExamName(), exam.getExamName()));
         exam.setTopic(examDto.getTopicId() != null ? topicService
                 .findById(examDto.getTopicId())
                 .orElse(null) : null);
-        examService.updateExam(exam);
+        examService.save(exam);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
                 .message("UPDATE_EXAM_SUCCESS")
+                .build();
+    }
+
+    @DeleteMapping("/delete-exam/{examId}")
+    public ResponseVO deleteExam(@PathVariable Integer examId) {
+        var exam = examService
+                .findById(examId);
+        if(exam.isPresent()) {
+            exam.get().setStatus("INACTIVE");
+            examService.save(exam.get());
+        }
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .message("DELETE_EXAM_SUCCESS")
                 .build();
     }
 

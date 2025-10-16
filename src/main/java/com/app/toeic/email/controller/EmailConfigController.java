@@ -5,13 +5,16 @@ import com.app.toeic.email.model.EmailConfig;
 import com.app.toeic.email.payload.EmailConfigDTO;
 import com.app.toeic.email.repo.EmailConfigRepo;
 import com.app.toeic.external.response.ResponseVO;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/email/config")
-@CrossOrigin("*")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class EmailConfigController {
     private final EmailConfigRepo emailConfigRepo;
 

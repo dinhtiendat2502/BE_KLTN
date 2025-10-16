@@ -18,7 +18,7 @@ public interface ITopicRepository extends JpaRepository<Topic, Integer> {
 
     List<Topic> findAllByStatusOrderByExamsDesc(String status);
 
-    Boolean existsByTopicName(String topicName);
+    Boolean existsByTopicNameAndTopicIdNot(String topicName, Integer topicId);
 
     @Query("""
                 SELECT t.topicId AS topicId,

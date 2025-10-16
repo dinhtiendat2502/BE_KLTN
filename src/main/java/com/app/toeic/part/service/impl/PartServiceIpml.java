@@ -9,16 +9,19 @@ import com.app.toeic.part.repo.IPartRepository;
 import com.app.toeic.part.service.PartService;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class PartServiceIpml implements PartService {
-    private final IPartRepository partRepository;
-    private final IExamRepository examRepository;
+    IPartRepository partRepository;
+    IExamRepository examRepository;
 
     @Override
     @Transactional

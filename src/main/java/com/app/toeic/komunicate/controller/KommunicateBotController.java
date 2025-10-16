@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/kommunicate/bot")
-@CrossOrigin("*")
 @RequiredArgsConstructor
 public class KommunicateBotController {
     private final KommunicateBotRepo kommunicateBotRepo;
