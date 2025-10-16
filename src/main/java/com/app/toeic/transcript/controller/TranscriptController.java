@@ -1,5 +1,6 @@
 package com.app.toeic.transcript.controller;
 
+import com.app.toeic.cache.FirebaseConfigCache;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.firebase.service.FirebaseStorageService;
 import com.app.toeic.revai.repo.RevAIConfigRepo;
@@ -9,6 +10,7 @@ import com.app.toeic.transcript.service.GoogleTranscriptService;
 import com.app.toeic.transcript.service.RevAITranscriptService;
 import com.app.toeic.translate.service.TranslateService;
 import com.app.toeic.util.DatetimeUtils;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
@@ -36,6 +38,7 @@ public class TranscriptController {
     RevAITranscriptService revAITranscriptService;
     TranslateService translateService;
     GoogleTranscriptService googleTranscriptService;
+    FirebaseConfigCache firebaseConfigCache;
 
     @PostMapping(value = "get/google", consumes = {"multipart/form-data"})
     public Object getTranscript(
@@ -50,6 +53,15 @@ public class TranscriptController {
                     .message(validateFile)
                     .build();
         }
+        var firebaseConfig = firebaseConfigCache.getConfigValue(true);
+        if (StringUtils.isEmpty(firebaseConfig.getFileJson())) {
+            return ResponseVO
+                    .builder()
+                    .data(null)
+                    .success(true)
+                    .message("FIREBASE_CONFIG_NOT_FOUND")
+                    .build();
+        }
         var fileUrl = firebaseStorageService.uploadFile(file);
         var transcriptHistory = TranscriptHistory
                 .builder()
@@ -58,10 +70,29 @@ public class TranscriptController {
                 .transcriptAudio(fileUrl)
                 .build();
         var result = transcriptRepo.save(transcriptHistory);
-        googleTranscriptService.getTranscript(file, result);
+        googleTranscriptService.getTranscript(fileUrl, result, firebaseConfig.getFileJson());
         return ResponseVO.builder()
                 .success(true)
                 .message("GET_TRANSCRIPT_IN_PROGRESS")
+                .build();
+    }
+
+    @PostMapping("test")
+    public Object test(@RequestParam String link) throws IOException {
+        var firebaseConfig = firebaseConfigCache.getConfigValue(true);
+        if (StringUtils.isEmpty(firebaseConfig.getFileJson())) {
+            return ResponseVO
+                    .builder()
+                    .data(null)
+                    .success(true)
+                    .message("FIREBASE_CONFIG_NOT_FOUND")
+                    .build();
+        }
+
+        return ResponseVO.builder()
+                .success(true)
+                .data(googleTranscriptService.getT(link, firebaseConfig.getFileJson()))
+                .message("TEST_SUCCESS")
                 .build();
     }
 
