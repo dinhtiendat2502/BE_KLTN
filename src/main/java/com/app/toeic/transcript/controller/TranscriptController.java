@@ -1,19 +1,14 @@
 package com.app.toeic.transcript.controller;
 
-
 import com.app.toeic.external.response.ResponseVO;
-import com.app.toeic.firebase.repo.FirebaseRepository;
 import com.app.toeic.firebase.service.FirebaseStorageService;
 import com.app.toeic.revai.repo.RevAIConfigRepo;
 import com.app.toeic.transcript.model.TranscriptHistory;
 import com.app.toeic.transcript.repo.TranscriptRepo;
+import com.app.toeic.transcript.service.GoogleTranscriptService;
 import com.app.toeic.transcript.service.RevAITranscriptService;
 import com.app.toeic.translate.service.TranslateService;
 import com.app.toeic.util.DatetimeUtils;
-import com.google.api.gax.core.FixedCredentialsProvider;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.speech.v1p1beta1.*;
-import com.google.protobuf.ByteString;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
@@ -24,8 +19,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Objects;
@@ -38,82 +31,38 @@ import java.util.logging.Level;
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class TranscriptController {
     RevAIConfigRepo revAIConfigRepo;
-    FirebaseRepository firebaseRepository;
     TranscriptRepo transcriptRepo;
     FirebaseStorageService firebaseStorageService;
     RevAITranscriptService revAITranscriptService;
     TranslateService translateService;
+    GoogleTranscriptService googleTranscriptService;
 
     @PostMapping(value = "get/google", consumes = {"multipart/form-data"})
     public Object getTranscript(
-            @RequestParam(value = "file") MultipartFile file,
+            @RequestParam(value = "file", required = false) MultipartFile file,
             @RequestParam(value = "name") String name
     ) throws IOException {
-        // check file is mp3
-        if (!Objects.requireNonNull(file.getContentType()).startsWith("audio/")) {
+        var validateFile = validateFile(file);
+        if (StringUtils.isNotBlank(validateFile)) {
             return ResponseVO.builder()
                     .data(null)
                     .success(false)
-                    .message("FILE_NOT_SUPPORT")
+                    .message(validateFile)
                     .build();
         }
-
-        var firebaseConfig = firebaseRepository.findAllByStatus(true).stream().findFirst();
-        if (firebaseConfig.isEmpty()) {
-            return ResponseVO
-                    .builder()
-                    .data(null)
-                    .success(true)
-                    .message("FIREBASE_CONFIG_NOT_FOUND")
-                    .build();
-        }
-        var rs = new StringBuilder();
-        var jsonContent = firebaseConfig.get().getFileJson();
-        var credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(jsonContent.getBytes()));
-        try (SpeechClient speechClient = SpeechClient.create(
-                SpeechSettings.newBuilder()
-                        .setCredentialsProvider(FixedCredentialsProvider.create(credentials))
-                        .build()
-        )) {
-            RecognitionAudio recognitionAudio =
-                    RecognitionAudio
-                            .newBuilder()
-                            .setContent(ByteString.copyFrom(file.getBytes()))
-                            .build();
-            var audioEncoding = Objects.requireNonNull(file.getContentType()).startsWith("audio/")
-                    ? RecognitionConfig.AudioEncoding.MP3
-                    : RecognitionConfig.AudioEncoding.LINEAR16;
-            var config =
-                    RecognitionConfig
-                            .newBuilder()
-                            .setEncoding(audioEncoding)
-                            .setSampleRateHertz(16000)
-                            .setLanguageCode("en-US")
-                            .build();
-            var recognizeResponse = speechClient.longRunningRecognizeAsync(config, recognitionAudio);
-
-            var results = recognizeResponse.get().getResultsList();
-            for (var result : results) {
-                var alternative = result.getAlternativesList().getFirst();
-                rs.append(alternative.getTranscript());
-            }
-            //            var translate = translateService.translate(rs.toString());
-
-            return ResponseVO
-                    .builder()
-                    .data(rs.toString())
-                    .success(true)
-                    .message("TRANSCRIPT_SUCCESS")
-                    .build();
-        } catch (Exception e) {
-            log.log(Level.WARNING, "TranscriptController >> getTranscript >> error: {}", e);
-            return ResponseVO
-                    .builder()
-                    .data(e.getMessage())
-                    .success(false)
-                    .message("TRANSCRIPT_FAILED")
-                    .build();
-        }
+        var fileUrl = firebaseStorageService.uploadFile(file);
+        var transcriptHistory = TranscriptHistory
+                .builder()
+                .transcriptName(name)
+                .modelType("GOOGLE")
+                .transcriptAudio(fileUrl)
+                .build();
+        var result = transcriptRepo.save(transcriptHistory);
+        googleTranscriptService.getTranscript(file, result);
+        return ResponseVO.builder()
+                .success(true)
+                .message("GET_TRANSCRIPT_IN_PROGRESS")
+                .build();
     }
 
 
@@ -122,26 +71,19 @@ public class TranscriptController {
             @RequestParam(value = "file", required = false) MultipartFile file,
             @RequestParam(value = "name") String name
     ) throws IOException {
-        if (file == null || file.isEmpty()) {
+        var validateFile = validateFile(file);
+        if (StringUtils.isNotBlank(validateFile)) {
             return ResponseVO.builder()
                     .data(null)
                     .success(false)
-                    .message("FILE_NOT_PRESENT")
-                    .build();
-        }
-
-        if (!Objects.requireNonNull(file.getContentType()).startsWith("audio/")) {
-            return ResponseVO.builder()
-                    .data(null)
-                    .success(false)
-                    .message("FILE_NOT_SUPPORT")
+                    .message(validateFile)
                     .build();
         }
         var fileUrl = firebaseStorageService.uploadFile(file);
-
         var transcriptHistory = TranscriptHistory
                 .builder()
                 .transcriptName(name)
+                .modelType("REV_AI")
                 .transcriptAudio(fileUrl)
                 .build();
         var transcriptHistory1 = transcriptRepo.save(transcriptHistory);
@@ -201,7 +143,16 @@ public class TranscriptController {
             @RequestParam(value = "status", defaultValue = "all") String status,
             @RequestParam(value = "sort", defaultValue = "desc") String sort
     ) {
-        log.log(Level.INFO, MessageFormat.format("TranscriptController >> getTranscriptHistory >> dateFrom: {0}, dateTo: {1}, page: {2}, size: {3}", dateFrom, dateTo, page, size));
+        log.log(
+                Level.INFO,
+                MessageFormat.format(
+                        "TranscriptController >> getTranscriptHistory >> dateFrom: {0}, dateTo: {1}, page: {2}, size: {3}",
+                        dateFrom,
+                        dateTo,
+                        page,
+                        size
+                )
+        );
         var startDateTime = DatetimeUtils.getFromDate(dateFrom);
         var endDateTime = DatetimeUtils.getToDate(dateTo);
         var sortRequest = "asc".equalsIgnoreCase(sort)
@@ -241,5 +192,14 @@ public class TranscriptController {
                 .build();
     }
 
+    private String validateFile(MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            return "FILE_NOT_PRESENT";
+        }
+        if (!Objects.requireNonNull(file.getContentType()).startsWith("audio/")) {
+            return "FILE_NOT_SUPPORT";
+        }
+        return StringUtils.EMPTY;
+    }
 
 }

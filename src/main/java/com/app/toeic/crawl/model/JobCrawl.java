@@ -28,6 +28,8 @@ public class JobCrawl {
     @Column(length = 50)
     String jobStatus;
 
+    String description;
+
     @CreationTimestamp
     LocalDateTime startTime;
 

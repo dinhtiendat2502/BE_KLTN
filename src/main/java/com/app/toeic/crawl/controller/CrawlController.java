@@ -9,6 +9,7 @@ import com.app.toeic.crawl.repo.JobCrawlRepository;
 import com.app.toeic.crawl.service.CrawlService;
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.external.response.ResponseVO;
+import com.app.toeic.util.Constant;
 import com.app.toeic.util.DatetimeUtils;
 import com.app.toeic.util.JsonConverter;
 import lombok.RequiredArgsConstructor;
@@ -113,7 +114,7 @@ public class CrawlController {
                 .build();
     }
 
-    @PostMapping("get-data")
+    @PostMapping("get-data-v2")
     public Object crawl(@RequestBody CrawlDTO crawl) throws IOException {
         String regex = "^https://study4\\.com/tests/(\\d+)/results/(\\d+)/details/$";
         Pattern pattern = Pattern.compile(regex);
@@ -174,6 +175,39 @@ public class CrawlController {
                 .builder()
                 .success(Boolean.TRUE)
                 .message("CRAWL_SUCCESS")
+                .build();
+    }
+
+    @PostMapping("get-data")
+    public Object crawlV2(@RequestBody CrawlDTO crawl) throws IOException {
+        var config = crawlConfigRepository.findByEmail(crawl.getEmail()).orElse(null);
+        if (config == null) {
+            return ResponseVO
+                    .builder()
+                    .success(Boolean.FALSE)
+                    .message("CRAWL_CONFIG_NOT_FOUND")
+                    .build();
+        }
+        var pattern = Pattern.compile(Constant.REGEX_CHECK_LINK_STUDY4);
+        if (!pattern.matcher(crawl.getUrl()).matches()) {
+            return ResponseVO
+                    .builder()
+                    .success(Boolean.FALSE)
+                    .message("URL_CRAWL_NOT_MATCH")
+                    .build();
+        }
+        var job = JobCrawl
+                .builder()
+                .jobLink(crawl.getUrl())
+                .jobName("CRAWL_EXAM")
+                .jobStatus("IN_PROGRESS")
+                .build();
+        var rsJob = jobCrawlRepository.save(job);
+        crawlService.crawlDataV2(crawl.getUrl(), config, rsJob);
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .message("CRAWL_IN_PROGRESS")
                 .build();
     }
 }

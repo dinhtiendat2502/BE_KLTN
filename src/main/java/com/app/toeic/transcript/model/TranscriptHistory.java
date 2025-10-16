@@ -33,6 +33,8 @@ public class TranscriptHistory {
     @Column(columnDefinition = "TEXT")
     String transcriptAudio;
 
+    String modelType;
+
     @CreationTimestamp
     LocalDateTime createdAt;
 

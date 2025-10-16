@@ -2,6 +2,7 @@ package com.app.toeic.transcript.service;
 
 import ai.rev.speechtotext.ApiClient;
 import ai.rev.speechtotext.models.asynchronous.RevAiJobOptions;
+import ai.rev.speechtotext.models.asynchronous.RevAiJobStatus;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.revai.repo.RevAIConfigRepo;
 import com.app.toeic.transcript.model.TranscriptHistory;
@@ -53,14 +54,14 @@ public class RevAITranscriptService {
                 while (!isJobComplete) {
                     jobDetails = apiClient.getJobDetails(jobId);
                     log.log(Level.INFO, MessageFormat.format("RevAITranscriptService >> getTranscript >> Job is not complete yet {0}", jobDetails.getJobStatus()));
-                    if ("transcribed".equalsIgnoreCase(jobDetails.getJobStatus().name())
-                            || "failed".equalsIgnoreCase(jobDetails.getJobStatus().name())) {
+                    if (RevAiJobStatus.TRANSCRIBED.equals(jobDetails.getJobStatus())
+                            || RevAiJobStatus.FAILED.equals(jobDetails.getJobStatus())) {
                         isJobComplete = true;
                         transcriptHistory.setStatus(jobDetails.getJobStatus().name());
                         transcriptHistory.setTranscriptContent(apiClient.getTranscriptText(jobDetails.getJobId()));
                         transcriptRepo.save(transcriptHistory);
                     }
-                    Thread.sleep(3000);
+                    Thread.sleep(3000L);
                 }
             } catch (Exception e) {
                 log.log(Level.SEVERE, "RevAITranscriptService >> getTranscript >> thenAccept >> Error: {}", e);
