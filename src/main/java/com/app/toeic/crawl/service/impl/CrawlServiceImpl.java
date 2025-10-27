@@ -295,7 +295,7 @@ public class CrawlServiceImpl implements CrawlService {
     }
 
     @Override
-    @Async("crawlDataExecutor")
+    @Async("toeicute")
     public void crawlDataV2(String url, CrawlConfig config, JobCrawl job) {
         var startTime = System.currentTimeMillis();
         try {
