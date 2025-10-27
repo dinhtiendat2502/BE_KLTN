@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -21,49 +22,49 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Exam {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer examId;
-    private String examName;
-    private String examImage;
+    Integer examId;
+    String examName;
+    String examImage;
     
     @Column(columnDefinition = "TEXT")
-    private String examAudio;
+    String examAudio;
     @Column(columnDefinition = "TEXT")
-    private String audioPart1;
+    String audioPart1;
     @Column(columnDefinition = "TEXT")
-    private String audioPart2;
+    String audioPart2;
     @Column(columnDefinition = "TEXT")
-    private String audioPart3;
+    String audioPart3;
     @Column(columnDefinition = "TEXT")
-    private String audioPart4;
+    String audioPart4;
 
     @Builder.Default
-    private String status = "ACTIVE";
+    String status = "ACTIVE";
 
     @Builder.Default
-    private Integer numberOfUserDoExam = 0;
+    Integer numberOfUserDoExam = 0;
 
     @Builder.Default
-    private Double price = 0.0;
+    Double price = 0.0;
 
     @JsonIgnore
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 
     @JsonIgnore
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "topic_id")
-    private Topic topic;
+    Topic topic;
 
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     @OrderBy("partCode ASC")
     @Builder.Default
-    private Set<Part> parts = new HashSet<>();
+    Set<Part> parts = new HashSet<>();
 }

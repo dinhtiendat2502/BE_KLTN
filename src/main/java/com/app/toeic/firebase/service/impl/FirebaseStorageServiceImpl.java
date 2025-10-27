@@ -5,6 +5,7 @@ import com.app.toeic.exception.AppException;
 import com.app.toeic.firebase.model.FirebaseUploadHistory;
 import com.app.toeic.firebase.repo.FirebaseUploadHistoryRepo;
 import com.app.toeic.firebase.service.FirebaseStorageService;
+import com.app.toeic.util.FileUtils;
 import com.app.toeic.util.HttpStatus;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
@@ -79,6 +80,24 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
     }
 
     @Override
+    public String uploadFile(FileUtils.FileInfo file) {
+        var bucket = StorageClient.getInstance().bucket();
+        bucket.create(file.fileName(), file.file(), file.contentType());
+        var url = getImageUrl(file.fileName());
+        log.info(MessageFormat.format("FirebaseStorageServiceImpl >> uploadFile >> {0}", url));
+        // save info to database
+        var history = FirebaseUploadHistory
+                .builder()
+                .fileName(file.fileName())
+                .fileUrl(url)
+                .fileType(file.contentType())
+                .fileSize(file.fileSize())
+                .build();
+        firebaseUploadHistoryRepo.save(history);
+        return url;
+    }
+
+    @Override
     public void delete(String name) throws IOException {
         var bucket = StorageClient.getInstance().bucket();
         if (org.apache.commons.lang3.StringUtils.isEmpty(name)) {
@@ -103,6 +122,7 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
     private String getImageUrl(String name) {
         return String.format(downloadUrl, name);
     }
+
     private String getGcsUrl(String name) {
         return String.format(gsUrl, name);
     }

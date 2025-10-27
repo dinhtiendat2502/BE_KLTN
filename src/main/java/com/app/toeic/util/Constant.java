@@ -32,4 +32,5 @@ public class Constant {
     public static final String STRONG = "strong";
     public static final String FAILED = "FAILED";
     public static final String OTP_INCORRECT = "OTP_INCORRECT";
+    public static final String REV_AI_CONFIG_NOT_FOUND = "REV_AI_CONFIG_NOT_FOUND";
 }

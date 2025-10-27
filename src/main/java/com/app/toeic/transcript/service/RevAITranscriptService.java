@@ -6,6 +6,7 @@ import ai.rev.speechtotext.models.asynchronous.RevAiJobStatus;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.transcript.model.TranscriptHistory;
 import com.app.toeic.transcript.repo.TranscriptRepo;
+import com.app.toeic.util.Constant;
 import com.app.toeic.util.HttpStatus;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,7 @@ public class RevAITranscriptService {
                 var submittedJob = apiClient.submitJobUrl(revAiOptions);
                 return submittedJob.getJobId();
             } catch (Exception e) {
-                saveTranscriptHistory(transcriptHistory, "FAILED");
+                saveTranscriptHistory(transcriptHistory, Constant.FAILED);
                 log.log(Level.SEVERE, "RevAITranscriptService >> getTranscript >> Error: {}", e);
                 throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "REV_AI_JOB_SUBMISSION_FAILED");
             }
@@ -63,10 +64,12 @@ public class RevAITranscriptService {
                 saveTranscriptHistory(transcriptHistory, jobDetails.getJobStatus().name());
             } catch (Exception e) {
                 log.log(Level.SEVERE, "RevAITranscriptService >> getTranscript >> thenAccept >> Error: {}", e);
-                saveTranscriptHistory(transcriptHistory, "FAILED");
+                saveTranscriptHistory(transcriptHistory, Constant.FAILED);
+                Thread.currentThread().interrupt();
+                throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR");
             }
         }).exceptionally(e -> {
-            saveTranscriptHistory(transcriptHistory, "FAILED");
+            saveTranscriptHistory(transcriptHistory, Constant.FAILED);
             log.log(Level.SEVERE, "RevAITranscriptService >> getTranscript >> exceptionally >> Error: {}", e);
             return null;
         });

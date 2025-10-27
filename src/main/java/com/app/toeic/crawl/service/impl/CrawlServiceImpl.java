@@ -6,10 +6,14 @@ import com.app.toeic.crawl.repo.JobCrawlRepository;
 import com.app.toeic.crawl.service.CrawlService;
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.exam.repo.IExamRepository;
+import com.app.toeic.exception.AppException;
+import com.app.toeic.firebase.service.FirebaseStorageService;
 import com.app.toeic.part.model.Part;
 import com.app.toeic.question.model.Question;
 import com.app.toeic.question.model.QuestionImage;
 import com.app.toeic.util.Constant;
+import com.app.toeic.util.FileUtils;
+import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
@@ -37,9 +41,10 @@ import java.util.logging.Level;
 public class CrawlServiceImpl implements CrawlService {
     JobCrawlRepository jobCrawlRepository;
     IExamRepository examRepository;
+    FirebaseStorageService firebaseStorageService;
     ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-    public Set<Question> mCrawlPart12(Element element1, boolean element2, Part part) {
+    public Set<Question> mCrawlPart12(Element element1, boolean element2, Part part) throws IOException {
         var questionList = new ArrayList<Question>();
         int totalQuestion = element2 ? Constant.NUMBER_QUESTION_PART_1 : Constant.NUMBER_QUESTION_PART_2;
         for (int i = 1; i <= totalQuestion; i++) {
@@ -48,7 +53,9 @@ public class CrawlServiceImpl implements CrawlService {
         if (element2) {
             var listImage = element1.getElementsByClass("lazyel");
             for (int i = 0; i < listImage.size(); i++) {
-                questionList.get(i).setQuestionImage(listImage.get(i).absUrl("data-src"));
+                var imgUrl = listImage.get(i).absUrl("data-src");
+                var file = FileUtils.getInfoFromUrl(imgUrl);
+                questionList.get(i).setQuestionImage(firebaseStorageService.uploadFile(file));
             }
         }
         var listQuestionNumber = element1.getElementsByClass("question-number");
@@ -75,7 +82,10 @@ public class CrawlServiceImpl implements CrawlService {
             } else {
                 var otherCorrectAnswerElement = listQuestionAnswer.get(i).nextElementSibling();
                 if (otherCorrectAnswerElement != null) {
-                    questionList.get(i).setCorrectAnswer(otherCorrectAnswerElement.text().replace(Constant.ANSWER_QUESTION, ""));
+                    questionList.get(i).setCorrectAnswer(otherCorrectAnswerElement.text().replace(
+                            Constant.ANSWER_QUESTION,
+                            ""
+                    ));
                 } else {
                     questionList.get(i).setCorrectAnswer("A");
                 }
@@ -93,7 +103,7 @@ public class CrawlServiceImpl implements CrawlService {
         }
     }
 
-    public Set<Question> mCrawlPart34(Element element1, boolean element2, Part part) {
+    public Set<Question> mCrawlPart34(Element element1, boolean element2, Part part) throws IOException {
         int totalQuestion = element2 ? Constant.NUMBER_QUESTION_PART_3 : Constant.NUMBER_QUESTION_PART_4;
         var questionList = new ArrayList<Question>();
         for (int i = 1; i <= totalQuestion; i++) {
@@ -109,7 +119,9 @@ public class CrawlServiceImpl implements CrawlService {
             questionList.get(indexStart).setTranscript(transcript.html());
             questionList.get(indexStart).setNumberQuestionInGroup(numberQuestionInGroup);
             if (CollectionUtils.isNotEmpty(questionImage)) {
-                questionList.get(indexStart).setQuestionImage(questionImage.getFirst().absUrl("src"));
+                var imgUrl = questionImage.getFirst().absUrl("src");
+                var file = FileUtils.getInfoFromUrl(imgUrl);
+                questionList.get(indexStart).setQuestionImage(firebaseStorageService.uploadFile(file));
             }
             for (int j = 0; j < numberQuestionInGroup; j++) {
                 var hasTranscript = (indexStart + j) == indexStart;
@@ -169,7 +181,7 @@ public class CrawlServiceImpl implements CrawlService {
         }
     }
 
-    public Set<Question> mCrawlPart6(Element element, Part part) {
+    public Set<Question> mCrawlPart6(Element element, Part part) throws IOException {
         int totalElement = 16;
         var questionList = new ArrayList<Question>();
         for (int i = 1; i <= totalElement; i++) {
@@ -180,7 +192,8 @@ public class CrawlServiceImpl implements CrawlService {
             var numberQuestionInGroup = Constant.FOUR_QUESTION_IN_GROUP;
             var indexStart = i * numberQuestionInGroup;
             var questionImage = questionGroupWrapper.get(i).getElementsByTag("img").getFirst().absUrl("src");
-            questionList.get(indexStart).setQuestionImage(questionImage);
+            var file = FileUtils.getInfoFromUrl(questionImage);
+            questionList.get(indexStart).setQuestionImage(firebaseStorageService.uploadFile(file));
             var transcript = questionGroupWrapper.get(i).getElementsByClass(Constant.CONTEXT_TRANSCRIPT).getFirst();
             questionList.get(indexStart).setTranscript(transcript.getElementsByClass(Constant.COLLAPSE).removeAttr("id").html());
             questionList.get(indexStart).setQuestionHaveTranscript(true);
@@ -227,7 +240,7 @@ public class CrawlServiceImpl implements CrawlService {
         return new HashSet<>(questionList);
     }
 
-    public Set<Question> mCrawlPart7(Element element, Part part) {
+    public Set<Question> mCrawlPart7(Element element, Part part) throws IOException {
         int totalElement = Constant.NUMBER_QUESTION_PART_7;
         var questionList = new ArrayList<Question>();
         for (int i = 1; i <= totalElement; i++) {
@@ -242,10 +255,12 @@ public class CrawlServiceImpl implements CrawlService {
             var indexQuestion = 0;
             questionList.get(index).setHaveMultiImage(true);
             for (Element value : listImage) {
+                var file = FileUtils.getInfoFromUrl(value.absUrl("src"));
                 questionList
                         .get(index)
                         .getQuestionImages()
-                        .add(QuestionImage.builder().question(questionList.get(index)).questionImage(value.absUrl("src")).build());
+                        .add(QuestionImage.builder().question(questionList.get(index)).questionImage(
+                                firebaseStorageService.uploadFile(file)).build());
             }
             questionList.get(index).setQuestionHaveTranscript(true);
             var transcript = questionGroup.getElementsByClass(Constant.CONTEXT_TRANSCRIPT).getFirst();
@@ -266,7 +281,12 @@ public class CrawlServiceImpl implements CrawlService {
     @Override
     public void crawlData(Elements listPartContent, Document doc, JobCrawl job, Exam exam) {
         listPartContent.parallelStream().forEach(partElement -> executorService.submit(() -> {
-            var part = createPart(listPartContent.indexOf(partElement) + 1, partElement, exam);
+            Part part;
+            try {
+                part = createPart(listPartContent.indexOf(partElement) + 1, partElement, exam);
+            } catch (IOException e) {
+                throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR_UPLOAD");
+            }
             exam.getParts().add(part);
         }));
         examRepository.save(exam);
@@ -305,7 +325,8 @@ public class CrawlServiceImpl implements CrawlService {
             }
             var audio = doc.getElementsByClass("post-audio-item").first();
             if (audio != null) {
-                exam.examAudio(audio.child(0).absUrl("src"));
+                var file = FileUtils.getInfoFromUrl(audio.child(0).absUrl("src"));
+                exam.examAudio(firebaseStorageService.uploadFile(file));
             }
             crawlData(listPartContent, doc, job, exam.build());
         } catch (IOException ex) {
@@ -321,7 +342,7 @@ public class CrawlServiceImpl implements CrawlService {
         }
     }
 
-    private Part createPart(int i, Element partElement, Exam exam) {
+    private Part createPart(int i, Element partElement, Exam exam) throws IOException {
         var part = Part.builder().partCode("PART%d".formatted(i)).partName("Part %d".formatted(i)).build();
         switch (i) {
             case 1 -> {
@@ -366,7 +387,8 @@ public class CrawlServiceImpl implements CrawlService {
                 part.setQuestions(this.mCrawlPart7(partElement, part));
                 log.log(Level.INFO, "CrawlServiceImpl >> crawlData >> Part 7 >> status: IN_PROGRESS");
             }
-            default -> log.log(Level.INFO, "CrawlServiceImpl >> crawlData >> Part %d >> status: NOT_FOUND".formatted(i));
+            default ->
+                    log.log(Level.INFO, "CrawlServiceImpl >> crawlData >> Part %d >> status: NOT_FOUND".formatted(i));
         }
         part.setExam(exam);
         return part;

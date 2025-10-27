@@ -12,6 +12,7 @@ import com.app.toeic.transcript.repo.TranscriptRepo;
 import com.app.toeic.transcript.service.GoogleTranscriptService;
 import com.app.toeic.transcript.service.RevAITranscriptService;
 import com.app.toeic.translate.service.TranslateService;
+import com.app.toeic.util.Constant;
 import com.app.toeic.util.DatetimeUtils;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import lombok.extern.java.Log;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import ai.rev.speechtotext.ApiClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +36,7 @@ import java.util.logging.Level;
 @Log
 @RestController
 @RequestMapping("transcript")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class TranscriptController {
     RevAIConfigRepo revAIConfigRepo;
@@ -96,7 +98,10 @@ public class TranscriptController {
                     .build();
         }
         var token = getRevAiConfig()
-                .orElseThrow(() -> new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "REV_AI_CONFIG_NOT_FOUND"));
+                .orElseThrow(() -> new AppException(
+                        HttpStatus.INTERNAL_SERVER_ERROR,
+                        Constant.REV_AI_CONFIG_NOT_FOUND
+                ));
         var apiClient = new ApiClient(token.getAccessToken());
 
         var fileUrl = firebaseStorageService.uploadFile(file);
@@ -116,16 +121,12 @@ public class TranscriptController {
 
     @GetMapping("get-revai-job")
     public Object getRevAIJob(@RequestParam(value = "jobId") String jobId) throws IOException {
-        var revAiConfig = revAIConfigRepo.findAllByStatus(true);
-        if (CollectionUtils.isEmpty(revAiConfig) || StringUtils.isBlank(revAiConfig.getFirst().getAccessToken())) {
-            return ResponseVO.builder()
-                    .data(null)
-                    .success(false)
-                    .message("REV_AI_CONFIG_NOT_FOUND")
-                    .build();
-        }
+        var revAiConfig = getRevAiConfig().orElseThrow(() -> new AppException(
+                HttpStatus.NOT_FOUND,
+                Constant.REV_AI_CONFIG_NOT_FOUND
+        ));
 
-        var apiClient = new ApiClient(revAiConfig.getFirst().getAccessToken());
+        var apiClient = new ApiClient(revAiConfig.getAccessToken());
         var revAiJob = apiClient.getJobDetails(jobId);
         return ResponseVO.builder()
                 .data(revAiJob)
@@ -136,16 +137,12 @@ public class TranscriptController {
 
     @GetMapping("get-transcript-revai")
     public Object getTrancriptRevai(@RequestParam(value = "jobId") String jobId) throws IOException {
-        var revAiConfig = revAIConfigRepo.findAllByStatus(true);
-        if (CollectionUtils.isEmpty(revAiConfig) || StringUtils.isBlank(revAiConfig.getFirst().getAccessToken())) {
-            return ResponseVO.builder()
-                    .data(null)
-                    .success(false)
-                    .message("REV_AI_CONFIG_NOT_FOUND")
-                    .build();
-        }
+        var revAiConfig = getRevAiConfig().orElseThrow(() -> new AppException(
+                HttpStatus.NOT_FOUND,
+                Constant.REV_AI_CONFIG_NOT_FOUND
+        ));
 
-        var apiClient = new ApiClient(revAiConfig.getFirst().getAccessToken());
+        var apiClient = new ApiClient(revAiConfig.getAccessToken());
         var transcript = apiClient.getTranscriptText(jobId);
         return ResponseVO.builder()
                 .data(transcript)

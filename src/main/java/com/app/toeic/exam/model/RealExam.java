@@ -1,9 +1,6 @@
-package com.app.toeic.part.model;
+package com.app.toeic.exam.model;
 
-
-import com.app.toeic.exam.model.Exam;
-import com.app.toeic.exam.model.RealExam;
-import com.app.toeic.question.model.Question;
+import com.app.toeic.part.model.Part;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -17,29 +14,29 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "part")
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "real_exam")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Part {
+public class RealExam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer partId;
-    String partName;
-    String partCode;
+    Long realExamId;
+
+    String examName;
+    String examImage;
+
     @Column(columnDefinition = "TEXT")
-    String partImage;
-    @Column(columnDefinition = "TEXT")
-    String partAudio;
-    @Column(columnDefinition = "TEXT")
-    String partContent;
-    int numberOfQuestion;
+    String examAudio;
 
     @Builder.Default
     String status = "ACTIVE";
+
+    @Builder.Default
+    Integer numberOfUserDoExam = 0;
 
     @JsonIgnore
     @CreationTimestamp
@@ -49,17 +46,9 @@ public class Part {
     @UpdateTimestamp
     LocalDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "exam_id")
-    Exam exam;
-
-    @ManyToOne
-    @JoinColumn(name = "real_exam_id")
-    RealExam realExam;
-
-    @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "realExam", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
-    @OrderBy("questionNumber ASC")
+    @OrderBy("partCode ASC")
     @Builder.Default
-    Set<Question> questions = new HashSet<>();
+    Set<Part> parts = new HashSet<>();
 }
