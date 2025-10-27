@@ -3,6 +3,7 @@ package com.app.toeic.score.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "calculate_score")
@@ -11,12 +12,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CalculateScore {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer calculateScoreId;
+    Integer calculateScoreId;
 
-    private Integer totalQuestion;
-    private Integer scoreListening;
-    private Integer scoreReading;
+    Integer totalQuestion;
+    Integer scoreListening;
+    Integer scoreReading;
 }

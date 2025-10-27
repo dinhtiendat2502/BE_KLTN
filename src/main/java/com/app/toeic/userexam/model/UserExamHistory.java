@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -22,55 +23,56 @@ import java.util.Set;
 @Getter
 @Setter
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserExamHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userExamHistoryId;
-    private Integer totalQuestion;
-    private Integer numberOfCorrectAnswer;
-    private Integer numberOfWrongAnswer;
-    private Integer numberOfNotAnswer;
-    private Integer numberOfCorrectAnswerPart1;
-    private Integer numberOfCorrectAnswerPart2;
-    private Integer numberOfCorrectAnswerPart3;
-    private Integer numberOfCorrectAnswerPart4;
-    private Integer numberOfCorrectAnswerPart5;
-    private Integer numberOfCorrectAnswerPart6;
-    private Integer numberOfCorrectAnswerPart7;
-    private Integer numberOfCorrectListeningAnswer;
-    private Integer numberOfWrongListeningAnswer;
-    private Integer numberOfCorrectReadingAnswer;
-    private Integer numberOfWrongReadingAnswer;
-    private Integer totalScore;
-    private Integer totalScoreReading;
-    private Integer totalScoreListening;
-    private Integer timeToDoExam;       // calculate by second
-    private Integer timeRemaining;      // calculate by second
+    Integer userExamHistoryId;
+    Integer totalQuestion;
+    Integer numberOfCorrectAnswer;
+    Integer numberOfWrongAnswer;
+    Integer numberOfNotAnswer;
+    Integer numberOfCorrectAnswerPart1;
+    Integer numberOfCorrectAnswerPart2;
+    Integer numberOfCorrectAnswerPart3;
+    Integer numberOfCorrectAnswerPart4;
+    Integer numberOfCorrectAnswerPart5;
+    Integer numberOfCorrectAnswerPart6;
+    Integer numberOfCorrectAnswerPart7;
+    Integer numberOfCorrectListeningAnswer;
+    Integer numberOfWrongListeningAnswer;
+    Integer numberOfCorrectReadingAnswer;
+    Integer numberOfWrongReadingAnswer;
+    Integer totalScore;
+    Integer totalScoreReading;
+    Integer totalScoreListening;
+    Integer timeToDoExam;       // calculate by second
+    Integer timeRemaining;      // calculate by second
     @Builder.Default
-    private Boolean isDone = false;
+    Boolean isDone = false;
     @Builder.Default
-    private Boolean isFullTest = false;
-    private String listPart;
+    Boolean isFullTest = false;
+    String listPart;
 
     @CreationTimestamp
-    private LocalDateTime examDate;
+    LocalDateTime examDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private UserAccount user;
+    UserAccount user;
 
     @ManyToOne
     @JoinColumn(name = "exam_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     @OrderBy("examId ASC")
-    private Exam exam;
+    Exam exam;
 
     @OneToMany(mappedBy = "userExamHistory", cascade = CascadeType.ALL)
     @JsonBackReference
     @OrderBy("userAnswerId ASC")
     @Builder.Default
-    private Set<UserAnswer> userAnswers = new HashSet<>();
+    Set<UserAnswer> userAnswers = new HashSet<>();
 }

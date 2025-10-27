@@ -3,6 +3,7 @@ package com.app.toeic.user.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -14,28 +15,29 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserAccountLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userAccountLogId;
+    Integer userAccountLogId;
 
     @Lob
     @Column(name = "old_data", length = 1000)
-    private String oldData;
+    String oldData;
 
     @Lob
     @Column(name = "new_data", length = 1000)
-    private String newData;
+    String newData;
 
-    private String country;
-    private String action;
-    private String lastUpdatedBy;
-    private String lastIpAddress;
+    String country;
+    String action;
+    String lastUpdatedBy;
+    String lastIpAddress;
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    private UserAccount userAccount;
+    UserAccount userAccount;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 }

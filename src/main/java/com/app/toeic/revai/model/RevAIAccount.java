@@ -2,6 +2,7 @@ package com.app.toeic.revai.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "revai_account")
@@ -10,16 +11,17 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class RevAIAccount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    Integer id;
 
     @Column(unique = true)
-    private String email;
+    String email;
 
-    private String password;
+    String password;
 
     @Builder.Default
-    private String status = "INACTIVE";
+    String status = "INACTIVE";
 }

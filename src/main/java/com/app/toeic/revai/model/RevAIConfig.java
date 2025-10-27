@@ -2,6 +2,7 @@ package com.app.toeic.revai.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "revai_config")
@@ -10,12 +11,13 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class RevAIConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String accessToken;
+    Integer id;
+    String accessToken;
 
     @Builder.Default
-    private boolean status = false;
+    boolean status = false;
 }

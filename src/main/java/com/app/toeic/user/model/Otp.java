@@ -2,6 +2,7 @@ package com.app.toeic.user.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -13,15 +14,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Otp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long otpId;
+    Long otpId;
 
-    private String otpCode; // OTP code
-    private String email;
-    private String action;
+    String otpCode; // OTP code
+    String email;
+    String action;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class RevAIConfigController {
     RevAIConfigRepo revAIConfigRepo;
     private static final String CONFIG_NOT_FOUND = "CONFIG_NOT_FOUND";
+
     @GetMapping("/all")
     public Object getAll() {
         return revAIConfigRepo.findAll();

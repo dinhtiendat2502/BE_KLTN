@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,49 +24,50 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserAccount implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    Integer userId;
 
     @Column(nullable = false)
-    private String password;
-    private String fullName;
-    private String phone;
+    String password;
+    String fullName;
+    String phone;
 
     @Column(length = 3000)
-    private String address;
+    String address;
 
     @Column(unique = true, nullable = false)
-    private String email;
+    String email;
 
     @Column(columnDefinition = "TEXT")
-    private String avatar;
+    String avatar;
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    private EUser status = EUser.ACTIVE;
-    private String provider;
+    EUser status = EUser.ACTIVE;
+    String provider;
 
     @JsonIgnore
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 
     @JsonIgnore
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    LocalDateTime updatedAt;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
     @Builder.Default
-    private Set<Role> roles = new HashSet<>();
+    Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference
     @Builder.Default
-    private Set<UserExamHistory> userExamHistories = new HashSet<>();
+    Set<UserExamHistory> userExamHistories = new HashSet<>();
 
 
     @Override

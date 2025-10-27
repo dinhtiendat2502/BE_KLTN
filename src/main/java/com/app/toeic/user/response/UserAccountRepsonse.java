@@ -4,9 +4,9 @@ import com.app.toeic.user.enums.EUser;
 
 
 public interface UserAccountRepsonse {
-    Integer getUserId();
+    Integer getUser_id();
 
-    String getFullName();
+    String getFull_name();
     String getPhone();
 
     String getAddress();
