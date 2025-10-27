@@ -38,6 +38,9 @@ public class RealExam {
     @Builder.Default
     Integer numberOfUserDoExam = 0;
 
+    LocalDateTime fromDate;
+    LocalDateTime toDate;
+
     @JsonIgnore
     @CreationTimestamp
     LocalDateTime createdAt;

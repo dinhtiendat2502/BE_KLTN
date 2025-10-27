@@ -191,7 +191,7 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isNotEmpty(token) && jwtUtilities.validateToken(token)) {
             String email = jwtUtilities.extractUsername(token);
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            var userDetails = userDetailsService.loadUserByUsername(email);
             if (Boolean.TRUE.equals(jwtUtilities.validateToken(token, userDetails))) {
                 var user = iUserRepository
                         .findByEmail(email)
@@ -208,7 +208,7 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isNotEmpty(token) && jwtUtilities.validateToken(token)) {
             String email = jwtUtilities.extractUsername(token);
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            var userDetails = userDetailsService.loadUserByUsername(email);
             return jwtUtilities.validateToken(token, userDetails);
         }
         return Boolean.FALSE;

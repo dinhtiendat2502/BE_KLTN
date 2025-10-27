@@ -39,9 +39,9 @@ public class UserController {
     EmailService emailService;
     FirebaseStorageService firebaseStorageService;
     IOtpRepository otpRepository;
-    private static final int OTP_EXPIRED = 48;
-    private static final String NOT_FOUNT_USER = "NOT_FOUNT_USER";
-    private final PasswordEncoder passwordEncoder;
+    static final int OTP_EXPIRED = 48;
+    static final String NOT_FOUNT_USER = "NOT_FOUNT_USER";
+    PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     public ResponseVO register(@Valid @RequestBody RegisterDTO registerDto) {

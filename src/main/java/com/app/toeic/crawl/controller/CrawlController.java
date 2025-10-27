@@ -19,6 +19,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -82,14 +83,23 @@ public class CrawlController {
             @RequestParam(value = "size", defaultValue = "10") Integer size,
             @RequestParam(value = "status", defaultValue = "ALL") String status,
             @RequestParam(value = "dateFrom", defaultValue = "") String dateFrom,
-            @RequestParam(value = "dateTo", defaultValue = "") String dateTo
+            @RequestParam(value = "dateTo", defaultValue = "") String dateTo,
+            @RequestParam(value = "sort", defaultValue = "desc") String sort
     ) {
         var startDateTime = DatetimeUtils.getFromDate(dateFrom);
         var endDateTime = DatetimeUtils.getToDate(dateTo);
+        var sortRequest = "asc".equalsIgnoreCase(sort)
+                ? Sort.by("startTime").ascending()
+                : Sort.by("startTime").descending();
         if ("ALL".equalsIgnoreCase(status)) {
-            return jobCrawlRepository.findAllByStartTimeBetween(startDateTime, endDateTime, PageRequest.of(page, size));
+            return jobCrawlRepository.findAllByStartTimeBetween(startDateTime, endDateTime, PageRequest.of(page, size, sortRequest));
         } else {
-            return jobCrawlRepository.findAllByJobStatusAndStartTimeBetween(status, startDateTime, endDateTime, PageRequest.of(page, size));
+            return jobCrawlRepository.findAllByJobStatusAndStartTimeBetween(
+                    status,
+                    startDateTime,
+                    endDateTime,
+                    PageRequest.of(page, size)
+            );
         }
     }
 
@@ -170,7 +180,10 @@ public class CrawlController {
             exam.examAudio(audio.child(0).absUrl("src"));
         }
         crawlService.crawlData(listPartContent, doc, rsJob, exam.build());
-        log.log(Level.INFO, MessageFormat.format("CrawlController >> crawl >> body: {0}", JsonConverter.convertObjectToJson(crawl)));
+        log.log(
+                Level.INFO,
+                MessageFormat.format("CrawlController >> crawl >> body: {0}", JsonConverter.convertObjectToJson(crawl))
+        );
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)

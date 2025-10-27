@@ -1,6 +1,7 @@
 package com.app.toeic.exam.model;
 
 
+import com.app.toeic.comment.model.Comment;
 import com.app.toeic.part.model.Part;
 import com.app.toeic.topic.model.Topic;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -67,4 +68,9 @@ public class Exam {
     @OrderBy("partCode ASC")
     @Builder.Default
     Set<Part> parts = new HashSet<>();
+
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    @Builder.Default
+    Set<Comment> comments = new HashSet<>();
 }

@@ -1,6 +1,7 @@
 package com.app.toeic.user.model;
 
 
+import com.app.toeic.comment.model.Comment;
 import com.app.toeic.userexam.model.UserExamHistory;
 import com.app.toeic.user.enums.EUser;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -68,6 +69,11 @@ public class UserAccount implements UserDetails {
     @JsonBackReference
     @Builder.Default
     Set<UserExamHistory> userExamHistories = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference
+    @Builder.Default
+    Set<Comment> comments = new HashSet<>();
 
 
     @Override
