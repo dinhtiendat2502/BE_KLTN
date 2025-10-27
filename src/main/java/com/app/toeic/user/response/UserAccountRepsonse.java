@@ -2,7 +2,6 @@ package com.app.toeic.user.response;
 
 import com.app.toeic.user.enums.EUser;
 
-import java.util.Set;
 
 public interface UserAccountRepsonse {
     Integer getUserId();

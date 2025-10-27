@@ -3,14 +3,16 @@ server:
   servlet:
     context-path: /api
 spring:
+  quartz:
+    job-store-type: jdbc
   application:
     name: toeicute-api
   boot:
     admin:
       client:
-        url: "http://${HOST:localhost}:8080/api"
+        url: "${SPRING_BOOT_ADMIN_URL:http://localhost:8080}"
         instance:
-          service-url: "http://${HOST:localhost}:8080/api"
+          service-url: "${SPRING_BOOT_ADMIN_URL:http://localhost:8080}"
 
   datasource:
     url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true"

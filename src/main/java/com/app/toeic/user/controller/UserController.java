@@ -10,6 +10,7 @@ import com.app.toeic.firebase.service.FirebaseStorageService;
 import com.app.toeic.user.payload.*;
 import com.app.toeic.user.repo.IOtpRepository;
 import com.app.toeic.user.service.UserService;
+import com.app.toeic.util.Constant;
 import com.app.toeic.util.HttpStatus;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -212,11 +213,11 @@ public class UserController {
                     msg[0] = "CONFIRM_OTP_SUCCESS";
                     success.set(true);
                 }else {
-                    msg[0] = "OTP_INCORRECT";
+                    msg[0] = Constant.OTP_INCORRECT;
                 }
             }
             otpRepository.delete(e);
-        }, () -> msg[0] = "OTP_INCORRECT");
+        }, () -> msg[0] = Constant.OTP_INCORRECT);
 
         return ResponseVO
                 .builder()
@@ -246,7 +247,7 @@ public class UserController {
                 success.set(true);
             }
             otpRepository.delete(e);
-        }, () -> msg[0] = "OTP_INCORRECT");
+        }, () -> msg[0] = Constant.OTP_INCORRECT);
         return ResponseVO
                 .builder()
                 .success(success.get())

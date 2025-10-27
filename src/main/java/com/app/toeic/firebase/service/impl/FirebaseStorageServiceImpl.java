@@ -32,18 +32,20 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
     FirebaseConfigCache firebaseConfigCache;
     FirebaseUploadHistoryRepo firebaseUploadHistoryRepo;
     static String downloadUrl = "https://firebasestorage.googleapis.com/v0/b/{0}/o/%s?alt=media";
+    static String gsUrl = "gs://{0}/%s";
 
     @PostConstruct
-    public void init() throws IOException {
+    public synchronized void init() throws IOException {
         var firebaseBean = firebaseConfigCache.getConfigValue(true);
         if (org.apache.commons.lang3.StringUtils.isBlank(firebaseBean.getProjectId())) {
             throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "FIREBASE_CONFIG_NOT_FOUND");
         }
         downloadUrl = MessageFormat.format(downloadUrl, firebaseBean.getBucketName());
+        gsUrl = MessageFormat.format(gsUrl, firebaseBean.getBucketName());
         var jsonContent = firebaseBean.getFileJson();
         log.info(MessageFormat.format("FirebaseStorageServiceImpl >> init >> {0}", jsonContent));
         var credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(jsonContent.getBytes()));
-        var options = new FirebaseOptions.Builder()
+        var options = FirebaseOptions.builder()
                 .setCredentials(credentials)
                 .setStorageBucket(firebaseBean.getBucketName())
                 .build();
@@ -53,6 +55,11 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
 
     @Override
     public String uploadFile(MultipartFile file) throws IOException {
+        return uploadFile(file, false);
+    }
+
+    @Override
+    public String uploadFile(MultipartFile file, boolean isGcs) throws IOException {
         var bucket = StorageClient.getInstance().bucket();
         var name = generateFileName(file.getOriginalFilename());
         bucket.create(name, file.getBytes(), file.getContentType());
@@ -68,7 +75,7 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
                 .fileSize(file.getSize())
                 .build();
         firebaseUploadHistoryRepo.save(history);
-        return url;
+        return isGcs ? getGcsUrl(name) : url;
     }
 
     @Override
@@ -93,7 +100,10 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
         return StringUtils.getFilenameExtension(originalFileName);
     }
 
-    public String getImageUrl(String name) {
+    private String getImageUrl(String name) {
         return String.format(downloadUrl, name);
+    }
+    private String getGcsUrl(String name) {
+        return String.format(gsUrl, name);
     }
 }

@@ -102,7 +102,7 @@ public class FirebaseConfigController {
     public Object update(
             @PathVariable("id") Integer id,
             @RequestParam("tokenKey") String tokenKey
-    ) throws IOException {
+    ) {
         final String[] msg = new String[1];
         msg[0] = "UPDATE_CONFIG_FIREBASE_SUCCESS";
         var firebaseConfig = firebaseRepository.findById(id);

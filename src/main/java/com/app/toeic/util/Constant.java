@@ -23,4 +23,13 @@ public class Constant {
     public static final String PART6_CONTENT = "Directions : Read the texts that follow. A word, phrase, or sentence is missing in parts of each text. Four answer choices for each question are given below the text. Select the best answer to complete the text. Then mark the letter (A), (B), (C), or (D) on your answer sheet.";
     public static final String PART7_CONTENT = "Directions: In this part you will read a selection of texts, such as magazine and newspaper articles, e-mails, and instant messages. Each text or set of texts is followed by several questions. Select the best answer for each question and mark the letter (A), (B), (C), or (D) on your answer sheet.";
     public static final String REGEX_CHECK_LINK_STUDY4 = "^https://study4\\.com/tests/(\\d+)/results/(\\d+)/details/$";
+    public static final String CONTEXT_TRANSCRIPT = "context-transcript";
+    public static final String COLLAPSE = "collapse";
+    public static final String CORRECT = "correct";
+    public static final String ANSWER_QUESTION = "Đáp án đúng:";
+    public static final String QUESTION_EXPLANATION_WRAPPER = "question-explanation-wrapper";
+    public static final String QUESTION_WRAPPER = "question-wrapper";
+    public static final String STRONG = "strong";
+    public static final String FAILED = "FAILED";
+    public static final String OTP_INCORRECT = "OTP_INCORRECT";
 }

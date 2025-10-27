@@ -1,8 +1,11 @@
 package com.app.toeic.transcript.controller;
 
 import com.app.toeic.cache.FirebaseConfigCache;
+import com.app.toeic.config.RevAiConfig;
+import com.app.toeic.exception.AppException;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.firebase.service.FirebaseStorageService;
+import com.app.toeic.revai.model.RevAIConfig;
 import com.app.toeic.revai.repo.RevAIConfigRepo;
 import com.app.toeic.transcript.model.TranscriptHistory;
 import com.app.toeic.transcript.repo.TranscriptRepo;
@@ -10,7 +13,7 @@ import com.app.toeic.transcript.service.GoogleTranscriptService;
 import com.app.toeic.transcript.service.RevAITranscriptService;
 import com.app.toeic.translate.service.TranslateService;
 import com.app.toeic.util.DatetimeUtils;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
@@ -21,9 +24,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.logging.Level;
 
 @Log
@@ -62,7 +67,7 @@ public class TranscriptController {
                     .message("FIREBASE_CONFIG_NOT_FOUND")
                     .build();
         }
-        var fileUrl = firebaseStorageService.uploadFile(file);
+        var fileUrl = firebaseStorageService.uploadFile(file, true);
         var transcriptHistory = TranscriptHistory
                 .builder()
                 .transcriptName(name)
@@ -77,26 +82,6 @@ public class TranscriptController {
                 .build();
     }
 
-    @PostMapping("test")
-    public Object test(@RequestParam String link) throws IOException {
-        var firebaseConfig = firebaseConfigCache.getConfigValue(true);
-        if (StringUtils.isEmpty(firebaseConfig.getFileJson())) {
-            return ResponseVO
-                    .builder()
-                    .data(null)
-                    .success(true)
-                    .message("FIREBASE_CONFIG_NOT_FOUND")
-                    .build();
-        }
-
-        return ResponseVO.builder()
-                .success(true)
-                .data(googleTranscriptService.getT(link, firebaseConfig.getFileJson()))
-                .message("TEST_SUCCESS")
-                .build();
-    }
-
-
     @PostMapping(value = "get/revai", consumes = {"multipart/form-data"})
     public Object getTranscriptV2(
             @RequestParam(value = "file", required = false) MultipartFile file,
@@ -110,6 +95,10 @@ public class TranscriptController {
                     .message(validateFile)
                     .build();
         }
+        var token = getRevAiConfig()
+                .orElseThrow(() -> new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "REV_AI_CONFIG_NOT_FOUND"));
+        var apiClient = new ApiClient(token.getAccessToken());
+
         var fileUrl = firebaseStorageService.uploadFile(file);
         var transcriptHistory = TranscriptHistory
                 .builder()
@@ -118,7 +107,7 @@ public class TranscriptController {
                 .transcriptAudio(fileUrl)
                 .build();
         var transcriptHistory1 = transcriptRepo.save(transcriptHistory);
-        revAITranscriptService.getTranscript(fileUrl, transcriptHistory1);
+        revAITranscriptService.getTranscript(fileUrl, transcriptHistory1, apiClient);
         return ResponseVO.builder()
                 .success(true)
                 .message("TRANSCRIPT_SUCCESS")
@@ -231,6 +220,12 @@ public class TranscriptController {
             return "FILE_NOT_SUPPORT";
         }
         return StringUtils.EMPTY;
+    }
+
+    private Optional<RevAIConfig> getRevAiConfig() {
+        return revAIConfigRepo.findAllByStatus(true)
+                .stream()
+                .findFirst();
     }
 
 }

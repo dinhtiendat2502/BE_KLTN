@@ -42,8 +42,8 @@ public class FirebaseHistoryController {
         var sortRequest = "asc".equalsIgnoreCase(sort)
                 ? Sort.by("uploadDate").ascending()
                 : Sort.by("uploadDate").descending();
-        var result = new Object();
-        var totalSize = BigInteger.ZERO;
+        Object result;
+        BigInteger totalSize;
         var startDateTime = DatetimeUtils.getFromDate(dateFrom);
         var endDateTime = DatetimeUtils.getToDate(dateTo);
         if ("all".equalsIgnoreCase(type)) {

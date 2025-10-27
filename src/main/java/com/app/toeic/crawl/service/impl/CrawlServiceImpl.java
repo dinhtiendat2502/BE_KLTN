@@ -6,7 +6,6 @@ import com.app.toeic.crawl.repo.JobCrawlRepository;
 import com.app.toeic.crawl.service.CrawlService;
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.exam.repo.IExamRepository;
-import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.part.model.Part;
 import com.app.toeic.question.model.Question;
 import com.app.toeic.question.model.QuestionImage;
@@ -27,7 +26,6 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.*;
 import java.util.logging.Level;
@@ -57,9 +55,9 @@ public class CrawlServiceImpl implements CrawlService {
         for (int i = 0; i < listQuestionNumber.size(); i++) {
             questionList.get(i).setQuestionNumber(Integer.parseInt(listQuestionNumber.get(i).text()));
         }
-        var listContextTranscript = element1.getElementsByClass("context-transcript");
+        var listContextTranscript = element1.getElementsByClass(Constant.CONTEXT_TRANSCRIPT);
         for (int i = 0; i < listContextTranscript.size(); i++) {
-            questionList.get(i).setTranscript(listContextTranscript.get(i).getElementsByClass("collapse").html());
+            questionList.get(i).setTranscript(listContextTranscript.get(i).getElementsByClass(Constant.COLLAPSE).html());
         }
         var listQuestionAnswer = element1.getElementsByClass("question-answers");
 
@@ -71,13 +69,13 @@ public class CrawlServiceImpl implements CrawlService {
             if (listAnswer.size() == Constant.QUESTION_FOUR_ANSWER) {
                 questionList.get(i).setAnswerD(listAnswer.get(3).val());
             }
-            var correctAnswer = listAnswer.stream().filter(aws -> aws.hasClass("correct")).findFirst();
+            var correctAnswer = listAnswer.stream().filter(aws -> aws.hasClass(Constant.CORRECT)).findFirst();
             if (correctAnswer.isPresent()) {
                 questionList.get(i).setCorrectAnswer(correctAnswer.get().val());
             } else {
                 var otherCorrectAnswerElement = listQuestionAnswer.get(i).nextElementSibling();
                 if (otherCorrectAnswerElement != null) {
-                    questionList.get(i).setCorrectAnswer(otherCorrectAnswerElement.text().replace("Đáp án đúng:", ""));
+                    questionList.get(i).setCorrectAnswer(otherCorrectAnswerElement.text().replace(Constant.ANSWER_QUESTION, ""));
                 } else {
                     questionList.get(i).setCorrectAnswer("A");
                 }
@@ -88,9 +86,9 @@ public class CrawlServiceImpl implements CrawlService {
     }
 
     private void getTranscriptExplanation(Element element1, ArrayList<Question> questionList) {
-        var questionExplain = element1.getElementsByClass("question-explanation-wrapper");
+        var questionExplain = element1.getElementsByClass(Constant.QUESTION_EXPLANATION_WRAPPER);
         for (int i = 0; i < questionExplain.size(); i++) {
-            questionList.get(i).setTranslateTranscript(questionExplain.get(i).getElementsByClass("collapse").getFirst().removeAttr(
+            questionList.get(i).setTranslateTranscript(questionExplain.get(i).getElementsByClass(Constant.COLLAPSE).getFirst().removeAttr(
                     "id").html());
         }
     }
@@ -103,7 +101,7 @@ public class CrawlServiceImpl implements CrawlService {
         }
         var questionGroupWrapper = element1.getElementsByClass("question-group-wrapper");
         for (int i = 0; i < questionGroupWrapper.size(); i++) {
-            var transcript = questionGroupWrapper.get(i).getElementsByClass("context-transcript").getFirst();
+            var transcript = questionGroupWrapper.get(i).getElementsByClass(Constant.CONTEXT_TRANSCRIPT).getFirst();
             var questionImage = questionGroupWrapper.get(i).getElementsByTag("img");
             transcript.getElementsByTag("a").remove();
             var numberQuestionInGroup = Constant.THREE_QUESTION_IN_GROUP;
@@ -116,8 +114,8 @@ public class CrawlServiceImpl implements CrawlService {
             for (int j = 0; j < numberQuestionInGroup; j++) {
                 var hasTranscript = (indexStart + j) == indexStart;
                 questionList.get(indexStart + j).setQuestionHaveTranscript(hasTranscript);
-                var questionContent = questionGroupWrapper.get(i).getElementsByClass("question-wrapper").get(j);
-                var questionNumber = questionContent.getElementsByTag("strong").getFirst().text();
+                var questionContent = questionGroupWrapper.get(i).getElementsByClass(Constant.QUESTION_WRAPPER).get(j);
+                var questionNumber = questionContent.getElementsByTag(Constant.STRONG).getFirst().text();
                 getAnswerQuestion(questionList, indexStart + j, Integer.parseInt(questionNumber), questionContent);
             }
         }
@@ -131,10 +129,10 @@ public class CrawlServiceImpl implements CrawlService {
         for (int i = 1; i <= totalElement; i++) {
             questionList.add(Question.builder().part(part).build());
         }
-        var questionWrapper = element.getElementsByClass("question-wrapper");
+        var questionWrapper = element.getElementsByClass(Constant.QUESTION_WRAPPER);
         for (int i = 0; i < questionWrapper.size(); i++) {
             var questionContent = questionWrapper.get(i);
-            var questionNumber = questionContent.getElementsByTag("strong").getFirst().text();
+            var questionNumber = questionContent.getElementsByTag(Constant.STRONG).getFirst().text();
             getAnswerQuestion(questionList, i, Integer.parseInt(questionNumber), questionContent);
         }
         getTranscriptExplanation(element, questionList);
@@ -155,14 +153,14 @@ public class CrawlServiceImpl implements CrawlService {
         questionList.get(i).setAnswerC(listAnswer.get(2).text());
         questionList.get(i).setAnswerD(listAnswer.get(3).text());
 
-        var correctAnswer = listAnswer.stream().filter(aws -> aws.hasClass("correct")).findFirst();
+        var correctAnswer = listAnswer.stream().filter(aws -> aws.hasClass(Constant.CORRECT)).findFirst();
         if (correctAnswer.isPresent()) {
             questionList.get(i).setCorrectAnswer(correctAnswer.get().val());
         } else {
             var otherCorrectAnswerElement = questionContent.getElementsByClass("text-success").getFirst();
             if (otherCorrectAnswerElement != null) {
                 questionList.get(i).setCorrectAnswer(otherCorrectAnswerElement.text().replace(
-                        "Đáp án đúng:",
+                        Constant.ANSWER_QUESTION,
                         ""
                 ));
             } else {
@@ -183,15 +181,15 @@ public class CrawlServiceImpl implements CrawlService {
             var indexStart = i * numberQuestionInGroup;
             var questionImage = questionGroupWrapper.get(i).getElementsByTag("img").getFirst().absUrl("src");
             questionList.get(indexStart).setQuestionImage(questionImage);
-            var transcript = questionGroupWrapper.get(i).getElementsByClass("context-transcript").getFirst();
-            questionList.get(indexStart).setTranscript(transcript.getElementsByClass("collapse").removeAttr("id").html());
+            var transcript = questionGroupWrapper.get(i).getElementsByClass(Constant.CONTEXT_TRANSCRIPT).getFirst();
+            questionList.get(indexStart).setTranscript(transcript.getElementsByClass(Constant.COLLAPSE).removeAttr("id").html());
             questionList.get(indexStart).setQuestionHaveTranscript(true);
-            var questionWrapper = questionGroupWrapper.get(i).getElementsByClass("question-wrapper");
-            var questionExplain = questionGroupWrapper.get(i).getElementsByClass("question-explanation-wrapper");
+            var questionWrapper = questionGroupWrapper.get(i).getElementsByClass(Constant.QUESTION_WRAPPER);
+            var questionExplain = questionGroupWrapper.get(i).getElementsByClass(Constant.QUESTION_EXPLANATION_WRAPPER);
             questionList.get(indexStart).setNumberQuestionInGroup(questionWrapper.size());
             for (int j = 0; j < questionWrapper.size(); j++) {
                 var questionContent = questionWrapper.get(j);
-                var questionNumber = questionContent.getElementsByTag("strong").getFirst().text();
+                var questionNumber = questionContent.getElementsByTag(Constant.STRONG).getFirst().text();
                 questionList.get(indexStart + j).setQuestionNumber(Integer.parseInt(questionNumber));
                 var listAnswer = questionContent.getElementsByClass("form-check-label");
                 questionList.get(indexStart + j).setAnswerA(listAnswer.getFirst().text());
@@ -199,7 +197,7 @@ public class CrawlServiceImpl implements CrawlService {
                 questionList.get(indexStart + j).setAnswerC(listAnswer.get(2).text());
                 questionList.get(indexStart + j).setAnswerD(listAnswer.get(3).text());
 
-                var correctAnswer = listAnswer.stream().filter(aws -> aws.hasClass("correct")).findFirst();
+                var correctAnswer = listAnswer.stream().filter(aws -> aws.hasClass(Constant.CORRECT)).findFirst();
                 if (correctAnswer.isPresent()) {
                     questionList.get(indexStart + j).setCorrectAnswer(correctAnswer.get().val());
                 } else {
@@ -209,7 +207,7 @@ public class CrawlServiceImpl implements CrawlService {
                                 .get(indexStart + j)
                                 .setCorrectAnswer(otherCorrectAnswerElement
                                         .text()
-                                        .replace("Đáp án đúng:", "")
+                                        .replace(Constant.ANSWER_QUESTION, "")
                                 );
                     } else {
                         questionList.get(indexStart + j).setCorrectAnswer("A");
@@ -219,7 +217,7 @@ public class CrawlServiceImpl implements CrawlService {
                         .get(indexStart + j)
                         .setTranslateTranscript(questionExplain
                                 .get(j)
-                                .getElementsByClass("collapse")
+                                .getElementsByClass(Constant.COLLAPSE)
                                 .getFirst()
                                 .removeAttr("id")
                                 .html()
@@ -238,8 +236,8 @@ public class CrawlServiceImpl implements CrawlService {
         var index = 0;
         var questionTwoCols = element.getElementsByClass("question-twocols");
         for (Element questionGroup : questionTwoCols) {
-            var listQuestion = questionGroup.getElementsByClass("question-wrapper");
-            var lisTranscript = questionGroup.getElementsByClass("question-explanation-wrapper");
+            var listQuestion = questionGroup.getElementsByClass(Constant.QUESTION_WRAPPER);
+            var lisTranscript = questionGroup.getElementsByClass(Constant.QUESTION_EXPLANATION_WRAPPER);
             var listImage = questionGroup.getElementsByTag("img");
             var indexQuestion = 0;
             questionList.get(index).setHaveMultiImage(true);
@@ -250,14 +248,14 @@ public class CrawlServiceImpl implements CrawlService {
                         .add(QuestionImage.builder().question(questionList.get(index)).questionImage(value.absUrl("src")).build());
             }
             questionList.get(index).setQuestionHaveTranscript(true);
-            var transcript = questionGroup.getElementsByClass("context-transcript").getFirst();
-            questionList.get(index).setTranscript(transcript.getElementsByClass("collapse").removeAttr("id").html());
+            var transcript = questionGroup.getElementsByClass(Constant.CONTEXT_TRANSCRIPT).getFirst();
+            questionList.get(index).setTranscript(transcript.getElementsByClass(Constant.COLLAPSE).removeAttr("id").html());
             questionList.get(index).setNumberQuestionInGroup(listQuestion.size());
             for (Element questionContent : listQuestion) {
-                var questionNumber = questionContent.getElementsByTag("strong").getFirst().text();
+                var questionNumber = questionContent.getElementsByTag(Constant.STRONG).getFirst().text();
                 getAnswerQuestion(questionList, index, Integer.parseInt(questionNumber), questionContent);
                 var questionExplain = lisTranscript.get(indexQuestion);
-                questionList.get(index).setTranslateTranscript(questionExplain.getElementsByClass("collapse").getFirst().removeAttr(
+                questionList.get(index).setTranslateTranscript(questionExplain.getElementsByClass(Constant.COLLAPSE).getFirst().removeAttr(
                         "id").html());
                 index++;
             }
@@ -266,7 +264,6 @@ public class CrawlServiceImpl implements CrawlService {
     }
 
     @Override
-    @Async("crawlDataExecutor")
     public void crawlData(Elements listPartContent, Document doc, JobCrawl job, Exam exam) {
         listPartContent.parallelStream().forEach(partElement -> executorService.submit(() -> {
             var part = createPart(listPartContent.indexOf(partElement) + 1, partElement, exam);
@@ -289,7 +286,7 @@ public class CrawlServiceImpl implements CrawlService {
             int totalPart = 7;
             if (CollectionUtils.isEmpty(listPartContent) || listPartContent.size() != totalPart) {
                 job.setDescription("PART_NOT_MATCH");
-                job.setJobStatus("FAILED");
+                job.setJobStatus(Constant.FAILED);
                 jobCrawlRepository.save(job);
                 return;
             }
@@ -302,7 +299,7 @@ public class CrawlServiceImpl implements CrawlService {
                 job.setExamName(examTitleName);
             } else {
                 job.setDescription("NOT_FOUND_EXAM_TO_CRAWL");
-                job.setJobStatus("FAILED");
+                job.setJobStatus(Constant.FAILED);
                 jobCrawlRepository.save(job);
                 return;
             }
@@ -313,7 +310,7 @@ public class CrawlServiceImpl implements CrawlService {
             crawlData(listPartContent, doc, job, exam.build());
         } catch (IOException ex) {
             job.setDescription("CRAWL_FAILED");
-            job.setJobStatus("FAILED");
+            job.setJobStatus(Constant.FAILED);
             jobCrawlRepository.save(job);
             log.log(Level.SEVERE, "CrawlServiceImpl >> crawlDataV2 >> Error: {}", ex);
         } finally {
@@ -369,6 +366,7 @@ public class CrawlServiceImpl implements CrawlService {
                 part.setQuestions(this.mCrawlPart7(partElement, part));
                 log.log(Level.INFO, "CrawlServiceImpl >> crawlData >> Part 7 >> status: IN_PROGRESS");
             }
+            default -> log.log(Level.INFO, "CrawlServiceImpl >> crawlData >> Part %d >> status: NOT_FOUND".formatted(i));
         }
         part.setExam(exam);
         return part;
