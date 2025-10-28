@@ -40,6 +40,15 @@ public class BlogController {
         return blogRepository.findAll(pageable);
     }
 
+    @GetMapping("detail/{blogId}")
+    public Object getDetail(@PathVariable("blogId") Long blogId) {
+        return ResponseVO
+                .builder()
+                .success(true)
+                .data(blogRepository.findById(blogId).orElse(null))
+                .build();
+    }
+
     @PostMapping("create")
     public Object create(
             @RequestParam("title") String title,
