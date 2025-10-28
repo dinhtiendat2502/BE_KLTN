@@ -28,6 +28,9 @@ public class Comment {
     @Column(columnDefinition = "TEXT")
     String content;
 
+    @Builder.Default
+    int numberOfReplies = 0;
+
     @CreationTimestamp
     LocalDateTime createdAt;
 

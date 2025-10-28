@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
@@ -16,8 +18,10 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
                 FROM Comment c
                 JOIN FETCH c.exam
                 JOIN FETCH c.user
-                WHERE c.exam.examId = :examId
+                WHERE c.exam.examId = :examId AND c.parent IS NULL
                 ORDER BY c.createdAt DESC
             """)
     Page<CommentResponse.CommentVO> findAllByExamExamId(Integer examId, Pageable pageable);
+
+    List<Comment> findAllByParent(Comment parent);
 }

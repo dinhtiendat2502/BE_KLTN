@@ -12,6 +12,7 @@ import com.app.toeic.user.repo.IOtpRepository;
 import com.app.toeic.user.service.UserService;
 import com.app.toeic.util.Constant;
 import com.app.toeic.util.HttpStatus;
+import com.app.toeic.util.ServerHelper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,10 +28,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
 
+@Log
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -257,7 +262,14 @@ public class UserController {
 
     @GetMapping("/test")
     public ResponseVO test() {
-        return new ResponseVO(Boolean.TRUE, "test", "Get assets successfully");
+        var ip = ServerHelper.getClientIp();
+        log.log(Level.INFO, MessageFormat.format("Test log: {0}, ip: {1}", "Test", ip));
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(ip)
+                .message("Test log")
+                .build();
     }
 
     public record ConfirmEmail(String email, String otp) {
