@@ -10,14 +10,14 @@ spring:
   boot:
     admin:
       client:
-        url: "${SPRING_BOOT_ADMIN_URL:http://localhost:8080}"
+        url: "${SPRING_BOOT_ADMIN_URL:http://localhost:8080/api}"
         instance:
-          service-url: "${SPRING_BOOT_ADMIN_URL:http://localhost:8080}"
+          service-url: "${SPRING_BOOT_ADMIN_URL:http://localhost:8080/api}"
 
   datasource:
     url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true"
     username: "${DB_USERNAME:root}"
-    password: "${DB_PASSWORD:1234}"
+    password: "${DB_PASSWORD:12345}"
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database: mysql

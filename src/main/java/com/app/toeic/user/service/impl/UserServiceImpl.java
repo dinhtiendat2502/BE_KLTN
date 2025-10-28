@@ -131,9 +131,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseVO updateUser(UserDTO user) {
         var u = iUserRepository
-                .findById(user.getId())
+                .findById(user.getUserId())
                 .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "USER_NOT_FOUND"));
         u.setStatus(user.getStatus());
+        iUserRepository.save(u);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
