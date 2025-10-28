@@ -33,7 +33,12 @@ public class ServerHelper {
             return StringUtils.EMPTY;
         }
         var request = ((ServletRequestAttributes) requestContext).getRequest();
-        return IP_HEADER_CANDIDATES.stream().map(request::getHeader).filter(ipList -> StringUtils.isNotBlank(ipList) && !"unknown".equalsIgnoreCase(ipList))
-                .findFirst().map(it -> it.split(",")[0]).orElse(request.getRemoteAddr());
+        return IP_HEADER_CANDIDATES
+                .stream()
+                .map(request::getHeader)
+                .filter(ipList -> StringUtils.isNotBlank(ipList) && !"unknown".equalsIgnoreCase(ipList))
+                .findFirst()
+                .map(it -> it.split(",")[0])
+                .orElse(request.getRemoteAddr());
     }
 }

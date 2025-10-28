@@ -236,7 +236,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Object loginSocial(LoginSocialDTO loginSocialDto) {
         var user = iUserRepository.findByEmail(loginSocialDto.getEmail());
-        List<String> tokens = new ArrayList<>();
+        var tokens = new ArrayList<String>();
         user.ifPresentOrElse(u -> {
             if (u.getStatus()
                     .equals(EUser.INACTIVE)) {
@@ -251,7 +251,7 @@ public class UserServiceImpl implements UserService {
                         "EMAIL_EXISTED_WITH_OTHER_PROVIDER"
                 );
             }
-            List<String> rolesNames = new ArrayList<>();
+            var rolesNames = new ArrayList<String>();
             u.getRoles().forEach(r -> rolesNames.add(r.getRoleName()));
             final var token = jwtUtilities.generateToken(u.getUsername(), u.getPassword(), rolesNames);
             tokens.add(token);

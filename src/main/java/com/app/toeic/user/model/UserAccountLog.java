@@ -19,19 +19,19 @@ import java.time.LocalDateTime;
 public class UserAccountLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer userAccountLogId;
+    Long userAccountLogId;
 
     @Lob
-    @Column(name = "old_data", length = 1000)
     String oldData;
 
     @Lob
-    @Column(name = "new_data", length = 1000)
     String newData;
 
-    String country;
     String action;
-    String lastUpdatedBy;
+    String description;
+
+    @Builder.Default
+    String lastUpdatedBy = "SYSTEM";
     String lastIpAddress;
 
     @ManyToOne

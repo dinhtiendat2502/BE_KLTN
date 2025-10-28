@@ -1,6 +1,7 @@
 package com.app.toeic.user.controller;
 
 
+import com.app.toeic.aop.annotation.AuthenticationLog;
 import com.app.toeic.external.payload.EmailDTO;
 import com.app.toeic.user.enums.EUser;
 import com.app.toeic.exception.AppException;
@@ -44,8 +45,8 @@ public class UserController {
     EmailService emailService;
     FirebaseStorageService firebaseStorageService;
     IOtpRepository otpRepository;
-    static final int OTP_EXPIRED = 48;
-    static final String NOT_FOUNT_USER = "NOT_FOUNT_USER";
+    static int OTP_EXPIRED = 48;
+    static String NOT_FOUNT_USER = "NOT_FOUNT_USER";
     PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
@@ -54,6 +55,7 @@ public class UserController {
     }
 
     @PostMapping("/login-social")
+    @AuthenticationLog(activity = "LOGIN_WITH_GOOGLE_FB", description = "Login with google or facebook")
     public ResponseVO loginSocial(@Valid @RequestBody LoginSocialDTO loginSocialDto) {
         var token = userService.loginSocial(loginSocialDto);
         return ResponseVO
@@ -65,6 +67,7 @@ public class UserController {
     }
 
     @PostMapping("/authenticate")
+    @AuthenticationLog(activity = "Login", description = "Login with email and password")
     public ResponseVO authenticate(@Valid @RequestBody LoginDTO loginDto) {
         return userService.authenticate(loginDto);
     }
@@ -86,6 +89,7 @@ public class UserController {
     }
 
     @PostMapping("/forgot-password")
+    @AuthenticationLog(activity = "FORGOT_PASSWORD", description = "Forgot password")
     public Object forgotPassword(@RequestBody String email) {
         userService.findByEmail(email);
         return ResponseVO
@@ -93,7 +97,6 @@ public class UserController {
                 .success(Boolean.TRUE)
                 .message(userService.forgotPassword(email))
                 .build();
-
     }
 
     @PatchMapping("/update-password")
