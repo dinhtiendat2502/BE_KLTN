@@ -13,29 +13,21 @@ public interface CommentResponse {
 
         UserVO getUser();
 
-        ExamVO getExam();
-
-        CommentVO getParent();
+        Integer getNumberOfReplies();
 
         String getStatus();
     }
-    interface ReplyVO {
+
+    interface Comment2VO {
         Long getCommentId();
-        String getContent();
-        UserVO getUser();
-        LocalDateTime getCreatedAt();
-        String getStatus();
+        Integer getNumberOfReplies();
     }
+
     interface UserVO {
         Long getUserId();
 
         String getFullName();
 
         String getAvatar();
-    }
-    interface ExamVO {
-        Integer getExamId();
-
-        String getExamName();
     }
 }

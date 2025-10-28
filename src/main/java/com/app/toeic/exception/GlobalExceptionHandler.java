@@ -22,7 +22,7 @@ import java.time.DateTimeException;
 @Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(AppException.class)
-    public ResponseVO handleAppException(AppException e) {
+    public Object handleAppException(AppException e) {
         log.error(MessageFormat.format("Exception >> GlobalExceptionHandler >> handleAppException: {0}", e.getMessage()), e);
         return ResponseVO
                 .builder()
@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseVO handleValidationException(MethodArgumentNotValidException e) {
+    public Object handleValidationException(MethodArgumentNotValidException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleValidationException: %s".formatted(e.getMessage()), e);
 
         BindingResult bindingResult = e.getBindingResult();
@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public ResponseVO handleFileSizeLimitExceededException(MaxUploadSizeExceededException e) {
+    public Object handleFileSizeLimitExceededException(MaxUploadSizeExceededException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleFileSizeLimitExceededException: %s".formatted(e.getMessage()), e);
         return ResponseVO
                 .builder()
@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MultipartException.class)
-    public ResponseVO handleMultipartException(MultipartException e) {
+    public Object handleMultipartException(MultipartException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleMultipartException: %s".formatted(e.getMessage()), e);
         return ResponseVO
                 .builder()
@@ -71,7 +71,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(IOException.class)
-    public ResponseVO handleIOException(IOException e) {
+    public Object handleIOException(IOException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleIOException: %s".formatted(e.getMessage()), e);
         return ResponseVO
                 .builder()
@@ -81,7 +81,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    public ResponseVO handleNotFoundException(NoHandlerFoundException e) {
+    public Object handleNotFoundException(NoHandlerFoundException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleNotFoundException: %s".formatted(e.getMessage()), e);
         return ResponseVO
                 .builder()
@@ -91,7 +91,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseVO handleBadCredentialsException(BadCredentialsException e) {
+    public Object handleBadCredentialsException(BadCredentialsException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleBadCredentialsException: %s".formatted(e.getMessage()), e);
         var message = e.getMessage();
         if (message.contains("Bad credentials")) {
@@ -105,7 +105,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseVO handleUsernameNotFoundException(UsernameNotFoundException e) {
+    public Object handleUsernameNotFoundException(UsernameNotFoundException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleUsernameNotFoundException: %s".formatted(e.getMessage()), e);
         return ResponseVO
                 .builder()
@@ -115,7 +115,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(InternalAuthenticationServiceException.class)
-    public ResponseVO handleInternalAuthenticationServiceException(InternalAuthenticationServiceException e) {
+    public Object handleInternalAuthenticationServiceException(InternalAuthenticationServiceException e) {
         log.error(
                 "Exception >> GlobalExceptionHandler >> handleInternalAuthenticationServiceException: %s".formatted(e.getMessage()),
                 e
@@ -128,7 +128,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(StorageException.class)
-    public ResponseVO handleStorageException(StorageException e) {
+    public Object handleStorageException(StorageException e) {
         log.error(
                 "Exception >> GlobalExceptionHandler >> StorageException: %s".formatted(e.getMessage()),
                 e
@@ -140,7 +140,7 @@ public class GlobalExceptionHandler {
                 .build();
     }
     @ExceptionHandler(DateTimeException.class)
-    public ResponseVO handleDateTimeException(DateTimeException e) {
+    public Object handleDateTimeException(DateTimeException e) {
         log.error("Exception >> GlobalExceptionHandler >> handleDateTimeException: %s".formatted(e.getMessage()), e);
         return ResponseVO
                 .builder()
@@ -150,7 +150,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseVO handleUnwantedException(Exception e) {
+    public Object handleUnwantedException(Exception e) {
         log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException: {}", e
                 .getClass()
                 .getSimpleName());

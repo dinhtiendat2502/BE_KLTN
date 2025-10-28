@@ -10,10 +10,13 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Log
 @RestController
@@ -37,14 +40,30 @@ public class CommentController {
                     .message("USER_NOT_LOGIN")
                     .build();
         }
-
+        var parentOtional = commentRepository.findByCommentId(payload.parentId);
         var comment = Comment.builder()
-                .content(payload.content)
-                .exam(Exam.builder().examId(payload.examId).build())
-                .parent(payload.parentId == null ? null : Comment.builder().commentId(payload.parentId).build())
-                .user(user.get())
-                .build();
-        commentRepository.save(comment);
+                             .content(payload.content)
+                             .exam(Exam.builder().examId(payload.examId).build())
+                             .user(user.get())
+                             .build();
+        parentOtional
+                .ifPresentOrElse(c -> {
+                    if (c.getParent() != null) {
+                        var parent = c.getParent();
+                        comment.setParent(parent);
+                        commentRepository.save(comment);
+                        parent.setNumberOfReplies(parent.getNumberOfReplies() + 1);
+                        commentRepository.save(parent);
+                    } else {
+                        comment.setParent(c);
+                        commentRepository.save(comment);
+                        c.setNumberOfReplies(c.getNumberOfReplies() + 1);
+                        commentRepository.save(c);
+                    }
+                }, () -> {
+                    comment.setParent(null);
+                    commentRepository.save(comment);
+                });
         return ResponseVO
                 .builder()
                 .success(true)
@@ -59,6 +78,18 @@ public class CommentController {
             @RequestParam(value = "size", defaultValue = "10") int size
     ) {
         return commentRepository.findAllByExamExamId(examId, PageRequest.of(page, size));
+    }
+
+    @GetMapping("get-by-parent")
+    public Object getCommentByParent(
+            @RequestParam("parentId") Long parentId,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        return commentRepository.findAllByParentCommentId(
+                parentId,
+                PageRequest.of(page, size, Sort.by("createdAt").descending())
+        );
     }
 
     public record CommentPayload(String content, Integer examId, Long parentId) {
