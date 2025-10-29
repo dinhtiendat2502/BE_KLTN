@@ -6,6 +6,7 @@ import com.app.toeic.part.payload.ListPartDTO;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.question.model.Question;
+import com.app.toeic.score.repo.ICalculateScoreRepository;
 import com.app.toeic.userexam.model.UserAnswer;
 import com.app.toeic.userexam.model.UserExamHistory;
 import com.app.toeic.external.response.ResponseVO;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@Log
 @RestController
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @RequestMapping("/exam")
@@ -34,8 +37,9 @@ public class ExamController {
     UserService userService;
     UserExamHistoryService userExamHistoryService;
     UserAnswerService userAnswerService;
-    static final String EXAM_NOT_FOUND = "EXAM_NOT_FOUND";
-    static final String GET_EXAM_SUCCESS = "GET_EXAM_SUCCESS";
+    ICalculateScoreRepository calculateScoreRepository;
+    private static final String EXAM_NOT_FOUND = "EXAM_NOT_FOUND";
+    private static final String GET_EXAM_SUCCESS = "GET_EXAM_SUCCESS";
 
     @GetMapping("/list")
     public Object getAllExams() {
@@ -142,7 +146,7 @@ public class ExamController {
                 .getAnswers()
                 .stream()
                 .map(asw -> {
-                    Question question = Question
+                    var question = Question
                             .builder()
                             .questionId(asw.getQuestionId())
                             .build();
@@ -154,20 +158,18 @@ public class ExamController {
                             .build();
 
                     var correctAnswer = examService.findCorrectAnswer(examHasFullQuestionAnswer, asw.getQuestionId());
-                    boolean isCorrect = Objects.equals(asw.getAnswer(), correctAnswer);
+                    var isCorrect = Objects.equals(asw.getAnswer(), correctAnswer);
                     userAnswer.setIsCorrect(isCorrect);
-                    if (StringUtils.isEmpty(asw.getAnswer()) || asw.getAnswer() == null) {
+                    if (StringUtils.isBlank(asw.getAnswer())) {
                         numberOfNotAnswer.incrementAndGet();
                     }
-                    String partCode = asw.getPartCode();
+                    var partCode = asw.getPartCode();
                     if (!isCorrect) {
                         numberOfWrongAnswer.incrementAndGet();
                         switch (partCode) {
                             case "PART1", "PART4", "PART2", "PART3" -> numberOfWrongListeningAnswer.incrementAndGet();
                             case "PART5", "PART6", "PART7" -> numberOfWrongReadingAnswer.incrementAndGet();
-                            default -> {
-                                break;
-                            }
+                            default -> log.info("ExamController >> finishExam >> PART NOT FOUND");
                         }
                     } else {
                         numberOfCorrectAnswer.incrementAndGet();
@@ -200,9 +202,7 @@ public class ExamController {
                                 numberOfCorrectAnswerPart7.incrementAndGet();
                                 numberOfCorrectReadingAnswer.incrementAndGet();
                             }
-                            default -> {
-                                break;
-                            }
+                            default -> log.info("ExamController >> finishExam >> PART NOT FOUND");
                         }
                     }
                     return userAnswer;
@@ -223,13 +223,10 @@ public class ExamController {
         returnUserExamHistory.setNumberOfWrongListeningAnswer(numberOfWrongListeningAnswer.get());
         returnUserExamHistory.setNumberOfCorrectReadingAnswer(numberOfCorrectReadingAnswer.get());
         returnUserExamHistory.setNumberOfWrongReadingAnswer(numberOfWrongReadingAnswer.get());
-        returnUserExamHistory.setTotalScore(userExamHistoryService.calculateScoreListening(
-                numberOfCorrectListeningAnswer.get()) + userExamHistoryService.calculateScoreReading(
-                numberOfCorrectReadingAnswer.get()));
-        returnUserExamHistory.setTotalScoreListening(
-                userExamHistoryService.calculateScoreListening(numberOfCorrectListeningAnswer.get()));
-        returnUserExamHistory.setTotalScoreReading(
-                userExamHistoryService.calculateScoreReading(numberOfCorrectReadingAnswer.get()));
+        var listScore = calculateScoreRepository.findAllByTotalQuestion(returnUserExamHistory.getNumberOfCorrectReadingAnswer(), returnUserExamHistory.getNumberOfCorrectListeningAnswer());
+        returnUserExamHistory.setTotalScoreListening(listScore.getLast().getListening());
+        returnUserExamHistory.setTotalScoreReading(listScore.getFirst().getReading());
+        returnUserExamHistory.setTotalScore(returnUserExamHistory.getTotalScoreListening() + returnUserExamHistory.getTotalScoreReading());
         userExamHistoryService.save(returnUserExamHistory);
         return ResponseVO
                 .builder()

@@ -26,7 +26,7 @@ import java.util.stream.IntStream;
 
 @RestController
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@RequestMapping("/admin/score")
+@RequestMapping("/score")
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class ScoreController {
     ICalculateScoreRepository calculateScoreRepository;
@@ -58,6 +58,19 @@ public class ScoreController {
                 .success(Boolean.TRUE)
                 .data(calculateScoreRepository.findAll())
                 .message("GET_LIST_SCORE_SUCCESS")
+                .build();
+    }
+
+    @GetMapping("cal")
+    public Object calculateScore(
+            @RequestParam("totalQuestionReading") String totalQuestionReading,
+            @RequestParam("totalQuestionListening") String totalQuestionListening
+    ) {
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(calculateScoreRepository.findAllByTotalQuestion(Integer.parseInt(totalQuestionReading), Integer.parseInt(totalQuestionListening)))
+                .message("CALCULATE_SCORE_SUCCESS")
                 .build();
     }
 

@@ -42,4 +42,7 @@ public interface UserService {
 
     String forgotPassword(String email);
     Object getActivities(HttpServletRequest request, int page, int size);
+
+    LoginDTO readCaptcha(HttpServletRequest request);
+    boolean isValidCaptcha(HttpServletRequest request, String captcha);
 }

@@ -13,18 +13,20 @@ import com.app.toeic.user.repo.IUserAccountRepository;
 import com.app.toeic.user.response.LoginResponse;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.user.service.UserService;
-import com.app.toeic.util.AvatarHelper;
-import com.app.toeic.util.HttpStatus;
+import com.app.toeic.util.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,8 +37,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.logging.Level;
 
+@Log
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -338,6 +343,22 @@ public class UserServiceImpl implements UserService {
                         )
                 ));
         return result.get("rs");
+    }
+
+    @Override
+    public LoginDTO readCaptcha(HttpServletRequest request) {
+        try {
+            return new ObjectMapper().readValue(request.getInputStream(), LoginDTO.class);
+        } catch (IOException e) {
+            log.log(Level.WARNING, "LoginAuthenticationFilter >> readRequest >> IOException: ", e.getMessage());
+            throw new AuthenticationServiceException("AUTHENTICATION.INVALID_REQUEST");
+        }
+    }
+
+    @Override
+    public boolean isValidCaptcha(HttpServletRequest request, String captcha) {
+        var cookie = CookieUtils.get(request, Constant.CAPTCHA);
+        return cookie.isPresent() && AESUtils.decrypt(cookie.get().getValue()).equals(captcha.trim());
     }
 
     public String randomPassword() {

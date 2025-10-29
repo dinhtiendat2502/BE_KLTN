@@ -212,6 +212,59 @@ VALUES ('Mẫu email cấp lại mật khẩu', 'active', 'Cấp lại mật kh�
 </table>
         ');
 
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Home', 'mdi mdi-home menu-icon', 1, false, '/admin', '', 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('User Management', 'mdi mdi-account-circle menu-icon', 2, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Topic Exam Management', 'mdi mdi-database menu-icon', 3, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Exam Management', 'mdi mdi-book-open menu-icon', 4, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Score Management', 'mdi mdi-checkbox-marked-circle menu-icon', 5, false, '/admin/score', null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Transcript', 'mdi mdi-tooltip-text menu-icon', 6, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Crawl', 'mdi mdi-database-plus menu-icon', 7, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Blog', 'mdi mdi mdi-clipboard-text menu-icon', 8, true, null, null, 'MEMBER');
+
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('System Monitoring', 'mdi mdi mdi-android menu-icon', 9, false, 'http://localhost:8080/api/applications', null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Firebase Config', 'mdi mdi-cloud-upload menu-icon', 10, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Email Config', 'mdi mdi-email menu-icon', 11, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Slider Config', 'mdi mdi-equal-box menu-icon', 12, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Rev AI Config', 'mdi mdi-at menu-icon', 13, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Kommunicate Config', 'mdi mdi-earth menu-icon', 14, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Tiny Editor Config', 'mdi mdi-widgets menu-icon', 14, true, null, null, 'SYSTEM');
+
+
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Member Management', '/admin/users-management', null, 2);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Member Activity', '/admin/users-activity', null, 2);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Topic', '/admin/topic/list', null, 3);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Topic', '/admin/topic/add', null, 3);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Exam', '/admin/exam/list', null, 4);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Exam', '/admin/exam/add', null, 4);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Get Transcript', '/admin/transcript/get', null, 6);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Transcript History', '/admin/transcript/history', null, 6);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Crawl Data', '/admin/crawl/get', null, 7);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Config Crawl', '/admin/crawl/config', null, 7);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Crawl History', '/admin/crawl/list', null, 7);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Blog', '/admin/blog/get', null, 8);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Blog', '/admin/blog/add', null, 8);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Firebase Config', '/admin/firebase/list', null, 10);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Config', '/admin/firebase/update', null, 10);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('History Upload', '/admin/firebase/history', null, 10);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Email Config', '/admin/email/account/list', null, 11);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Email Config', '/admin/email/account/update', null, 11);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Template Email', '/admin/email/template-email/list', null, 11);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Template Email', '/admin/email/template-email/update', null, 11);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Slider', '/admin/slider/list', null, 12);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Slider', '/admin/slider/update', null, 12);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List RevAi Account', '/admin/rev-ai/account/list', null, 13);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add RevAi Account', '/admin/rev-ai/account/update', null, 13);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List RevAi Config', '/admin/rev-ai/config/list', null, 13);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add RevAi Config', '/admin/rev-ai/config/update', null, 13);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Kommunicate Account', '/admin/kommunicate/account/list', null, 14);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Kommunicate Account', '/admin/kommunicate/account/update', null, 14);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Kommunicate Config', '/admin/kommunicate/bot/list', null, 14);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Kommunicate Config', '/admin/kommunicate/bot/update', null, 14);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Tiny Account', '/admin/tiny/account/list', null, 15);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Tiny Account', '/admin/tiny/account/update', null, 15);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Tiny Config', '/admin/tiny/config/list', null, 15);
+insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Tiny Config', '/admin/tiny/config/update', null, 15);
+
 
 insert into revai_config(access_token, status)
     value ('02Nr61oQry1wxj-hsCiaMUmAAdfM_VWYGTcFXiNxB0RwmozYdeLpBRde7O_wmZ63pE18gsxYor7OOm8tLbunHjuKma3e0', true);

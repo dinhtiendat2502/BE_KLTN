@@ -1,6 +1,7 @@
 package com.app.toeic.email.service.impl;
 
 
+import com.app.toeic.config.JavaMailConfig;
 import com.app.toeic.email.repo.EmailTemplateRepo;
 import com.app.toeic.email.service.EmailService;
 import com.app.toeic.user.model.Otp;
@@ -9,12 +10,10 @@ import com.app.toeic.exception.AppException;
 import com.app.toeic.user.repo.IOtpRepository;
 import com.app.toeic.util.HttpStatus;
 import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class EmailServiceImpl implements EmailService {
-    JavaMailSender mailSender;
+    JavaMailConfig javaMailConfig;
     Random random = new Random();
     IOtpRepository otpRepository;
     EmailTemplateRepo emailTemplateRepo;
@@ -45,8 +44,9 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendEmail(String emailTo, String templateCode) {
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
+        var mailSender = javaMailConfig.buildJavaMailSender();
+        var mimeMessage = mailSender.createMimeMessage();
+        var helper = new MimeMessageHelper(mimeMessage, "UTF-8");
         try {
             var emailTemplate = emailTemplateRepo
                     .findByTemplateCode(templateCode)
@@ -132,8 +132,9 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendEmailAccount(LoginSocialDTO loginSocialDto, String password, String templateName) {
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
+        var mailSender = javaMailConfig.buildJavaMailSender();
+        var mimeMessage = mailSender.createMimeMessage();
+        var helper = new MimeMessageHelper(mimeMessage, "UTF-8");
         try {
             var emailTemplate = emailTemplateRepo
                     .findByTemplateCode(templateName)

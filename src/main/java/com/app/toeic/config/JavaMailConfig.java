@@ -5,7 +5,6 @@ import com.app.toeic.email.repo.EmailConfigRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -17,9 +16,7 @@ import java.util.Properties;
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class JavaMailConfig {
     EmailConfigRepo emailConfigRepo;
-
-    @Bean
-    public JavaMailSender javaMailSender() {
+    public JavaMailSender buildJavaMailSender() {
         var emailConfig = emailConfigRepo.findByStatus(true).orElse(new EmailConfig());
         var mailSender = new JavaMailSenderImpl();
         var mailProperties = buildJavaMailProperties();

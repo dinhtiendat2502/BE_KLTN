@@ -12,6 +12,7 @@ import com.app.toeic.firebase.service.FirebaseStorageService;
 import com.app.toeic.user.payload.*;
 import com.app.toeic.user.repo.IOtpRepository;
 import com.app.toeic.user.service.UserService;
+import com.app.toeic.util.CaptchaGenerator;
 import com.app.toeic.util.Constant;
 import com.app.toeic.util.HttpStatus;
 import com.app.toeic.util.ServerHelper;
@@ -25,6 +26,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,6 +54,13 @@ public class UserController {
     private static final String NOT_FOUNT_USER = "NOT_FOUNT_USER";
     PasswordEncoder passwordEncoder;
 
+
+    @GetMapping(value = "get-captcha", produces = MediaType.IMAGE_JPEG_VALUE)
+    public Object getCaptcha() {
+        var captchaProperty = CaptchaGenerator.getCaptchaProperty();
+        return captchaProperty.captcha();
+    }
+
     @PostMapping("/register")
     public ResponseVO register(@Valid @RequestBody RegisterDTO registerDto) {
         return userService.register(registerDto);
@@ -70,7 +80,10 @@ public class UserController {
 
     @PostMapping("/authenticate")
     @AuthenticationLog(activity = Constant.LOGIN, description = "Login with email and password")
-    public ResponseVO authenticate(@Valid @RequestBody LoginDTO loginDto) {
+    public ResponseVO authenticate(@Valid @RequestBody LoginDTO loginDto, HttpServletRequest request) {
+        if (!userService.isValidCaptcha(request, loginDto.getCaptcha())) {
+            throw new AuthenticationServiceException("AUTHENTICATION.INVALID_CAPTCHA");
+        }
         return userService.authenticate(loginDto);
     }
 

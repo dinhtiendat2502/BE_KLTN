@@ -1,6 +1,7 @@
 package com.app.toeic.email.controller;
 
 
+import com.app.toeic.config.JavaMailConfig;
 import com.app.toeic.email.model.EmailConfig;
 import com.app.toeic.email.payload.EmailConfigDTO;
 import com.app.toeic.email.repo.EmailConfigRepo;
@@ -9,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.support.DefaultSingletonBeanRegistry;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +18,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class EmailConfigController {
-    private final EmailConfigRepo emailConfigRepo;
+    EmailConfigRepo emailConfigRepo;
+    JavaMailConfig javaMailConfig;
 
     @GetMapping("/all")
     public Object getAll() {
@@ -37,12 +40,12 @@ public class EmailConfigController {
                 }, () -> {
                     emailConfigRepo
                             .save(EmailConfig
-                                    .builder()
-                                    .host(payload.getHost())
-                                    .port(payload.getPort())
-                                    .username(payload.getUsername())
-                                    .password(payload.getPassword())
-                                    .build());
+                                          .builder()
+                                          .host(payload.getHost())
+                                          .port(payload.getPort())
+                                          .username(payload.getUsername())
+                                          .password(payload.getPassword())
+                                          .build());
                     msg[0] = "ADD_EMAIL_CONFIG_SUCCESS";
                 });
         return ResponseVO
@@ -54,7 +57,6 @@ public class EmailConfigController {
 
     @PatchMapping("/update/status/{username}")
     public Object updateEmailConfigStatus(@PathVariable String username) {
-
         var emailConfig = emailConfigRepo.findByUsername(username).orElse(null);
         if (emailConfig == null) {
             return ResponseVO

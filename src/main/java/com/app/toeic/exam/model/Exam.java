@@ -52,6 +52,9 @@ public class Exam {
     @Builder.Default
     Double price = 0.0;
 
+    @Builder.Default
+    boolean isFree = false;
+
     @JsonIgnore
     @CreationTimestamp
     LocalDateTime createdAt;
