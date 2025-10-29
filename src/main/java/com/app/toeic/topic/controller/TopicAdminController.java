@@ -29,6 +29,15 @@ public class TopicAdminController {
         return topicService.getAllTopic(page, size);
     }
 
+    @GetMapping("/all")
+    public Object findAllTopic() {
+        return ResponseVO
+                .builder()
+                .success(true)
+                .data(topicService.getAllTopics())
+                .build();
+    }
+
     @PostMapping(value = "/create-topic", consumes = {"multipart/form-data"})
     public ResponseVO createTopic(
             @RequestParam("topicName") String topicName,
@@ -56,12 +65,12 @@ public class TopicAdminController {
             @RequestParam(value = "file", required = false) MultipartFile file
     ) throws IOException {
         var image = "";
-        if(file != null) {
+        if (file != null) {
             image = firebaseStorageService.uploadFile(file);
         }
 
         var topic = topicService.getTopicById(topicId)
-                .orElseThrow(() -> new RuntimeException("TOPIC_NOT_FOUND"));
+                                .orElseThrow(() -> new RuntimeException("TOPIC_NOT_FOUND"));
         topic.setTopicName(StringUtils.defaultIfBlank(topicName, topic.getTopicName()));
         topic.setTopicImage(StringUtils.defaultIfBlank(image, topic.getTopicImage()));
         topicService.saveTopic(topic);
