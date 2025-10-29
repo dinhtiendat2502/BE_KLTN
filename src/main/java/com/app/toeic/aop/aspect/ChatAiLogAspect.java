@@ -5,6 +5,7 @@ import com.app.toeic.chatai.model.ChatHistory;
 import com.app.toeic.chatai.payload.ChatRequestBody;
 import com.app.toeic.chatai.repo.ChatHistoryRepository;
 import com.app.toeic.chatai.response.ChatResponse;
+import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.user.service.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +53,11 @@ public class ChatAiLogAspect {
                     "ChatAiLogAspect >> aroundAspect >> Exception: {0}",
                     e
             ));
-            return null;
+            return ResponseVO
+                    .builder()
+                    .success(false)
+                    .message("Error")
+                    .build();
         } finally {
             log.info(MessageFormat.format(
                     "ChatAiLogAspect >> aroundAspect >> execute: {0} ms",

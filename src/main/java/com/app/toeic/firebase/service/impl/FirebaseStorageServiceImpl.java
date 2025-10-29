@@ -2,6 +2,7 @@ package com.app.toeic.firebase.service.impl;
 
 import com.app.toeic.cache.FirebaseConfigCache;
 import com.app.toeic.exception.AppException;
+import com.app.toeic.firebase.model.FirebaseConfig;
 import com.app.toeic.firebase.model.FirebaseUploadHistory;
 import com.app.toeic.firebase.repo.FirebaseUploadHistoryRepo;
 import com.app.toeic.firebase.service.FirebaseStorageService;
@@ -28,30 +29,19 @@ import java.util.UUID;
 
 @Log
 @Service
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class FirebaseStorageServiceImpl implements FirebaseStorageService {
-    FirebaseConfigCache firebaseConfigCache;
-    FirebaseUploadHistoryRepo firebaseUploadHistoryRepo;
+    final FirebaseConfigCache firebaseConfigCache;
+    final FirebaseUploadHistoryRepo firebaseUploadHistoryRepo;
     static String downloadUrl = "https://firebasestorage.googleapis.com/v0/b/{0}/o/%s?alt=media";
     static String gsUrl = "gs://{0}/%s";
 
+    private FirebaseConfig previousFirebaseBean;
+
     @PostConstruct
     public synchronized void init() throws IOException {
-        var firebaseBean = firebaseConfigCache.getConfigValue(true);
-        if (org.apache.commons.lang3.StringUtils.isBlank(firebaseBean.getProjectId())) {
-            throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "FIREBASE_CONFIG_NOT_FOUND");
-        }
-        downloadUrl = MessageFormat.format(downloadUrl, firebaseBean.getBucketName());
-        gsUrl = MessageFormat.format(gsUrl, firebaseBean.getBucketName());
-        var jsonContent = firebaseBean.getFileJson();
-        log.info(MessageFormat.format("FirebaseStorageServiceImpl >> init >> {0}", jsonContent));
-        var credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(jsonContent.getBytes()));
-        var options = FirebaseOptions.builder()
-                                     .setCredentials(credentials)
-                                     .setStorageBucket(firebaseBean.getBucketName())
-                                     .build();
-        FirebaseApp.initializeApp(options);
+        updateFirebaseConfig();
     }
 
 
@@ -112,7 +102,26 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
         blob.delete();
     }
 
-
+    @Override
+    public void updateFirebaseConfig() throws IOException {
+        var firebaseBean = firebaseConfigCache.getConfigValue(true);
+        if (!firebaseBean.equals(previousFirebaseBean)) { // Kiểm tra xem có thay đổi không
+            if (org.apache.commons.lang3.StringUtils.isBlank(firebaseBean.getProjectId())) {
+                throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "FIREBASE_CONFIG_NOT_FOUND");
+            }
+            downloadUrl = MessageFormat.format(downloadUrl, firebaseBean.getBucketName());
+            gsUrl = MessageFormat.format(gsUrl, firebaseBean.getBucketName());
+            var jsonContent = firebaseBean.getFileJson();
+            log.info(MessageFormat.format("FirebaseStorageServiceImpl >> init >> {0}", jsonContent));
+            var credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(jsonContent.getBytes()));
+            var options = FirebaseOptions.builder()
+                                         .setCredentials(credentials)
+                                         .setStorageBucket(firebaseBean.getBucketName())
+                                         .build();
+            FirebaseApp.initializeApp(options);
+            previousFirebaseBean = firebaseBean; // Cập nhật tham chiếu đến phiên bản mới
+        }
+    }
     private String generateFileName(String originalFileName) {
         return UUID.randomUUID() + getExtension(originalFileName);
     }

@@ -48,4 +48,8 @@ public class FirebaseConfigCache {
         }
         return FirebaseConfig.builder().build();
     }
+
+    public void invalidateCache() {
+        systemCache.invalidateAll();
+    }
 }

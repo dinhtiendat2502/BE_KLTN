@@ -47,4 +47,13 @@ public class Constant {
     public static final String GPT = "GPT";
     public static final String GEMINI = "GEMINI";
     public static final String GEMINI_CURL = "GEMINI-CURL";
+    public static final String REGISTER = "REGISTER";
+    public static final String LOGIN = "LOGIN";
+    public static final String LOGOUT = "LOGOUT";
+    public static final String FORGOT_PASSWORD = "FORGOT_PASSWORD";
+    public static final String RESET_PASSWORD = "RESET_PASSWORD";
+    public static final String LOGIN_WITH_GOOGLE_FB = "LOGIN_WITH_GOOGLE_FB";
+    public static final String UPDATE_PASSWORD = "UPDATE_PASSWORD";
+    public static final String UPDATE_PROFILE = "UPDATE_PROFILE";
+    public static final String UPDATE_AVATAR = "UPDATE_AVATAR";
 }

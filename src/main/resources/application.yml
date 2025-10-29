@@ -3,6 +3,8 @@ server:
   servlet:
     context-path: /api
 spring:
+  thymeleaf:
+    check-template-location: false
   quartz:
     job-store-type: jdbc
   application:

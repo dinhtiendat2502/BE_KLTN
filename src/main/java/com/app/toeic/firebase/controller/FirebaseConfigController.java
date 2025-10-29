@@ -1,10 +1,13 @@
 package com.app.toeic.firebase.controller;
 
+import com.app.toeic.cache.FirebaseConfigCache;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.firebase.model.FirebaseConfig;
 import com.app.toeic.firebase.repo.FirebaseRepository;
+import com.app.toeic.firebase.service.FirebaseStorageService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
@@ -25,6 +28,8 @@ import java.util.logging.Level;
 @Log
 public class FirebaseConfigController {
     FirebaseRepository firebaseRepository;
+    FirebaseConfigCache firebaseConfigCache;
+    FirebaseStorageService firebaseStorageService;
 
     @GetMapping("/all")
     public Object getAll() {
@@ -122,6 +127,7 @@ public class FirebaseConfigController {
     }
 
     @PatchMapping("/update/status/{id}")
+    @SneakyThrows
     public Object update(@PathVariable("id") Integer id) {
         firebaseRepository.findById(id).ifPresent(firebaseConfig -> {
             firebaseConfig.setStatus(true);
@@ -133,6 +139,8 @@ public class FirebaseConfigController {
             configsToUpdate.add(firebaseConfig);
         });
         firebaseRepository.saveAll(configsToUpdate);
+        firebaseConfigCache.invalidateCache();
+        firebaseStorageService.updateFirebaseConfig();
         return ResponseVO
                 .builder()
                 .success(true)

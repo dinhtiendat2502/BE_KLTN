@@ -1,6 +1,7 @@
 package com.app.toeic.user.controller;
 
 
+import com.app.toeic.aop.annotation.ActivityLog;
 import com.app.toeic.aop.annotation.AuthenticationLog;
 import com.app.toeic.external.payload.EmailDTO;
 import com.app.toeic.user.enums.EUser;
@@ -32,6 +33,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 
@@ -55,7 +57,7 @@ public class UserController {
     }
 
     @PostMapping("/login-social")
-    @AuthenticationLog(activity = "LOGIN_WITH_GOOGLE_FB", description = "Login with google or facebook")
+    @AuthenticationLog(activity = Constant.LOGIN_WITH_GOOGLE_FB, description = "Login with google or facebook")
     public ResponseVO loginSocial(@Valid @RequestBody LoginSocialDTO loginSocialDto) {
         var token = userService.loginSocial(loginSocialDto);
         return ResponseVO
@@ -67,7 +69,7 @@ public class UserController {
     }
 
     @PostMapping("/authenticate")
-    @AuthenticationLog(activity = "Login", description = "Login with email and password")
+    @AuthenticationLog(activity = Constant.LOGIN, description = "Login with email and password")
     public ResponseVO authenticate(@Valid @RequestBody LoginDTO loginDto) {
         return userService.authenticate(loginDto);
     }
@@ -89,7 +91,7 @@ public class UserController {
     }
 
     @PostMapping("/forgot-password")
-    @AuthenticationLog(activity = "FORGOT_PASSWORD", description = "Forgot password")
+    @AuthenticationLog(activity = Constant.FORGOT_PASSWORD, description = "Forgot password")
     public Object forgotPassword(@RequestBody String email) {
         userService.findByEmail(email);
         return ResponseVO
@@ -100,6 +102,7 @@ public class UserController {
     }
 
     @PatchMapping("/update-password")
+    @ActivityLog(activity = Constant.UPDATE_PASSWORD, description = "Update password")
     public ResponseVO updatePassword(
             @Valid @RequestBody UserUpdatePasswordDTO userUpdatePasswordDto,
             HttpServletRequest request
@@ -126,6 +129,7 @@ public class UserController {
     }
 
     @PatchMapping(value = "/update-profile", consumes = {"multipart/form-data"})
+    @ActivityLog(activity = Constant.UPDATE_PROFILE, description = "Update profile")
     public ResponseVO updateProfile(
             @RequestParam(value = "file", required = false) MultipartFile file,
             @RequestParam(value = "fullName", required = false) String fullName,
@@ -155,6 +159,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/update-avatar", consumes = {"multipart/form-data"})
+    @ActivityLog(activity = Constant.UPDATE_AVATAR, description = "Update avatar")
     public ResponseVO updateAvatar(
             @RequestParam("file") MultipartFile file,
             HttpServletRequest request
@@ -210,7 +215,7 @@ public class UserController {
     public ResponseVO confirmOtp(@RequestBody ConfirmEmail payload) {
         final var msg = new String[1];
         var success = new AtomicBoolean(false);
-        var otp = otpRepository.findByEmailAndAction(payload.email, "REGISTER");
+        var otp = otpRepository.findByEmailAndAction(payload.email, Constant.REGISTER);
         otp.ifPresentOrElse(e -> {
             // check if otp was sent over 5 minutes
             var otpCreationTime = e.getCreatedAt();
@@ -244,8 +249,9 @@ public class UserController {
     }
 
     @PostMapping("reset-password")
+    @ActivityLog(activity = Constant.RESET_PASSWORD, description = "Reset password")
     public Object resetPassword(@RequestBody ResetPasswordDTO resetPasswordDTO) {
-        var otp = otpRepository.findByOtpCodeAndAction(resetPasswordDTO.otp, "FORGOT_PASSWORD");
+        var otp = otpRepository.findByOtpCodeAndAction(resetPasswordDTO.otp, Constant.FORGOT_PASSWORD);
         final var msg = new String[1];
         final var success = new AtomicBoolean(false);
         otp.ifPresentOrElse(e -> {
@@ -271,14 +277,30 @@ public class UserController {
                 .build();
     }
 
+    @Operation(security = {@SecurityRequirement(name = "openApiSecurityScheme")})
+    @GetMapping("/activity")
+    public Object userActivity(
+            HttpServletRequest request,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        var rs = userService.getActivities(request, page, size);
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(rs)
+                .build();
+    }
+
     @GetMapping("/test")
+    @ActivityLog(activity = Constant.UPDATE_PASSWORD, description = "Update password")
     public ResponseVO test() {
         var ip = ServerHelper.getClientIp();
         log.log(Level.INFO, MessageFormat.format("Test log: {0}, ip: {1}", "Test", ip));
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .data(ip)
+                .data(Map.of("ip", ip, "test", "Test"))
                 .message("Test log")
                 .build();
     }

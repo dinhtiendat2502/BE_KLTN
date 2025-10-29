@@ -8,6 +8,7 @@ import com.app.toeic.jwt.JwtTokenProvider;
 import com.app.toeic.user.model.UserAccount;
 import com.app.toeic.user.payload.*;
 import com.app.toeic.user.repo.IRoleRepository;
+import com.app.toeic.user.repo.IUserAccountLogRepository;
 import com.app.toeic.user.repo.IUserAccountRepository;
 import com.app.toeic.user.response.LoginResponse;
 import com.app.toeic.external.response.ResponseVO;
@@ -18,7 +19,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -44,6 +49,7 @@ public class UserServiceImpl implements UserService {
     JwtTokenProvider jwtUtilities;
     UserDetailsService userDetailsService;
     EmailServiceImpl emailService;
+    IUserAccountLogRepository iUserAccountLogRepository;
 
     private static final String EMAIL_NOT_REGISTERED = "EMAIL_NOT_REGISTERED";
 
@@ -317,6 +323,21 @@ public class UserServiceImpl implements UserService {
     public String forgotPassword(String email) {
         emailService.sendEmail(email, "FORGOT_PASSWORD");
         return "SEND_EMAIL_SUCCESS";
+    }
+
+    @Override
+    public Object getActivities(HttpServletRequest request, int page, int pageSize) {
+        var profile = getProfile(request);
+        var result = new HashMap<>(Map.of("rs", new Object()));
+        profile.ifPresent(r -> result
+                .put(
+                        "rs",
+                        iUserAccountLogRepository.findAllByUserAccount(
+                                r,
+                                PageRequest.of(page, pageSize, Sort.by("createdAt").descending())
+                        )
+                ));
+        return result.get("rs");
     }
 
     public String randomPassword() {

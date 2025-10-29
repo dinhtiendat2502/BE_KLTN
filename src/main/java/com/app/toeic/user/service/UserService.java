@@ -41,4 +41,5 @@ public interface UserService {
     Object isAdminLogin(HttpServletRequest request);
 
     String forgotPassword(String email);
+    Object getActivities(HttpServletRequest request, int page, int size);
 }

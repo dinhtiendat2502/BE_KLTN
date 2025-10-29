@@ -1,7 +1,6 @@
 package com.app.toeic.transcript.controller;
 
 import com.app.toeic.cache.FirebaseConfigCache;
-import com.app.toeic.config.RevAiConfig;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.firebase.service.FirebaseStorageService;
@@ -18,7 +17,6 @@ import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import ai.rev.speechtotext.ApiClient;
 import org.springframework.beans.factory.annotation.Autowired;

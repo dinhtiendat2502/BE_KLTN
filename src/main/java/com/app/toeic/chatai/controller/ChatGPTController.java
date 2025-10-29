@@ -9,14 +9,11 @@ import com.app.toeic.chatai.payload.TextToSpeechPayload;
 import com.app.toeic.chatai.repo.ChatAiRepository;
 import com.app.toeic.chatai.response.ChatResponse;
 import com.app.toeic.external.response.ResponseVO;
-import com.app.toeic.user.service.UserService;
 import com.app.toeic.util.Constant;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -34,7 +31,6 @@ import java.util.List;
 public class ChatGPTController {
     RestTemplate restTemplate;
     ChatAiRepository chatAiRepository;
-    UserService userService;
 
     @PostMapping("/chat")
     @ChatAiLog(model = ModelChat.GPT)
