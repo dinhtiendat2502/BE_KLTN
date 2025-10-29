@@ -1,0 +1,6 @@
+language: "java"
+name: "TLCN-BE"
+appmap_dir: "tmp/appmap"
+packages:
+- path: "com.app.toeic"
+- path: "static.script"

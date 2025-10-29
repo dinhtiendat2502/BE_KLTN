@@ -199,7 +199,7 @@ public class UserServiceImpl implements UserService {
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .data(null)
+                .data(userAccount.getAvatar())
                 .message("UPDATE_AVATAR_SUCCESS")
                 .build();
     }
