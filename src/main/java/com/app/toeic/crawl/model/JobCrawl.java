@@ -1,6 +1,7 @@
 package com.app.toeic.crawl.model;
 
 
+import com.app.toeic.util.Constant;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -25,8 +26,10 @@ public class JobCrawl {
     String jobName;
     String examName;
     String jobLink;
+
+    @Builder.Default
     @Column(length = 50)
-    String jobStatus;
+    String jobStatus = Constant.STATUS_IN_PROGRESS;
 
     String description;
 

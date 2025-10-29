@@ -27,6 +27,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.*;
 
@@ -144,6 +146,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<UserAccount> getCurrentUser() {
+        var requestContext = RequestContextHolder.getRequestAttributes();
+        if (requestContext == null) {
+            return Optional.empty();
+        }
+        var request = ((ServletRequestAttributes) requestContext).getRequest();
+        return getProfile(request);
+    }
+
+    @Override
     public UserAccount findByEmail(String email) {
         return iUserRepository
                 .findByEmail(email)
@@ -240,13 +252,13 @@ public class UserServiceImpl implements UserService {
         var tokens = new ArrayList<String>();
         user.ifPresentOrElse(u -> {
             if (u.getStatus()
-                    .equals(EUser.INACTIVE)) {
+                 .equals(EUser.INACTIVE)) {
                 throw new AppException(HttpStatus.SEE_OTHER, "ACCOUNT_NOT_ACTIVE");
             } else if (u.getStatus()
-                    .equals(EUser.BLOCKED)) {
+                        .equals(EUser.BLOCKED)) {
                 throw new AppException(HttpStatus.SEE_OTHER, "ACCOUNT_BLOCKED");
             } else if (!u.getProvider()
-                    .equals(loginSocialDto.getProvider())) {
+                         .equals(loginSocialDto.getProvider())) {
                 throw new AppException(
                         HttpStatus.SEE_OTHER,
                         "EMAIL_EXISTED_WITH_OTHER_PROVIDER"
@@ -271,7 +283,7 @@ public class UserServiceImpl implements UserService {
             iUserRepository.save(newUser);
             List<String> rolesNames = new ArrayList<>();
             newUser.getRoles()
-                    .forEach(r -> rolesNames.add(r.getRoleName()));
+                   .forEach(r -> rolesNames.add(r.getRoleName()));
             final var token = jwtUtilities.generateToken(newUser.getUsername(), newUser.getPassword(), rolesNames);
             tokens.add(token);
             emailService.sendEmailAccount(loginSocialDto, password, "LOGIN_SOCIAL");

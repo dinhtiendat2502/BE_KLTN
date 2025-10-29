@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.text.MessageFormat;
+import java.util.Map;
 import java.util.UUID;
 
 @Log
@@ -47,20 +48,21 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
         log.info(MessageFormat.format("FirebaseStorageServiceImpl >> init >> {0}", jsonContent));
         var credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(jsonContent.getBytes()));
         var options = FirebaseOptions.builder()
-                .setCredentials(credentials)
-                .setStorageBucket(firebaseBean.getBucketName())
-                .build();
+                                     .setCredentials(credentials)
+                                     .setStorageBucket(firebaseBean.getBucketName())
+                                     .build();
         FirebaseApp.initializeApp(options);
     }
 
 
     @Override
     public String uploadFile(MultipartFile file) throws IOException {
-        return uploadFile(file, false);
+        var rs = uploadFile(file, false);
+        return rs.get("url");
     }
 
     @Override
-    public String uploadFile(MultipartFile file, boolean isGcs) throws IOException {
+    public Map<String, String> uploadFile(MultipartFile file, boolean isGcs) throws IOException {
         var bucket = StorageClient.getInstance().bucket();
         var name = generateFileName(file.getOriginalFilename());
         bucket.create(name, file.getBytes(), file.getContentType());
@@ -76,7 +78,7 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
                 .fileSize(file.getSize())
                 .build();
         firebaseUploadHistoryRepo.save(history);
-        return isGcs ? getGcsUrl(name) : url;
+        return Map.of("url", url, "gcsUrl", getGcsUrl(name));
     }
 
     @Override

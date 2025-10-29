@@ -6,6 +6,7 @@ import com.app.toeic.exam.repo.IExamRepository;
 import com.app.toeic.exam.response.ExamVO;
 import com.app.toeic.exam.service.ExamService;
 import com.app.toeic.part.service.PartService;
+import com.app.toeic.util.Constant;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -25,7 +26,7 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public Object getAllExam() {
-        return examRepository.findAllByStatus("ACTIVE");
+        return examRepository.findAllByStatus(Constant.STATUS_ACTIVE);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class ExamServiceImpl implements ExamService {
         var exam = examRepository
                 .findById(examId)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "EXAM_NOT_FOUND"));
-        exam.setStatus("INACTIVE");
+        exam.setStatus(Constant.STATUS_INACTIVE);
         examRepository.save(exam);
         return "DELETE_EXAM_SUCCESS";
     }
@@ -70,7 +71,7 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public Object getAllExamByTopic(Integer topicId) {
         if (topicId == null || topicId == 0) {
-            return examRepository.findAllByStatus("ACTIVE");
+            return examRepository.findAllByStatus(Constant.STATUS_ACTIVE);
         }
         if (topicId == -1) {
             return examRepository.findAllByTopicIsNull();

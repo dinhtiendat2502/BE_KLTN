@@ -4,6 +4,7 @@ import com.app.toeic.firebase.service.FirebaseStorageService;
 import com.app.toeic.topic.model.Topic;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.topic.service.TopicService;
+import com.app.toeic.util.Constant;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
@@ -38,7 +39,7 @@ public class TopicAdminController {
                 .builder()
                 .topicName(topicName)
                 .topicImage(image)
-                .status("ACTIVE")
+                .status(Constant.STATUS_ACTIVE)
                 .build();
         topicService.saveTopic(newTopic);
         return ResponseVO

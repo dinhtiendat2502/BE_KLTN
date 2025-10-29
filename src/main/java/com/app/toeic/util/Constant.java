@@ -33,4 +33,18 @@ public class Constant {
     public static final String FAILED = "FAILED";
     public static final String OTP_INCORRECT = "OTP_INCORRECT";
     public static final String REV_AI_CONFIG_NOT_FOUND = "REV_AI_CONFIG_NOT_FOUND";
+    public static final String STATUS_ACTIVE = "ACTIVE";
+    public static final String STATUS_INACTIVE = "INACTIVE";
+    public static final String STATUS_DELETED = "DELETED";
+    public static final String STATUS_PENDING = "PENDING";
+    public static final String STATUS_APPROVED = "APPROVED";
+    public static final String STATUS_REJECTED = "REJECTED";
+    public static final String STATUS_DONE = "DONE";
+    public static final String STATUS_BLOCKED = "BLOCKED";
+    public static final String STATUS_UNBLOCKED = "UNBLOCKED";
+    public static final String STATUS_TRANSCRIBED = "TRANSCRIBED";
+    public static final String STATUS_IN_PROGRESS = "IN_PROGRESS";
+    public static final String GPT = "GPT";
+    public static final String GEMINI = "GEMINI";
+    public static final String GEMINI_CURL = "GEMINI-CURL";
 }

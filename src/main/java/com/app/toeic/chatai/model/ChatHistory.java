@@ -1,5 +1,7 @@
-package com.app.toeic.transcript.model;
+package com.app.toeic.chatai.model;
 
+import com.app.toeic.user.model.UserAccount;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,38 +10,32 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "transcript_history")
+@Table(name = "chatai-history")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TranscriptHistory {
+public class ChatHistory {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-
-    String jobRevAIId;
-    String transcriptName;
+    Long chatHistoryId;
 
     @Column(columnDefinition = "TEXT")
-    String transcriptContent;
+    String question;
 
     @Column(columnDefinition = "TEXT")
-    String transcriptContentTranslate;
+    String answer;
 
-    @Column(columnDefinition = "TEXT")
-    String transcriptAudio;
+    String model;
 
-    @Column(columnDefinition = "TEXT")
-    String gcsUrl;
-
-    String modelType;
-
+    @JsonIgnore
     @CreationTimestamp
     LocalDateTime createdAt;
 
-    @Builder.Default
-    String status = "IN_PROGRESS";
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    UserAccount user;
 }

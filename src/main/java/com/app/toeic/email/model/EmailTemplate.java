@@ -1,6 +1,7 @@
 package com.app.toeic.email.model;
 
 
+import com.app.toeic.util.Constant;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,5 +28,5 @@ public class EmailTemplate {
     @Column(columnDefinition = "TEXT")
     private String templateContent;
     @Builder.Default
-    private String status = "INACTIVE";
+    private String status = Constant.STATUS_INACTIVE;
 }

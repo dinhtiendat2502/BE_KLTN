@@ -290,7 +290,7 @@ public class CrawlServiceImpl implements CrawlService {
             exam.getParts().add(part);
         }));
         examRepository.save(exam);
-        job.setJobStatus("DONE");
+        job.setJobStatus(Constant.STATUS_DONE);
         jobCrawlRepository.save(job);
     }
 
@@ -310,7 +310,7 @@ public class CrawlServiceImpl implements CrawlService {
                 jobCrawlRepository.save(job);
                 return;
             }
-            var exam = Exam.builder().status("ACTIVE").price(0.0).numberOfUserDoExam(0);
+            var exam = Exam.builder().status(Constant.STATUS_ACTIVE).price(0.0).numberOfUserDoExam(0);
             var title = doc.getElementsByTag("h1").first();
             if (title != null && CollectionUtils.isNotEmpty(title.children())) {
                 title.children().remove();

@@ -7,6 +7,7 @@ import com.app.toeic.exam.model.Exam;
 import com.app.toeic.topic.repo.ITopicRepository;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.exam.service.ExamService;
+import com.app.toeic.util.Constant;
 import com.app.toeic.util.HttpStatus;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +49,7 @@ public class ExamAdminController {
                 .examImage(examDto.getExamImage())
                 .numberOfUserDoExam(0)
                 .price(0.0)
-                .status("ACTIVE")
+                .status(Constant.STATUS_ACTIVE)
                 .topic(examDto.getTopicId() != null ? topicService
                         .findById(examDto.getTopicId())
                         .orElse(null) : null)
@@ -90,7 +91,7 @@ public class ExamAdminController {
         var exam = examService
                 .findById(examId);
         if(exam.isPresent()) {
-            exam.get().setStatus("INACTIVE");
+            exam.get().setStatus(Constant.STATUS_INACTIVE);
             examService.save(exam.get());
         }
         return ResponseVO

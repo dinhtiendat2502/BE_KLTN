@@ -4,6 +4,7 @@ package com.app.toeic.exam.model;
 import com.app.toeic.comment.model.Comment;
 import com.app.toeic.part.model.Part;
 import com.app.toeic.topic.model.Topic;
+import com.app.toeic.util.Constant;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -43,7 +44,7 @@ public class Exam {
     String audioPart4;
 
     @Builder.Default
-    String status = "ACTIVE";
+    String status = Constant.STATUS_ACTIVE;
 
     @Builder.Default
     Integer numberOfUserDoExam = 0;

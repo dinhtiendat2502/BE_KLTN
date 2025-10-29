@@ -10,14 +10,17 @@ spring:
   boot:
     admin:
       client:
-        url: "${SPRING_BOOT_ADMIN_URL:http://localhost:8080/api}"
+        url: "${SPRING_BOOT_ADMIN_URL:http://127.0.0.1:8080/api}"
         instance:
-          service-url: "${SPRING_BOOT_ADMIN_URL:http://localhost:8080/api}"
+          service-url: "${SPRING_BOOT_ADMIN_URL:http://127.0.0.1:8080/api}"
+          prefer-ip: true
+          management-url: "${SPRING_BOOT_ADMIN_URL:http://127.0.0.1:8080/api/actuator}"
+          name: "${spring.application.name}"
 
   datasource:
     url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true"
     username: "${DB_USERNAME:root}"
-    password: "${DB_PASSWORD:12345}"
+    password: "${DB_PASSWORD:1234}"
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database: mysql

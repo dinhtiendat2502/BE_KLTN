@@ -1,12 +1,17 @@
 package com.app.toeic.chatai.controller;
 
+import com.app.toeic.aop.annotation.ChatAiLog;
 import com.app.toeic.chatai.model.ChatAI;
+import com.app.toeic.chatai.model.ModelChat;
 import com.app.toeic.chatai.payload.Message;
 import com.app.toeic.chatai.payload.ChatRequestBody;
 import com.app.toeic.chatai.payload.TextToSpeechPayload;
 import com.app.toeic.chatai.repo.ChatAiRepository;
 import com.app.toeic.chatai.response.ChatResponse;
 import com.app.toeic.external.response.ResponseVO;
+import com.app.toeic.user.service.UserService;
+import com.app.toeic.util.Constant;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -29,10 +34,12 @@ import java.util.List;
 public class ChatGPTController {
     RestTemplate restTemplate;
     ChatAiRepository chatAiRepository;
+    UserService userService;
 
     @PostMapping("/chat")
+    @ChatAiLog(model = ModelChat.GPT)
     public Object chat(@RequestBody ChatRequestBody req) {
-        var chatGptConfig = chatAiRepository.findAllByStatusAndType(true, "GPT").getFirst();
+        var chatGptConfig = chatAiRepository.findAllByStatusAndType(true, Constant.GPT).getFirst();
         var headers = createHeaders(chatGptConfig);
         req.getChatRequest().addMessage(new Message("user", chatGptConfig.getPrompt().formatted(req.getPrompt())));
         var httpEntity = new HttpEntity<>(req.getChatRequest(), headers);
@@ -46,7 +53,7 @@ public class ChatGPTController {
 
     @PostMapping("text-to-speech")
     public Object textToSpeech(@RequestBody TextToSpeechPayload payload) {
-        var chatGptConfig = chatAiRepository.findAllByStatusAndType(true, "GPT").getFirst();
+        var chatGptConfig = chatAiRepository.findAllByStatusAndType(true, Constant.GPT).getFirst();
         var url = "https://api.openai.com/v1/audio/speech";
         var headers = createHeaders(chatGptConfig);
         payload.setModel("tts-1");

@@ -4,6 +4,7 @@ package com.app.toeic.part.model;
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.exam.model.RealExam;
 import com.app.toeic.question.model.Question;
+import com.app.toeic.util.Constant;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -39,7 +40,7 @@ public class Part {
     int numberOfQuestion;
 
     @Builder.Default
-    String status = "ACTIVE";
+    String status = Constant.STATUS_ACTIVE;
 
     @JsonIgnore
     @CreationTimestamp

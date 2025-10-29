@@ -1,6 +1,7 @@
 package com.app.toeic.topic.model;
 
 import com.app.toeic.exam.model.Exam;
+import com.app.toeic.util.Constant;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -31,7 +32,7 @@ public class Topic {
     String topicName;
     String topicImage;
     @Builder.Default
-    String status = "ACTIVE";
+    String status = Constant.STATUS_ACTIVE;
     @Builder.Default
     Boolean isFree = true;
 

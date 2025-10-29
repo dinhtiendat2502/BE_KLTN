@@ -55,10 +55,10 @@ public class TranscriptController {
         var validateFile = validateFile(file);
         if (StringUtils.isNotBlank(validateFile)) {
             return ResponseVO.builder()
-                    .data(null)
-                    .success(false)
-                    .message(validateFile)
-                    .build();
+                             .data(null)
+                             .success(false)
+                             .message(validateFile)
+                             .build();
         }
         var firebaseConfig = firebaseConfigCache.getConfigValue(true);
         if (StringUtils.isEmpty(firebaseConfig.getFileJson())) {
@@ -74,14 +74,15 @@ public class TranscriptController {
                 .builder()
                 .transcriptName(name)
                 .modelType("GOOGLE")
-                .transcriptAudio(fileUrl)
+                .transcriptAudio(fileUrl.get("url"))
+                .gcsUrl(fileUrl.get("gcsUrl"))
                 .build();
         var result = transcriptRepo.save(transcriptHistory);
-        googleTranscriptService.getTranscript(fileUrl, result, firebaseConfig.getFileJson());
+        googleTranscriptService.getTranscript(transcriptHistory.getGcsUrl(), result, firebaseConfig.getFileJson());
         return ResponseVO.builder()
-                .success(true)
-                .message("GET_TRANSCRIPT_IN_PROGRESS")
-                .build();
+                         .success(true)
+                         .message("GET_TRANSCRIPT_IN_PROGRESS")
+                         .build();
     }
 
     @PostMapping(value = "get/revai", consumes = {"multipart/form-data"})
@@ -92,10 +93,10 @@ public class TranscriptController {
         var validateFile = validateFile(file);
         if (StringUtils.isNotBlank(validateFile)) {
             return ResponseVO.builder()
-                    .data(null)
-                    .success(false)
-                    .message(validateFile)
-                    .build();
+                             .data(null)
+                             .success(false)
+                             .message(validateFile)
+                             .build();
         }
         var token = getRevAiConfig()
                 .orElseThrow(() -> new AppException(
@@ -114,9 +115,9 @@ public class TranscriptController {
         var transcriptHistory1 = transcriptRepo.save(transcriptHistory);
         revAITranscriptService.getTranscript(fileUrl, transcriptHistory1, apiClient);
         return ResponseVO.builder()
-                .success(true)
-                .message("TRANSCRIPT_SUCCESS")
-                .build();
+                         .success(true)
+                         .message("TRANSCRIPT_SUCCESS")
+                         .build();
     }
 
     @GetMapping("get-revai-job")
@@ -129,10 +130,10 @@ public class TranscriptController {
         var apiClient = new ApiClient(revAiConfig.getAccessToken());
         var revAiJob = apiClient.getJobDetails(jobId);
         return ResponseVO.builder()
-                .data(revAiJob)
-                .success(true)
-                .message("GET_REV_AI_JOB_SUCCESS")
-                .build();
+                         .data(revAiJob)
+                         .success(true)
+                         .message("GET_REV_AI_JOB_SUCCESS")
+                         .build();
     }
 
     @GetMapping("get-transcript-revai")
@@ -145,10 +146,10 @@ public class TranscriptController {
         var apiClient = new ApiClient(revAiConfig.getAccessToken());
         var transcript = apiClient.getTranscriptText(jobId);
         return ResponseVO.builder()
-                .data(transcript)
-                .success(true)
-                .message("GET_REV_AI_JOB_SUCCESS")
-                .build();
+                         .data(transcript)
+                         .success(true)
+                         .message("GET_REV_AI_JOB_SUCCESS")
+                         .build();
     }
 
     @GetMapping("/history")
@@ -180,10 +181,10 @@ public class TranscriptController {
                 ? transcriptRepo.findAllByCreatedAtBetween(startDateTime, endDateTime, pageRequest)
                 : transcriptRepo.findAllByCreatedAtBetweenAndStatus(startDateTime, endDateTime, status, pageRequest);
         return ResponseVO.builder()
-                .data(result)
-                .success(true)
-                .message("GET_TRANSCRIPT_HISTORY_SUCCESS")
-                .build();
+                         .data(result)
+                         .success(true)
+                         .message("GET_TRANSCRIPT_HISTORY_SUCCESS")
+                         .build();
     }
 
     @GetMapping("translate/{id}")
@@ -204,9 +205,9 @@ public class TranscriptController {
             }
         }, () -> msg[0] = "TRANSCRIPT_NOT_FOUND");
         return ResponseVO.builder()
-                .success(success[0])
-                .message(msg[0])
-                .build();
+                         .success(success[0])
+                         .message(msg[0])
+                         .build();
     }
 
     private String validateFile(MultipartFile file) {
@@ -221,8 +222,8 @@ public class TranscriptController {
 
     private Optional<RevAIConfig> getRevAiConfig() {
         return revAIConfigRepo.findAllByStatus(true)
-                .stream()
-                .findFirst();
+                              .stream()
+                              .findFirst();
     }
 
 }

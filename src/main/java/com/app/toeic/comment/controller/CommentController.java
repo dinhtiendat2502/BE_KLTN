@@ -10,13 +10,10 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @Log
 @RestController
@@ -40,13 +37,13 @@ public class CommentController {
                     .message("USER_NOT_LOGIN")
                     .build();
         }
-        var parentOtional = commentRepository.findByCommentId(payload.parentId);
+        var parentOptional = commentRepository.findByCommentId(payload.parentId);
         var comment = Comment.builder()
                              .content(payload.content)
                              .exam(Exam.builder().examId(payload.examId).build())
                              .user(user.get())
                              .build();
-        parentOtional
+        parentOptional
                 .ifPresentOrElse(c -> {
                     if (c.getParent() != null) {
                         var parent = c.getParent();

@@ -2,6 +2,7 @@ package com.app.toeic.comment.model;
 
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.user.model.UserAccount;
+import com.app.toeic.util.Constant;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -47,7 +48,7 @@ public class Comment {
     Comment parent;
 
     @Builder.Default
-    String status = "ACTIVE";
+    String status = Constant.STATUS_ACTIVE;
 
     @OneToMany(mappedBy = "parent", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default

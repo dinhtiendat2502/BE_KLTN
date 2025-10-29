@@ -45,8 +45,8 @@ public class UserController {
     EmailService emailService;
     FirebaseStorageService firebaseStorageService;
     IOtpRepository otpRepository;
-    static int OTP_EXPIRED = 48;
-    static String NOT_FOUNT_USER = "NOT_FOUNT_USER";
+    private static final int OTP_EXPIRED = 48;
+    private static final String NOT_FOUNT_USER = "NOT_FOUNT_USER";
     PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
@@ -140,7 +140,7 @@ public class UserController {
         profile.setFullName(StringUtils.defaultIfBlank(fullName, profile.getFullName()));
         profile.setPhone(StringUtils.defaultIfBlank(phone, profile.getPhone()));
         profile.setAddress(StringUtils.defaultIfBlank(address, profile.getAddress()));
-        if(file != null && !file.isEmpty()) {
+        if (file != null && !file.isEmpty()) {
             var avatar = firebaseStorageService.uploadFile(file);
             if (StringUtils.isNotBlank(avatar)) {
                 profile.setAvatar(avatar);
@@ -154,15 +154,23 @@ public class UserController {
                 .build();
     }
 
-    @PostMapping("/update-avatar")
+    @PostMapping(value = "/update-avatar", consumes = {"multipart/form-data"})
     public ResponseVO updateAvatar(
-            @Valid @RequestBody UserUpdateAvatarDTO updateAvatarDto,
+            @RequestParam("file") MultipartFile file,
             HttpServletRequest request
-    ) {
+    ) throws IOException {
+        if (file == null || file.isEmpty()) {
+            return ResponseVO
+                    .builder()
+                    .success(Boolean.FALSE)
+                    .message("FILE_NOT_FOUND")
+                    .build();
+        }
         var profile = userService
                 .getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
-        profile.setAvatar(updateAvatarDto.getAvatar());
+        var avatar = firebaseStorageService.uploadFile(file);
+        profile.setAvatar(StringUtils.defaultIfBlank(avatar, profile.getAvatar()));
         return userService.updateAvatar(profile);
     }
 
@@ -210,17 +218,17 @@ public class UserController {
             var minutesElapsed = Duration.between(otpCreationTime, currentTime).toMinutes();
             var timeExpired = 5;
             var isOtpExpired = minutesElapsed > timeExpired;
-            if(isOtpExpired) {
+            if (isOtpExpired) {
                 msg[0] = "OTP_EXPIRED";
             } else {
                 var otpCorrect = e.getOtpCode().equalsIgnoreCase(payload.otp);
-                if(otpCorrect) {
+                if (otpCorrect) {
                     var user = userService.findByEmail(payload.email);
                     user.setStatus(EUser.ACTIVE);
                     userService.save(user);
                     msg[0] = "CONFIRM_OTP_SUCCESS";
                     success.set(true);
-                }else {
+                } else {
                     msg[0] = Constant.OTP_INCORRECT;
                 }
             }
@@ -245,7 +253,7 @@ public class UserController {
             var currentTime = LocalDateTime.now();
             var minutesElapsed = Duration.between(otpCreationTime, currentTime).toHours();
             var isOtpExpired = minutesElapsed > OTP_EXPIRED;
-            if(isOtpExpired) {
+            if (isOtpExpired) {
                 msg[0] = "OTP_EXPIRED";
             } else {
                 var user = userService.findByEmail(e.getEmail());
@@ -277,6 +285,7 @@ public class UserController {
 
     public record ConfirmEmail(String email, String otp) {
     }
+
     public record ResetPasswordDTO(String otp, String password) {
     }
 }

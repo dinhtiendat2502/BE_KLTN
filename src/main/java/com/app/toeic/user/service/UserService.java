@@ -15,6 +15,7 @@ public interface UserService {
     ResponseVO getAllUser();
 
     ResponseVO updateUser(UserDTO user);
+    Optional<UserAccount> getCurrentUser();
 
 
     UserAccount findByEmail(String email);

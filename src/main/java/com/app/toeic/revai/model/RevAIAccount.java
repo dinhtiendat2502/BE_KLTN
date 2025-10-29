@@ -1,5 +1,6 @@
 package com.app.toeic.revai.model;
 
+import com.app.toeic.util.Constant;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -23,5 +24,5 @@ public class RevAIAccount {
     String password;
 
     @Builder.Default
-    String status = "INACTIVE";
+    String status = Constant.STATUS_INACTIVE;
 }
