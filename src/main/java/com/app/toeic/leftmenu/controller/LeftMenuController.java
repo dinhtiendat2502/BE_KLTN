@@ -1,6 +1,5 @@
 package com.app.toeic.leftmenu.controller;
 
-import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.leftmenu.repo.MenuGroupRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,11 +17,6 @@ public class LeftMenuController {
 
     @GetMapping("get")
     public Object getLeftMenu(){
-        return ResponseVO
-                .builder()
-                .success(true)
-                .data(menuGroupRepo.findAll())
-                .message("Get left menu success")
-                .build();
+        return menuGroupRepo.findAll();
     }
 }
