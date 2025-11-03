@@ -18,7 +18,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "exam")
+@Table(name = "exam", indexes = {
+        @Index(name = "status_index", columnList = "status"),
+        @Index(name = "is_free_index", columnList = "is_free"),
+})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -31,7 +34,7 @@ public class Exam {
     Integer examId;
     String examName;
     String examImage;
-    
+
     @Column(columnDefinition = "TEXT")
     String examAudio;
     @Column(columnDefinition = "TEXT")

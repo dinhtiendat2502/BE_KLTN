@@ -6,7 +6,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "calculate_score")
+@Table(name = "calculate_score", indexes = {
+        @Index(name = "total_question_index", columnList = "totalQuestion"),
+})
 @Getter
 @Setter
 @NoArgsConstructor

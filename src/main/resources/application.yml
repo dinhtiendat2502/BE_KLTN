@@ -60,13 +60,6 @@ logging:
   file:
     name: target/toeicute.log
 
-firebase:
-  project-id: "${FIREBASE_PROJECT_ID:toeicute-70460}"
-  token-key: "${FIREBASE_TOKEN_KEY:toeicute-upload}"
-  bucket-name: "${FIREBASE_BUCKET_NAME:toeicute-70460.appspot.com}"
-ipinfo:
-  token: "${IPINFO_TOKEN:b1324b9ae149de}"
-
 BOT_AI_URL: "${API_AI:https://llamastudio.dev/api/cls40w5460001l2087o43vxsy}"
 openai:
   model: gpt-3.5-turbo
@@ -75,6 +68,3 @@ openai:
     key: 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
 
 GOOGLE_TRANSLATE_API: "${GOOGLE_TRANSLATE_URL:https://translate.google.com/translate_a/single?client=at&dt=t&dt=ld&dt=qca&dt=rm&dt=bd&dj=1&hl=%25s&ie=UTF-8&oe=UTF-8&inputm=2&otf=2&iid=1dd3b944-fa62-4b55-b330-74909a99969e&}"
-REV_AI_TOKEN: "${REVAI_ACCESS_TOKEN:02x7qBPWLMBrrDZPKWallLiYEyxJ8Hz_JdqqVWgIaracvN8t9jtP_Xypu7QKlEDKDaXHwHN7_ArTSTKnsULjDqHKNQFtw}"
-
-

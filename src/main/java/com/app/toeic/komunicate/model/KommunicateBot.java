@@ -2,6 +2,7 @@ package com.app.toeic.komunicate.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "kommunicate_bot")
@@ -10,15 +11,16 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class KommunicateBot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    Integer id;
 
     @Column(unique = true)
-    private String appId;
-    private String apiKey;
+    String appId;
+    String apiKey;
 
     @Builder.Default
-    private boolean status = false;
+    boolean status = false;
 }

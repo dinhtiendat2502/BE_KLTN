@@ -1,5 +1,7 @@
 package com.app.toeic.user.response;
 
+import java.time.LocalDateTime;
+
 public interface UserActivityResponse {
     Long getUserAccountLogId();
 
@@ -10,6 +12,8 @@ public interface UserActivityResponse {
     String getAction();
 
     String getLastIpAddress();
+
+    LocalDateTime getCreatedAt();
 
     interface UserActivity2Response extends UserActivityResponse {
         UserAccountInfoResponse getUserAccount();

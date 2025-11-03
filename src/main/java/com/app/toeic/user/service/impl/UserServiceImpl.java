@@ -20,15 +20,13 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -38,13 +36,14 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.logging.Level;
 
 @Log
 @Service
 @Transactional
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class UserServiceImpl implements UserService {
     AuthenticationManager authenticationManager;
@@ -328,25 +327,27 @@ public class UserServiceImpl implements UserService {
     public Object getActivities(HttpServletRequest request, int page, int pageSize, String type) {
         var profile = getProfile(request);
         if (profile.isPresent()) {
-            return getListActivity(page, pageSize, type, profile.get());
+            return getListActivity(page, pageSize, type, profile.get(), null, null);
         }
         return Collections.emptyList();
     }
 
-    private Object getListActivity(int page, int pageSize, String type, UserAccount account) {
+    private Object getListActivity(int page, int pageSize, String type, UserAccount account, LocalDateTime dateFrom, LocalDateTime dateTo) {
         if ("ALL".equals(type)) {
             return account != null
                     ? iUserAccountLogRepository.findAllByUserAccount(account, PageRequest.of(page, pageSize, Sort.by("createdAt").descending()))
-                    : iUserAccountLogRepository.findAll(PageRequest.of(page, pageSize, Sort.by("createdAt").descending()));
+                    : iUserAccountLogRepository.findAllByCreatedAtBetween(dateFrom, dateTo ,PageRequest.of(page, pageSize, Sort.by("createdAt").descending()));
         }
         return account != null
                 ? iUserAccountLogRepository.findAllByUserAccountAndAction(account, type, PageRequest.of(page, pageSize, Sort.by("createdAt").descending()))
-                : iUserAccountLogRepository.findAllByAction(type, PageRequest.of(page, pageSize, Sort.by("createdAt").descending()));
+                : iUserAccountLogRepository.findAllByActionAndCreatedAtBetween(dateFrom, dateTo, type, PageRequest.of(page, pageSize, Sort.by("createdAt").descending()));
     }
 
     @Override
-    public Object getActivities(int page, int size, String type) {
-        return getListActivity(page, size, type, null);
+    public Object getActivities(int page, int size, String type, String fromDate, String toDate) {
+        var dateFrom = DatetimeUtils.getFromDate(fromDate);
+        var dateTo = DatetimeUtils.getToDate(toDate);
+        return getListActivity(page, size, type, null, dateFrom, dateTo);
     }
 
     @Override

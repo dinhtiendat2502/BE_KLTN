@@ -40,8 +40,10 @@ public class UserAdminController {
     public Object getActivities(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
-            @RequestParam(value = "type", defaultValue = "ALL") String type
+            @RequestParam(value = "type", defaultValue = "ALL") String type,
+            @RequestParam(value = "dateFrom", required = false) String dateFrom,
+            @RequestParam(value = "dateTo", required = false) String dateTo
     ) {
-        return userService.getActivities(page, size, type);
+        return userService.getActivities(page, size, type, dateFrom, dateTo);
     }
 }

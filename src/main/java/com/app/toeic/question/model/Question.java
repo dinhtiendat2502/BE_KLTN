@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -16,7 +17,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "question")
+@Table(name = "question", indexes = {
+        @Index(name = "question_number_index", columnList = "questionNumber"),
+})
 @Setter
 @Getter
 @AllArgsConstructor

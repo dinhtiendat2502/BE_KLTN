@@ -8,7 +8,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "firebase_upload_history")
+@Table(name = "firebase_upload_history", indexes = {
+        @Index(name = "idx_file_type", columnList = "fileType"),
+})
 @Getter
 @Setter
 @AllArgsConstructor

@@ -20,7 +20,10 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
-@Table(name = "user_account")
+@Table(name = "user_account", indexes = {
+        @Index(name = "email", columnList = "email"),
+        @Index(name = "status", columnList = "status")
+})
 @Getter
 @Setter
 @NoArgsConstructor

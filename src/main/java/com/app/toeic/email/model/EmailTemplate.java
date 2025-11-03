@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "email_template")
+@Table(name = "email_template", indexes = {
+        @Index(name = "email_template_code_index", columnList = "templateCode"),
+})
 @Getter
 @Setter
 @AllArgsConstructor

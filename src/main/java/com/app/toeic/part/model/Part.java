@@ -18,7 +18,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "part")
+@Table(name = "part", indexes = {
+        @Index(name = "part_exam_id_index", columnList = "exam_id"),
+        @Index(name = "part_real_exam_id_index", columnList = "real_exam_id"),
+        @Index(name = "part_code_index", columnList = "partCode")
+})
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
