@@ -35,4 +35,13 @@ public class UserAdminController {
     public ResponseVO updateUser(@RequestBody UserDTO user) {
         return userService.updateUser(user);
     }
+
+    @GetMapping("activity")
+    public Object getActivities(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "type", defaultValue = "ALL") String type
+    ) {
+        return userService.getActivities(page, size, type);
+    }
 }

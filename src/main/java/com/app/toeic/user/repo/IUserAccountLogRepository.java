@@ -11,4 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IUserAccountLogRepository extends JpaRepository<UserAccountLog, Integer> {
     Page<UserActivityResponse> findAllByUserAccount(UserAccount userAccount, Pageable pageable);
+    Page<UserActivityResponse> findAllByUserAccountAndAction(UserAccount userAccount, String action, Pageable pageable);
+    Page<UserActivityResponse> findAllByAction(String action, Pageable pageable);
 }

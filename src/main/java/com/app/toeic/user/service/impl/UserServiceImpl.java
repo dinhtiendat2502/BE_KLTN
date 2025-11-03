@@ -61,25 +61,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseVO authenticate(LoginDTO loginDto) {
         var v1 = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
-        Authentication authentication = authenticationManager.authenticate(v1);
+        var authentication = authenticationManager.authenticate(v1);
         SecurityContextHolder
                 .getContext()
                 .setAuthentication(authentication);
-        UserAccount user = iUserRepository
+        var user = iUserRepository
                 .findByEmail(authentication.getName())
                 .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, EMAIL_NOT_REGISTERED));
-        if (user
-                .getStatus()
-                .equals(EUser.INACTIVE)) {
+        if (EUser.INACTIVE.equals(user.getStatus())) {
             return ResponseVO
                     .builder()
                     .success(Boolean.FALSE)
                     .data(user.getStatus())
                     .message("ACCOUNT_NOT_ACTIVE")
                     .build();
-        } else if (user
-                .getStatus()
-                .equals(EUser.BLOCKED)) {
+        } else if (EUser.BLOCKED.equals(user.getStatus())) {
             return ResponseVO
                     .builder()
                     .success(Boolean.FALSE)
@@ -87,10 +83,8 @@ public class UserServiceImpl implements UserService {
                     .build();
         }
 
-        List<String> rolesNames = new ArrayList<>();
-        user
-                .getRoles()
-                .forEach(r -> rolesNames.add(r.getRoleName()));
+        var rolesNames = new ArrayList<String>();
+        user.getRoles().forEach(r -> rolesNames.add(r.getRoleName()));
         var token = jwtUtilities.generateToken(user.getUsername(), user.getPassword(), rolesNames);
         var res = LoginResponse
                 .builder()
@@ -331,18 +325,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object getActivities(HttpServletRequest request, int page, int pageSize) {
+    public Object getActivities(HttpServletRequest request, int page, int pageSize, String type) {
         var profile = getProfile(request);
-        var result = new HashMap<>(Map.of("rs", new Object()));
-        profile.ifPresent(r -> result
-                .put(
-                        "rs",
-                        iUserAccountLogRepository.findAllByUserAccount(
-                                r,
-                                PageRequest.of(page, pageSize, Sort.by("createdAt").descending())
-                        )
-                ));
-        return result.get("rs");
+        if (profile.isPresent()) {
+            return getListActivity(page, pageSize, type, profile.get());
+        }
+        return Collections.emptyList();
+    }
+
+    private Object getListActivity(int page, int pageSize, String type, UserAccount account) {
+        if ("ALL".equals(type)) {
+            return account != null
+                    ? iUserAccountLogRepository.findAllByUserAccount(account, PageRequest.of(page, pageSize, Sort.by("createdAt").descending()))
+                    : iUserAccountLogRepository.findAll(PageRequest.of(page, pageSize, Sort.by("createdAt").descending()));
+        }
+        return account != null
+                ? iUserAccountLogRepository.findAllByUserAccountAndAction(account, type, PageRequest.of(page, pageSize, Sort.by("createdAt").descending()))
+                : iUserAccountLogRepository.findAllByAction(type, PageRequest.of(page, pageSize, Sort.by("createdAt").descending()));
+    }
+
+    @Override
+    public Object getActivities(int page, int size, String type) {
+        return getListActivity(page, size, type, null);
     }
 
     @Override

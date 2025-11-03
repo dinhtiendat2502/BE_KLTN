@@ -41,7 +41,8 @@ public interface UserService {
     Object isAdminLogin(HttpServletRequest request);
 
     String forgotPassword(String email);
-    Object getActivities(HttpServletRequest request, int page, int size);
+    Object getActivities(HttpServletRequest request, int page, int size, String type);
+    Object getActivities(int page, int size, String type);
 
     LoginDTO readCaptcha(HttpServletRequest request);
     boolean isValidCaptcha(HttpServletRequest request, String captcha);

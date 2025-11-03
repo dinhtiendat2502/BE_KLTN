@@ -57,7 +57,8 @@ public class UserController {
     @GetMapping(value = "get-captcha", produces = MediaType.IMAGE_JPEG_VALUE)
     public Object getCaptcha(HttpServletResponse response) {
         var captchaProperty = CaptchaGenerator.getCaptchaProperty();
-        CookieUtils.add(response, Constant.CAPTCHA, AESUtils.encrypt(captchaProperty.answer()), 60 * 5);
+        var minutes = 60 * 5;
+        CookieUtils.add(response, Constant.CAPTCHA, AESUtils.encrypt(captchaProperty.answer()), minutes);
         return captchaProperty.captcha();
     }
 
@@ -295,9 +296,10 @@ public class UserController {
     public Object userActivity(
             HttpServletRequest request,
             @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "type", defaultValue = "ALL") String type
     ) {
-        var rs = userService.getActivities(request, page, size);
+        var rs = userService.getActivities(request, page, size, type);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
