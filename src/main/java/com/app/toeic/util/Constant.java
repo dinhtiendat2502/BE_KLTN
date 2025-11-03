@@ -56,6 +56,6 @@ public class Constant {
     public static final String UPDATE_PASSWORD = "UPDATE_PASSWORD";
     public static final String UPDATE_PROFILE = "UPDATE_PROFILE";
     public static final String UPDATE_AVATAR = "UPDATE_AVATAR";
-    public static final String AES_KEY = "TOEICUTE_AES_KEY_UTE_2024";
+    public static final String AES_KEY = "snowkiratoeicute";
     public static final String CAPTCHA = "Captcha";
 }

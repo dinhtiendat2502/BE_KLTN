@@ -12,13 +12,11 @@ import com.app.toeic.firebase.service.FirebaseStorageService;
 import com.app.toeic.user.payload.*;
 import com.app.toeic.user.repo.IOtpRepository;
 import com.app.toeic.user.service.UserService;
-import com.app.toeic.util.CaptchaGenerator;
-import com.app.toeic.util.Constant;
-import com.app.toeic.util.HttpStatus;
-import com.app.toeic.util.ServerHelper;
+import com.app.toeic.util.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +34,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
@@ -56,8 +55,9 @@ public class UserController {
 
 
     @GetMapping(value = "get-captcha", produces = MediaType.IMAGE_JPEG_VALUE)
-    public Object getCaptcha() {
+    public Object getCaptcha(HttpServletResponse response) {
         var captchaProperty = CaptchaGenerator.getCaptchaProperty();
+        CookieUtils.add(response, Constant.CAPTCHA, AESUtils.encrypt(captchaProperty.answer()), 60 * 5);
         return captchaProperty.captcha();
     }
 
@@ -82,7 +82,7 @@ public class UserController {
     @AuthenticationLog(activity = Constant.LOGIN, description = "Login with email and password")
     public ResponseVO authenticate(@Valid @RequestBody LoginDTO loginDto, HttpServletRequest request) {
         if (!userService.isValidCaptcha(request, loginDto.getCaptcha())) {
-            throw new AuthenticationServiceException("AUTHENTICATION.INVALID_CAPTCHA");
+            throw new AppException(HttpStatus.BAD_REQUEST, "CAPTCHA_INCORRECT");
         }
         return userService.authenticate(loginDto);
     }
