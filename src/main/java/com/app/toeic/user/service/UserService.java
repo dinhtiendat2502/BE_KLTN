@@ -24,7 +24,7 @@ public interface UserService {
 
     Object updatePassword(UserUpdatePasswordDTO userUpdateDto, UserAccount user);
 
-    ResponseVO updateAvatar(UserAccount userAccount);
+    void updateAvatar(UserAccount userAccount);
 
     Optional<UserAccount> getProfile(HttpServletRequest request);
 
@@ -34,7 +34,7 @@ public interface UserService {
 
     Boolean keepAlive(HttpServletRequest request);
 
-    Object updateProfile(UserAccount profile);
+    void updateProfile(UserAccount profile);
 
     Object loginSocial(LoginSocialDTO loginSocialDto);
 

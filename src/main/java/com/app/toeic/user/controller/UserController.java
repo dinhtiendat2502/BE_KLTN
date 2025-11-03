@@ -22,6 +22,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -37,6 +38,8 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 
 @Log
@@ -154,7 +157,6 @@ public class UserController {
         var profile = userService
                 .getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
-
         profile.setFullName(StringUtils.defaultIfBlank(fullName, profile.getFullName()));
         profile.setPhone(StringUtils.defaultIfBlank(phone, profile.getPhone()));
         profile.setAddress(StringUtils.defaultIfBlank(address, profile.getAddress()));
@@ -164,10 +166,11 @@ public class UserController {
                 profile.setAvatar(avatar);
             }
         }
+        userService.updateProfile(profile);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .data(userService.updateProfile(profile))
+                .data(new NewInfoUser(profile.getFullName(), profile.getPhone(), profile.getAddress(), profile.getAvatar()))
                 .message("UPDATE_PROFILE_SUCCESS")
                 .build();
     }
@@ -190,7 +193,13 @@ public class UserController {
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
         var avatar = firebaseStorageService.uploadFile(file);
         profile.setAvatar(StringUtils.defaultIfBlank(avatar, profile.getAvatar()));
-        return userService.updateAvatar(profile);
+        userService.updateAvatar(profile);
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(avatar)
+                .message("UPDATE_AVATAR_SUCCESS")
+                .build();
     }
 
     @Operation(security = {@SecurityRequirement(name = "openApiSecurityScheme")})
@@ -268,15 +277,17 @@ public class UserController {
         var otp = otpRepository.findByOtpCodeAndAction(resetPasswordDTO.otp, Constant.FORGOT_PASSWORD);
         final var msg = new String[1];
         final var success = new AtomicBoolean(false);
+        var obj = new AtomicInteger();
         otp.ifPresentOrElse(e -> {
             var otpCreationTime = e.getCreatedAt();
             var currentTime = LocalDateTime.now();
             var minutesElapsed = Duration.between(otpCreationTime, currentTime).toHours();
             var isOtpExpired = minutesElapsed > OTP_EXPIRED;
+            var user = userService.findByEmail(e.getEmail());
+            obj.set(user.getUserId());
             if (isOtpExpired) {
                 msg[0] = "OTP_EXPIRED";
             } else {
-                var user = userService.findByEmail(e.getEmail());
                 user.setPassword(passwordEncoder.encode(resetPasswordDTO.password));
                 userService.save(user);
                 msg[0] = "RESET_PASSWORD_SUCCESS";
@@ -288,6 +299,7 @@ public class UserController {
                 .builder()
                 .success(success.get())
                 .message(msg[0])
+                .data(obj.get())
                 .build();
     }
 
@@ -324,5 +336,7 @@ public class UserController {
     }
 
     public record ResetPasswordDTO(String otp, String password) {
+    }
+    public record NewInfoUser(String fullName, String phone, String address, String avatar) {
     }
 }

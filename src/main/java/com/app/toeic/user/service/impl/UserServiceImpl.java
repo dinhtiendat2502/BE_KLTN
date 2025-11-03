@@ -192,14 +192,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseVO updateAvatar(UserAccount userAccount) {
+    public void updateAvatar(UserAccount userAccount) {
         iUserRepository.save(userAccount);
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .data(userAccount.getAvatar())
-                .message("UPDATE_AVATAR_SUCCESS")
-                .build();
     }
 
     @Override
@@ -246,8 +240,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object updateProfile(UserAccount profile) {
-        return iUserRepository.save(profile);
+    public void updateProfile(UserAccount profile) {
+        iUserRepository.save(profile);
     }
 
     @Override
@@ -340,7 +334,7 @@ public class UserServiceImpl implements UserService {
         }
         return account != null
                 ? iUserAccountLogRepository.findAllByUserAccountAndAction(account, type, PageRequest.of(page, pageSize, Sort.by("createdAt").descending()))
-                : iUserAccountLogRepository.findAllByActionAndCreatedAtBetween(dateFrom, dateTo, type, PageRequest.of(page, pageSize, Sort.by("createdAt").descending()));
+                : iUserAccountLogRepository.findAllByActionAndCreatedAtBetween(type, dateFrom, dateTo, PageRequest.of(page, pageSize, Sort.by("createdAt").descending()));
     }
 
     @Override

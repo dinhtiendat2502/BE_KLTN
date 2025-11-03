@@ -14,6 +14,6 @@ import java.time.LocalDateTime;
 public interface IUserAccountLogRepository extends JpaRepository<UserAccountLog, Integer> {
     Page<UserActivityResponse> findAllByUserAccount(UserAccount userAccount, Pageable pageable);
     Page<UserActivityResponse> findAllByUserAccountAndAction(UserAccount userAccount, String action, Pageable pageable);
-    Page<UserActivityResponse.UserActivity2Response> findAllByActionAndCreatedAtBetween(LocalDateTime from, LocalDateTime to, String action, Pageable pageable);
+    Page<UserActivityResponse.UserActivity2Response> findAllByActionAndCreatedAtBetween(String action, LocalDateTime createdAt, LocalDateTime createdAt2, Pageable pageable     );
     Page<UserActivityResponse.UserActivity2Response> findAllByCreatedAtBetween(LocalDateTime from, LocalDateTime to, Pageable pageable);
 }
