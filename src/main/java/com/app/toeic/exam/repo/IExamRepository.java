@@ -56,14 +56,23 @@ public interface IExamRepository extends JpaRepository<Exam, Integer> {
 
 
     @Query("""
-        SELECT e 
-        FROM Exam e 
-        JOIN FETCH e.parts p 
-        JOIN FETCH p.questions q 
-        LEFT JOIN FETCH q.questionImages
-        WHERE e.examId = ?1 AND e.status = 'ACTIVE' AND p.partCode IN (?2) 
-        ORDER BY p.partCode ASC, q.questionNumber ASC
-        """)
+            SELECT e 
+            FROM Exam e 
+            JOIN FETCH e.parts p 
+            JOIN FETCH p.questions q 
+            LEFT JOIN FETCH q.questionImages
+            WHERE e.examId = ?1 AND e.status = 'ACTIVE' AND p.partCode IN (?2) 
+            ORDER BY p.partCode ASC, q.questionNumber ASC
+            """)
     Optional<ExamVO.ExamFullQuestion> findExamPractice(Integer examId, List<String> listPart);
+
+
+    @Query("""
+            SELECT e
+            FROM Exam e
+            WHERE e.status = 'ACTIVE' AND e.isFree = ?1
+            ORDER BY e.examName ASC
+            """)
+    List<Exam> findAllByFree(boolean isFree);
 
 }

@@ -4,6 +4,7 @@ package com.app.toeic.exam.controller;
 import com.app.toeic.exam.payload.ExamDTO;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.exam.model.Exam;
+import com.app.toeic.topic.model.Topic;
 import com.app.toeic.topic.repo.ITopicRepository;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.exam.service.ExamService;
@@ -12,6 +13,7 @@ import com.app.toeic.util.HttpStatus;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +29,7 @@ public class ExamAdminController {
 
     @GetMapping("/list")
     public Object getAllExam() {
-        var list =  examService.getAllExam();
+        var list = examService.getAllExam();
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
@@ -41,18 +43,17 @@ public class ExamAdminController {
     public Object createExam(@Valid @RequestBody ExamDTO examDto) {
         var exam = Exam
                 .builder()
-                .examName(examDto.getExamName())
-                .audioPart1(examDto.getAudioPart1())
-                .audioPart2(examDto.getAudioPart2())
-                .audioPart3(examDto.getAudioPart3())
-                .audioPart4(examDto.getAudioPart4())
-                .examImage(examDto.getExamImage())
+                .examName(examDto.examName())
+                .audioPart1(examDto.audioPart1())
+                .audioPart2(examDto.audioPart2())
+                .audioPart3(examDto.audioPart3())
+                .audioPart4(examDto.audioPart4())
+                .examImage(examDto.examImage())
+                .isFree(examDto.isFree())
                 .numberOfUserDoExam(0)
                 .price(0.0)
                 .status(Constant.STATUS_ACTIVE)
-                .topic(examDto.getTopicId() != null ? topicService
-                        .findById(examDto.getTopicId())
-                        .orElse(null) : null)
+                .topic(examDto.topicId() != null ? Topic.builder().topicId(examDto.topicId()).build() : null)
                 .build();
         examService.addExam(exam);
         return ResponseVO
@@ -65,7 +66,7 @@ public class ExamAdminController {
     @PatchMapping("/update-exam")
     public ResponseVO updateExam(@Valid @RequestBody ExamDTO examDto) {
         var exam = examService
-                .findById(examDto.getExamId())
+                .findById(examDto.examId())
                 .orElse(null);
         if (exam == null) {
             return ResponseVO
@@ -74,9 +75,10 @@ public class ExamAdminController {
                     .message(EXAM_NOT_FOUND)
                     .build();
         }
-        exam.setExamName(StringUtils.defaultIfBlank(examDto.getExamName(), exam.getExamName()));
-        exam.setTopic(examDto.getTopicId() != null ? topicService
-                .findById(examDto.getTopicId())
+        exam.setExamName(StringUtils.defaultIfBlank(examDto.examName(), exam.getExamName()));
+        exam.setFree(BooleanUtils.toBooleanDefaultIfNull(examDto.isFree(), exam.isFree()));
+        exam.setTopic(examDto.topicId() != null ? topicService
+                .findById(examDto.topicId())
                 .orElse(null) : null);
         examService.save(exam);
         return ResponseVO
@@ -90,7 +92,7 @@ public class ExamAdminController {
     public ResponseVO deleteExam(@PathVariable Integer examId) {
         var exam = examService
                 .findById(examId);
-        if(exam.isPresent()) {
+        if (exam.isPresent()) {
             exam.get().setStatus(Constant.STATUS_INACTIVE);
             examService.save(exam.get());
         }

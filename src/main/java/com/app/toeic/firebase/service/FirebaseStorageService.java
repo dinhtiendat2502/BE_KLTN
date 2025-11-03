@@ -11,7 +11,7 @@ public interface FirebaseStorageService {
     Map<String, String> uploadFile(MultipartFile file, boolean isGcs) throws IOException;
     String uploadFile(FileUtils.FileInfo file);
     void delete(String name) throws IOException;
-    public void updateFirebaseConfig() throws IOException;
-
+    void updateFirebaseConfig() throws IOException;
+    Object getAllFiles();
 
 }

@@ -28,6 +28,8 @@ public class RealExam {
     Long realExamId;
 
     String examName;
+
+    @Column(columnDefinition = "TEXT")
     String examImage;
 
     @Column(columnDefinition = "TEXT")

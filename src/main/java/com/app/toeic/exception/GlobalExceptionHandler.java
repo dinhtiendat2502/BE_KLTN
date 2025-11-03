@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -46,6 +47,16 @@ public class GlobalExceptionHandler {
                 .builder()
                 .success(Boolean.FALSE)
                 .message(errorMessages)
+                .build();
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public Object handleNoResourceFoundException(NoResourceFoundException e) {
+        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> handleNoResourceFoundException: {0}", e);
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message("API_NOT_FOUND")
                 .build();
     }
 

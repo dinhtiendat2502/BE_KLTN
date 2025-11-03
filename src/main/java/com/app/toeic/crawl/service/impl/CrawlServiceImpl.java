@@ -15,6 +15,7 @@ import com.app.toeic.util.Constant;
 import com.app.toeic.util.FileUtils;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
 import org.apache.commons.collections4.CollectionUtils;
@@ -55,7 +56,7 @@ public class CrawlServiceImpl implements CrawlService {
             for (int i = 0; i < listImage.size(); i++) {
                 var imgUrl = listImage.get(i).absUrl("data-src");
                 var file = FileUtils.getInfoFromUrl(imgUrl);
-                questionList.get(i).setQuestionImage(firebaseStorageService.uploadFile(file));
+                questionList.get(i).setQuestionImage(file != null ? firebaseStorageService.uploadFile(file) : imgUrl);
             }
         }
         var listQuestionNumber = element1.getElementsByClass("question-number");
@@ -64,7 +65,8 @@ public class CrawlServiceImpl implements CrawlService {
         }
         var listContextTranscript = element1.getElementsByClass(Constant.CONTEXT_TRANSCRIPT);
         for (int i = 0; i < listContextTranscript.size(); i++) {
-            questionList.get(i).setTranscript(listContextTranscript.get(i).getElementsByClass(Constant.COLLAPSE).html());
+            questionList.get(i)
+                        .setTranscript(listContextTranscript.get(i).getElementsByClass(Constant.COLLAPSE).html());
         }
         var listQuestionAnswer = element1.getElementsByClass("question-answers");
 
@@ -98,8 +100,13 @@ public class CrawlServiceImpl implements CrawlService {
     private void getTranscriptExplanation(Element element1, ArrayList<Question> questionList) {
         var questionExplain = element1.getElementsByClass(Constant.QUESTION_EXPLANATION_WRAPPER);
         for (int i = 0; i < questionExplain.size(); i++) {
-            questionList.get(i).setTranslateTranscript(questionExplain.get(i).getElementsByClass(Constant.COLLAPSE).getFirst().removeAttr(
-                    "id").html());
+            questionList.get(i)
+                        .setTranslateTranscript(questionExplain.get(i)
+                                                               .getElementsByClass(Constant.COLLAPSE)
+                                                               .getFirst()
+                                                               .removeAttr(
+                                                                       "id")
+                                                               .html());
         }
     }
 
@@ -121,7 +128,8 @@ public class CrawlServiceImpl implements CrawlService {
             if (CollectionUtils.isNotEmpty(questionImage)) {
                 var imgUrl = questionImage.getFirst().absUrl("src");
                 var file = FileUtils.getInfoFromUrl(imgUrl);
-                questionList.get(indexStart).setQuestionImage(firebaseStorageService.uploadFile(file));
+                questionList.get(indexStart)
+                            .setQuestionImage(file != null ? firebaseStorageService.uploadFile(file) : imgUrl);
             }
             for (int j = 0; j < numberQuestionInGroup; j++) {
                 var hasTranscript = (indexStart + j) == indexStart;
@@ -193,9 +201,11 @@ public class CrawlServiceImpl implements CrawlService {
             var indexStart = i * numberQuestionInGroup;
             var questionImage = questionGroupWrapper.get(i).getElementsByTag("img").getFirst().absUrl("src");
             var file = FileUtils.getInfoFromUrl(questionImage);
-            questionList.get(indexStart).setQuestionImage(firebaseStorageService.uploadFile(file));
+            questionList.get(indexStart)
+                        .setQuestionImage(file != null ? firebaseStorageService.uploadFile(file) : questionImage);
             var transcript = questionGroupWrapper.get(i).getElementsByClass(Constant.CONTEXT_TRANSCRIPT).getFirst();
-            questionList.get(indexStart).setTranscript(transcript.getElementsByClass(Constant.COLLAPSE).removeAttr("id").html());
+            questionList.get(indexStart)
+                        .setTranscript(transcript.getElementsByClass(Constant.COLLAPSE).removeAttr("id").html());
             questionList.get(indexStart).setQuestionHaveTranscript(true);
             var questionWrapper = questionGroupWrapper.get(i).getElementsByClass(Constant.QUESTION_WRAPPER);
             var questionExplain = questionGroupWrapper.get(i).getElementsByClass(Constant.QUESTION_EXPLANATION_WRAPPER);
@@ -219,8 +229,8 @@ public class CrawlServiceImpl implements CrawlService {
                         questionList
                                 .get(indexStart + j)
                                 .setCorrectAnswer(otherCorrectAnswerElement
-                                        .text()
-                                        .replace(Constant.ANSWER_QUESTION, "")
+                                                          .text()
+                                                          .replace(Constant.ANSWER_QUESTION, "")
                                 );
                     } else {
                         questionList.get(indexStart + j).setCorrectAnswer("A");
@@ -229,11 +239,11 @@ public class CrawlServiceImpl implements CrawlService {
                 questionList
                         .get(indexStart + j)
                         .setTranslateTranscript(questionExplain
-                                .get(j)
-                                .getElementsByClass(Constant.COLLAPSE)
-                                .getFirst()
-                                .removeAttr("id")
-                                .html()
+                                                        .get(j)
+                                                        .getElementsByClass(Constant.COLLAPSE)
+                                                        .getFirst()
+                                                        .removeAttr("id")
+                                                        .html()
                         );
             }
         }
@@ -255,23 +265,29 @@ public class CrawlServiceImpl implements CrawlService {
             var indexQuestion = 0;
             questionList.get(index).setHaveMultiImage(true);
             for (Element value : listImage) {
-                var file = FileUtils.getInfoFromUrl(value.absUrl("src"));
+                var fileUrl = value.absUrl("src");
+                var file = FileUtils.getInfoFromUrl(fileUrl);
                 questionList
                         .get(index)
                         .getQuestionImages()
                         .add(QuestionImage.builder().question(questionList.get(index)).questionImage(
-                                firebaseStorageService.uploadFile(file)).build());
+                                file != null ? firebaseStorageService.uploadFile(file) : fileUrl).build());
             }
             questionList.get(index).setQuestionHaveTranscript(true);
             var transcript = questionGroup.getElementsByClass(Constant.CONTEXT_TRANSCRIPT).getFirst();
-            questionList.get(index).setTranscript(transcript.getElementsByClass(Constant.COLLAPSE).removeAttr("id").html());
+            questionList.get(index)
+                        .setTranscript(transcript.getElementsByClass(Constant.COLLAPSE).removeAttr("id").html());
             questionList.get(index).setNumberQuestionInGroup(listQuestion.size());
             for (Element questionContent : listQuestion) {
                 var questionNumber = questionContent.getElementsByTag(Constant.STRONG).getFirst().text();
                 getAnswerQuestion(questionList, index, Integer.parseInt(questionNumber), questionContent);
                 var questionExplain = lisTranscript.get(indexQuestion);
-                questionList.get(index).setTranslateTranscript(questionExplain.getElementsByClass(Constant.COLLAPSE).getFirst().removeAttr(
-                        "id").html());
+                questionList.get(index)
+                            .setTranslateTranscript(questionExplain.getElementsByClass(Constant.COLLAPSE)
+                                                                   .getFirst()
+                                                                   .removeAttr(
+                                                                           "id")
+                                                                   .html());
                 index++;
             }
         }
@@ -280,18 +296,30 @@ public class CrawlServiceImpl implements CrawlService {
 
     @Override
     public void crawlData(Elements listPartContent, Document doc, JobCrawl job, Exam exam) {
-        listPartContent.parallelStream().forEach(partElement -> executorService.submit(() -> {
-            Part part;
-            try {
-                part = createPart(listPartContent.indexOf(partElement) + 1, partElement, exam);
-            } catch (IOException e) {
-                throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR_UPLOAD");
-            }
-            exam.getParts().add(part);
-        }));
-        examRepository.save(exam);
-        job.setJobStatus(Constant.STATUS_DONE);
-        jobCrawlRepository.save(job);
+        var futures = new ArrayList<CompletableFuture<Void>>();
+        for (int i = 1; i <= listPartContent.size(); i++) {
+            int finalI = i;
+            var future = CompletableFuture.runAsync(() -> {
+                try {
+                    log.info(MessageFormat.format("Crawl part index: {0}", finalI));
+                    var part = createPart(finalI, listPartContent.get(finalI - 1), exam);
+                    exam.getParts().add(part);
+                } catch (IOException e) {
+                    throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR_UPLOAD");
+                }
+            }, executorService);
+            futures.add(future);
+        }
+        var allFutures = CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
+        allFutures.thenRun(() -> {
+            log.log(Level.INFO, "CrawlServiceImpl >> crawlData >> status: DONE");
+            examRepository.save(exam);
+            job.setJobStatus("DONE");
+            jobCrawlRepository.save(job);
+        }).exceptionally(e -> {
+            log.log(Level.SEVERE, "CrawlServiceImpl >> crawlData >> Error: {}", e);
+            return null;
+        });
     }
 
     @Override
@@ -325,8 +353,9 @@ public class CrawlServiceImpl implements CrawlService {
             }
             var audio = doc.getElementsByClass("post-audio-item").first();
             if (audio != null) {
-                var file = FileUtils.getInfoFromUrl(audio.child(0).absUrl("src"));
-                exam.examAudio(firebaseStorageService.uploadFile(file));
+                var fileUrl = audio.child(0).absUrl("src");
+                var file = FileUtils.getInfoFromUrl(fileUrl);
+                exam.examAudio(file != null ? firebaseStorageService.uploadFile(file) : fileUrl);
             }
             crawlData(listPartContent, doc, job, exam.build());
         } catch (IOException ex) {

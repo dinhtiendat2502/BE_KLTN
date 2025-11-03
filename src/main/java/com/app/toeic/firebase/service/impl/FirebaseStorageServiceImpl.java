@@ -122,6 +122,23 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
             previousFirebaseBean = firebaseBean; // Cập nhật tham chiếu đến phiên bản mới
         }
     }
+
+    @Override
+    public Object getAllFiles() {
+        var bucket = StorageClient.getInstance().bucket();
+        var rs = bucket.list()
+                       .streamAll()
+                       .map(blob -> {
+                           var url = getImageUrl(blob.getName());
+                           var contentType = blob.getContentType();
+                           var fileSize = blob.getSize();
+                           return Map.of("url", url, "contentType", contentType, "fileSize", fileSize);
+                       })
+                       .toList();
+        log.info(MessageFormat.format("FirebaseStorageServiceImpl >> getAllFiles >> {0}", rs.size()));
+        return rs;
+    }
+
     private String generateFileName(String originalFileName) {
         return UUID.randomUUID() + getExtension(originalFileName);
     }
