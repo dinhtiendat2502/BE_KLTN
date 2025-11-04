@@ -316,7 +316,6 @@ public class UserController {
     }
 
     @GetMapping("/test")
-    @ActivityLog(activity = Constant.UPDATE_PASSWORD, description = "Update password")
     public ResponseVO test() {
         var ip = ServerHelper.getClientIp();
         log.log(Level.INFO, MessageFormat.format("Test log: {0}, ip: {1}", "Test", ip));

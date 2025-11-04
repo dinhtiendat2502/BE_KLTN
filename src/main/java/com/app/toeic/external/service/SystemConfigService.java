@@ -31,14 +31,14 @@ public class SystemConfigService {
         @NotNull
         @Override
         public String load(@NotNull String key) {
-            return systemConfigRepository.findByConfigKey(key).orElse(new SystemConfig()).getValue();
+            return StringUtils.defaultIfBlank(systemConfigRepository.findByConfigKey(key).orElse(new SystemConfig()).getValue(), StringUtils.EMPTY);
         }
     };
 
     LoadingCache<String, String> systemCache = CacheBuilder.newBuilder()
-                                                           .recordStats()
-                                                           .refreshAfterWrite(1, TimeUnit.DAYS)
-                                                           .build(CacheLoader.asyncReloading(cacheLoader, Executors.newSingleThreadExecutor()));
+            .recordStats()
+            .refreshAfterWrite(1, TimeUnit.DAYS)
+            .build(CacheLoader.asyncReloading(cacheLoader, Executors.newSingleThreadExecutor()));
 
     public String getConfigValue(String key) {
         try {
