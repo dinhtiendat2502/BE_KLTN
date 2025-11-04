@@ -18,6 +18,29 @@ spring:
           prefer-ip: true
           management-url: "${SPRING_BOOT_ADMIN_URL:http://127.0.0.1:8080/api/actuator}"
           name: "${spring.application.name}"
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: "${GOOGLE_CLIENT_ID:5014057553-8gm9um6vnli3cle5rgigcdjpdrid14m9.apps.googleusercontent.com}"
+            clientSecret: "${GOOGLE_CLIENT_SECRET:tWZKVLxaD_ARWsriiiUFYoIk}"
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
+          facebook:
+            clientId: "${FACEBOOK_CLIENT_ID:121189305185277}"
+            clientSecret: "${FACEBOOK_CLIENT_SECRET:42ffe5aa7379e8326387e0fe16f34132}"
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - public_profile
+        provider:
+          facebook:
+            authorizationUri: "https://www.facebook.com/v3.0/dialog/oauth"
+            tokenUri: "https://graph.facebook.com/v3.0/oauth/access_token"
+            userInfoUri: "https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)"
 
   datasource:
     url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true"
@@ -59,6 +82,3 @@ logging:
     root: info
   file:
     name: target/toeicute.log
-
-BOT_AI_URL: "${API_AI:https://llamastudio.dev/api/cls40w5460001l2087o43vxsy}"
-GOOGLE_TRANSLATE_API: "${GOOGLE_TRANSLATE_URL:https://translate.google.com/translate_a/single?client=at&dt=t&dt=ld&dt=qca&dt=rm&dt=bd&dj=1&hl=%25s&ie=UTF-8&oe=UTF-8&inputm=2&otf=2&iid=1dd3b944-fa62-4b55-b330-74909a99969e&}"

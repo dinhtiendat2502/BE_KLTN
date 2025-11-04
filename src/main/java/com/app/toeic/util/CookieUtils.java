@@ -5,8 +5,10 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.experimental.UtilityClass;
+import org.springframework.util.SerializationUtils;
 
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Optional;
 
 @UtilityClass
@@ -42,7 +44,18 @@ public class CookieUtils {
                             cookie.setPath("/");
                             cookie.setMaxAge(0);
                             response.addCookie(cookie);
-                        }));
+                        })
+                );
+    }
+
+    public static String serialize(Object object) {
+        return Base64.getUrlEncoder()
+                     .encodeToString(SerializationUtils.serialize(object));
+    }
+
+    public static <T> T deserialize(Cookie cookie, Class<T> cls) {
+        return cls.cast(SerializationUtils.deserialize(
+                Base64.getUrlDecoder().decode(cookie.getValue())));
     }
 
 }

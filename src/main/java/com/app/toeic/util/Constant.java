@@ -61,4 +61,17 @@ public class Constant {
     public static final String CAPTCHA = "Captcha";
     public static final String TWILIO_SID = "TWILIO_SID";
     public static final String TWILIO_TOKEN = "TWILIO_TOKEN";
+    public static final String GOOGLE_TRANSLATE_URL = "GOOGLE_TRANSLATE_URL";
+    public static final String ANDROID_DEVICE = "AndroidTranslate/5.3.0.RC02.130475354-53000263 5.1 phone TRANSLATE_OPM5_TEST_1";
+    public static final String USER_AGENT = "User-Agent";
+    public static final String EN_US = "en-us";
+    public static final String VI_VN = "vi-vn";
+    public static final String SOURCE_LANGUAGE = "sl";
+    public static final String TARGET_LANGUAGE = "tl";
+    public static final String CONTENT = "q";
+    public static final String FACEBOOK = "facebook";
+    public static final String GOOGLE = "google";
+    public static final String TOEICUTE = "toeicute";
+    public static final String REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri";
+    public static final String AUTHORIZED_REDIRECT_URI = "authorizedRedirectUris";
 }

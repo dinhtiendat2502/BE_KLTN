@@ -341,7 +341,7 @@ insert into system_config(config_key, value, description, updated_at)
 VALUES ('TWILIO_SID', 'AC1df831ee034c57eff6e804dd57683db4', '', CURRENT_DATE());
 insert into system_config(config_key, value, description, updated_at)
 VALUES ('TWILIO_TOKEN', '79287f208f1057facf553eca59e14515', '', CURRENT_DATE());
-
+insert into system_config(config_key, description, updated_at, value) VALUES ('authorizedRedirectUris', '', CURRENT_DATE(), 'http://localhost:4200/oauth2/redirect');
 insert into kommunicate_bot(api_key, app_id, status, script)
 VALUES ('21e1deaca7ccde427eab393663be5b77a', '', true, '(function (d, m) {
     var defaultSettings = {
