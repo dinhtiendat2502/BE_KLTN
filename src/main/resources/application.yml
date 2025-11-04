@@ -30,8 +30,8 @@ spring:
               - email
               - profile
           facebook:
-            clientId: "${FACEBOOK_CLIENT_ID:121189305185277}"
-            clientSecret: "${FACEBOOK_CLIENT_SECRET:42ffe5aa7379e8326387e0fe16f34132}"
+            clientId: "${FACEBOOK_CLIENT_ID:441124901895321}"
+            clientSecret: "${FACEBOOK_CLIENT_SECRET:c32645e832703aec8c10d776f85f45f1}"
             redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
@@ -41,7 +41,21 @@ spring:
             authorizationUri: "https://www.facebook.com/v3.0/dialog/oauth"
             tokenUri: "https://graph.facebook.com/v3.0/oauth/access_token"
             userInfoUri: "https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)"
-
+  ai:
+    vertex:
+      ai:
+        gemini:
+          project-id: "${GEMINI_PROJECT_ID:beaming-inn-423802-q6}"
+          location: "${GEMINI_LOCATION:us-central1}"
+          chat:
+            options:
+              model: vertex-pro-vision
+              temperature: 0.5
+        api-key: "${GEMINI_API_KEY:AIzaSyBRL8Lz9vaftejrIqHAaHOZhuobfJFHgis}"
+        chat:
+          model: chat-bison-001
+          options:
+            temperature: 0.5
   datasource:
     url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true"
     username: "${DB_USERNAME:root}"

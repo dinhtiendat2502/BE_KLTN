@@ -24,6 +24,7 @@ public class SystemConfig {
 
     String configKey;
 
+    @Column(columnDefinition = "TEXT")
     String value;
     String description;
 

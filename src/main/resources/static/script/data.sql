@@ -342,6 +342,22 @@ VALUES ('TWILIO_SID', 'AC1df831ee034c57eff6e804dd57683db4', '', CURRENT_DATE());
 insert into system_config(config_key, value, description, updated_at)
 VALUES ('TWILIO_TOKEN', '79287f208f1057facf553eca59e14515', '', CURRENT_DATE());
 insert into system_config(config_key, description, updated_at, value) VALUES ('authorizedRedirectUris', '', CURRENT_DATE(), 'http://localhost:4200/oauth2/redirect');
+insert into system_config (config_key, description, updated_at, value)
+values ('VERTEX','Description for vertex ai', CURRENT_DATE, '{
+  "type": "service_account",
+  "project_id": "beaming-inn-423802-q6",
+  "private_key_id": "329f5697e378faecc7aba72bfb34649da6b362a2",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCV3MmiHIX9JbYN\nujWZgyLtTHxSL+ZCBcZRGDWGoh6lV/AtRxZ11/Z8u7QNal0QTfpPHc2228ly7u/c\ntxsUtQsuVELJKiwpDuxzDzXHJJnOrUthG/RvVSFWCTWns23KCb13fXPhaA+7y5DH\n0IPVv7aYoaykn1kiL5OQYOm8q7r4h7Z13P6EPF9GOY5j486FgH/R20gzmNGo7kmg\nGI3iTqgCTlqp6fsaye8PJTgY4tApTEfRkfUOWM0UBGsa76238nZgS2QfenSOTOaK\nWZYaXOSTa9t9OHs4VXeCS/I0Md5whP4Hk6ZFtxNPXScr605wyLBzc9uOvOWb3JuF\n2zXnvCevAgMBAAECggEAFKWxYhRr9s9rSxjh/vSCVg9jptnSmjtmx2V+emjRBWwd\nkHTAM3GTFDxdjOZKoXnHiCmjCL6J/WZ4xaq0oHW7xKD3Up/s1aX+Dcbase/pAQCp\n51yNS4l/E6DRM6RqS/EWRDrp7EmvYUBQAjednPrSPX/eOWV68lV7ueNK+3jtmbAN\nmrzhP2SSFXIHop4vSKTyi0YwAN/9ClTWPLAJq+Bds1poIuNKKzINJu8y/i/gpxHN\njoq8bcfaec5N3SyjrGWbc/Rh6TWeElQpJ3CUtldQWsHzK+FKLOiFLzMm37EDXSfL\nqoC5nCmoZT29tuxvIGavm3u/TP8Nj7kRr1UxFDonAQKBgQDQXyjWO3ufhxy0JWu2\nUVb9cbTts03UPoJGoU8kSC9RmTK5jRmXGMbeB5RYBXEm8ysWHGdBgoQROWFuSeCw\n+tLidDCGXBBUsHacGIYt0PubbkW9PMlluBCjwJH3DD42E9PIzhCGqo7t7YbqgUsD\nmFuxzgXcwNFZJAlS8/u5Ss4VhwKBgQC4HfePXU3JcUYQjFQ0IqcmlZUFxicPkiMc\nqGst1p/lzeMNm4HYLkXQ9rvXE9D07B4wo7GSpKjMvhx+rwptSS8UyQdYT/p5w0/X\nWMBQDECV5sjhOVoLkn0rZDFqq0gZEOvuFyNxC7ddXIWOyv/9D8FewTujhwyECPNz\nk/I5qXbmmQKBgQClagWHHC1lVOMKd3Jsh2HhTLTuxhqQ1Raib0fea5d01YMZHdQk\nyLyGYcn3nkpXO08G/IFT1gJ1kfGwleFTXaqvrsEeyFMGiBeAj09la7Nxjja6pVjT\n8Sz0cdjuH7/7Of40OLGR1jAk3RzvaLheIEMagYzR1BfdBeiI+7rnO2UiXQKBgGAa\n/FswR+dLolgG9/kS0Y9ZayVNbpw5GuzdmLyfmG1bEBbNQnS2iqjt8dTtuhfunD+l\nYo56NsZQwgz6j4XGOrYtzRCzBrrCUY3F/PSLwLa+dcLirfb2azHYJddZOtQiuhRY\nrZ5XkEpCflCv8/mDXNt6IAhW+Rh+l52P71Nb+v2ZAoGBAKLa60Gcz5ogl9kPxC4E\nve2cyuU7mLKqJ+SLZ+rtJWLUBR4SsdJjHURdJRcGSDVFDPUzNLlbhEq+EAgdWAgj\nnOLr6RTq1mdiis42nyWmOHCELod2w9H5plCFwCWYpBjSrUge1cDy0m0ICFZ0fCjF\nOhmDzDt7vtVoN12l0zt9uj/i\n-----END PRIVATE KEY-----\n",
+  "client_email": "toeicute@beaming-inn-423802-q6.iam.gserviceaccount.com",
+  "client_id": "115334651142144592942",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/toeicute%40beaming-inn-423802-q6.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
+');
+
 insert into kommunicate_bot(api_key, app_id, status, script)
 VALUES ('21e1deaca7ccde427eab393663be5b77a', '', true, '(function (d, m) {
     var defaultSettings = {
