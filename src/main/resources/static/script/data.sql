@@ -212,71 +212,160 @@ VALUES ('Mẫu email cấp lại mật khẩu', 'active', 'Cấp lại mật kh�
 </table>
         ');
 
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Home', 'mdi mdi-home menu-icon', 1, false, '/admin', '', 'MEMBER');
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('User Management', 'mdi mdi-account-circle menu-icon', 2, true, null, null, 'MEMBER');
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Topic Exam Management', 'mdi mdi-database menu-icon', 3, true, null, null, 'MEMBER');
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Exam Management', 'mdi mdi-book-open menu-icon', 4, true, null, null, 'MEMBER');
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Score Management', 'mdi mdi-checkbox-marked-circle menu-icon', 5, false, '/admin/score', null, 'MEMBER');
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Transcript', 'mdi mdi-tooltip-text menu-icon', 6, true, null, null, 'MEMBER');
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Crawl', 'mdi mdi-database-plus menu-icon', 7, true, null, null, 'MEMBER');
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Blog', 'mdi mdi mdi-clipboard-text menu-icon', 8, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Home', 'mdi mdi-home menu-icon', 1, false, '/admin', '', 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('User Management', 'mdi mdi-account-circle menu-icon', 2, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Topic Exam Management', 'mdi mdi-database menu-icon', 3, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Exam Management', 'mdi mdi-book-open menu-icon', 4, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Score Management', 'mdi mdi-checkbox-marked-circle menu-icon', 5, false, '/admin/score', null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Transcript', 'mdi mdi-tooltip-text menu-icon', 6, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Crawl', 'mdi mdi-database-plus menu-icon', 7, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Blog', 'mdi mdi mdi-clipboard-text menu-icon', 8, true, null, null, 'MEMBER');
 
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('System Monitoring', 'mdi mdi mdi-android menu-icon', 9, false, 'http://localhost:8080/api/applications', null, 'SYSTEM');
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Firebase Config', 'mdi mdi-cloud-upload menu-icon', 10, true, null, null, 'SYSTEM');
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Email Config', 'mdi mdi-email menu-icon', 11, true, null, null, 'SYSTEM');
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Slider Config', 'mdi mdi-equal-box menu-icon', 12, true, null, null, 'SYSTEM');
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Rev AI Config', 'mdi mdi-at menu-icon', 13, true, null, null, 'SYSTEM');
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Kommunicate Config', 'mdi mdi-earth menu-icon', 14, true, null, null, 'SYSTEM');
-insert into menu_group(display_name, icon, priority, have_child, path, roles, type) VALUES ('Tiny Editor Config', 'mdi mdi-widgets menu-icon', 14, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('System Monitoring', 'mdi mdi mdi-android menu-icon', 9, false, 'http://localhost:8080/api/applications', null,
+        'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Firebase Config', 'mdi mdi-cloud-upload menu-icon', 10, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Email Config', 'mdi mdi-email menu-icon', 11, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Slider Config', 'mdi mdi-equal-box menu-icon', 12, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Rev AI Config', 'mdi mdi-at menu-icon', 13, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Kommunicate Config', 'mdi mdi-earth menu-icon', 14, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Tiny Editor Config', 'mdi mdi-widgets menu-icon', 14, true, null, null, 'SYSTEM');
 
 
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Member Management', '/admin/users-management', null, 2);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Member Activity', '/admin/users-activity', null, 2);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Topic', '/admin/topic/list', null, 3);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Topic', '/admin/topic/add', null, 3);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Exam', '/admin/exam/list', null, 4);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Exam', '/admin/exam/add', null, 4);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Get Transcript', '/admin/transcript/get', null, 6);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Transcript History', '/admin/transcript/history', null, 6);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Crawl Data', '/admin/crawl/get', null, 7);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Config Crawl', '/admin/crawl/config', null, 7);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Crawl History', '/admin/crawl/list', null, 7);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Blog', '/admin/blog/get', null, 8);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Blog', '/admin/blog/add', null, 8);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Firebase Config', '/admin/firebase/list', null, 10);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Config', '/admin/firebase/update', null, 10);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('History Upload', '/admin/firebase/history', null, 10);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Email Config', '/admin/email/account/list', null, 11);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Email Config', '/admin/email/account/update', null, 11);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Template Email', '/admin/email/template-email/list', null, 11);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Template Email', '/admin/email/template-email/update', null, 11);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Slider', '/admin/slider/list', null, 12);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Slider', '/admin/slider/update', null, 12);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List RevAi Account', '/admin/rev-ai/account/list', null, 13);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add RevAi Account', '/admin/rev-ai/account/update', null, 13);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List RevAi Config', '/admin/rev-ai/config/list', null, 13);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add RevAi Config', '/admin/rev-ai/config/update', null, 13);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Kommunicate Account', '/admin/kommunicate/account/list', null, 14);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Kommunicate Account', '/admin/kommunicate/account/update', null, 14);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Kommunicate Config', '/admin/kommunicate/bot/list', null, 14);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Kommunicate Config', '/admin/kommunicate/bot/update', null, 14);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Tiny Account', '/admin/tiny/account/list', null, 15);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Tiny Account', '/admin/tiny/account/update', null, 15);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('List Tiny Config', '/admin/tiny/config/list', null, 15);
-insert into left_menu(display_name, path, roles, menu_group_id) VALUES ('Add Tiny Config', '/admin/tiny/config/update', null, 15);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Member Management', '/admin/users-management', null, 2);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Member Activity', '/admin/users-activity', null, 2);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Topic', '/admin/topic/list', null, 3);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Topic', '/admin/topic/add', null, 3);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Exam', '/admin/exam/list', null, 4);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Exam', '/admin/exam/add', null, 4);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Get Transcript', '/admin/transcript/get', null, 6);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Transcript History', '/admin/transcript/history', null, 6);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Crawl Data', '/admin/crawl/get', null, 7);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Config Crawl', '/admin/crawl/config', null, 7);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Crawl History', '/admin/crawl/list', null, 7);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Blog', '/admin/blog/get', null, 8);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Blog', '/admin/blog/add', null, 8);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Firebase Config', '/admin/firebase/list', null, 10);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Config', '/admin/firebase/update', null, 10);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('History Upload', '/admin/firebase/history', null, 10);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Email Config', '/admin/email/account/list', null, 11);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Email Config', '/admin/email/account/update', null, 11);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Template Email', '/admin/email/template-email/list', null, 11);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Template Email', '/admin/email/template-email/update', null, 11);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Slider', '/admin/slider/list', null, 12);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Slider', '/admin/slider/update', null, 12);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List RevAi Account', '/admin/rev-ai/account/list', null, 13);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add RevAi Account', '/admin/rev-ai/account/update', null, 13);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List RevAi Config', '/admin/rev-ai/config/list', null, 13);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add RevAi Config', '/admin/rev-ai/config/update', null, 13);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Kommunicate Account', '/admin/kommunicate/account/list', null, 14);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Kommunicate Account', '/admin/kommunicate/account/update', null, 14);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Kommunicate Config', '/admin/kommunicate/bot/list', null, 14);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Kommunicate Config', '/admin/kommunicate/bot/update', null, 14);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Tiny Account', '/admin/tiny/account/list', null, 15);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Tiny Account', '/admin/tiny/account/update', null, 15);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Tiny Config', '/admin/tiny/config/list', null, 15);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Tiny Config', '/admin/tiny/config/update', null, 15);
 
 
 insert into revai_config(access_token, status)
     value ('02Nr61oQry1wxj-hsCiaMUmAAdfM_VWYGTcFXiNxB0RwmozYdeLpBRde7O_wmZ63pE18gsxYor7OOm8tLbunHjuKma3e0', true);
 
 
-INSERT INTO chatai(type, url, prompt, model_name, status) VALUES ('LLAMAS', 'https://llamastudio.dev/api/clwa4ji0e0001jv08e7otvmm4', '', '', true);
-INSERT INTO chatai (location, model_name, project_id, prompt, status, token, type, url) VALUES ('', 'gpt-3.5-turbo', '', 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot\'s designated purpose of assisting users with TOEIC and English language learning.
+INSERT INTO chatai(type, url, prompt, model_name, status)
+VALUES ('LLAMAS', 'https://llamastudio.dev/api/clwa4ji0e0001jv08e7otvmm4', '', '', true);
+INSERT INTO chatai (location, model_name, project_id, prompt, status, token, type, url)
+VALUES ('', 'gpt-3.5-turbo', '',
+        'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot\'s designated purpose of assisting users with TOEIC and English language learning.
 Start a conversation like "Hello!" and encourage them like "No worries!" when you feel they do not understand. Question: %s', true, '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', 'GPT', 'https://api.openai.com/v1/chat/completions');
 
-insert into chatai(type, token, status, prompt, url) values ('GEMINI-CURL', 'AIzaSyBRL8Lz9vaftejrIqHAaHOZhuobfJFHgis', true, 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot\'s designated purpose of assisting users with TOEIC and English language learning.
-Start a conversation like "Hello!" and encourage them like "No worries!" when you feel they do not understand. Question: %s', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=%s');
+insert into chatai(type, token, status, prompt, url) values ('GEMINI-CURL', 'AIzaSyBRL8Lz9vaftejrIqHAaHOZhuobfJFHgis', true, 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning,
+        the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics,
+        the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot\'s designated purpose of assisting users with TOEIC and English language learning.
+Start a conversation like "Hello!" and encourage them like "No worries!" when you feel they do not understand. Question: %s',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=%s');
 
-insert into system_config(config_key, value, description, updated_at) VALUES ('GOOGLE_TRANSLATE_URL', 'https://translate.google.com/translate_a/single?client=at&dt=t&dt=ld&dt=qca&dt=rm&dt=bd&dj=1&hl=%25s&ie=UTF-8&oe=UTF-8&inputm=2&otf=2&iid=1dd3b944-fa62-4b55-b330-74909a99969e&', '', CURDATE());
-insert into system_config(config_key, value, description, updated_at) VALUES ('TWILIO_SID', 'AC1df831ee034c57eff6e804dd57683db4', '', CURRENT_DATE());
-insert into system_config(config_key, value, description, updated_at) VALUES ('TWILIO_TOKEN', '79287f208f1057facf553eca59e14515', '', CURRENT_DATE());
+insert into system_config(config_key, value, description, updated_at)
+VALUES ('GOOGLE_TRANSLATE_URL',
+        'https://translate.google.com/translate_a/single?client=at&dt=t&dt=ld&dt=qca&dt=rm&dt=bd&dj=1&hl=%25s&ie=UTF-8&oe=UTF-8&inputm=2&otf=2&iid=1dd3b944-fa62-4b55-b330-74909a99969e&',
+        '', CURDATE());
+insert into system_config(config_key, value, description, updated_at)
+VALUES ('TWILIO_SID', 'AC1df831ee034c57eff6e804dd57683db4', '', CURRENT_DATE());
+insert into system_config(config_key, value, description, updated_at)
+VALUES ('TWILIO_TOKEN', '79287f208f1057facf553eca59e14515', '', CURRENT_DATE());
+
+insert into kommunicate_bot(api_key, app_id, status, script)
+VALUES ('21e1deaca7ccde427eab393663be5b77a', '', true, '(function (d, m) {
+    var defaultSettings = {
+        "defaultBotIds": ["toeicute-7iflz"],
+        "defaultAssignee": "toeicute-7iflz",
+        "skipRouting":true
+        };
+      var kommunicateSettings = {
+        "appId": "21e1deaca7ccde427eab393663be5b77a",
+        "popupWidget": true,
+        "automaticChatOpenOnNavigation": true,
+        "voiceNote": true,
+        "onInit": function() {
+            Kommunicate.customizeWidgetCss(".chat-popup-widget-text{color:red!important;} .mck-box-top {background-color: red!important;}");
+            Kommunicate.updateSettings(defaultSettings);
+        }
+      };
+      var s = document.createElement("script");
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+      var h = document.getElementsByTagName("head")[0];
+      h.appendChild(s);
+      window.kommunicate = m;
+      m._globals = kommunicateSettings;
+    })(document, window.kommunicate || {});');
+

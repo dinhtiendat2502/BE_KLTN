@@ -3,10 +3,12 @@ package com.app.toeic.aop.aspect;
 import com.app.toeic.aop.annotation.ChatAiLog;
 import com.app.toeic.chatai.model.ChatHistory;
 import com.app.toeic.chatai.payload.ChatRequestBody;
+import com.app.toeic.chatai.payload.GeminiPayload;
 import com.app.toeic.chatai.repo.ChatHistoryRepository;
 import com.app.toeic.chatai.response.ChatResponse;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.user.service.UserService;
+import com.app.toeic.util.JsonConverter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
+import java.util.Map;
 import java.util.logging.Level;
 
 @Log
@@ -42,6 +45,12 @@ public class ChatAiLogAspect {
                 switch (args[0]) {
                     case ChatRequestBody chatRequestBody -> chatHistory.setQuestion(chatRequestBody.getPrompt());
                     case String input -> chatHistory.setQuestion(input);
+                    case GeminiPayload geminiPayload -> chatHistory
+                            .setQuestion(geminiPayload.getContents()
+                                                      .getLast()
+                                                      .getParts()
+                                                      .getFirst()
+                                                      .getText());
                     default -> log.log(
                             Level.WARNING,
                             MessageFormat.format("ChatAiLogAspect >> aroundAspect >> Unknown args: {0}", args[0])
@@ -53,11 +62,16 @@ public class ChatAiLogAspect {
             currentUser.ifPresent(chatHistory::setUser);
             if (rs instanceof ResponseVO rsVO) {
                 switch (rsVO.getData()) {
-                    case ChatResponse chatResponse -> chatHistory.setAnswer(chatResponse.getChoices().getFirst().getMessage().getContent());
+                    case ChatResponse chatResponse ->
+                            chatHistory.setAnswer(chatResponse.getChoices().getFirst().getMessage().getContent());
                     case String answer -> chatHistory.setAnswer(answer);
+                    case Map<?, ?> m -> chatHistory.setAnswer(JsonConverter.convertObjectToJson(m));
                     default -> log.log(
                             Level.WARNING,
-                            MessageFormat.format("ChatAiLogAspect >> aroundAspect >> Unknown rsVO.getData(): {0}", rsVO.getData())
+                            MessageFormat.format(
+                                    "ChatAiLogAspect >> aroundAspect >> Unknown rsVO.getData(): {0}",
+                                    JsonConverter.convertObjectToJson(rsVO.getData())
+                            )
                     );
                 }
             }

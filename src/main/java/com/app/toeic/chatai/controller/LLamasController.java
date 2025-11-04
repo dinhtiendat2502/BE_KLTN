@@ -9,6 +9,7 @@ import com.app.toeic.external.payload.AskDTO;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.util.Constant;
 import com.app.toeic.util.JsonConverter;
+import com.app.toeic.util.RequestUtils;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
@@ -44,7 +45,7 @@ public class LLamasController {
                 .builder()
                 .build();
         try {
-            var headers = createHeaders();
+            var headers = RequestUtils.createHeaders();
             var httpEntity = new HttpEntity<>(Map.of("input", input), headers);
             var responseEntity = restTemplate.postForEntity(
                     config.getUrl(),
@@ -59,19 +60,12 @@ public class LLamasController {
                     MessageFormat.format("LLamasController >> ask >> param: {0} >> Exception: ", input),
                     e
             );
-            result.setSuccess(true);
+            result.setSuccess(false);
         }
         return result;
     }
 
     private ChatAI getChatAI() {
         return chatAiRepository.findAllByStatusAndType(true, Constant.LLAMAS).getFirst();
-    }
-
-    private HttpHeaders createHeaders() {
-        var headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-        return headers;
     }
 }

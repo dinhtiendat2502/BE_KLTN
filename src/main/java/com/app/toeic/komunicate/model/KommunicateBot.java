@@ -21,6 +21,9 @@ public class KommunicateBot {
     String appId;
     String apiKey;
 
+    @Column(columnDefinition = "TEXT")
+    String script;
+
     @Builder.Default
     boolean status = false;
 }
