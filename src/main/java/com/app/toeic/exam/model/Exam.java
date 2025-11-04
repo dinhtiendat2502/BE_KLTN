@@ -58,6 +58,9 @@ public class Exam {
     @Builder.Default
     boolean isFree = false;
 
+    LocalDateTime fromDate;
+    LocalDateTime toDate;
+
     @JsonIgnore
     @CreationTimestamp
     LocalDateTime createdAt;

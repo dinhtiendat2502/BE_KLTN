@@ -2,7 +2,6 @@ package com.app.toeic.part.model;
 
 
 import com.app.toeic.exam.model.Exam;
-import com.app.toeic.exam.model.RealExam;
 import com.app.toeic.question.model.Question;
 import com.app.toeic.util.Constant;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -57,10 +56,6 @@ public class Part {
     @ManyToOne
     @JoinColumn(name = "exam_id")
     Exam exam;
-
-    @ManyToOne
-    @JoinColumn(name = "real_exam_id")
-    RealExam realExam;
 
     @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
