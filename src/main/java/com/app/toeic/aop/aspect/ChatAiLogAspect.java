@@ -28,6 +28,7 @@ import java.util.logging.Level;
 public class ChatAiLogAspect {
     UserService userService;
     ChatHistoryRepository chatHistoryRepository;
+
     @Around(value = "@annotation(chatAiLog)", argNames = "pjp, chatAiLog")
     public Object aroundAspect(final ProceedingJoinPoint pjp, final ChatAiLog chatAiLog) throws Throwable {
         var startTime = System.currentTimeMillis();
@@ -37,14 +38,28 @@ public class ChatAiLogAspect {
                     .builder()
                     .model(chatAiLog.model().name())
                     .build();
-            if (args.length > 0 && args[0] instanceof ChatRequestBody requestBody) {
-                chatHistory.setQuestion(requestBody.getPrompt());
+            if (args.length > 0) {
+                switch (args[0]) {
+                    case ChatRequestBody chatRequestBody -> chatHistory.setQuestion(chatRequestBody.getPrompt());
+                    case String input -> chatHistory.setQuestion(input);
+                    default -> log.log(
+                            Level.WARNING,
+                            MessageFormat.format("ChatAiLogAspect >> aroundAspect >> Unknown args: {0}", args[0])
+                    );
+                }
             }
             var rs = pjp.proceed();
             var currentUser = userService.getCurrentUser();
             currentUser.ifPresent(chatHistory::setUser);
-            if(rs instanceof ChatResponse chatResponse) {
-                chatHistory.setAnswer(chatResponse.getChoices().getFirst().getMessage().getContent());
+            if (rs instanceof ResponseVO rsVO) {
+                switch (rsVO.getData()) {
+                    case ChatResponse chatResponse -> chatHistory.setAnswer(chatResponse.getChoices().getFirst().getMessage().getContent());
+                    case String answer -> chatHistory.setAnswer(answer);
+                    default -> log.log(
+                            Level.WARNING,
+                            MessageFormat.format("ChatAiLogAspect >> aroundAspect >> Unknown rsVO.getData(): {0}", rsVO.getData())
+                    );
+                }
             }
             chatHistoryRepository.save(chatHistory);
             return rs;

@@ -47,6 +47,7 @@ public class Constant {
     public static final String GPT = "GPT";
     public static final String GEMINI = "GEMINI";
     public static final String GEMINI_CURL = "GEMINI-CURL";
+    public static final String LLAMAS = "LLAMAS";
     public static final String REGISTER = "REGISTER";
     public static final String LOGIN = "LOGIN";
     public static final String LOGOUT = "LOGOUT";
@@ -58,4 +59,6 @@ public class Constant {
     public static final String UPDATE_AVATAR = "UPDATE_AVATAR";
     public static final String AES_KEY = "snowkiratoeicute";
     public static final String CAPTCHA = "Captcha";
+    public static final String TWILIO_SID = "TWILIO_SID";
+    public static final String TWILIO_TOKEN = "TWILIO_TOKEN";
 }

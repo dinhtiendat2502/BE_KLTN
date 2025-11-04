@@ -1,5 +1,6 @@
 package com.app.toeic.chatai.controller;
 
+import com.app.toeic.chatai.repo.ChatAiRepository;
 import com.app.toeic.external.response.ResponseVO;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.List;
 
 @Log
@@ -15,7 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class GeminiController {
-
+    RestTemplate restTemplate;
+    ChatAiRepository chatAiRepository;
     @PostMapping("ask/v1")
     public Object askGeminiV1(@RequestBody GeminiPayload payload) {
 

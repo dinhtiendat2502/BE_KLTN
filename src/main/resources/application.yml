@@ -61,10 +61,4 @@ logging:
     name: target/toeicute.log
 
 BOT_AI_URL: "${API_AI:https://llamastudio.dev/api/cls40w5460001l2087o43vxsy}"
-openai:
-  model: gpt-3.5-turbo
-  api:
-    url: https://api.openai.com/v1/chat/completions
-    key: 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
-
 GOOGLE_TRANSLATE_API: "${GOOGLE_TRANSLATE_URL:https://translate.google.com/translate_a/single?client=at&dt=t&dt=ld&dt=qca&dt=rm&dt=bd&dj=1&hl=%25s&ie=UTF-8&oe=UTF-8&inputm=2&otf=2&iid=1dd3b944-fa62-4b55-b330-74909a99969e&}"

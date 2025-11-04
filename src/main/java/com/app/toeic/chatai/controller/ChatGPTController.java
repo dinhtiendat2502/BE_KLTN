@@ -44,7 +44,11 @@ public class ChatGPTController {
                 httpEntity,
                 ChatResponse.class
         );
-        return responseEntity.getBody();
+        return ResponseVO
+                .builder()
+                .success(true)
+                .data(responseEntity.getBody())
+                .build();
     }
 
     @PostMapping("text-to-speech")
