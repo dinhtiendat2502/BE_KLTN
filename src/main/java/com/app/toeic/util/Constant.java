@@ -76,5 +76,6 @@ public class Constant {
     public static final String AUTHORIZED_REDIRECT_URI = "authorizedRedirectUris";
     public static final String VERTEX = "VERTEX";
     public static final String PALM2 = "PALM2";
-    public static final String USER = "user";;
+    public static final String USER = "user";
+    public static final String MODEL_GPT = "gpt-3.5-turbo";
 }

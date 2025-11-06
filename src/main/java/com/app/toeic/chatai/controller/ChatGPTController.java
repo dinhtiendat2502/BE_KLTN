@@ -10,9 +10,15 @@ import com.app.toeic.chatai.repo.ChatAiRepository;
 import com.app.toeic.chatai.response.ChatResponse;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.util.Constant;
+import com.app.toeic.util.JsonConverter;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
+import org.springframework.ai.chat.messages.AssistantMessage;
+import org.springframework.ai.chat.messages.UserMessage;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,15 +28,46 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
+import java.util.logging.Level;
 
+@Log
 @RestController
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequestMapping("chat-gpt")
+@RequestMapping("gpt")
 public class ChatGPTController {
     RestTemplate restTemplate;
     ChatAiRepository chatAiRepository;
+    OpenAiChatClient openAiChatClient;
+
+    @PostMapping("ask")
+    @ChatAiLog(model = ModelChat.GPT)
+    public Object ask(@RequestBody PayloadOpenAi payloadOpenAi) {
+        var rs = ResponseVO
+                .builder()
+                .success(true)
+                .build();
+        try {
+            var listMessage = new java.util.ArrayList<>(convertToMessage(payloadOpenAi.listMsg()));
+            listMessage.add(new UserMessage(payloadOpenAi.prompt()));
+            var prompt = new Prompt(listMessage);
+            var text = openAiChatClient.call(prompt).getResult().getOutput().getContent();
+            rs.setData(text);
+        } catch (Exception e) {
+            log.log(
+                    Level.WARNING,
+                    MessageFormat.format(
+                            "ChatGPTController >> ask >> param: {0}",
+                            JsonConverter.convertObjectToJson(payloadOpenAi)
+                    ),
+                    e
+            );
+            rs.setSuccess(false);
+        }
+        return rs;
+    }
 
     @PostMapping("/chat")
     @ChatAiLog(model = ModelChat.GPT)
@@ -84,5 +121,21 @@ public class ChatGPTController {
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         headers.setBearerAuth(config.getToken());
         return headers;
+    }
+
+    private List<org.springframework.ai.chat.messages.Message> convertToMessage(List<PayloadOpenAi.Msg> listMsg) {
+        return listMsg.stream()
+                      .map(msg -> {
+                          if (Constant.USER.equalsIgnoreCase(msg.type())) {
+                              return new UserMessage(msg.text());
+                          }
+                          return (org.springframework.ai.chat.messages.Message) new AssistantMessage(msg.text());
+                      })
+                      .toList();
+    }
+
+    public record PayloadOpenAi(List<Msg> listMsg, String prompt) {
+        public record Msg(String text, String type) {
+        }
     }
 }

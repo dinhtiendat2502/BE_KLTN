@@ -90,34 +90,31 @@ public class ActivityLogAspect {
             }
             case Constant.UPDATE_PASSWORD -> rs.description(des);
             case Constant.RESET_PASSWORD -> {
-                if (result instanceof ResponseVO vo) {
-                    if (vo.getData() instanceof Integer uid) {
-                        rs.userAccount(UserAccount.builder().userId(uid).build());
-                    }
+                if (result instanceof ResponseVO vo && (vo.getData() instanceof Integer uid)) {
+                    rs.userAccount(UserAccount.builder().userId(uid).build());
+
                 }
             }
             case Constant.UPDATE_AVATAR -> {
                 if (user != null) {
                     rs.oldData(user.getAvatar());
-                    if (result instanceof ResponseVO vo) {
-                        if (vo.getData() instanceof String avatar) {
-                            rs.newData(avatar);
-                        }
+                    if (result instanceof ResponseVO vo && (vo.getData() instanceof String avatar)) {
+                        rs.newData(avatar);
+
                     }
                 }
                 rs.description(des);
             }
             case Constant.UPDATE_PROFILE -> {
-                if (user != null) {
-                    if (result instanceof ResponseVO vo) {
-                         if (vo.getData() instanceof UserController.NewInfoUser newData) {
-                             rs.newData(JsonConverter.convertObjectToJson(newData));
-                         }
-                         rs.oldData(JsonConverter.convertObjectToJson(new Object[]{user.getFullName(), user.getPhone(), user.getAddress(), user.getAvatar()}));
+                if (user != null && (result instanceof ResponseVO vo)) {
+                    if (vo.getData() instanceof UserController.NewInfoUser newData) {
+                        rs.newData(JsonConverter.convertObjectToJson(newData));
                     }
+                    rs.oldData(JsonConverter.convertObjectToJson(new Object[]{user.getFullName(), user.getPhone(), user.getAddress(), user.getAvatar()}));
+
                 }
                 var fileUpload = ObjectUtils.CONST(null);
-                if(params[0] instanceof MultipartFile file) {
+                if (params[0] instanceof MultipartFile file) {
                     fileUpload = new Object[]{file.getOriginalFilename(), file.getSize(), file.getContentType()};
                 }
                 rs.description(MessageFormat.format(
@@ -126,6 +123,7 @@ public class ActivityLogAspect {
                         JsonConverter.convertObjectToJson(new Object[]{params[1], params[2], params[3], fileUpload})
                 ));
             }
+            default -> log.info(STR."ActivityLogAspect >> getUserAccountLog >> action not found: \{action}");
         }
         return rs.build();
     }

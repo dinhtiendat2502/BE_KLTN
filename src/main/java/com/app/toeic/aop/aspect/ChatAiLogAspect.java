@@ -1,6 +1,8 @@
 package com.app.toeic.aop.aspect;
 
 import com.app.toeic.aop.annotation.ChatAiLog;
+import com.app.toeic.chatai.controller.ChatGPTController;
+import com.app.toeic.chatai.controller.VertexAIController;
 import com.app.toeic.chatai.model.ChatHistory;
 import com.app.toeic.chatai.payload.ChatRequestBody;
 import com.app.toeic.chatai.payload.GeminiPayload;
@@ -43,14 +45,9 @@ public class ChatAiLogAspect {
                     .build();
             if (args.length > 0) {
                 switch (args[0]) {
-                    case ChatRequestBody chatRequestBody -> chatHistory.setQuestion(chatRequestBody.getPrompt());
+                    case ChatGPTController.PayloadOpenAi chatRequestBody -> chatHistory.setQuestion(chatRequestBody.prompt());
                     case String input -> chatHistory.setQuestion(input);
-                    case GeminiPayload geminiPayload -> chatHistory
-                            .setQuestion(geminiPayload.getContents()
-                                                      .getLast()
-                                                      .getParts()
-                                                      .getFirst()
-                                                      .getText());
+                    case VertexAIController.PayloadVertex geminiPayload -> chatHistory.setQuestion(geminiPayload.prompt());
                     default -> log.log(
                             Level.WARNING,
                             MessageFormat.format("ChatAiLogAspect >> aroundAspect >> Unknown args: {0}", args[0])

@@ -1,5 +1,6 @@
 package com.app.toeic.translate.controller;
 
+import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.translate.service.TranslateService;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,6 +24,10 @@ public class TranslateController {
 
     @PostMapping("translate")
     public Object translate(@RequestBody String content) {
-        return translateService.translate(content);
+        return ResponseVO
+                .builder()
+                .success(true)
+                .data(translateService.translate(content))
+                .build();
     }
 }

@@ -56,6 +56,7 @@ public class UserServiceImpl implements UserService {
     IUserAccountLogRepository iUserAccountLogRepository;
 
     private static final String EMAIL_NOT_REGISTERED = "EMAIL_NOT_REGISTERED";
+    private static final String CREATED_AT = "createdAt";
 
     @Override
     public ResponseVO authenticate(LoginDTO loginDto) {
@@ -329,12 +330,12 @@ public class UserServiceImpl implements UserService {
     private Object getListActivity(int page, int pageSize, String type, UserAccount account, LocalDateTime dateFrom, LocalDateTime dateTo) {
         if ("ALL".equals(type)) {
             return account != null
-                    ? iUserAccountLogRepository.findAllByUserAccount(account, PageRequest.of(page, pageSize, Sort.by("createdAt").descending()))
-                    : iUserAccountLogRepository.findAllByCreatedAtBetween(dateFrom, dateTo ,PageRequest.of(page, pageSize, Sort.by("createdAt").descending()));
+                    ? iUserAccountLogRepository.findAllByUserAccount(account, PageRequest.of(page, pageSize, Sort.by(CREATED_AT).descending()))
+                    : iUserAccountLogRepository.findAllByCreatedAtBetween(dateFrom, dateTo ,PageRequest.of(page, pageSize, Sort.by(CREATED_AT).descending()));
         }
         return account != null
-                ? iUserAccountLogRepository.findAllByUserAccountAndAction(account, type, PageRequest.of(page, pageSize, Sort.by("createdAt").descending()))
-                : iUserAccountLogRepository.findAllByActionAndCreatedAtBetween(type, dateFrom, dateTo, PageRequest.of(page, pageSize, Sort.by("createdAt").descending()));
+                ? iUserAccountLogRepository.findAllByUserAccountAndAction(account, type, PageRequest.of(page, pageSize, Sort.by(CREATED_AT).descending()))
+                : iUserAccountLogRepository.findAllByActionAndCreatedAtBetween(type, dateFrom, dateTo, PageRequest.of(page, pageSize, Sort.by(CREATED_AT).descending()));
     }
 
     @Override

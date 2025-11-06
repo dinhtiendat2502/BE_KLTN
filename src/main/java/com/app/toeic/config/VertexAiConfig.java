@@ -6,6 +6,9 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.vertexai.VertexAI;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.ai.openai.OpenAiChatClient;
+import org.springframework.ai.openai.OpenAiChatOptions;
+import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatClient;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatOptions;
 import org.springframework.ai.vertexai.palm2.VertexAiPaLm2ChatClient;
@@ -24,6 +27,22 @@ import java.io.IOException;
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class VertexAiConfig {
     SystemConfigService systemConfigService;
+
+    @Lazy
+    @Bean
+    public OpenAiChatClient openAiChatClient() {
+        var apiKey = systemConfigService.getConfigValue(Constant.GPT);
+        var openAiApi = new OpenAiApi(apiKey);
+        return new OpenAiChatClient(
+                openAiApi,
+                OpenAiChatOptions
+                        .builder()
+                        .withModel(Constant.MODEL_GPT)
+                        .withTemperature(0.6F)
+                        .withMaxTokens(400)
+                        .build()
+        );
+    }
 
     @Lazy
     @Bean

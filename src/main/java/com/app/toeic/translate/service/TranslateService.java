@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -43,30 +44,23 @@ public class TranslateService {
 
         var entity = new HttpEntity<>(map, headers);
         var response = restTemplate.exchange(googleTranslateUrl, HttpMethod.POST, entity, Object.class);
-        var resultBuilder = new StringBuilder();
-        getResponseTranslate(response, resultBuilder);
-        log.info(MessageFormat.format(
-                "TranslateService >> translate >> content: {0}, response: {1}",
-                content,
-                resultBuilder
-        ));
-        return resultBuilder.toString();
+        return getResponseTranslate(response);
     }
 
-    private void getResponseTranslate(ResponseEntity<Object> response, StringBuilder resultBuilder) {
+    private Object getResponseTranslate(ResponseEntity<Object> response) {
+        var obj = new java.util.ArrayList<>();
         if (response.getStatusCode().is2xxSuccessful()) {
             var body = response.getBody();
             if (body instanceof Map<?, ?> map1 && (map1.containsKey("sentences"))) {
-                    var sentences = (List<?>) map1.get("sentences");
-                    for (Object sentence : sentences) {
-                        if (sentence instanceof Map<?, ?> sentenceMap && (sentenceMap.containsKey("trans"))) {
-                                var trans = (String) sentenceMap.get("trans");
-                                resultBuilder.append(trans.trim()).append("\n");
-
-                        }
+                var sentences = (List<?>) map1.get("sentences");
+                for (Object sentence : sentences) {
+                    if (sentence instanceof Map<?, ?> sentenceMap && (sentenceMap.containsKey("trans"))) {
+                        obj.add(sentenceMap.get("trans"));
                     }
-
+                }
             }
         }
+        // return string
+        return StringUtils.join(obj, "");
     }
 }
