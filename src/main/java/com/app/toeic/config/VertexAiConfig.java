@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatClient;
 import org.springframework.ai.vertexai.gemini.VertexAiGeminiChatOptions;
+import org.springframework.ai.vertexai.palm2.VertexAiPaLm2ChatClient;
+import org.springframework.ai.vertexai.palm2.VertexAiPaLm2ChatOptions;
+import org.springframework.ai.vertexai.palm2.api.VertexAiPaLm2Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +43,19 @@ public class VertexAiConfig {
                                          .withTopP(0.95F)
                                          .withMaxOutputTokens(8192)
                                          .build()
+        );
+    }
+
+    @Lazy
+    @Bean
+    public VertexAiPaLm2ChatClient vertexAiPaLm2ChatClient() {
+        var apiKey = systemConfigService.getConfigValue(Constant.PALM2);
+        var vertexApi = new VertexAiPaLm2Api(apiKey);
+        return new VertexAiPaLm2ChatClient(
+                vertexApi,
+                VertexAiPaLm2ChatOptions.builder()
+                                        .withTemperature(0.95F)
+                                        .build()
         );
     }
 }

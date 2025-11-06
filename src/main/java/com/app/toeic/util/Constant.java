@@ -75,4 +75,6 @@ public class Constant {
     public static final String REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri";
     public static final String AUTHORIZED_REDIRECT_URI = "authorizedRedirectUris";
     public static final String VERTEX = "VERTEX";
+    public static final String PALM2 = "PALM2";
+    public static final String USER = "user";;
 }

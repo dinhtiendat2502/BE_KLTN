@@ -16,8 +16,6 @@ import java.util.logging.Level;
 @Log
 @UtilityClass
 public class AESUtils {
-
-
     private static final byte[] IV = new byte[16];
 
     public static String encrypt(String data) {

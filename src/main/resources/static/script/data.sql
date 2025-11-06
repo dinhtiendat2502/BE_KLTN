@@ -357,6 +357,10 @@ values ('VERTEX','Description for vertex ai', CURRENT_DATE, '{
   "universe_domain": "googleapis.com"
 }
 ');
+insert into system_config (config_key, description, updated_at, value)
+values ('PALM2','Description for PALM2', CURRENT_DATE, 'AIzaSyBRL8Lz9vaftejrIqHAaHOZhuobfJFHgis');
+insert into system_config (config_key, description, updated_at, value)
+values ('GPT','Description for GPT', CURRENT_DATE, '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');
 
 insert into kommunicate_bot(api_key, app_id, status, script)
 VALUES ('21e1deaca7ccde427eab393663be5b77a', '', true, '(function (d, m) {

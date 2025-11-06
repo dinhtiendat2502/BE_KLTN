@@ -45,17 +45,17 @@ spring:
     vertex:
       ai:
         gemini:
-          project-id: "${GEMINI_PROJECT_ID:beaming-inn-423802-q6}"
-          location: "${GEMINI_LOCATION:us-central1}"
-          chat:
-            options:
-              model: vertex-pro-vision
-              temperature: 0.5
-        api-key: "${GEMINI_API_KEY:AIzaSyBRL8Lz9vaftejrIqHAaHOZhuobfJFHgis}"
+          project-id: "${GEMINI_PROJECT_ID:123456}"
+          location: "${GEMINI_LOCATION:12356}"
+        api-key: "${GEMINI_API_KEY:123456}"
         chat:
           model: chat-bison-001
-          options:
-            temperature: 0.5
+    openai:
+      api-key: "${OPENAI_API_KEY:sk-1234567890}"
+      chat:
+        options:
+          model: gpt-3.5-turbo
+          temperature: 0.7
   datasource:
     url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true"
     username: "${DB_USERNAME:root}"
