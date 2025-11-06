@@ -3,8 +3,6 @@ package com.app.toeic.config;
 import com.app.toeic.external.service.SystemConfigService;
 import com.app.toeic.util.Constant;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.auth.oauth2.ServiceAccountCredentials;
-import com.google.cloud.vertexai.Transport;
 import com.google.cloud.vertexai.VertexAI;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,8 +14,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @Configuration
@@ -39,7 +35,7 @@ public class VertexAiConfig {
         return new VertexAiGeminiChatClient(
                 vertexApi,
                 VertexAiGeminiChatOptions.builder()
-                                         .withModel("gemini-1.0-pro")
+                                         .withModel(VertexAiGeminiChatClient.ChatModel.GEMINI_PRO.value)
                                          .withTemperature(1F)
                                          .withTopP(0.95F)
                                          .withMaxOutputTokens(8192)

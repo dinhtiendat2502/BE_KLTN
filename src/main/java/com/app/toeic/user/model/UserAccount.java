@@ -3,6 +3,7 @@ package com.app.toeic.user.model;
 
 import com.app.toeic.chatai.model.ChatHistory;
 import com.app.toeic.comment.model.Comment;
+import com.app.toeic.user.enums.UType;
 import com.app.toeic.userexam.model.UserExamHistory;
 import com.app.toeic.user.enums.EUser;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -51,7 +52,13 @@ public class UserAccount implements UserDetails {
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
+    UType userType = UType.STANDARD_USER;
+
+
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
     EUser status = EUser.ACTIVE;
+
     String provider;
 
     @JsonIgnore
