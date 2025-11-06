@@ -4,6 +4,7 @@ package com.app.toeic.exam.controller;
 import com.app.toeic.exam.payload.ExamDTO;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.exam.model.Exam;
+import com.app.toeic.firebase.service.FirebaseStorageService;
 import com.app.toeic.topic.model.Topic;
 import com.app.toeic.topic.repo.ITopicRepository;
 import com.app.toeic.external.response.ResponseVO;
@@ -12,12 +13,22 @@ import com.app.toeic.util.Constant;
 import com.app.toeic.util.HttpStatus;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.text.MessageFormat;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.logging.Level;
+
+@Log
 @RequestMapping("/admin/exam")
 @RestController
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -25,6 +36,7 @@ import org.springframework.web.bind.annotation.*;
 public class ExamAdminController {
     ExamService examService;
     ITopicRepository topicService;
+    FirebaseStorageService firebaseStorageService;
     static final String EXAM_NOT_FOUND = "EXAM_NOT_FOUND";
 
     @GetMapping("/list")
@@ -39,28 +51,54 @@ public class ExamAdminController {
     }
 
 
-    @PostMapping("/create-exam")
-    public Object createExam(@Valid @RequestBody ExamDTO examDto) {
+    @PostMapping(value = "/create-exam", consumes = {"multipart/form-data"})
+    @SneakyThrows
+    public Object createExam(
+            @RequestParam("examName") String examName,
+            @RequestParam("audio") MultipartFile audio,
+            @RequestParam(value = "audio1", required = false) MultipartFile audio1,
+            @RequestParam(value = "audio2", required = false) MultipartFile audio2,
+            @RequestParam(value = "audio3", required = false) MultipartFile audio3,
+            @RequestParam(value = "audio4", required = false) MultipartFile audio4,
+            @RequestParam("isFree") Boolean isFree,
+            @RequestParam(value = "topicId", required = false) Integer topicId,
+            @RequestParam(value = "fromDate", required = false) LocalDateTime fromDate,
+            @RequestParam(value = "toDate", required = false) LocalDateTime toDate
+    ) {
         var exam = Exam
                 .builder()
-                .examName(examDto.examName())
-                .audioPart1(examDto.audioPart1())
-                .audioPart2(examDto.audioPart2())
-                .audioPart3(examDto.audioPart3())
-                .audioPart4(examDto.audioPart4())
-                .examImage(examDto.examImage())
-                .isFree(examDto.isFree())
-                .numberOfUserDoExam(0)
-                .price(0.0)
-                .status(Constant.STATUS_ACTIVE)
-                .topic(examDto.topicId() != null ? Topic.builder().topicId(examDto.topicId()).build() : null)
+                .examName(examName)
+                .isFree(isFree)
+                .topic(topicId != -1 ? Topic.builder().topicId(topicId).build() : null)
                 .build();
+        uploadAudio(audio, exam, 0);
+        uploadAudio(audio1, exam, 1);
+        uploadAudio(audio2, exam, 2);
+        uploadAudio(audio3, exam, 3);
+        uploadAudio(audio4, exam, 4);
+        if (!isFree) {
+            exam.setFromDate(fromDate);
+            exam.setToDate(toDate);
+        }
         examService.addExam(exam);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
                 .message("CREATE_EXAM_SUCCESS")
                 .build();
+    }
+
+    @SneakyThrows
+    private void uploadAudio(MultipartFile audio, Exam exam, int index) {
+        if (audio == null || audio.isEmpty()) return;
+        var url = firebaseStorageService.uploadFile(audio);
+        switch (index) {
+            case 1 -> exam.setAudioPart1(url);
+            case 2 -> exam.setAudioPart2(url);
+            case 3 -> exam.setAudioPart3(url);
+            case 4 -> exam.setAudioPart4(url);
+            default -> exam.setExamAudio(url);
+        }
     }
 
     @PatchMapping("/update-exam")

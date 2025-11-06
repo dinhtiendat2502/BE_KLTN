@@ -47,7 +47,7 @@ public class Exam {
     String audioPart4;
 
     @Builder.Default
-    String status = Constant.STATUS_ACTIVE;
+    String status = Constant.STATUS_INACTIVE;
 
     @Builder.Default
     Integer numberOfUserDoExam = 0;

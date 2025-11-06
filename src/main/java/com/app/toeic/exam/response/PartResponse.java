@@ -10,7 +10,7 @@ public interface PartResponse {
     String getPartContent();
     int getNumberOfQuestion();
     ExamResponse getExam();
-    Set<ExamVO.ExamFullQuestion.Part.Question> getQuestions();
+    Set<ExamVO.QuestionFull> getQuestions();
 
     interface ExamResponse {
         String getExamAudio();

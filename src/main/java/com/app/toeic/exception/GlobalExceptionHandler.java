@@ -2,6 +2,7 @@ package com.app.toeic.exception;
 
 import com.app.toeic.external.response.ResponseVO;
 import com.google.cloud.storage.StorageException;
+import io.undertow.server.RequestTooBigException;
 import lombok.extern.java.Log;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -70,6 +71,16 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
+    @ExceptionHandler(RequestTooBigException.class)
+    public Object handleFileSizeLimitExceededException(RequestTooBigException e) {
+        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> RequestTooBigException: {0}", e);
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message("SIZE_LIMIT_EXCEEDED")
+                .build();
+    }
+
     @ExceptionHandler(MultipartException.class)
     public Object handleMultipartException(MultipartException e) {
         log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> handleMultipartException: {0}", e);
@@ -126,7 +137,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InternalAuthenticationServiceException.class)
     public Object handleInternalAuthenticationServiceException(InternalAuthenticationServiceException e) {
-        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> handleInternalAuthenticationServiceException: {0}", e);
+        log.log(
+                Level.WARNING,
+                "Exception >> GlobalExceptionHandler >> handleInternalAuthenticationServiceException: {0}",
+                e
+        );
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Log
@@ -30,6 +31,7 @@ public class PartServiceIpml implements PartService {
     @Override
     @Transactional
     public void init7PartForExam(Exam exam) {
+        var listPart = new ArrayList<Part>();
         for (int i = 1; i <= 7; i++) {
             var part = Part
                     .builder()
@@ -74,8 +76,9 @@ public class PartServiceIpml implements PartService {
                 }
                 default -> log.info("PartServiceIpml >> init7PartForExam >> Invalid part number");
             }
-            partRepository.save(part);
+            listPart.add(part);
         }
+        partRepository.saveAll(listPart);
     }
 
     @Override

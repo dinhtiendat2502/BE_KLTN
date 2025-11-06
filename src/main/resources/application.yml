@@ -72,8 +72,8 @@ spring:
     open-in-view: false
   servlet:
     multipart:
-      max-file-size: 20MB
-      max-request-size: 20MB
+      max-file-size: 100MB
+      max-request-size: 100MB
 springdoc:
   api-docs:
     path: /toeicute/api-docs

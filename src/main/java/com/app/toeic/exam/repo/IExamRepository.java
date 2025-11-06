@@ -15,7 +15,13 @@ public interface IExamRepository extends JpaRepository<Exam, Integer> {
     @Query("SELECT COUNT(e) > 0 FROM Exam e WHERE e.examName = ?1 AND e.examId <> ?2")
     Boolean existsExamByExamName(String examName, Integer examId);
 
-    @Query("SELECT e FROM Exam e LEFT JOIN FETCH e.topic t WHERE e.status = 'ACTIVE' ORDER BY t.topicId DESC, e.examName ASC")
+    @Query("""
+            SELECT e
+            FROM Exam e
+            LEFT JOIN FETCH e.topic t
+            WHERE e.status != 'DELETED'
+            ORDER BY t.topicId DESC, e.examName ASC
+            """)
     List<ExamVO.ExamListAll> findAllByStatus(String status);
 
     @Query("SELECT e FROM Exam e LEFT JOIN FETCH e.topic t WHERE e.status = 'ACTIVE' AND t.topicId = ?1 ORDER BY t.topicId DESC, e.examName ASC")
