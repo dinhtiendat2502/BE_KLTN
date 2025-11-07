@@ -5,6 +5,7 @@ import com.app.toeic.oauth2.*;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -18,6 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -48,8 +52,9 @@ public class WebSecurityConfig {
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .cors(cors -> cors.configurationSource(corsConfiguration()))
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest()
-                        .permitAll())
+                        .requestMatchers(ignoredUrls().toArray(new String[0])).permitAll()
+                        .anyRequest().authenticated()
+                )
                 .oauth2Login(oauth2 -> oauth2
                         .authorizationEndpoint(auth -> auth
                                 .baseUri("/oauth2/authorize")
@@ -77,5 +82,11 @@ public class WebSecurityConfig {
         var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfig);
         return source;
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "application.ignored.urls")
+    public List<String> ignoredUrls() {
+        return new ArrayList<>();
     }
 }

@@ -1,3 +1,17 @@
+application:
+  ignored:
+    urls:
+      - /user/get-captcha
+      - /user/register
+      - /user/authenticate
+      - /user/forgot-password
+      - /user/confirm-otp
+      - /user/reset-password
+      - /user/test
+      - /v3/api-docs
+      - /v3/api-docs/**
+      - /swagger-ui/**
+      - /swagger-ui.html
 server:
   port: ${PORT:8080}
   servlet:
@@ -54,12 +68,6 @@ spring:
         options:
           model: gpt-3.5-turbo
           temperature: 0.7
-  data:
-    redis:
-      host: "${REDIS_HOST:localhost}"
-      port: "${REDIS_PORT:13301}"
-      username: "${REDIS_USERNAME:default}"
-      password: "${REDIS_PASSWORD:1234}"
   datasource:
     url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true"
     username: "${DB_USERNAME:root}"
@@ -101,4 +109,3 @@ logging:
   file:
     name: target/toeicute.log
 
-isProd: ${IS_PROD:false}

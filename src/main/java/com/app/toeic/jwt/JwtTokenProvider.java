@@ -64,7 +64,7 @@ public class JwtTokenProvider {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
+    public boolean validateToken(String token, UserDetails userDetails) {
         final String email = extractUsername(token);
         final String password = extractPassword(token);
         return (email.equals(userDetails.getUsername())

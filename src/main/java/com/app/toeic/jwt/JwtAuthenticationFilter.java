@@ -43,7 +43,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             IOException {
         var token = jwtUtilities.getToken(request);
 
-        if (token != null && jwtUtilities.validateToken(token)) {
+        if (org.apache.commons.lang3.StringUtils.isNotBlank(token)
+                && !"null".equalsIgnoreCase(token)
+                && jwtUtilities.validateToken(token)) {
             var username = jwtUtilities.extractUsername(token);
 
             var userDetails = userDetailsService.loadUserByUsername(username);
