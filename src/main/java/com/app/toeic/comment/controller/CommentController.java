@@ -4,6 +4,7 @@ import com.app.toeic.comment.model.Comment;
 import com.app.toeic.comment.repo.CommentRepository;
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.external.response.ResponseVO;
+import com.app.toeic.user.model.UserAccount;
 import com.app.toeic.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 @Log
 @RestController
@@ -43,27 +46,32 @@ public class CommentController {
                              .exam(Exam.builder().examId(payload.examId).build())
                              .user(user.get())
                              .build();
+        AtomicReference<Comment> log = new AtomicReference<>();
         parentOptional
                 .ifPresentOrElse(c -> {
                     if (c.getParent() != null) {
                         var parent = c.getParent();
                         comment.setParent(parent);
-                        commentRepository.save(comment);
+                        var returnComment = commentRepository.save(comment);
                         parent.setNumberOfReplies(parent.getNumberOfReplies() + 1);
                         commentRepository.save(parent);
+                        log.set(returnComment);
                     } else {
                         comment.setParent(c);
-                        commentRepository.save(comment);
+                        var returnComment = commentRepository.save(comment);
                         c.setNumberOfReplies(c.getNumberOfReplies() + 1);
                         commentRepository.save(c);
+                        log.set(returnComment);
                     }
                 }, () -> {
                     comment.setParent(null);
-                    commentRepository.save(comment);
+                    var returnComment = commentRepository.save(comment);
+                    log.set(returnComment);
                 });
         return ResponseVO
                 .builder()
                 .success(true)
+                .data(log.get().getParent() != null ? log.get().getParent().getCommentId() : log.get().getCommentId())
                 .message("CREATE_COMMENT_SUCCESS")
                 .build();
     }

@@ -24,7 +24,9 @@ public class RedisConfig {
         var host = systemConfigService.getConfigValue("REDIS_HOST");
         var port = Integer.parseInt(systemConfigService.getConfigValue("REDIS_PORT"));
         var password = systemConfigService.getConfigValue("REDIS_PASSWORD");
-        return new JedisPooled(new HostAndPort(host, port),
-                DefaultJedisClientConfig.builder().user(REDIS_USERNAME).password(password).ssl(true).build());
+        return "localhost".equals(host) ? new JedisPooled(host, port) : new JedisPooled(
+                new HostAndPort(host, port),
+                DefaultJedisClientConfig.builder().user(REDIS_USERNAME).password(password).ssl(true).build()
+        );
     }
 }

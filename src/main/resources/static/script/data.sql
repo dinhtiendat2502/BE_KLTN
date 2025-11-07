@@ -393,8 +393,8 @@ insert into system_config(config_key, description, updated_at, value)
 VALUES ('URL_FRONTEND', 'Domain of frontend', current_date, 'http://localhost:4200');
 
 insert into system_config(config_key, description, updated_at, value)
-VALUES ('REDIS_HOST', 'Host of redis', current_date, 'redis-13301.c256.us-east-1-2.ec2.redns.redis-cloud.com');
+VALUES ('REDIS_HOST', 'Host of redis', current_date, 'toeicute-redis-toeicute.f.aivencloud.com');
 insert into system_config(config_key, description, updated_at, value)
-VALUES ('REDIS_PORT', 'Port of redis', current_date, '13301');
+VALUES ('REDIS_PORT', 'Port of redis', current_date, '23605');
 insert into system_config(config_key, description, updated_at, value)
-VALUES ('REDIS_PASSWORD', 'Password of redis', current_date, 'aWCybEVeng6FbyfxKpqPMGF0Osd6Bi7j');
+VALUES ('REDIS_PASSWORD', 'Password of redis', current_date, 'AVNS_x8WigoRV7Q8k-6X2rOB');
