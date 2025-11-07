@@ -15,8 +15,6 @@ spring:
         url: "${SPRING_BOOT_ADMIN_URL:http://127.0.0.1:8080/api}"
         instance:
           service-url: "${SPRING_BOOT_ADMIN_URL:http://127.0.0.1:8080/api}"
-          prefer-ip: true
-          management-url: "${SPRING_BOOT_ADMIN_URL:http://127.0.0.1:8080/api/actuator}"
           name: "${spring.application.name}"
   security:
     oauth2:
