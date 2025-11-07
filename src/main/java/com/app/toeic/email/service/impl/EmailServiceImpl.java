@@ -8,12 +8,12 @@ import com.app.toeic.user.model.Otp;
 import com.app.toeic.user.payload.LoginSocialDTO;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.user.repo.IOtpRepository;
+import com.app.toeic.util.Constant;
 import com.app.toeic.util.HttpStatus;
 import jakarta.mail.MessagingException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
@@ -75,14 +75,14 @@ public class EmailServiceImpl implements EmailService {
             LoginSocialDTO loginSocialDto
     ) throws NoSuchAlgorithmException {
         return switch (templateCode) {
-            case "AUTHENTICATION_AFTER_REGISTER" -> {
+            case Constant.AUTHENTICATION_AFTER_REGISTER -> {
                 var otp = this.generateOTP();
 
                 var otpObj = otpRepository
-                        .findByEmailAndAction(emailTo, "REGISTER")
+                        .findByEmailAndAction(emailTo, Constant.REGISTER)
                         .orElse(Otp
                                 .builder()
-                                .action("REGISTER")
+                                .action(Constant.REGISTER)
                                 .email(emailTo)
                                 .build());
                 otpObj.setOtpCode(otp);
@@ -90,42 +90,39 @@ public class EmailServiceImpl implements EmailService {
                 otpRepository.save(otpObj);
                 yield templateContent.formatted(emailTo, otp);
             }
-            case "FORGOT_PASSWORD" -> {
+            case Constant.FORGOT_PASSWORD -> {
                 var otp = emailTo;
                 // hash otp
-                MessageDigest md = MessageDigest.getInstance("SHA-256");
-                byte[] hashInBytes = md.digest(otp.getBytes(StandardCharsets.UTF_8));
-                StringBuilder sb = new StringBuilder();
+                var md = MessageDigest.getInstance("SHA-256");
+                var hashInBytes = md.digest(otp.getBytes(StandardCharsets.UTF_8));
+                var sb = new StringBuilder();
                 for (byte b : hashInBytes) {
                     sb.append(String.format("%02x", b));
                 }
                 otp = sb.toString();
                 var otpObj = otpRepository
-                        .findByEmailAndAction(emailTo, "FORGOT_PASSWORD")
+                        .findByEmailAndAction(emailTo, Constant.FORGOT_PASSWORD)
                         .orElse(Otp
                                 .builder()
-                                .action("FORGOT_PASSWORD")
+                                .action(Constant.FORGOT_PASSWORD)
                                 .email(emailTo)
                                 .build());
                 otpObj.setOtpCode(otp);
                 otpObj.setCreatedAt(LocalDateTime.now());
                 otpRepository.save(otpObj);
                 yield templateContent.formatted(
-                        "http://localhost:4200",
-                        STR."http://localhost:4200/reset-password/\{otp}"
+                        loginSocialDto.getUrl(),
+                        STR."\{loginSocialDto.getUrl()}/reset-password/\{otp}"
                 );
             }
-            case "LOGIN_SOCIAL" -> {
-                String url = StringUtils.isEmpty(loginSocialDto.getUrl()) ? "http://localhost:4200" : loginSocialDto.getUrl();
-                yield templateContent.formatted(
-                        loginSocialDto.getEmail(),
-                        loginSocialDto.getProvider(),
-                        loginSocialDto.getEmail(),
-                        loginSocialDto.getFullName(),
-                        password,
-                        url
-                );
-            }
+            case Constant.LOGIN_SOCIAL -> templateContent.formatted(
+                    loginSocialDto.getEmail(),
+                    loginSocialDto.getProvider(),
+                    loginSocialDto.getEmail(),
+                    loginSocialDto.getFullName(),
+                    password,
+                    loginSocialDto.getUrl()
+            );
             default -> templateContent;
         };
     }

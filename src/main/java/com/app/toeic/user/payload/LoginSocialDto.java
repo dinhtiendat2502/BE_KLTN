@@ -3,11 +3,13 @@ package com.app.toeic.user.payload;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 
 @Data
 @AllArgsConstructor
+@Builder
 public class LoginSocialDTO {
     @NotEmpty(message = "Email không được bỏ trống")
     @Email(message = "Email không hợp lệ")

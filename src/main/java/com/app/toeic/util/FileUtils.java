@@ -2,6 +2,7 @@ package com.app.toeic.util;
 
 import lombok.experimental.UtilityClass;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
@@ -42,7 +43,8 @@ public class FileUtils {
         } else {
             fileStream = connection.getInputStream();
         }
-        return new FileInfo(fileName, contentType, contentLength, fileStream);
+        var imageBytes = IOUtils.toByteArray(url.openStream());
+        return new FileInfo(fileName, contentType, contentLength, fileStream, imageBytes);
     }
 
     public boolean isImage(String contentType) {
@@ -57,6 +59,6 @@ public class FileUtils {
         return file != null && !file.isEmpty();
     }
 
-    public record FileInfo(String fileName, String contentType, long fileSize, InputStream file) {
+    public record FileInfo(String fileName, String contentType, long fileSize, InputStream file, byte[] imageBytes) {
     }
 }

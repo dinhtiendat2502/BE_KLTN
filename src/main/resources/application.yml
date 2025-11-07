@@ -21,8 +21,8 @@ spring:
       client:
         registration:
           google:
-            clientId: "${GOOGLE_CLIENT_ID:5014057553-8gm9um6vnli3cle5rgigcdjpdrid14m9.apps.googleusercontent.com}"
-            clientSecret: "${GOOGLE_CLIENT_SECRET:tWZKVLxaD_ARWsriiiUFYoIk}"
+            clientId: "${GOOGLE_CLIENT_ID:695539607356-7ivpkghg3bmq3sul0gp8illtpc1i056a.apps.googleusercontent.com}"
+            clientSecret: "${GOOGLE_CLIENT_SECRET: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}"
             redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
@@ -94,3 +94,5 @@ logging:
     root: info
   file:
     name: target/toeicute.log
+
+isProd: ${IS_PROD:false}

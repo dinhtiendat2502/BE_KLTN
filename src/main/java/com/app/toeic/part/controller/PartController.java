@@ -98,7 +98,7 @@ public class PartController {
             "Question Image"
     };
 
-    @GetMapping("export-part-1")
+    @GetMapping("export-part")
     public void exportPart1ToExcel(@RequestParam("partId") Integer partId, HttpServletResponse response) {
         response.setContentType("application/octet-stream");
         var dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");

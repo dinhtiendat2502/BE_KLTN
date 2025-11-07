@@ -51,7 +51,9 @@ public class WebSecurityConfig {
                         .anyRequest()
                         .permitAll())
                 .oauth2Login(oauth2 -> oauth2
-                        .authorizationEndpoint(auth -> auth.baseUri("/oauth2/authorize"))
+                        .authorizationEndpoint(auth -> auth
+                                .baseUri("/oauth2/authorize")
+                                .authorizationRequestRepository(cookieAuthorizationRequestRepository()))
                         .redirectionEndpoint(red -> red.baseUri("/oauth2/callback/*"))
                         .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
                         .successHandler(oAuth2AuthenticationSuccessHandler)

@@ -389,3 +389,5 @@ VALUES ('21e1deaca7ccde427eab393663be5b77a', '', true, '(function (d, m) {
       m._globals = kommunicateSettings;
     })(document, window.kommunicate || {});');
 
+insert into system_config(config_key, description, updated_at, value)
+VALUES ('URL_FRONTEND', 'Domain of frontend', current_date, 'http://localhost:4200');

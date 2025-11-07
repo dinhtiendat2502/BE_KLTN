@@ -78,4 +78,8 @@ public class Constant {
     public static final String PALM2 = "PALM2";
     public static final String USER = "user";
     public static final String MODEL_GPT = "gpt-3.5-turbo";
+    public static final String URL_FRONTEND = "URL_FRONTEND";
+    public static final String LOGIN_SOCIAL = "LOGIN_SOCIAL";
+    public static final String AUTHENTICATION_AFTER_REGISTER = "AUTHENTICATION_AFTER_REGISTER";
+
 }
