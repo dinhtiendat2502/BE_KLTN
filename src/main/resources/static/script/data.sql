@@ -398,3 +398,6 @@ insert into system_config(config_key, description, updated_at, value)
 VALUES ('REDIS_PORT', 'Port of redis', current_date, '23605');
 insert into system_config(config_key, description, updated_at, value)
 VALUES ('REDIS_PASSWORD', 'Password of redis', current_date, 'AVNS_x8WigoRV7Q8k-6X2rOB');
+
+INSERT INTO system_config (config_key, description, updated_at, value)
+VALUES ('GPT_4', null, '2024-06-09 13:22:30.000000', 'sk-proj-hCtKKpRFdz2fkp05TmaET3BlbkFJijf1eYearfBzThtVMM3r');

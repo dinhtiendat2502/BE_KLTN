@@ -117,6 +117,8 @@ public class ExamController {
                 .numberOfWrongListeningAnswer(0)
                 .numberOfCorrectReadingAnswer(0)
                 .numberOfWrongReadingAnswer(0)
+                .totalLeave(finishExamDto.getTotalLeave())
+                .totalOpenNewTab(finishExamDto.getTotalOpenNewTab())
                 .totalScore(0)
                 .totalScoreReading(0)
                 .totalScoreListening(0)

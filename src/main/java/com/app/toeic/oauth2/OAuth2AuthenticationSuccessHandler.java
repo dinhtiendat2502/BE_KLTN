@@ -4,7 +4,9 @@ import com.app.toeic.exception.AppException;
 import com.app.toeic.external.service.SystemConfigService;
 import com.app.toeic.jwt.JwtTokenProvider;
 import com.app.toeic.user.model.Role;
+import com.app.toeic.user.model.UserToken;
 import com.app.toeic.user.repo.IUserAccountRepository;
+import com.app.toeic.user.repo.UserTokenRepository;
 import com.app.toeic.util.Constant;
 import com.app.toeic.util.CookieUtils;
 import com.app.toeic.util.HttpStatus;
@@ -36,6 +38,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     JwtTokenProvider tokenProvider;
     IUserAccountRepository iUserAccountRepository;
     SystemConfigService systemConfigService;
+    UserTokenRepository userTokenRepository;
 
     @Override
     public void onAuthenticationSuccess(
@@ -72,14 +75,31 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                                                  HttpStatus.UNAUTHORIZED,
                                                  "USER_NOT_FOUND"
                                          ));
-        var token = tokenProvider.generateToken(
+        var token = tokenProvider.generateTokenV2(
                 user.getEmail(),
                 user.getPassword(),
                 user.getRoles().stream().map(Role::getRoleName).toList()
         );
 
+        var userTokenOptional = userTokenRepository.findByEmail(user.getEmail());
+        userTokenOptional.ifPresentOrElse(uToken -> {
+            uToken.setToken(token.getToken());
+            uToken.setCreatedDate(token.getCreatedDate());
+            uToken.setExpiredDate(token.getExpiredDate());
+            userTokenRepository.save(uToken);
+        }, () -> {
+            var userToken = UserToken
+                    .builder()
+                    .token(token.getToken())
+                    .email(user.getEmail())
+                    .createdDate(token.getCreatedDate())
+                    .expiredDate(token.getExpiredDate())
+                    .build();
+            userTokenRepository.save(userToken);
+        });
+
         return UriComponentsBuilder.fromUriString(targetUrl)
-                                   .queryParam("token", token)
+                                   .queryParam("token", token.getToken())
                                    .build().toUriString();
     }
 

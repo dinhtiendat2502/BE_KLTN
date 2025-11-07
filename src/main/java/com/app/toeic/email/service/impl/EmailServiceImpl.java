@@ -4,6 +4,7 @@ package com.app.toeic.email.service.impl;
 import com.app.toeic.config.JavaMailConfig;
 import com.app.toeic.email.repo.EmailTemplateRepo;
 import com.app.toeic.email.service.EmailService;
+import com.app.toeic.external.service.SystemConfigService;
 import com.app.toeic.user.model.Otp;
 import com.app.toeic.user.payload.LoginSocialDTO;
 import com.app.toeic.exception.AppException;
@@ -31,6 +32,7 @@ public class EmailServiceImpl implements EmailService {
     Random random = new Random();
     IOtpRepository otpRepository;
     EmailTemplateRepo emailTemplateRepo;
+    SystemConfigService systemConfigService;
 
     public String generateOTP() {
         int length = 6;
@@ -110,9 +112,10 @@ public class EmailServiceImpl implements EmailService {
                 otpObj.setOtpCode(otp);
                 otpObj.setCreatedAt(LocalDateTime.now());
                 otpRepository.save(otpObj);
+                var urlFE = systemConfigService.getConfigValue(Constant.URL_FRONTEND);
                 yield templateContent.formatted(
-                        loginSocialDto.getUrl(),
-                        STR."\{loginSocialDto.getUrl()}/reset-password/\{otp}"
+                        urlFE,
+                        STR."\{urlFE}/reset-password/\{otp}"
                 );
             }
             case Constant.LOGIN_SOCIAL -> templateContent.formatted(

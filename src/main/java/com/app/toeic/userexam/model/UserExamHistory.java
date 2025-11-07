@@ -77,8 +77,8 @@ public class UserExamHistory {
     @Builder.Default
     Integer totalOpenNewTab = 0;
 
-    @CreationTimestamp
     LocalDateTime examDate;
+    LocalDateTime endTime;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

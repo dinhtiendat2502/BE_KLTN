@@ -46,6 +46,7 @@ public interface UserService {
     Object getActivities(int page, int size, String type, String fromDate, String toDate);
 
     LoginDTO readCaptcha(HttpServletRequest request);
+    boolean checkMultipleLogin(HttpServletRequest request);
     boolean isValidCaptcha(HttpServletRequest request, String captcha);
     Optional<UserAccountRepsonse> getProfileV2(HttpServletRequest request);
 }

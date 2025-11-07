@@ -5,17 +5,20 @@ import com.app.toeic.user.enums.ERole;
 import com.app.toeic.user.enums.EUser;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.jwt.JwtTokenProvider;
+import com.app.toeic.user.model.Role;
 import com.app.toeic.user.model.UserAccount;
 import com.app.toeic.user.payload.*;
 import com.app.toeic.user.repo.IRoleRepository;
 import com.app.toeic.user.repo.IUserAccountLogRepository;
 import com.app.toeic.user.repo.IUserAccountRepository;
+import com.app.toeic.user.repo.UserTokenRepository;
 import com.app.toeic.user.response.LoginResponse;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.user.response.UserAccountRepsonse;
 import com.app.toeic.user.service.UserService;
 import com.app.toeic.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +58,7 @@ public class UserServiceImpl implements UserService {
     UserDetailsService userDetailsService;
     EmailServiceImpl emailService;
     IUserAccountLogRepository iUserAccountLogRepository;
+    UserTokenRepository userTokenRepository;
 
     private static final String EMAIL_NOT_REGISTERED = "EMAIL_NOT_REGISTERED";
     private static final String CREATED_AT = "createdAt";
@@ -84,19 +88,11 @@ public class UserServiceImpl implements UserService {
                     .build();
         }
 
-        var rolesNames = new ArrayList<String>();
-        user.getRoles().forEach(r -> rolesNames.add(r.getRoleName()));
-        var token = jwtUtilities.generateToken(user.getUsername(), user.getPassword(), rolesNames);
-        var res = LoginResponse
-                .builder()
-                .token(token)
-                .email(user.getEmail())
-                .roles(rolesNames)
-                .build();
+        var rolesNames = user.getRoles().stream().map(Role::getRoleName).toList();
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .data(res)
+                .data(jwtUtilities.generateTokenV2(user.getUsername(), user.getPassword(), rolesNames))
                 .message("LOGIN_SUCCESS")
                 .build();
     }
@@ -328,15 +324,54 @@ public class UserServiceImpl implements UserService {
         return Collections.emptyList();
     }
 
-    private Object getListActivity(int page, int pageSize, String type, UserAccount account, LocalDateTime dateFrom, LocalDateTime dateTo) {
+    private Object getListActivity(
+            int page,
+            int pageSize,
+            String type,
+            UserAccount account,
+            LocalDateTime dateFrom,
+            LocalDateTime dateTo
+    ) {
         if ("ALL".equals(type)) {
             return account != null
-                    ? iUserAccountLogRepository.findAllByUserAccount(account, PageRequest.of(page, pageSize, Sort.by(CREATED_AT).descending()))
-                    : iUserAccountLogRepository.findAllByCreatedAtBetween(dateFrom, dateTo ,PageRequest.of(page, pageSize, Sort.by(CREATED_AT).descending()));
+                    ? iUserAccountLogRepository.findAllByUserAccount(
+                    account,
+                    PageRequest.of(
+                            page,
+                            pageSize,
+                            Sort.by(CREATED_AT).descending()
+                    )
+            )
+                    : iUserAccountLogRepository.findAllByCreatedAtBetween(
+                    dateFrom,
+                    dateTo,
+                    PageRequest.of(
+                            page,
+                            pageSize,
+                            Sort.by(CREATED_AT).descending()
+                    )
+            );
         }
         return account != null
-                ? iUserAccountLogRepository.findAllByUserAccountAndAction(account, type, PageRequest.of(page, pageSize, Sort.by(CREATED_AT).descending()))
-                : iUserAccountLogRepository.findAllByActionAndCreatedAtBetween(type, dateFrom, dateTo, PageRequest.of(page, pageSize, Sort.by(CREATED_AT).descending()));
+                ? iUserAccountLogRepository.findAllByUserAccountAndAction(
+                account,
+                type,
+                PageRequest.of(
+                        page,
+                        pageSize,
+                        Sort.by(CREATED_AT).descending()
+                )
+        )
+                : iUserAccountLogRepository.findAllByActionAndCreatedAtBetween(
+                type,
+                dateFrom,
+                dateTo,
+                PageRequest.of(
+                        page,
+                        pageSize,
+                        Sort.by(CREATED_AT).descending()
+                )
+        );
     }
 
     @Override
@@ -357,9 +392,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean checkMultipleLogin(HttpServletRequest request) {
+        var token = jwtUtilities.getToken(request);
+        if (StringUtils.isNotEmpty(token) && jwtUtilities.validateToken(token)) {
+            var email = jwtUtilities.extractUsername(token);
+            var userToken = userTokenRepository.findByEmail(email);
+            if (userToken.isPresent()) {
+                var tokenValue = userToken.get().getToken();
+                return !token.equalsIgnoreCase(tokenValue);
+            }
+        }
+        return false;
+    }
+
+    @Override
     public boolean isValidCaptcha(HttpServletRequest request, String captcha) {
         var cookie = CookieUtils.get(request, Constant.CAPTCHA);
-        return cookie.isPresent() && AESUtils.decrypt(cookie.get().getValue()).equals(captcha.trim());
+        var captchaDecrypt = cookie.isPresent() ? AESUtils.decrypt(cookie.get().getValue()) : "null";
+        log.log(
+                Level.INFO,
+                "Captcha: {0}, cookie: {1}, decrypt: {2}",
+                new Object[]{captcha, cookie.isPresent() ? cookie.get().getValue() : "null", captchaDecrypt}
+        );
+
+        return captchaDecrypt.equals(captcha.trim());
     }
 
     @Override

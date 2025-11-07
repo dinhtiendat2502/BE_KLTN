@@ -12,6 +12,9 @@ application:
       - /v3/api-docs/**
       - /swagger-ui/**
       - /swagger-ui.html
+      - /slider/all
+      - /kommunicate/bot/get-bot-active
+
 server:
   port: ${PORT:8080}
   servlet:

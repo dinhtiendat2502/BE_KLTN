@@ -35,7 +35,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         try {
             String jwt = jwtTokenProvider.getToken(request);
-
             if (StringUtils.hasText(jwt) && !"null".equalsIgnoreCase(jwt) && jwtTokenProvider.validateToken(jwt)) {
                 var username = jwtTokenProvider.extractUsername(jwt);
 

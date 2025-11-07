@@ -1,5 +1,6 @@
 package com.app.toeic.jwt;
 
+import com.app.toeic.user.response.LoginResponse;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -13,10 +14,13 @@ import org.springframework.util.StringUtils;
 
 import java.security.Key;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 
@@ -88,6 +92,28 @@ public class JwtTokenProvider {
                                                  .plus(jwtExpiration, ChronoUnit.MILLIS)))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public LoginResponse generateTokenV2(String email, String password, List<String> roles) {
+        var createdDate = Instant.now();
+        var expiredDate = Instant.now().plus(jwtExpiration, ChronoUnit.MILLIS);
+        var token = Jwts
+                .builder()
+                .setSubject(email)
+                .claim("role", roles)
+                .claim("password", password)
+                .setIssuedAt(Date.from(createdDate))
+                .setExpiration(Date.from(expiredDate))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+        return LoginResponse
+                .builder()
+                .token(token)
+                .email(email)
+                .roles(roles)
+                .createdDate(LocalDateTime.ofInstant(createdDate, ZoneId.systemDefault()))
+                .expiredDate(LocalDateTime.ofInstant(expiredDate, ZoneId.systemDefault()))
+                .build();
     }
 
     public boolean validateToken(String token) {

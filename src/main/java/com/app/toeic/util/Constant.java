@@ -45,6 +45,7 @@ public class Constant {
     public static final String STATUS_TRANSCRIBED = "TRANSCRIBED";
     public static final String STATUS_IN_PROGRESS = "IN_PROGRESS";
     public static final String GPT = "GPT";
+    public static final String GPT_4 = "GPT_4";
     public static final String GEMINI = "GEMINI";
     public static final String GEMINI_CURL = "GEMINI-CURL";
     public static final String LLAMAS = "LLAMAS";
@@ -78,6 +79,7 @@ public class Constant {
     public static final String PALM2 = "PALM2";
     public static final String USER = "user";
     public static final String MODEL_GPT = "gpt-3.5-turbo";
+    public static final String MODEL_GPT_4 = "gpt-4";
     public static final String URL_FRONTEND = "URL_FRONTEND";
     public static final String LOGIN_SOCIAL = "LOGIN_SOCIAL";
     public static final String AUTHENTICATION_AFTER_REGISTER = "AUTHENTICATION_AFTER_REGISTER";
