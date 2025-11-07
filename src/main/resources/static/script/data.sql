@@ -391,3 +391,10 @@ VALUES ('21e1deaca7ccde427eab393663be5b77a', '', true, '(function (d, m) {
 
 insert into system_config(config_key, description, updated_at, value)
 VALUES ('URL_FRONTEND', 'Domain of frontend', current_date, 'http://localhost:4200');
+
+insert into system_config(config_key, description, updated_at, value)
+VALUES ('REDIS_HOST', 'Host of redis', current_date, 'redis-13301.c256.us-east-1-2.ec2.redns.redis-cloud.com');
+insert into system_config(config_key, description, updated_at, value)
+VALUES ('REDIS_PORT', 'Port of redis', current_date, '13301');
+insert into system_config(config_key, description, updated_at, value)
+VALUES ('REDIS_PASSWORD', 'Password of redis', current_date, 'aWCybEVeng6FbyfxKpqPMGF0Osd6Bi7j');

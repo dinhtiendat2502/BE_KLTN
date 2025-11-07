@@ -12,6 +12,7 @@ import com.app.toeic.user.repo.IUserAccountLogRepository;
 import com.app.toeic.user.repo.IUserAccountRepository;
 import com.app.toeic.user.response.LoginResponse;
 import com.app.toeic.external.response.ResponseVO;
+import com.app.toeic.user.response.UserAccountRepsonse;
 import com.app.toeic.user.service.UserService;
 import com.app.toeic.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -359,6 +360,23 @@ public class UserServiceImpl implements UserService {
     public boolean isValidCaptcha(HttpServletRequest request, String captcha) {
         var cookie = CookieUtils.get(request, Constant.CAPTCHA);
         return cookie.isPresent() && AESUtils.decrypt(cookie.get().getValue()).equals(captcha.trim());
+    }
+
+    @Override
+    public Optional<UserAccountRepsonse> getProfileV2(HttpServletRequest request) {
+        var token = jwtUtilities.getToken(request);
+        if (StringUtils.isNotEmpty(token) && jwtUtilities.validateToken(token)) {
+            String email = jwtUtilities.extractUsername(token);
+
+            var userDetails = userDetailsService.loadUserByUsername(email);
+            if (Boolean.TRUE.equals(jwtUtilities.validateToken(token, userDetails))) {
+                var user = iUserRepository
+                        .getByEmail(email)
+                        .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, EMAIL_NOT_REGISTERED));
+                return Optional.of(user);
+            }
+        }
+        return Optional.empty();
     }
 
     public String randomPassword() {

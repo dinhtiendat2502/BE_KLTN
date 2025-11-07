@@ -202,7 +202,7 @@ public class UserController {
     @GetMapping("/get-profile")
     public ResponseVO getProfile(HttpServletRequest request) {
         var profile = userService
-                .getProfile(request)
+                .getProfileV2(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, NOT_FOUNT_USER));
         return ResponseVO
                 .builder()

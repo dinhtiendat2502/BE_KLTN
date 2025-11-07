@@ -18,38 +18,53 @@ public interface IUserAccountRepository extends JpaRepository<UserAccount, Integ
 
     Optional<UserAccount> findByEmail(String email);
 
+    @Query(value = """
+            select
+                ua.user_id,
+                ua.email,
+                ua.full_name,
+                ua.phone,
+                ua.provider,
+                ua.avatar,
+                ua.address,
+                ua.status
+            from user_account ua
+            where ua.email = ?1
+            """, nativeQuery = true)
+    Optional<UserAccountRepsonse> getByEmail(String email);
+
     List<UserAccount> findAllByRolesNotContains(Role role);
 
     @Query(value = """
             select
-                ua.user_id,
-                ua.email,
-                ua.full_name,
-                ua.phone,
-                ua.provider,
-                ua.avatar,
-                ua.address,
-                ua.status
+                    ua.user_id,
+                    ua.email,
+                    ua.full_name,
+                    ua.phone,
+                    ua.provider,
+                    ua.avatar,
+                    ua.address,
+                    ua.status
             from user_account ua
-                     inner join user_role ur on ur.user_id = ua.user_id
-                     inner join role r on r.role_id = ur.role_id and r.role_name = 'USER'
-             """, nativeQuery = true)
+            inner join user_role ur on ur.user_id = ua.user_id
+            inner join role r on r.role_id=ur.role_id and r.role_name = 'USER'
+            """, nativeQuery = true)
     Page<UserAccountRepsonse> findAllUser(Pageable pageable);
 
     @Query(value = """
             select
-                ua.user_id,
-                ua.email,
-                ua.full_name,
-                ua.phone,
-                ua.provider,
-                ua.avatar,
-                ua.address,
-                ua.status
+                    ua.user_id,
+            ua.email,
+            ua.full_name,
+            ua.phone,
+            ua.provider,
+            ua.avatar,
+            ua.address,
+            ua.status
             from user_account ua
-                     inner join user_role ur on ur.user_id = ua.user_id
-                     inner join role r on r.role_id = ur.role_id and r.role_name = 'USER'
-            WHERE ua.status = ?1
-             """, nativeQuery = true)
+            inner join user_role ur on ur.user_id = ua.user_id
+            inner join role r on r.role_id=ur.role_id and r.role_name = 'USER'
+            WHERE ua.status =?1
+            """, nativeQuery = true)
     Page<UserAccountRepsonse> findAllUserByStatus(String status, Pageable pageable);
 }

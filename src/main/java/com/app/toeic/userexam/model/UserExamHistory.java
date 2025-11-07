@@ -29,23 +29,40 @@ public class UserExamHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer userExamHistoryId;
     Integer totalQuestion;
-    Integer numberOfCorrectAnswer;
-    Integer numberOfWrongAnswer;
-    Integer numberOfNotAnswer;
-    Integer numberOfCorrectAnswerPart1;
-    Integer numberOfCorrectAnswerPart2;
-    Integer numberOfCorrectAnswerPart3;
-    Integer numberOfCorrectAnswerPart4;
-    Integer numberOfCorrectAnswerPart5;
-    Integer numberOfCorrectAnswerPart6;
-    Integer numberOfCorrectAnswerPart7;
-    Integer numberOfCorrectListeningAnswer;
-    Integer numberOfWrongListeningAnswer;
-    Integer numberOfCorrectReadingAnswer;
-    Integer numberOfWrongReadingAnswer;
-    Integer totalScore;
-    Integer totalScoreReading;
-    Integer totalScoreListening;
+    @Builder.Default
+    Integer numberOfCorrectAnswer = 0;
+    @Builder.Default
+    Integer numberOfWrongAnswer = 0;
+    @Builder.Default
+    Integer numberOfNotAnswer = 0;
+    @Builder.Default
+    Integer numberOfCorrectAnswerPart1 = 0;
+    @Builder.Default
+    Integer numberOfCorrectAnswerPart2 = 0;
+    @Builder.Default
+    Integer numberOfCorrectAnswerPart3 = 0;
+    @Builder.Default
+    Integer numberOfCorrectAnswerPart4 = 0;
+    @Builder.Default
+    Integer numberOfCorrectAnswerPart5 = 0;
+    @Builder.Default
+    Integer numberOfCorrectAnswerPart6 = 0;
+    @Builder.Default
+    Integer numberOfCorrectAnswerPart7 = 0;
+    @Builder.Default
+    Integer numberOfCorrectListeningAnswer = 0;
+    @Builder.Default
+    Integer numberOfWrongListeningAnswer = 0;
+    @Builder.Default
+    Integer numberOfCorrectReadingAnswer = 0;
+    @Builder.Default
+    Integer numberOfWrongReadingAnswer = 0;
+    @Builder.Default
+    Integer totalScore = 0;
+    @Builder.Default
+    Integer totalScoreReading = 0;
+    @Builder.Default
+    Integer totalScoreListening = 0;
     Integer timeToDoExam;       // calculate by second
     Integer timeRemaining;      // calculate by second
     @Builder.Default
@@ -53,6 +70,12 @@ public class UserExamHistory {
     @Builder.Default
     Boolean isFullTest = false;
     String listPart;
+
+    @Builder.Default
+    Integer totalLeave = 0;
+
+    @Builder.Default
+    Integer totalOpenNewTab = 0;
 
     @CreationTimestamp
     LocalDateTime examDate;

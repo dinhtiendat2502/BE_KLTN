@@ -81,5 +81,5 @@ public class Constant {
     public static final String URL_FRONTEND = "URL_FRONTEND";
     public static final String LOGIN_SOCIAL = "LOGIN_SOCIAL";
     public static final String AUTHENTICATION_AFTER_REGISTER = "AUTHENTICATION_AFTER_REGISTER";
-
+    public static final String URL_CACHE_EXAM = "exam:{0}:{1}";  // exam:userId:examId
 }

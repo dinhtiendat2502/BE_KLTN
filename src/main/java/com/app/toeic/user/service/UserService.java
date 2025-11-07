@@ -3,6 +3,7 @@ package com.app.toeic.user.service;
 import com.app.toeic.user.model.UserAccount;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.user.payload.*;
+import com.app.toeic.user.response.UserAccountRepsonse;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Optional;
@@ -46,4 +47,5 @@ public interface UserService {
 
     LoginDTO readCaptcha(HttpServletRequest request);
     boolean isValidCaptcha(HttpServletRequest request, String captcha);
+    Optional<UserAccountRepsonse> getProfileV2(HttpServletRequest request);
 }

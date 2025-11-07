@@ -112,7 +112,6 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
             downloadUrl = MessageFormat.format(downloadUrl, firebaseBean.getBucketName());
             gsUrl = MessageFormat.format(gsUrl, firebaseBean.getBucketName());
             var jsonContent = firebaseBean.getFileJson();
-            log.info(MessageFormat.format("FirebaseStorageServiceImpl >> init >> {0}", jsonContent));
             var credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(jsonContent.getBytes()));
             var options = FirebaseOptions.builder()
                                          .setCredentials(credentials)
