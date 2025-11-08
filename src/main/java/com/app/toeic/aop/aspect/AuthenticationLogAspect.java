@@ -54,7 +54,7 @@ public class AuthenticationLogAspect {
             response = pjp.proceed();
             return response;
         } catch (Exception e) {
-            log.log(Level.WARNING, "AccessibilityAspect >> aroundAspect >> Exception: ", e);
+log.log(Level.WARNING, "AccessibilityAspect >> aroundAspect >> Exception: ", e);
             throw e;
         } finally {
             var user = Optional.<UserAccount>empty();

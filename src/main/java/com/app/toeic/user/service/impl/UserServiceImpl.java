@@ -18,6 +18,8 @@ import com.app.toeic.user.response.UserAccountRepsonse;
 import com.app.toeic.user.service.UserService;
 import com.app.toeic.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.Cookie;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -407,7 +409,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isValidCaptcha(HttpServletRequest request, String captcha) {
         var cookie = CookieUtils.get(request, Constant.CAPTCHA);
+        var captchaDecrypt = cookie.isPresent() ? AESUtils.decrypt(cookie.get().getValue()) : "null";
+        log.log(
+                Level.INFO,
+                "Captcha: {0}, cookie: {1}, decrypt: {2}",
+                new Object[]{captcha, cookie.isPresent() ? cookie.get().getValue() : "null", captchaDecrypt}
+        );
+
         return cookie.isPresent() && AESUtils.decrypt(cookie.get().getValue()).equals(captcha.trim());
+
     }
 
     @Override
