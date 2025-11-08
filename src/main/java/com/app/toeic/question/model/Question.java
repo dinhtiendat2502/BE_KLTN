@@ -19,6 +19,7 @@ import java.util.Set;
 @Entity
 @Table(name = "question", indexes = {
         @Index(name = "question_number_index", columnList = "questionNumber"),
+        @Index(name = "part_id_index", columnList = "part_id")
 })
 @Setter
 @Getter

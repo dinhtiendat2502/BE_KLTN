@@ -3,6 +3,10 @@ package com.app.toeic.user.model;
 
 import com.app.toeic.chatai.model.ChatHistory;
 import com.app.toeic.comment.model.Comment;
+import com.app.toeic.course.model.Enrollment;
+import com.app.toeic.message.model.Conversation;
+import com.app.toeic.message.model.Message;
+import com.app.toeic.message.model.Participant;
 import com.app.toeic.user.enums.UType;
 import com.app.toeic.userexam.model.UserExamHistory;
 import com.app.toeic.user.enums.EUser;
@@ -91,6 +95,35 @@ public class UserAccount implements UserDetails {
     @Builder.Default
     Set<ChatHistory> chatHistories = new HashSet<>();
 
+    @ManyToMany
+    @JsonBackReference
+    @Builder.Default
+    @JoinTable(
+            name = "participants",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "conversation_id")
+    )
+    Set<Conversation> conversations = new HashSet<>();
+
+    @OneToMany(mappedBy = "sender")
+    @JsonBackReference
+    @Builder.Default
+    Set<Message> messages = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    @Builder.Default
+    Set<Participant> conversationParticipants = new HashSet<>();
+
+    @OneToMany(mappedBy = "creator")
+    @JsonBackReference
+    @Builder.Default
+    Set<Conversation> createdConversations = new HashSet<>();
+
+    @OneToMany(mappedBy = "userAccount")
+    @JsonBackReference
+    @Builder.Default
+    Set<Enrollment> enrollments = new HashSet<>();
 
     @Override
     @JsonIgnore

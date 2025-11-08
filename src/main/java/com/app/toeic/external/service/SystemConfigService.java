@@ -37,7 +37,7 @@ public class SystemConfigService {
 
     LoadingCache<String, String> systemCache = CacheBuilder.newBuilder()
             .recordStats()
-            .refreshAfterWrite(1, TimeUnit.DAYS)
+            .refreshAfterWrite(5, TimeUnit.MINUTES)
             .build(CacheLoader.asyncReloading(cacheLoader, Executors.newSingleThreadExecutor()));
 
     public String getConfigValue(String key) {
@@ -47,5 +47,19 @@ public class SystemConfigService {
             log.log(Level.WARNING, "SystemConfigService >> getConfigValue >> ExecutionException: ", e);
             return StringUtils.EMPTY;
         }
+    }
+
+    public void updateConfigValue(String key, String value) {
+        systemConfigRepository.findByConfigKey(key).ifPresentOrElse(e -> {
+            e.setValue(value);
+            systemConfigRepository.save(e);
+            systemCache.refresh(key);
+        }, () -> {
+            var systemConfig = new SystemConfig();
+            systemConfig.setConfigKey(key);
+            systemConfig.setValue(value);
+            systemConfigRepository.save(systemConfig);
+            systemCache.refresh(key);
+        });
     }
 }

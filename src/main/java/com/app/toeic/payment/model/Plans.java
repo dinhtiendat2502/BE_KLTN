@@ -1,5 +1,6 @@
 package com.app.toeic.payment.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,10 +30,6 @@ public class Plans {
     @Column(columnDefinition = "TEXT")
     String description;
     BigDecimal planPrice;
-    byte planDuration;
-
-    @Builder.Default
-    boolean isActive = true;
 
     @JsonIgnore
     @CreationTimestamp
@@ -42,7 +39,17 @@ public class Plans {
     @UpdateTimestamp
     LocalDateTime updatedAt;
 
+    @ManyToMany
+    @JoinTable(
+            name = "plan_mapping",
+            joinColumns = @JoinColumn(name = "plan_id"),
+            inverseJoinColumns = @JoinColumn(name = "plan_detail_id")
+    )
+    @Builder.Default
+    Set<PlanDetail> planMapping = new HashSet<>();
+
     @OneToMany(mappedBy = "plan")
     @Builder.Default
+    @JsonBackReference
     Set<Subscription> subscriptions = new HashSet<>();
 }

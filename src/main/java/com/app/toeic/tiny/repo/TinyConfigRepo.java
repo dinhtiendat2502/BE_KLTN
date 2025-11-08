@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface TinyConfigRepo extends JpaRepository<TinyConfig, Long> {
     List<TinyConfig> findAllByTinyConfigIdNot(Long tinyConfigId);
+    List<TinyConfig> findAllByStatus(boolean status);
 }

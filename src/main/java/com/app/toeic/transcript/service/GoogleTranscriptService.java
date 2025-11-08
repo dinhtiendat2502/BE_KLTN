@@ -36,7 +36,7 @@ public class GoogleTranscriptService {
     TranscriptRepo transcriptRepo;
     ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-    @Async("toeicute")
+    @Async(Constant.TOEICUTE)
     public void getTranscript(String url, TranscriptHistory transcriptHistory, String jsonFile) {
         var startTime = System.currentTimeMillis();
         try {

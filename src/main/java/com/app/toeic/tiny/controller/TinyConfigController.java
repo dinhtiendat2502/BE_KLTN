@@ -17,6 +17,15 @@ import org.springframework.web.bind.annotation.*;
 public class TinyConfigController {
     TinyConfigRepo tinyConfigRepo;
 
+    @GetMapping("get-active")
+    public Object getActiveTinyConfig() {
+        return ResponseVO
+                .builder()
+                .success(true)
+                .data(tinyConfigRepo.findAllByStatus(true).stream().findFirst().orElse(null))
+                .build();
+    }
+
     @GetMapping("list")
     public Object getAllTinyConfig(
             @RequestParam(value = "page", defaultValue = "0") int page,

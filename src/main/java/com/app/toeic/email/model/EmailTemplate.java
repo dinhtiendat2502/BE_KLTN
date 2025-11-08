@@ -4,6 +4,7 @@ package com.app.toeic.email.model;
 import com.app.toeic.util.Constant;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "email_template", indexes = {
@@ -14,21 +15,22 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EmailTemplate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    Integer id;
 
     @Column(unique = true)
-    private String name;
+    String name;
 
-    private String subject;
+    String subject;
 
     @Column(unique = true)
-    private String templateCode;
+    String templateCode;
 
     @Column(columnDefinition = "TEXT")
-    private String templateContent;
+    String templateContent;
     @Builder.Default
-    private String status = Constant.STATUS_INACTIVE;
+    String status = Constant.STATUS_INACTIVE;
 }

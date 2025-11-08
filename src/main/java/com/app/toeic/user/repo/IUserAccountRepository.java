@@ -27,13 +27,25 @@ public interface IUserAccountRepository extends JpaRepository<UserAccount, Integ
                 ua.provider,
                 ua.avatar,
                 ua.address,
-                ua.status
+                ua.status,
+                ua.user_type
             from user_account ua
             where ua.email = ?1
             """, nativeQuery = true)
     Optional<UserAccountRepsonse> getByEmail(String email);
 
     List<UserAccount> findAllByRolesNotContains(Role role);
+
+    @Query(value = """
+                        select
+                                ua.user_id,
+                                ua.status,
+                                ua.user_type
+                        from user_account ua
+                        inner join user_role ur on ur.user_id = ua.user_id
+                        inner join role r on r.role_id=ur.role_id and r.role_name = 'USER'
+            """, nativeQuery = true)
+    List<UserAccountRepsonse> findAllAccountUser();
 
     @Query(value = """
             select
@@ -44,7 +56,8 @@ public interface IUserAccountRepository extends JpaRepository<UserAccount, Integ
                     ua.provider,
                     ua.avatar,
                     ua.address,
-                    ua.status
+                    ua.status,
+                    ua.user_type
             from user_account ua
             inner join user_role ur on ur.user_id = ua.user_id
             inner join role r on r.role_id=ur.role_id and r.role_name = 'USER'
@@ -60,7 +73,8 @@ public interface IUserAccountRepository extends JpaRepository<UserAccount, Integ
             ua.provider,
             ua.avatar,
             ua.address,
-            ua.status
+            ua.status,
+            ua.user_type
             from user_account ua
             inner join user_role ur on ur.user_id = ua.user_id
             inner join role r on r.role_id=ur.role_id and r.role_name = 'USER'

@@ -14,6 +14,7 @@ import com.app.toeic.exam.service.ExamService;
 import com.app.toeic.userexam.service.UserAnswerService;
 import com.app.toeic.userexam.service.UserExamHistoryService;
 import com.app.toeic.user.service.UserService;
+import com.app.toeic.util.Constant;
 import com.app.toeic.util.HttpStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AccessLevel;
@@ -23,7 +24,9 @@ import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import redis.clients.jedis.JedisPooled;
 
+import java.text.MessageFormat;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -38,6 +41,8 @@ public class ExamController {
     UserExamHistoryService userExamHistoryService;
     UserAnswerService userAnswerService;
     ICalculateScoreRepository calculateScoreRepository;
+    JedisPooled jedisPooled;
+    private static final String KEY_EXAM = "answerExam";
     private static final String EXAM_NOT_FOUND = "EXAM_NOT_FOUND";
     private static final String GET_EXAM_SUCCESS = "GET_EXAM_SUCCESS";
 
@@ -47,6 +52,16 @@ public class ExamController {
                 .builder()
                 .success(Boolean.TRUE)
                 .data(examService.getAllExam())
+                .message(GET_EXAM_SUCCESS)
+                .build();
+    }
+
+    @GetMapping("list-real-test")
+    public Object getAllRealTest() {
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(examService.getAllRealExam())
                 .message(GET_EXAM_SUCCESS)
                 .build();
     }
@@ -92,6 +107,7 @@ public class ExamController {
         var user = userService
                 .getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
+        examService.increaseUserDoExam(finishExamDto.getExamId());
         var examHasFullQuestionAnswer = examService
                 .findExamFullQuestionWithAnswer(finishExamDto.getExamId())
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, EXAM_NOT_FOUND));
@@ -230,6 +246,8 @@ public class ExamController {
         returnUserExamHistory.setTotalScoreReading(listScore.getFirst().getReading());
         returnUserExamHistory.setTotalScore(returnUserExamHistory.getTotalScoreListening() + returnUserExamHistory.getTotalScoreReading());
         userExamHistoryService.save(returnUserExamHistory);
+        var key = jedisPooled.hdel(KEY_EXAM, getKeyCacheExam(user.getUserId(), finishExamDto.getExamId()));
+        log.info(MessageFormat.format("UserExamLogController >> getListAnswer >> {0}", key));
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
@@ -250,5 +268,7 @@ public class ExamController {
                 .message(GET_EXAM_SUCCESS)
                 .build();
     }
-
+    private String getKeyCacheExam(int userId, int examId) {
+        return MessageFormat.format(Constant.URL_CACHE_EXAM, userId, examId);
+    }
 }

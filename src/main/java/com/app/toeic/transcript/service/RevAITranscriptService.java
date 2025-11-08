@@ -30,7 +30,7 @@ public class RevAITranscriptService {
     TranscriptRepo transcriptRepo;
     ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-    @Async("toeicute")
+    @Async(Constant.TOEICUTE)
     public void getTranscript(String url, TranscriptHistory transcriptHistory, ApiClient apiClient) {
         CompletableFuture.supplyAsync(() -> {
             try {

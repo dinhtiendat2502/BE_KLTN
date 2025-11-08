@@ -12,11 +12,11 @@ VALUES ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, li
         'csrftoken=taoxMpbf7FKoFHoZGyNqfdoKcwD0elEJgIKsrel28Pc7cEKWiO5XB9Tc8Lw4r0ge; sessionid=11wlkenrvfpsrris51vl9aqbixlvcvfq; cf_clearance=.UxZwpQCxxLgA3nOPuc8.XCIZ3pXEIYNPBVDEK1r_r8-1711956447-1.0.1.1-MTG7UGOio0vwN9itKBMXt3e8nMGDHKmXBgnQfft.DVHqFqok0rtyy.QQ9imW79wiElSwe8jX0eKt8vHd9HyijQ',
         'hideonbush8405@gmail.com');
 insert into email_config(host, port, username, password, status)
-values ('smtp.gmail.com', '587', 'hideonbush8405', 'okcu xvrk eblg accw', true);
+values ('smtp.gmail.com', '587', '', '', true);
 
 
 insert into email_template(name, status, subject, template_code, template_content)
-VALUES ('Mẫu email xác thực OTP khi đăng ký', 'active', 'Xác thực tài khoản TOEICUTE',
+VALUES ('Mẫu email xác thực OTP khi đăng ký', 'active', 'Xác thực tài khoản TOEIC HERO',
         'AUTHENTICATION_AFTER_REGISTER',
         '<!DOCTYPE html>
         <html lang="en">
@@ -33,10 +33,10 @@ VALUES ('Mẫu email xác thực OTP khi đăng ký', 'active', 'Xác thực tà
             <div style="font-family: Helvetica,Arial,sans-serif;min-width:700px;overflow:auto;line-height:2">
                 <div style="margin:50px auto;width:600px;padding:20px 0">
                     <div style="border-bottom:1px solid #eee">
-                        <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">TOEICUTE</a>
+                        <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">TOEIC HERO</a>
                     </div>
                     <p style="font-size:1.1em">Hi, %s</p>
-                    <p>Chào mừng bạn đến với TOEICUTE.<br />Mã OTP kích hoạt tài khoản của bạn là:</p>
+                    <p>Chào mừng bạn đến với TOEIC HERO.<br />Mã OTP kích hoạt tài khoản của bạn là:</p>
                     <h2
                         style="background: #00466a; margin: 0 auto;width: max-content;padding: 0 10px;color: #fff; border-radius: 4px;">
                         %s
@@ -62,7 +62,7 @@ VALUES ('Mẫu email xác thực OTP khi đăng ký', 'active', 'Xác thực tà
 
 
 insert into email_template(name, status, subject, template_code, template_content)
-VALUES ('Mẫu email sau khi đăng ký tài khoản bằng FB/GOOGLE', 'active', 'THÔNG TIN TÀI KHOẢN TOEICUTE', 'LOGIN_SOCIAL',
+VALUES ('Mẫu email sau khi đăng ký tài khoản bằng FB/GOOGLE', 'active', 'THÔNG TIN TÀI KHOẢN TOEIC HERO', 'LOGIN_SOCIAL',
         '<!DOCTYPE html>
 <html lang="en">
 
@@ -88,20 +88,20 @@ VALUES ('Mẫu email sau khi đăng ký tài khoản bằng FB/GOOGLE', 'active'
               color: #00466a;
               text-decoration: none;
               font-weight: 600;
-            ">TOEICUTE</a>
+            ">TOEIC HERO</a>
             </div>
             <p style="font-size: 1.1em">Hi, %s</p>
             <p>
-                Chào mừng bạn đến với TOEICUTE.
+                Chào mừng bạn đến với TOEIC HERO.
             </p>
             <ul style="font-size: 0.8em;">
-                <li>Bạn có thể sử dụng thông tin này để đăng nhập vào TOEICUTE hoặc đăng nhập bằng tài khoản %s
+                <li>Bạn có thể sử dụng thông tin này để đăng nhập vào TOEIC HERO hoặc đăng nhập bằng tài khoản %s
                 </li>
                 <li>Sau khi đăng nhập, bạn có thể thay đổi mật khẩu tùy thích.</li>
                 <li>Chúng tôi khuyến khích bạn nên thay đổi mật khẩu để bảo mật tài khoản.</li>
             </ul>
             <p>Tài khoản để đăng nhập vào
-                TOEICUTE của bạn là:</p>
+                TOEIC HERO của bạn là:</p>
             <table
                 style="border-collapse: collapse; width: 600px; border: 1px solid #ddd; font-size: 14px; margin-bottom: 20px;">
                 <tr style="border-bottom: 1px solid #ddd;">
@@ -162,7 +162,7 @@ VALUES ('Mẫu email sau khi đăng ký tài khoản bằng FB/GOOGLE', 'active'
 
 
 insert into email_template(name, status, subject, template_code, template_content)
-VALUES ('Mẫu email cấp lại mật khẩu', 'active', 'Cấp lại mật khẩu TOEICUTE', 'FORGOT_PASSWORD',
+VALUES ('Mẫu email cấp lại mật khẩu', 'active', 'Cấp lại mật khẩu TOEIC HERO', 'FORGOT_PASSWORD',
         '
 <table style="background-color: #f2f3f8; max-width: 540px; margin: 0 auto;">
     <tbody>
@@ -228,22 +228,24 @@ insert into menu_group(display_name, icon, priority, have_child, path, roles, ty
 VALUES ('Crawl', 'mdi mdi-database-plus menu-icon', 7, true, null, null, 'MEMBER');
 insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
 VALUES ('Blog', 'mdi mdi mdi-clipboard-text menu-icon', 8, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Pricing management', 'mdi mdi-currency-usd menu-icon', 9, false, '/admin/pricing', null, 'MEMBER');
 
 insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
-VALUES ('System Monitoring', 'mdi mdi mdi-android menu-icon', 9, false, 'http://localhost:8080/api/applications', null,
+VALUES ('System Monitoring', 'mdi mdi mdi-android menu-icon', 10, false, 'http://localhost:8080/api/applications', null,
         'SYSTEM');
 insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
-VALUES ('Firebase Config', 'mdi mdi-cloud-upload menu-icon', 10, true, null, null, 'SYSTEM');
+VALUES ('Firebase Config', 'mdi mdi-cloud-upload menu-icon', 11, true, null, null, 'SYSTEM');
 insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
-VALUES ('Email Config', 'mdi mdi-email menu-icon', 11, true, null, null, 'SYSTEM');
+VALUES ('Email Config', 'mdi mdi-email menu-icon', 12, true, null, null, 'SYSTEM');
 insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
-VALUES ('Slider Config', 'mdi mdi-equal-box menu-icon', 12, true, null, null, 'SYSTEM');
+VALUES ('Slider Config', 'mdi mdi-equal-box menu-icon', 13, true, null, null, 'SYSTEM');
 insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
-VALUES ('Rev AI Config', 'mdi mdi-at menu-icon', 13, true, null, null, 'SYSTEM');
+VALUES ('Rev AI Config', 'mdi mdi-at menu-icon', 14, true, null, null, 'SYSTEM');
 insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
-VALUES ('Kommunicate Config', 'mdi mdi-earth menu-icon', 14, true, null, null, 'SYSTEM');
+VALUES ('Kommunicate Config', 'mdi mdi-earth menu-icon', 15, true, null, null, 'SYSTEM');
 insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
-VALUES ('Tiny Editor Config', 'mdi mdi-widgets menu-icon', 14, true, null, null, 'SYSTEM');
+VALUES ('Tiny Editor Config', 'mdi mdi-widgets menu-icon', 16, true, null, null, 'SYSTEM');
 
 
 insert into left_menu(display_name, path, roles, menu_group_id)
@@ -273,47 +275,47 @@ VALUES ('List Blog', '/admin/blog/get', null, 8);
 insert into left_menu(display_name, path, roles, menu_group_id)
 VALUES ('Add Blog', '/admin/blog/add', null, 8);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('List Firebase Config', '/admin/firebase/list', null, 10);
+VALUES ('List Firebase Config', '/admin/firebase/list', null, 11);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('Add Config', '/admin/firebase/update', null, 10);
+VALUES ('Add Config', '/admin/firebase/update', null, 11);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('History Upload', '/admin/firebase/history', null, 10);
+VALUES ('History Upload', '/admin/firebase/history', null, 11);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('List Email Config', '/admin/email/account/list', null, 11);
+VALUES ('List Email Config', '/admin/email/account/list', null, 12);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('Add Email Config', '/admin/email/account/update', null, 11);
+VALUES ('Add Email Config', '/admin/email/account/update', null, 12);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('List Template Email', '/admin/email/template-email/list', null, 11);
+VALUES ('List Template Email', '/admin/email/template-email/list', null, 12);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('Add Template Email', '/admin/email/template-email/update', null, 11);
+VALUES ('Add Template Email', '/admin/email/template-email/update', null, 12);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('List Slider', '/admin/slider/list', null, 12);
+VALUES ('List Slider', '/admin/slider/list', null, 13);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('Add Slider', '/admin/slider/update', null, 12);
+VALUES ('Add Slider', '/admin/slider/update', null, 13);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('List RevAi Account', '/admin/rev-ai/account/list', null, 13);
+VALUES ('List RevAi Account', '/admin/rev-ai/account/list', null, 14);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('Add RevAi Account', '/admin/rev-ai/account/update', null, 13);
+VALUES ('Add RevAi Account', '/admin/rev-ai/account/update', null, 14);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('List RevAi Config', '/admin/rev-ai/config/list', null, 13);
+VALUES ('List RevAi Config', '/admin/rev-ai/config/list', null, 14);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('Add RevAi Config', '/admin/rev-ai/config/update', null, 13);
+VALUES ('Add RevAi Config', '/admin/rev-ai/config/update', null, 14);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('List Kommunicate Account', '/admin/kommunicate/account/list', null, 14);
+VALUES ('List Kommunicate Account', '/admin/kommunicate/account/list', null, 15);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('Add Kommunicate Account', '/admin/kommunicate/account/update', null, 14);
+VALUES ('Add Kommunicate Account', '/admin/kommunicate/account/update', null, 15);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('List Kommunicate Config', '/admin/kommunicate/bot/list', null, 14);
+VALUES ('List Kommunicate Config', '/admin/kommunicate/bot/list', null, 15);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('Add Kommunicate Config', '/admin/kommunicate/bot/update', null, 14);
+VALUES ('Add Kommunicate Config', '/admin/kommunicate/bot/update', null, 15);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('List Tiny Account', '/admin/tiny/account/list', null, 15);
+VALUES ('List Tiny Account', '/admin/tiny/account/list', null, 16);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('Add Tiny Account', '/admin/tiny/account/update', null, 15);
+VALUES ('Add Tiny Account', '/admin/tiny/account/update', null, 16);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('List Tiny Config', '/admin/tiny/config/list', null, 15);
+VALUES ('List Tiny Config', '/admin/tiny/config/list', null, 16);
 insert into left_menu(display_name, path, roles, menu_group_id)
-VALUES ('Add Tiny Config', '/admin/tiny/config/update', null, 15);
+VALUES ('Add Tiny Config', '/admin/tiny/config/update', null, 16);
 
 
 insert into revai_config(access_token, status)
@@ -338,56 +340,19 @@ VALUES ('GOOGLE_TRANSLATE_URL',
         'https://translate.google.com/translate_a/single?client=at&dt=t&dt=ld&dt=qca&dt=rm&dt=bd&dj=1&hl=%25s&ie=UTF-8&oe=UTF-8&inputm=2&otf=2&iid=1dd3b944-fa62-4b55-b330-74909a99969e&',
         '', CURDATE());
 insert into system_config(config_key, value, description, updated_at)
-VALUES ('TWILIO_SID', 'AC1df831ee034c57eff6e804dd57683db4', '', CURRENT_DATE());
+VALUES ('TWILIO_SID', '', '', CURRENT_DATE());
 insert into system_config(config_key, value, description, updated_at)
-VALUES ('TWILIO_TOKEN', '79287f208f1057facf553eca59e14515', '', CURRENT_DATE());
+VALUES ('TWILIO_TOKEN', '', '', CURRENT_DATE());
 insert into system_config(config_key, description, updated_at, value) VALUES ('authorizedRedirectUris', '', CURRENT_DATE(), 'http://localhost:4200/oauth2/redirect');
 insert into system_config (config_key, description, updated_at, value)
-values ('VERTEX','Description for vertex ai', CURRENT_DATE, '{
-  "type": "service_account",
-  "project_id": "beaming-inn-423802-q6",
-  "private_key_id": "329f5697e378faecc7aba72bfb34649da6b362a2",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCV3MmiHIX9JbYN\nujWZgyLtTHxSL+ZCBcZRGDWGoh6lV/AtRxZ11/Z8u7QNal0QTfpPHc2228ly7u/c\ntxsUtQsuVELJKiwpDuxzDzXHJJnOrUthG/RvVSFWCTWns23KCb13fXPhaA+7y5DH\n0IPVv7aYoaykn1kiL5OQYOm8q7r4h7Z13P6EPF9GOY5j486FgH/R20gzmNGo7kmg\nGI3iTqgCTlqp6fsaye8PJTgY4tApTEfRkfUOWM0UBGsa76238nZgS2QfenSOTOaK\nWZYaXOSTa9t9OHs4VXeCS/I0Md5whP4Hk6ZFtxNPXScr605wyLBzc9uOvOWb3JuF\n2zXnvCevAgMBAAECggEAFKWxYhRr9s9rSxjh/vSCVg9jptnSmjtmx2V+emjRBWwd\nkHTAM3GTFDxdjOZKoXnHiCmjCL6J/WZ4xaq0oHW7xKD3Up/s1aX+Dcbase/pAQCp\n51yNS4l/E6DRM6RqS/EWRDrp7EmvYUBQAjednPrSPX/eOWV68lV7ueNK+3jtmbAN\nmrzhP2SSFXIHop4vSKTyi0YwAN/9ClTWPLAJq+Bds1poIuNKKzINJu8y/i/gpxHN\njoq8bcfaec5N3SyjrGWbc/Rh6TWeElQpJ3CUtldQWsHzK+FKLOiFLzMm37EDXSfL\nqoC5nCmoZT29tuxvIGavm3u/TP8Nj7kRr1UxFDonAQKBgQDQXyjWO3ufhxy0JWu2\nUVb9cbTts03UPoJGoU8kSC9RmTK5jRmXGMbeB5RYBXEm8ysWHGdBgoQROWFuSeCw\n+tLidDCGXBBUsHacGIYt0PubbkW9PMlluBCjwJH3DD42E9PIzhCGqo7t7YbqgUsD\nmFuxzgXcwNFZJAlS8/u5Ss4VhwKBgQC4HfePXU3JcUYQjFQ0IqcmlZUFxicPkiMc\nqGst1p/lzeMNm4HYLkXQ9rvXE9D07B4wo7GSpKjMvhx+rwptSS8UyQdYT/p5w0/X\nWMBQDECV5sjhOVoLkn0rZDFqq0gZEOvuFyNxC7ddXIWOyv/9D8FewTujhwyECPNz\nk/I5qXbmmQKBgQClagWHHC1lVOMKd3Jsh2HhTLTuxhqQ1Raib0fea5d01YMZHdQk\nyLyGYcn3nkpXO08G/IFT1gJ1kfGwleFTXaqvrsEeyFMGiBeAj09la7Nxjja6pVjT\n8Sz0cdjuH7/7Of40OLGR1jAk3RzvaLheIEMagYzR1BfdBeiI+7rnO2UiXQKBgGAa\n/FswR+dLolgG9/kS0Y9ZayVNbpw5GuzdmLyfmG1bEBbNQnS2iqjt8dTtuhfunD+l\nYo56NsZQwgz6j4XGOrYtzRCzBrrCUY3F/PSLwLa+dcLirfb2azHYJddZOtQiuhRY\nrZ5XkEpCflCv8/mDXNt6IAhW+Rh+l52P71Nb+v2ZAoGBAKLa60Gcz5ogl9kPxC4E\nve2cyuU7mLKqJ+SLZ+rtJWLUBR4SsdJjHURdJRcGSDVFDPUzNLlbhEq+EAgdWAgj\nnOLr6RTq1mdiis42nyWmOHCELod2w9H5plCFwCWYpBjSrUge1cDy0m0ICFZ0fCjF\nOhmDzDt7vtVoN12l0zt9uj/i\n-----END PRIVATE KEY-----\n",
-  "client_email": "toeicute@beaming-inn-423802-q6.iam.gserviceaccount.com",
-  "client_id": "115334651142144592942",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/toeicute%40beaming-inn-423802-q6.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
-');
+values ('VERTEX','Description for vertex ai', CURRENT_DATE, '');
 insert into system_config (config_key, description, updated_at, value)
 values ('PALM2','Description for PALM2', CURRENT_DATE, 'AIzaSyBRL8Lz9vaftejrIqHAaHOZhuobfJFHgis');
 insert into system_config (config_key, description, updated_at, value)
 values ('GPT','Description for GPT', CURRENT_DATE, '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');
 
 insert into kommunicate_bot(api_key, app_id, status, script)
-VALUES ('21e1deaca7ccde427eab393663be5b77a', '', true, '(function (d, m) {
-    var defaultSettings = {
-        "defaultBotIds": ["toeicute-7iflz"],
-        "defaultAssignee": "toeicute-7iflz",
-        "skipRouting":true
-        };
-      var kommunicateSettings = {
-        "appId": "21e1deaca7ccde427eab393663be5b77a",
-        "popupWidget": true,
-        "automaticChatOpenOnNavigation": true,
-        "voiceNote": true,
-        "onInit": function() {
-            Kommunicate.customizeWidgetCss(".chat-popup-widget-text{color:red!important;} .mck-box-top {background-color: red!important;}");
-            Kommunicate.updateSettings(defaultSettings);
-        }
-      };
-      var s = document.createElement("script");
-      s.type = "text/javascript";
-      s.async = true;
-      s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
-      var h = document.getElementsByTagName("head")[0];
-      h.appendChild(s);
-      window.kommunicate = m;
-      m._globals = kommunicateSettings;
-    })(document, window.kommunicate || {});');
+VALUES ('21e1deaca7ccde427eab393663be5b77a', '', true, '');
 
 insert into system_config(config_key, description, updated_at, value)
 VALUES ('URL_FRONTEND', 'Domain of frontend', current_date, 'http://localhost:4200');
@@ -401,3 +366,49 @@ VALUES ('REDIS_PASSWORD', 'Password of redis', current_date, 'AVNS_x8WigoRV7Q8k-
 
 INSERT INTO system_config (config_key, description, updated_at, value)
 VALUES ('GPT_4', null, '2024-06-09 13:22:30.000000', 'sk-proj-hCtKKpRFdz2fkp05TmaET3BlbkFJijf1eYearfBzThtVMM3r');
+
+update left_menu
+set path = '/admin/users/manager'
+where left_menu_id = 1;
+update left_menu
+set path = '/admin/users/activity'
+where left_menu_id = 2;
+update menu_group
+set path = '/admin/home'
+where menu_group_id = 1;
+
+
+INSERT INTO firebase_config (id, bucket_name, file_json, project_id, status, token_key) VALUES (2, '', 'toeicute-70460', true, 'toeicute');
+INSERT INTO firebase_config (id, bucket_name, file_json, project_id, status, token_key) VALUES (3, '', false, 'dsadsadsa');
+INSERT INTO system_config (system_config_id, config_key, description, updated_at, value) VALUES (14, 'VN_PAY_RETURN_URL', null, '2024-06-09 13:22:30.000000', 'http://localhost:4200/thank-you');
+
+INSERT INTO system_config (config_key, description, updated_at, value) VALUES ('PAYPAL_CLIENT_ID', null, '2024-06-09 13:22:30.000000', 'AfUIEEg0iDSc1w33ZqAwjYj5kCPlJ1GKC3yxmf9DjjI9SZScVEMb8xcBGTEKjvCofXFkMHlnc3gB3Wxj');
+INSERT INTO system_config (config_key, description, updated_at, value) VALUES ('PAYPAL_CLIENT_SECRET', null, '2024-06-09 13:22:30.000000', 'EFll9RFSqEdqW_bPBfWlCAnXtkCyaQJiV3INTBCCNpRqgMsEqe6pG48TQ6lXR2KfO70Cn9fhhd10ejKs');
+INSERT INTO system_config (config_key, description, updated_at, value) VALUES ('STRIPE_API_KEY', null, '2024-06-09 13:22:30.000000', 'sk_test_51P9ezb01sXpkr4EaHPTB9Irk8J9D7ZJAee8s7MIdAF8deWb4cA9X99Jy3JqGT4qkggOCiizP3J53J2s8yEpGJqP500sluzPaaP');
+INSERT INTO system_config (config_key, description, updated_at, value) VALUES ('STRIPE_RETURN_URL', null, '2024-06-09 13:22:30.000000', 'http://localhost:4200/thank-you/stripe');
+
+UPDATE menu_group t1
+JOIN (
+    SELECT menu_group_id
+    FROM menu_group
+    WHERE display_name = 'Exam Management'
+) t2
+ON t1.menu_group_id > t2.menu_group_id
+SET t1.priority = t1.priority + 1
+where true;
+
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Course Management', 'mdi mdi-widgets menu-icon', 5, true, null, null, 'MEMBER');
+
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Course', '/admin/course-mana/list', null, 17);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Course', '/admin/course-mana/add', null, 17);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Category Course', '/admin/course-mana/list-category', null, 17);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Category Course', '/admin/course-mana/add-category', null, 17);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Management Course Register', '/admin/course-mana/course-register', null, 17);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Management QR Code', '/admin/course-mana/qr', null, 17);

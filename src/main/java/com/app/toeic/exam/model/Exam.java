@@ -4,6 +4,7 @@ package com.app.toeic.exam.model;
 import com.app.toeic.comment.model.Comment;
 import com.app.toeic.part.model.Part;
 import com.app.toeic.topic.model.Topic;
+import com.app.toeic.userexam.model.UserExamHistory;
 import com.app.toeic.util.Constant;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -47,7 +48,7 @@ public class Exam {
     String audioPart4;
 
     @Builder.Default
-    String status = Constant.STATUS_INACTIVE;
+    String status = Constant.STATUS_PENDING;
 
     @Builder.Default
     Integer numberOfUserDoExam = 0;
@@ -83,4 +84,9 @@ public class Exam {
     @JsonBackReference
     @Builder.Default
     Set<Comment> comments = new HashSet<>();
+
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    @Builder.Default
+    Set<UserExamHistory> userExamHistories = new HashSet<>();
 }

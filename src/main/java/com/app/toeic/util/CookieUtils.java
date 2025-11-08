@@ -5,6 +5,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.experimental.UtilityClass;
+import org.springframework.http.ResponseCookie;
 import org.springframework.util.SerializationUtils;
 
 import java.util.Arrays;
@@ -24,6 +25,14 @@ public class CookieUtils {
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
+    }
+
+    public static String add(String name, String value, int maxAge) {
+        return ResponseCookie.from(name, value)
+                             .path("/")
+                             .httpOnly(true)
+                             .maxAge(maxAge)
+                             .build().toString();
     }
 
     public static void add(HttpServletResponse response, String name, String value, int maxAge) {

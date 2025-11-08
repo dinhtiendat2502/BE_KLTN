@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
 import org.jetbrains.annotations.NotNull;
@@ -20,11 +21,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Log
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
-    @Autowired
     JwtTokenProvider jwtTokenProvider;
-    @Autowired
     CustomerUserDetailsService customerUserDetailsService;
 
     @Override

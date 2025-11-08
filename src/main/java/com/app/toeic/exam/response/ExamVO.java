@@ -111,6 +111,7 @@ public class ExamVO {
         Integer getNumberOfUserDoExam();
 
         Double getPrice();
+        Boolean getIsFree();
 
         String getStatus();
 

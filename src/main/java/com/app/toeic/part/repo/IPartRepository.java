@@ -27,6 +27,16 @@ public interface IPartRepository extends JpaRepository<Part, Integer> {
             """)
     Optional<PartResponse> findPartById(Integer partId);
 
+    @Query("""
+                SELECT p
+                FROM Part p
+                JOIN FETCH p.exam
+                JOIN FETCH p.questions q
+                LEFT JOIN FETCH q.questionImages
+                WHERE p.exam.examId = ?1
+            """)
+    List<PartResponse> findAllByExamExamId(Integer examId);
+
 
     @Query("""
                 SELECT p

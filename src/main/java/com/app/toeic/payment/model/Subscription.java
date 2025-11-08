@@ -8,7 +8,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "subscription")
+@Table(name = "subscription", indexes = {
+        @Index(name = "idx_subscription_end_date", columnList = "end_date"),
+        @Index(name = "idx_subscription_status", columnList = "status")
+})
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,7 +31,6 @@ public class Subscription {
     BigDecimal amount;
     String paymentMethod;
     String status;
-
 
     @ManyToOne
     @JoinColumn(name = "plan_id")

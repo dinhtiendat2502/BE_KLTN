@@ -100,7 +100,6 @@ public class ActivityLogAspect {
                     rs.oldData(user.getAvatar());
                     if (result instanceof ResponseVO vo && (vo.getData() instanceof String avatar)) {
                         rs.newData(avatar);
-
                     }
                 }
                 rs.description(des);

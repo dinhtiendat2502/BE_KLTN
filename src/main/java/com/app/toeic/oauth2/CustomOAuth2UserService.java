@@ -8,17 +8,19 @@ import com.app.toeic.oauth2.user.OAuth2UserInfoFactory;
 import com.app.toeic.user.enums.ERole;
 import com.app.toeic.user.enums.EUser;
 import com.app.toeic.user.model.UserAccount;
+import com.app.toeic.user.model.UserAccountLog;
 import com.app.toeic.user.payload.LoginSocialDTO;
 import com.app.toeic.user.repo.IRoleRepository;
+import com.app.toeic.user.repo.IUserAccountLogRepository;
 import com.app.toeic.user.repo.IUserAccountRepository;
 import com.app.toeic.util.Constant;
 import com.app.toeic.util.HttpStatus;
+import com.app.toeic.util.ServerHelper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,6 +39,7 @@ import java.util.UUID;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     IUserAccountRepository iUserAccountRepository;
+    IUserAccountLogRepository iUserAccountLogRepository;
     PasswordEncoder passwordEncoder;
     IRoleRepository iRoleRepository;
     EmailServiceImpl emailService;
@@ -79,6 +82,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 throw new AppException(HttpStatus.SEE_OTHER, "ACCOUNT_BLOCKED");
             }
             user = updateExistingUser(user, oAuth2UserInfo);
+            var logUser = UserAccountLog.builder()
+                                        .action(Constant.LOGIN_WITH_GOOGLE_FB)
+                                        .description("Login with google or facebook")
+                                        .lastIpAddress(ServerHelper.getClientIp())
+                                        .userAccount(user)
+                                        .build();
+            iUserAccountLogRepository.save(logUser);
         } else {
             user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
         }

@@ -26,7 +26,7 @@ public class OpenApiConfig {
                                 .name("Authorization")
                                 .scheme("Bearer")))
                 .info(new Info()
-                        .title("Toeicute Service")
+                        .title("Toeic Hero Service")
                         .version("0.0.1")
                         .description("")
                         .license(new License()

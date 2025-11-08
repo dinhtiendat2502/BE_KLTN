@@ -1,6 +1,7 @@
 package com.app.toeic.part.service.impl;
 
 
+import com.app.toeic.exam.response.PartResponse;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.part.model.Part;
@@ -8,14 +9,18 @@ import com.app.toeic.exam.repo.IExamRepository;
 import com.app.toeic.part.repo.IPartRepository;
 import com.app.toeic.part.service.PartService;
 import com.app.toeic.util.Constant;
+import com.app.toeic.util.ExcelHelper;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,5 +105,15 @@ public class PartServiceIpml implements PartService {
     @Transactional
     public void savePart(Part part) {
         partRepository.save(part);
+    }
+
+    @Override
+    @Async(Constant.TOEICUTE)
+    public void exportPartToExcel(
+            OutputStream outputStream,
+            String[] headerMap,
+            List<PartResponse> parts
+    ) throws IOException {
+        ExcelHelper.export(outputStream, headerMap, parts);
     }
 }

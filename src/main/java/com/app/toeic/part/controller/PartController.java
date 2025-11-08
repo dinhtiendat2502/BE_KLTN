@@ -2,22 +2,23 @@ package com.app.toeic.part.controller;
 
 import com.app.toeic.exam.repo.IExamRepository;
 import com.app.toeic.external.response.ResponseVO;
-import com.app.toeic.part.model.Part;
 import com.app.toeic.part.payload.PartDTO;
 import com.app.toeic.part.repo.IPartRepository;
 import com.app.toeic.part.service.PartService;
 import com.app.toeic.util.ExcelHelper;
 import com.app.toeic.util.JsonConverter;
-import com.google.protobuf.Message;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -88,6 +89,7 @@ public class PartController {
 
     public String[] headers = {
             "Question Number",
+            "Question Content",
             "Answer A",
             "Answer B",
             "Answer C",
@@ -99,20 +101,19 @@ public class PartController {
     };
 
     @GetMapping("export-part")
-    public void exportPart1ToExcel(@RequestParam("partId") Integer partId, HttpServletResponse response) {
-        response.setContentType("application/octet-stream");
+    @SneakyThrows
+    public ResponseEntity<StreamingResponseBody> exportExcelByExam(
+            @RequestParam("examId") Integer examId
+    ) {
         var dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         var currentDateTime = dateFormatter.format(new Date());
-        var headerKey = "Content-Disposition";
-        var headerValue = STR."attachment; filename=users_\{currentDateTime}.xlsx";
-        response.setHeader(headerKey, headerValue);
-        var part = iPartRepository.findPartById(partId);
-        part.ifPresent(p -> {
-            try {
-                ExcelHelper.export(response, headers, p);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        var headerValue = String.format("attachment; filename=exam_%s.xlsx", currentDateTime);
+        var listPart = iPartRepository.findAllByExamExamId(examId);
+        StreamingResponseBody stream = outputStream -> ExcelHelper.export(outputStream, headers, listPart);
+        return ResponseEntity.ok()
+                             .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
+                             .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                             .body(stream);
     }
+
 }

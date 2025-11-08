@@ -3,6 +3,7 @@ package com.app.toeic.email.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "email_config", indexes = {
@@ -13,16 +14,17 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EmailConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String host;
-    private int port;
+    Integer id;
+    String host;
+    int port;
     @Column(unique = true)
-    private String username;
-    private String password;
+    String username;
+    String password;
 
     @Builder.Default
-    private boolean status = false;
+    boolean status = false;
 }

@@ -25,7 +25,6 @@ import java.util.logging.Level;
 public class GlobalExceptionHandler {
     @ExceptionHandler(AppException.class)
     public Object handleAppException(AppException e) {
-        log.log(Level.WARNING, MessageFormat.format("Exception >> GlobalExceptionHandler >> handleAppException: {0}", e.getMessage()));
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)

@@ -24,7 +24,7 @@ public class JsonConverter {
         try {
             return MAPPER.writeValueAsString(param);
         } catch (Exception e) {
-            log.log(Level.WARNING, "b2b-service >> JsonConverter >> convertObjectToJson >> Exception:", e);
+            log.log(Level.WARNING, "TOEICUTE BE >> JsonConverter >> convertObjectToJson >> Exception:", e);
             return "{}";
         }
     }
@@ -33,7 +33,7 @@ public class JsonConverter {
         try {
             return MAPPER.writeValueAsString(param);
         } catch (Exception e) {
-            log.log(Level.WARNING, "b2b-service >> JsonConverter >> convertListToJson >> Exception:", e);
+            log.log(Level.WARNING, "TOEICUTE BE >> JsonConverter >> convertListToJson >> Exception:", e);
             return "[]";
         }
     }
@@ -43,7 +43,7 @@ public class JsonConverter {
             var result = MAPPER.readValue(json, typeKey);
             return Optional.ofNullable(result);
         } catch (Exception e) {
-            log.log(Level.WARNING, MessageFormat.format("b2b-service >> JsonConverter >> convertToObject >> request: {0} >> Exception:", json), e);
+            log.log(Level.WARNING, MessageFormat.format("TOEICUTE BE >> JsonConverter >> convertToObject >> request: {0} >> Exception:", json), e);
             return Optional.empty();
         }
     }
@@ -53,7 +53,7 @@ public class JsonConverter {
             var result = MAPPER.readValue(json, typeKey);
             return Optional.ofNullable(result);
         } catch (Exception e) {
-            log.log(Level.WARNING, MessageFormat.format("b2b-service >> JsonConverter >> convertToObject >> request: {0} >> Exception:", json), e);
+            log.log(Level.WARNING, MessageFormat.format("TOEICUTE BE >> JsonConverter >> convertToObject >> request: {0} >> Exception:", json), e);
             return Optional.empty();
         }
     }
@@ -62,7 +62,7 @@ public class JsonConverter {
         try {
             return MAPPER.readTree(json).path(property).asText();
         } catch (Exception e) {
-            log.log(Level.WARNING, MessageFormat.format("b2b-service >> JsonConverter >> getPropertyFromJson >> request: {0} >> Exception:", json), e);
+            log.log(Level.WARNING, MessageFormat.format("TOEICUTE BE >> JsonConverter >> getPropertyFromJson >> request: {0} >> Exception:", json), e);
             return StringUtils.EMPTY;
         }
     }

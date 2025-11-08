@@ -38,15 +38,15 @@ spring:
       client:
         registration:
           google:
-            clientId: "${GOOGLE_CLIENT_ID:695539607356-7ivpkghg3bmq3sul0gp8illtpc1i056a.apps.googleusercontent.com}"
-            clientSecret: "${GOOGLE_CLIENT_SECRET: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}"
+            clientId: "${GOOGLE_CLIENT_ID:adsa}"
+            clientSecret: "${GOOGLE_CLIENT_SECRET:dsadsd}"
             redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
               - profile
           facebook:
-            clientId: "${FACEBOOK_CLIENT_ID:441124901895321}"
-            clientSecret: "${FACEBOOK_CLIENT_SECRET:c32645e832703aec8c10d776f85f45f1}"
+            clientId: "${FACEBOOK_CLIENT_ID:132}"
+            clientSecret: "${FACEBOOK_CLIENT_SECRET:1321}"
             redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
             scope:
               - email
@@ -106,6 +106,8 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+    shutdown:
+      enabled: false
 logging:
   level:
     root: info

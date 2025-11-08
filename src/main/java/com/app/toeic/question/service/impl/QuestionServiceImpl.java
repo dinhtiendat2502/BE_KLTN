@@ -29,11 +29,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public ResponseVO getAllQuestionByPartId(Part part) {
+    public ResponseVO getAllQuestionByPartId(Integer part) {
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .data(questionRepository.findAllByPart(part))
+                .data(questionRepository.findAllByPartV2(part))
                 .message("Lấy danh sách câu hỏi thành công!")
                 .build();
     }

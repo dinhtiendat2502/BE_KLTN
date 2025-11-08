@@ -4,9 +4,8 @@ import com.app.toeic.exception.AppException;
 import com.app.toeic.external.service.SystemConfigService;
 import com.app.toeic.jwt.JwtTokenProvider;
 import com.app.toeic.user.model.Role;
-import com.app.toeic.user.model.UserToken;
 import com.app.toeic.user.repo.IUserAccountRepository;
-import com.app.toeic.user.repo.UserTokenRepository;
+import com.app.toeic.user.service.UserTokenService;
 import com.app.toeic.util.Constant;
 import com.app.toeic.util.CookieUtils;
 import com.app.toeic.util.HttpStatus;
@@ -38,7 +37,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     JwtTokenProvider tokenProvider;
     IUserAccountRepository iUserAccountRepository;
     SystemConfigService systemConfigService;
-    UserTokenRepository userTokenRepository;
+    UserTokenService userTokenService;
 
     @Override
     public void onAuthenticationSuccess(
@@ -81,22 +80,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 user.getRoles().stream().map(Role::getRoleName).toList()
         );
 
-        var userTokenOptional = userTokenRepository.findByEmail(user.getEmail());
-        userTokenOptional.ifPresentOrElse(uToken -> {
-            uToken.setToken(token.getToken());
-            uToken.setCreatedDate(token.getCreatedDate());
-            uToken.setExpiredDate(token.getExpiredDate());
-            userTokenRepository.save(uToken);
-        }, () -> {
-            var userToken = UserToken
-                    .builder()
-                    .token(token.getToken())
-                    .email(user.getEmail())
-                    .createdDate(token.getCreatedDate())
-                    .expiredDate(token.getExpiredDate())
-                    .build();
-            userTokenRepository.save(userToken);
-        });
+        userTokenService.saveUserToken(token);
 
         return UriComponentsBuilder.fromUriString(targetUrl)
                                    .queryParam("token", token.getToken())

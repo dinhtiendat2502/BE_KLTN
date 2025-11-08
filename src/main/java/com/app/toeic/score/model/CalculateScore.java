@@ -23,4 +23,12 @@ public class CalculateScore {
     Integer totalQuestion;
     Integer scoreListening;
     Integer scoreReading;
+
+    public static CalculateScore from(Integer i){
+        return CalculateScore.builder()
+                .totalQuestion(i)
+                .scoreListening(0)
+                .scoreReading(0)
+                .build();
+    }
 }

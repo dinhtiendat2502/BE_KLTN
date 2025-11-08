@@ -146,6 +146,19 @@ public class UserExamHistoryVO {
                 String getAnswerD();
 
                 String getCorrectAnswer();
+
+                String getTranscript();
+
+                String getTranslateTranscript();
+                Boolean getHaveMultiImage();
+
+                Set<QuestionImageRS> getQuestionImages();
+
+                interface QuestionImageRS {
+                    Integer getQuestionImageId();
+
+                    String getQuestionImage();
+                }
             }
         }
 

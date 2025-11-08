@@ -5,9 +5,11 @@ import com.app.toeic.topic.model.Topic;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.topic.service.TopicService;
 import com.app.toeic.util.Constant;
+import com.google.api.client.http.HttpContent;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.hc.core5.http.ContentType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,6 +60,16 @@ public class TopicAdminController {
                 .build();
     }
 
+    @PostMapping(value = "/create-v2", consumes = {"multipart/form-data"})
+    public Object createTopicV2(@ModelAttribute TopicRequest request) throws IOException {
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .message("CREATE_TOPIC_SUCCESS")
+                .build();
+    }
+
+
     @PatchMapping(value = "/update/{topicId}", consumes = {"multipart/form-data"})
     public ResponseVO updateTopic(
             @PathVariable("topicId") Integer topicId,
@@ -89,5 +101,12 @@ public class TopicAdminController {
                 .success(Boolean.TRUE)
                 .message("DELETE_TOPIC_SUCCESS")
                 .build();
+    }
+
+    public record TopicRequest(
+            Integer id,
+            String topicName,
+            MultipartFile file
+    ) {
     }
 }

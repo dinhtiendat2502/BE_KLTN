@@ -84,4 +84,13 @@ public class Constant {
     public static final String LOGIN_SOCIAL = "LOGIN_SOCIAL";
     public static final String AUTHENTICATION_AFTER_REGISTER = "AUTHENTICATION_AFTER_REGISTER";
     public static final String URL_CACHE_EXAM = "exam:{0}:{1}";  // exam:userId:examId
+    public static final String URL_CACHE_CAPTCHA = "captcha:{0}";  // captcha:email
+    public static final String PAYPAL_CLIENT_SECRET = "PAYPAL_CLIENT_SECRET";
+    public static final String PAYPAL_CLIENT_ID = "PAYPAL_CLIENT_ID";
+    public static final String STRIPE_API_KEY = "STRIPE_API_KEY";
+    public static final String STRIPE_RETURN_URL = "STRIPE_RETURN_URL";
+    public static final String PAYPAL_RETURN_URL = "PAYPAL_RETURN_URL";
+    public static final String CLIENT_GOOGLE_ID = "CLIENT_GOOGLE_ID";
+    public static final String CLIENT_GOOGLE_SECRET = "CLIENT_GOOGLE_SECRET";
+    public static final String QR_CODE = "QR_CODE";
 }

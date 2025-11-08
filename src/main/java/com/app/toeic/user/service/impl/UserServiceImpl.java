@@ -5,6 +5,7 @@ import com.app.toeic.user.enums.ERole;
 import com.app.toeic.user.enums.EUser;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.jwt.JwtTokenProvider;
+import com.app.toeic.user.enums.UType;
 import com.app.toeic.user.model.Role;
 import com.app.toeic.user.model.UserAccount;
 import com.app.toeic.user.payload.*;
@@ -19,7 +20,6 @@ import com.app.toeic.user.service.UserService;
 import com.app.toeic.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.Cookie;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -292,18 +292,12 @@ public class UserServiceImpl implements UserService {
     public Object isAdminLogin(HttpServletRequest request) {
         var token = jwtUtilities.getToken(request);
         if (StringUtils.isNotEmpty(token) && jwtUtilities.validateToken(token)) {
-            String email = jwtUtilities.extractUsername(token);
-
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-
+            var email = jwtUtilities.extractUsername(token);
+            var userDetails = userDetailsService.loadUserByUsername(email);
             var listRoles = jwtUtilities.extractRoles(token);
-
-            if (Boolean.TRUE.equals(
-                    jwtUtilities.validateToken(token, userDetails))
-                    && listRoles
-                    .stream()
-                    .map(String::valueOf)
-                    .anyMatch(r -> r.contains(ERole.ADMIN.name()))) {
+            if (jwtUtilities.validateToken(token, userDetails)
+                && listRoles.stream().map(String::valueOf).anyMatch(r -> r.contains(ERole.ADMIN.name()))
+            ) {
                 return Boolean.TRUE;
             }
         }
@@ -333,46 +327,15 @@ public class UserServiceImpl implements UserService {
             LocalDateTime dateFrom,
             LocalDateTime dateTo
     ) {
+        var pageRequest = PageRequest.of(page, pageSize, Sort.by(CREATED_AT).descending());
         if ("ALL".equals(type)) {
             return account != null
-                    ? iUserAccountLogRepository.findAllByUserAccount(
-                    account,
-                    PageRequest.of(
-                            page,
-                            pageSize,
-                            Sort.by(CREATED_AT).descending()
-                    )
-            )
-                    : iUserAccountLogRepository.findAllByCreatedAtBetween(
-                    dateFrom,
-                    dateTo,
-                    PageRequest.of(
-                            page,
-                            pageSize,
-                            Sort.by(CREATED_AT).descending()
-                    )
-            );
+                    ? iUserAccountLogRepository.findAllByUserAccount(account, pageRequest)
+                    : iUserAccountLogRepository.findAllByCreatedAtBetween(dateFrom, dateTo, pageRequest);
         }
         return account != null
-                ? iUserAccountLogRepository.findAllByUserAccountAndAction(
-                account,
-                type,
-                PageRequest.of(
-                        page,
-                        pageSize,
-                        Sort.by(CREATED_AT).descending()
-                )
-        )
-                : iUserAccountLogRepository.findAllByActionAndCreatedAtBetween(
-                type,
-                dateFrom,
-                dateTo,
-                PageRequest.of(
-                        page,
-                        pageSize,
-                        Sort.by(CREATED_AT).descending()
-                )
-        );
+                ? iUserAccountLogRepository.findAllByUserAccountAndAction(account, type, pageRequest)
+                : iUserAccountLogRepository.findAllByActionAndCreatedAtBetween(type, dateFrom, dateTo, pageRequest);
     }
 
     @Override
@@ -409,15 +372,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isValidCaptcha(HttpServletRequest request, String captcha) {
         var cookie = CookieUtils.get(request, Constant.CAPTCHA);
-        var captchaDecrypt = cookie.isPresent() ? AESUtils.decrypt(cookie.get().getValue()) : "null";
-        log.log(
-                Level.INFO,
-                "Captcha: {0}, cookie: {1}, decrypt: {2}",
-                new Object[]{captcha, cookie.isPresent() ? cookie.get().getValue() : "null", captchaDecrypt}
-        );
-
-        return cookie.isPresent() && AESUtils.decrypt(cookie.get().getValue()).equals(captcha.trim());
-
+        return cookie.map(value -> AESUtils.decrypt(value.getValue()).equals(captcha.trim()))
+                     .orElseGet(() -> AESUtils.decrypt(StringUtils.defaultIfBlank(
+                                                      request.getHeader(Constant.CAPTCHA),
+                                                      StringUtils.EMPTY
+                                              ))
+                                              .equals(captcha.trim()));
     }
 
     @Override
@@ -437,9 +397,56 @@ public class UserServiceImpl implements UserService {
         return Optional.empty();
     }
 
+    @Override
+    public Object ultimateLogin(String username) {
+        var user = iUserRepository
+                .findByEmail(username)
+                .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, EMAIL_NOT_REGISTERED));
+        if (EUser.INACTIVE.equals(user.getStatus())) {
+            return ResponseVO
+                    .builder()
+                    .success(Boolean.FALSE)
+                    .data(user.getStatus())
+                    .message("ACCOUNT_NOT_ACTIVE")
+                    .build();
+        } else if (EUser.BLOCKED.equals(user.getStatus())) {
+            return ResponseVO
+                    .builder()
+                    .success(Boolean.FALSE)
+                    .message("ACCOUNT_BLOCKED")
+                    .build();
+        }
+
+        var rolesNames = user.getRoles().stream().map(Role::getRoleName).toList();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(jwtUtilities.generateTokenV2(user.getUsername(), user.getPassword(), rolesNames))
+                .message("LOGIN_SUCCESS")
+                .build();
+    }
+
+    @Override
+    public Object updateUserType(HttpServletRequest request) {
+        var token = jwtUtilities.getToken(request);
+        if (StringUtils.isNotEmpty(token) && jwtUtilities.validateToken(token)) {
+            String email = jwtUtilities.extractUsername(token);
+
+            var u = iUserRepository
+                    .findByEmail(email)
+                    .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, EMAIL_NOT_REGISTERED));
+            u.setUserType(UType.VIP_USER);
+            iUserRepository.save(u);
+            return "SUCCESS";
+        }
+        return "FAIL";
+    }
+
+    @Override
     public String randomPassword() {
         return UUID
                 .randomUUID()
-                .toString();
+                .toString()
+                .replace("-", "");
     }
 }

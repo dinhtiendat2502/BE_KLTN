@@ -42,10 +42,9 @@ import java.util.logging.Level;
 public class CrawlServiceImpl implements CrawlService {
     JobCrawlRepository jobCrawlRepository;
     IExamRepository examRepository;
-    FirebaseStorageService firebaseStorageService;
     ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-    public Set<Question> mCrawlPart12(Element element1, boolean element2, Part part) throws IOException {
+    public Set<Question> mCrawlPart12(Element element1, boolean element2, Part part) {
         var questionList = new ArrayList<Question>();
         int totalQuestion = element2 ? Constant.NUMBER_QUESTION_PART_1 : Constant.NUMBER_QUESTION_PART_2;
         for (int i = 1; i <= totalQuestion; i++) {
@@ -55,8 +54,7 @@ public class CrawlServiceImpl implements CrawlService {
             var listImage = element1.getElementsByClass("lazyel");
             for (int i = 0; i < listImage.size(); i++) {
                 var imgUrl = listImage.get(i).absUrl("data-src");
-                var file = FileUtils.getInfoFromUrl(imgUrl);
-                questionList.get(i).setQuestionImage(file != null ? firebaseStorageService.uploadFile(file) : imgUrl);
+                questionList.get(i).setQuestionImage(imgUrl);
             }
         }
         var listQuestionNumber = element1.getElementsByClass("question-number");
@@ -110,7 +108,7 @@ public class CrawlServiceImpl implements CrawlService {
         }
     }
 
-    public Set<Question> mCrawlPart34(Element element1, boolean element2, Part part) throws IOException {
+    public Set<Question> mCrawlPart34(Element element1, boolean element2, Part part) {
         int totalQuestion = element2 ? Constant.NUMBER_QUESTION_PART_3 : Constant.NUMBER_QUESTION_PART_4;
         var questionList = new ArrayList<Question>();
         for (int i = 1; i <= totalQuestion; i++) {
@@ -127,9 +125,7 @@ public class CrawlServiceImpl implements CrawlService {
             questionList.get(indexStart).setNumberQuestionInGroup(numberQuestionInGroup);
             if (CollectionUtils.isNotEmpty(questionImage)) {
                 var imgUrl = questionImage.getFirst().absUrl("src");
-                var file = FileUtils.getInfoFromUrl(imgUrl);
-                questionList.get(indexStart)
-                            .setQuestionImage(file != null ? firebaseStorageService.uploadFile(file) : imgUrl);
+                questionList.get(indexStart).setQuestionImage(imgUrl);
             }
             for (int j = 0; j < numberQuestionInGroup; j++) {
                 var hasTranscript = (indexStart + j) == indexStart;
@@ -179,17 +175,15 @@ public class CrawlServiceImpl implements CrawlService {
         } else {
             var otherCorrectAnswerElement = questionContent.getElementsByClass("text-success").getFirst();
             if (otherCorrectAnswerElement != null) {
-                questionList.get(i).setCorrectAnswer(otherCorrectAnswerElement.text().replace(
-                        Constant.ANSWER_QUESTION,
-                        ""
-                ));
+                var otherCorrectAnswer = otherCorrectAnswerElement.text().replace(Constant.ANSWER_QUESTION, "");
+                questionList.get(i).setCorrectAnswer(otherCorrectAnswer);
             } else {
                 questionList.get(i).setCorrectAnswer("A");
             }
         }
     }
 
-    public Set<Question> mCrawlPart6(Element element, Part part) throws IOException {
+    public Set<Question> mCrawlPart6(Element element, Part part) {
         int totalElement = 16;
         var questionList = new ArrayList<Question>();
         for (int i = 1; i <= totalElement; i++) {
@@ -200,9 +194,7 @@ public class CrawlServiceImpl implements CrawlService {
             var numberQuestionInGroup = Constant.FOUR_QUESTION_IN_GROUP;
             var indexStart = i * numberQuestionInGroup;
             var questionImage = questionGroupWrapper.get(i).getElementsByTag("img").getFirst().absUrl("src");
-            var file = FileUtils.getInfoFromUrl(questionImage);
-            questionList.get(indexStart)
-                        .setQuestionImage(file != null ? firebaseStorageService.uploadFile(file) : questionImage);
+            questionList.get(indexStart).setQuestionImage(questionImage);
             var transcript = questionGroupWrapper.get(i).getElementsByClass(Constant.CONTEXT_TRANSCRIPT).getFirst();
             questionList.get(indexStart)
                         .setTranscript(transcript.getElementsByClass(Constant.COLLAPSE).removeAttr("id").html());
@@ -226,31 +218,25 @@ public class CrawlServiceImpl implements CrawlService {
                 } else {
                     var otherCorrectAnswerElement = questionContent.getElementsByClass("text-success").getFirst();
                     if (otherCorrectAnswerElement != null) {
-                        questionList
-                                .get(indexStart + j)
-                                .setCorrectAnswer(otherCorrectAnswerElement
-                                                          .text()
-                                                          .replace(Constant.ANSWER_QUESTION, "")
-                                );
+                        var otherCorrectAnswer = otherCorrectAnswerElement.text().replace(Constant.ANSWER_QUESTION, "");
+                        questionList.get(indexStart + j).setCorrectAnswer(otherCorrectAnswer);
                     } else {
                         questionList.get(indexStart + j).setCorrectAnswer("A");
                     }
                 }
-                questionList
-                        .get(indexStart + j)
-                        .setTranslateTranscript(questionExplain
-                                                        .get(j)
-                                                        .getElementsByClass(Constant.COLLAPSE)
-                                                        .getFirst()
-                                                        .removeAttr("id")
-                                                        .html()
-                        );
+                var translateTranscript = questionExplain
+                        .get(j)
+                        .getElementsByClass(Constant.COLLAPSE)
+                        .getFirst()
+                        .removeAttr("id")
+                        .html();
+                questionList.get(indexStart + j).setTranslateTranscript(translateTranscript);
             }
         }
         return new HashSet<>(questionList);
     }
 
-    public Set<Question> mCrawlPart7(Element element, Part part) throws IOException {
+    public Set<Question> mCrawlPart7(Element element, Part part) {
         int totalElement = Constant.NUMBER_QUESTION_PART_7;
         var questionList = new ArrayList<Question>();
         for (int i = 1; i <= totalElement; i++) {
@@ -266,12 +252,10 @@ public class CrawlServiceImpl implements CrawlService {
             questionList.get(index).setHaveMultiImage(true);
             for (Element value : listImage) {
                 var fileUrl = value.absUrl("src");
-                var file = FileUtils.getInfoFromUrl(fileUrl);
                 questionList
                         .get(index)
                         .getQuestionImages()
-                        .add(QuestionImage.builder().question(questionList.get(index)).questionImage(
-                                file != null ? firebaseStorageService.uploadFile(file) : fileUrl).build());
+                        .add(QuestionImage.builder().question(questionList.get(index)).questionImage(fileUrl).build());
             }
             questionList.get(index).setQuestionHaveTranscript(true);
             var transcript = questionGroup.getElementsByClass(Constant.CONTEXT_TRANSCRIPT).getFirst();
@@ -282,13 +266,13 @@ public class CrawlServiceImpl implements CrawlService {
                 var questionNumber = questionContent.getElementsByTag(Constant.STRONG).getFirst().text();
                 getAnswerQuestion(questionList, index, Integer.parseInt(questionNumber), questionContent);
                 var questionExplain = lisTranscript.get(indexQuestion);
-                questionList.get(index)
-                            .setTranslateTranscript(questionExplain.getElementsByClass(Constant.COLLAPSE)
-                                                                   .getFirst()
-                                                                   .removeAttr(
-                                                                           "id")
-                                                                   .html());
+                var translateScript = questionExplain.getElementsByClass(Constant.COLLAPSE)
+                                                     .getFirst()
+                                                     .removeAttr("id")
+                                                     .html();
+                questionList.get(index).setTranslateTranscript(translateScript);
                 index++;
+                indexQuestion++;
             }
         }
         return new HashSet<>(questionList);
@@ -305,6 +289,8 @@ public class CrawlServiceImpl implements CrawlService {
                     var part = createPart(finalI, listPartContent.get(finalI - 1), exam);
                     exam.getParts().add(part);
                 } catch (IOException e) {
+                    log.log(Level.SEVERE, "CrawlServiceImpl >> crawlData >> Error: {}", e);
+                    saveFailedJob(job, "FAILED_CRAWL_PART_%d".formatted(finalI));
                     throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR_UPLOAD");
                 }
             }, executorService);
@@ -318,12 +304,13 @@ public class CrawlServiceImpl implements CrawlService {
             jobCrawlRepository.save(job);
         }).exceptionally(e -> {
             log.log(Level.SEVERE, "CrawlServiceImpl >> crawlData >> Error: {}", e);
+            saveFailedJob(job, "FAILED_CRAWL_DATA");
             return null;
         });
     }
 
     @Override
-    @Async("toeicute")
+    @Async(Constant.TOEICUTE)
     public void crawlDataV2(String url, CrawlConfig config, JobCrawl job) {
         var startTime = System.currentTimeMillis();
         try {
@@ -333,12 +320,10 @@ public class CrawlServiceImpl implements CrawlService {
             var listPartContent = doc.getElementsByClass("test-questions-wrapper");
             int totalPart = 7;
             if (CollectionUtils.isEmpty(listPartContent) || listPartContent.size() != totalPart) {
-                job.setDescription("PART_NOT_MATCH");
-                job.setJobStatus(Constant.FAILED);
-                jobCrawlRepository.save(job);
+                saveFailedJob(job, "NOT_FOUND_PART_TO_CRAWL");
                 return;
             }
-            var exam = Exam.builder().status(Constant.STATUS_ACTIVE).price(0.0).numberOfUserDoExam(0);
+            var exam = Exam.builder().status(Constant.STATUS_PENDING).price(0.0).numberOfUserDoExam(0).isFree(true);
             var title = doc.getElementsByTag("h1").first();
             if (title != null && CollectionUtils.isNotEmpty(title.children())) {
                 title.children().remove();
@@ -346,22 +331,17 @@ public class CrawlServiceImpl implements CrawlService {
                 exam.examName(examTitleName);
                 job.setExamName(examTitleName);
             } else {
-                job.setDescription("NOT_FOUND_EXAM_TO_CRAWL");
-                job.setJobStatus(Constant.FAILED);
-                jobCrawlRepository.save(job);
+                saveFailedJob(job, "NOT_FOUND_EXAM_TO_CRAWL");
                 return;
             }
             var audio = doc.getElementsByClass("post-audio-item").first();
             if (audio != null) {
                 var fileUrl = audio.child(0).absUrl("src");
-                var file = FileUtils.getInfoFromUrl(fileUrl);
-                exam.examAudio(file != null ? firebaseStorageService.uploadFile(file) : fileUrl);
+                exam.examAudio(fileUrl);
             }
             crawlData(listPartContent, doc, job, exam.build());
         } catch (IOException ex) {
-            job.setDescription("CRAWL_FAILED");
-            job.setJobStatus(Constant.FAILED);
-            jobCrawlRepository.save(job);
+            saveFailedJob(job, "ERROR_UPLOAD_AUDIO");
             log.log(Level.SEVERE, "CrawlServiceImpl >> crawlDataV2 >> Error: {}", ex);
         } finally {
             log.info(MessageFormat.format(
@@ -421,5 +401,12 @@ public class CrawlServiceImpl implements CrawlService {
         }
         part.setExam(exam);
         return part;
+    }
+
+
+    private void saveFailedJob(JobCrawl job, String description) {
+        job.setDescription(description);
+        job.setJobStatus(Constant.FAILED);
+        jobCrawlRepository.save(job);
     }
 }

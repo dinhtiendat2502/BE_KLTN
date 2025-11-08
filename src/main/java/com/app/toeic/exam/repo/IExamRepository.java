@@ -19,18 +19,35 @@ public interface IExamRepository extends JpaRepository<Exam, Integer> {
             SELECT e
             FROM Exam e
             LEFT JOIN FETCH e.topic t
-            WHERE e.status != 'DELETED'
+            WHERE e.status = ?1 AND e.isFree = true
             ORDER BY t.topicId DESC, e.examName ASC
             """)
     List<ExamVO.ExamListAll> findAllByStatus(String status);
 
-    @Query("SELECT e FROM Exam e LEFT JOIN FETCH e.topic t WHERE e.status = 'ACTIVE' AND t.topicId = ?1 ORDER BY t.topicId DESC, e.examName ASC")
+    @Query("""
+            SELECT e
+            FROM Exam e
+            WHERE e.status = ?1 AND e.isFree = false
+            ORDER BY e.examName ASC
+            """)
+    List<ExamVO.ExamListAll> findAllRealTest(String status);
+
+    @Query("""
+            SELECT e
+            FROM Exam e
+            LEFT JOIN FETCH e.topic t
+            WHERE e.status <> ?1
+            ORDER BY t.topicId DESC, e.examName ASC
+            """)
+    List<ExamVO.ExamListAll> findAllByStatusForAdmin(String status);
+
+    @Query("SELECT e FROM Exam e LEFT JOIN FETCH e.topic t WHERE e.status = 'ACTIVE' AND t.topicId = ?1 AND e.isFree = true ORDER BY t.topicId DESC, e.examName ASC")
     List<ExamVO.ExamListAll> findAllByStatusAndTopicId(Integer topicId);
 
     @Query("""
             SELECT e
             FROM Exam e
-            WHERE e.status = 'ACTIVE' AND e.topic is NULL
+            WHERE e.status = 'ACTIVE' AND e.topic is NULL AND e.isFree = true
             ORDER BY e.examName ASC
             """)
     List<ExamVO.ExamListAll> findAllByTopicIsNull();

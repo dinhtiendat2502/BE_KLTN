@@ -42,16 +42,14 @@ public class QuestionController {
                     .message("File không đúng định dạng!")
                     .build();
         }
+
         var part = partService.getPartById(partId);
         var isAddNew = part
                 .getQuestions()
                 .isEmpty();
-        var listQuestion = !part
-                .getQuestions()
-                .isEmpty() ? part
-                .getQuestions()
-                .stream()
-                .toList() : new ArrayList<Question>();
+        var listQuestion = !isAddNew
+                ? part.getQuestions().stream().toList()
+                : new ArrayList<Question>();
         listQuestion = switch (part.getPartCode()) {
             case "PART1" -> excelService.excelToPart1(file.getInputStream(), part, listQuestion, isAddNew);
             case "PART2" -> excelService.excelToPart2(file.getInputStream(), part, listQuestion, isAddNew);
@@ -72,8 +70,7 @@ public class QuestionController {
 
     @GetMapping("/list-by-part")
     public ResponseVO getAllQuestionByPartId(@RequestParam Integer partId) {
-        var part = partService.getPartById(partId);
-        return questionService.getAllQuestionByPartId(part);
+        return questionService.getAllQuestionByPartId(partId);
     }
 
     @DeleteMapping("/delete-all-by-part")

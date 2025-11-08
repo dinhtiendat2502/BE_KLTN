@@ -1,20 +1,19 @@
 package com.app.toeic.util;
 
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import com.lowagie.text.*;
 import com.lowagie.text.Font;
+import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
+import lombok.experimental.UtilityClass;
 
 import java.awt.*;
 import java.math.BigDecimal;
 import java.util.Map;
-@Data
-@NoArgsConstructor
+
+@UtilityClass
 public class PdfHelper {
-    public void writeCell(PdfPTable table, PdfPCell cell, Font font, Object value, FormatType formatType, Alignment alighment) {
+    public void writeCell(PdfPTable table, PdfPCell cell, Font font, Object value, FormatType formatType, Alignment alignment) {
         switch (formatType) {
             case TEXT -> cell.setPhrase(new Phrase(value.toString(), font));
             case BIG_DECIMAL -> {
@@ -25,7 +24,7 @@ public class PdfHelper {
                 return;
             }
         }
-        switch (alighment) {
+        switch (alignment) {
             case RIGHT -> cell.setHorizontalAlignment(2);
             case LEFT -> cell.setHorizontalAlignment(0);
             default -> cell.setHorizontalAlignment(1);
@@ -42,10 +41,10 @@ public class PdfHelper {
         font.setSize(10);
         font.setColor(Color.BLACK);
         font.setStyle(Font.BOLD);
-        mapValue.entrySet().forEach(item -> {
-            var header = new Paragraph(item.getValue(), font);
-            header.setAlignment(alignConfig.getOrDefault(item.getKey(), 1));
-            if (item.getKey() == mapValue.size() - 1) {
+        mapValue.forEach((key, value) -> {
+            var header = new Paragraph(value, font);
+            header.setAlignment(alignConfig.getOrDefault(key, 1));
+            if (key == mapValue.size() - 1) {
                 header.setSpacingAfter(10);
             }
             document.add(header);

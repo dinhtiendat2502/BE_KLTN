@@ -2,24 +2,19 @@ package com.app.toeic.score.controller;
 
 
 import com.app.toeic.exception.AppException;
+import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.score.model.CalculateScore;
 import com.app.toeic.score.repo.ICalculateScoreRepository;
-import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -36,12 +31,7 @@ public class ScoreController {
         calculateScoreRepository.deleteAll();
         var initList = IntStream
                 .range(0, 101)
-                .mapToObj(i -> CalculateScore
-                        .builder()
-                        .totalQuestion(i)
-                        .scoreListening(0)
-                        .scoreReading(0)
-                        .build())
+                .mapToObj(CalculateScore::from)
                 .toList();
         calculateScoreRepository.saveAll(initList);
         return ResponseVO
@@ -69,7 +59,10 @@ public class ScoreController {
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .data(calculateScoreRepository.findAllByTotalQuestion(Integer.parseInt(totalQuestionReading), Integer.parseInt(totalQuestionListening)))
+                .data(calculateScoreRepository.findAllByTotalQuestion(
+                        Integer.parseInt(totalQuestionReading),
+                        Integer.parseInt(totalQuestionListening)
+                ))
                 .message("CALCULATE_SCORE_SUCCESS")
                 .build();
     }
@@ -97,51 +90,38 @@ public class ScoreController {
     @PostMapping(value = "import-file-score", consumes = {"multipart/form-data"})
     public ResponseVO importFileScore(@RequestParam("file") MultipartFile file) throws IOException {
         if (file == null) return new ResponseVO(Boolean.FALSE, "", "FILE_IS_NULL");
+
         var list = calculateScoreRepository.findAll();
-
         if (CollectionUtils.isEmpty(list)) {
-            list = IntStream
-                    .range(0, 101)
-                    .mapToObj(i -> CalculateScore
-                            .builder()
-                            .totalQuestion(i)
-                            .scoreListening(0)
-                            .scoreReading(0)
-                            .build())
-                    .toList();
+            list = IntStream.range(0, 101).mapToObj(CalculateScore::from).toList();
         }
 
-        Workbook workbook = new XSSFWorkbook(file.getInputStream());
-        Sheet sheet = workbook.getSheet("Sheet1");
-        Iterator<Row> rows = sheet.iterator();
-        if (sheet.getPhysicalNumberOfRows() != 101) {
-            throw new AppException(HttpStatus.SEE_OTHER, "FILE_INVALID");
-        }
-        int rowNumber = 0;
-        while (rows.hasNext()) {
-            Row currentRow = rows.next();
-            Iterator<Cell> cellsInRow = currentRow.iterator();
-            var calculateScore = list.get(rowNumber);
-            while (cellsInRow.hasNext()) {
-                Cell currentCell = cellsInRow.next();
-                int columnIndex = currentCell.getColumnIndex();
-                if (columnIndex == 1) {
-                    calculateScore.setScoreListening((int) currentCell.getNumericCellValue());
-                } else if (columnIndex == 2) {
-                    calculateScore.setScoreReading((int) currentCell.getNumericCellValue());
-                }
+        try (var workbook = new XSSFWorkbook(file.getInputStream())) {
+            var sheet = workbook.getSheetAt(0);
+            if (sheet.getPhysicalNumberOfRows() != 101) {
+                throw new AppException(HttpStatus.SEE_OTHER, "FILE_INVALID");
             }
-            rowNumber++;
-        }
-        workbook.close();
-        calculateScoreRepository.saveAll(list);
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .message("IMPORT_FILE_SCORE_SUCCESS")
-                .build();
-    }
 
+            final var finalList = list;
+            sheet.forEach(currentRow -> {
+                var rowNumber = currentRow.getRowNum();
+                var calculateScore = finalList.get(rowNumber);
+                currentRow.forEach(column -> {
+                    var columnIndex = column.getColumnIndex();
+                    if (columnIndex == 1) {
+                        calculateScore.setScoreListening((int) column.getNumericCellValue());
+                    } else if (columnIndex == 2) {
+                        calculateScore.setScoreReading((int) column.getNumericCellValue());
+                    }
+                });
+            });
+            calculateScoreRepository.saveAll(finalList);
+        }
+        return ResponseVO.builder()
+                         .success(Boolean.TRUE)
+                         .message("IMPORT_FILE_SCORE_SUCCESS")
+                         .build();
+    }
 }
 
 

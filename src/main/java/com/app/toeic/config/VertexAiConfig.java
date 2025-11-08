@@ -31,7 +31,7 @@ public class VertexAiConfig {
     @Lazy
     @Bean
     public OpenAiChatClient openAiChatClient() {
-        var apiKey = systemConfigService.getConfigValue(Constant.GPT_4);
+        var apiKey = systemConfigService.getConfigValue(Constant.GPT);
         var openAiApi = new OpenAiApi(apiKey);
         return new OpenAiChatClient(
                 openAiApi,

@@ -4,6 +4,7 @@ import com.app.toeic.external.service.ExcelService;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.part.model.Part;
 import com.app.toeic.question.model.Question;
+import com.app.toeic.util.Constant;
 import com.app.toeic.util.HttpStatus;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class ExcelServiceImpl implements ExcelService {
         Workbook workbook = new XSSFWorkbook(is);
         Sheet sheet = workbook.getSheet(NAME_SHEET);
         Iterator<Row> rows = sheet.iterator();
-        if (sheet.getPhysicalNumberOfRows() - 1 != 6) {
+        if (sheet.getPhysicalNumberOfRows() - 1 != Constant.NUMBER_QUESTION_PART_1) {
             throw new AppException(HttpStatus.SEE_OTHER, EXCEL_FILE_NOT_CORRECT_FORMAT);
         }
         List<Question> questionList = isAddNew ? new ArrayList<>() : list;

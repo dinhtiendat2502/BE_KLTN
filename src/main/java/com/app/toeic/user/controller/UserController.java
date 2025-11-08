@@ -9,6 +9,7 @@ import com.app.toeic.exception.AppException;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.email.service.EmailService;
 import com.app.toeic.firebase.service.FirebaseStorageService;
+import com.app.toeic.user.enums.UType;
 import com.app.toeic.user.payload.*;
 import com.app.toeic.user.repo.IOtpRepository;
 import com.app.toeic.user.service.UserService;
@@ -52,12 +53,17 @@ public class UserController {
     private static final String NOT_FOUNT_USER = "NOT_FOUNT_USER";
     PasswordEncoder passwordEncoder;
 
+    @GetMapping("ultimate-login")
+    public Object ultimateLogin(@RequestParam("username") String username) {
+        return userService.ultimateLogin(username);
+    }
 
     @GetMapping(value = "get-captcha", produces = MediaType.IMAGE_JPEG_VALUE)
     public Object getCaptcha(HttpServletResponse response) {
         var captchaProperty = CaptchaGenerator.getCaptchaProperty();
         var minutes = 60 * 5;
         CookieUtils.add(response, Constant.CAPTCHA, AESUtils.encrypt(captchaProperty.answer()), minutes);
+        response.setHeader(Constant.CAPTCHA, AESUtils.encrypt(captchaProperty.answer()));
         return captchaProperty.captcha();
     }
 
@@ -80,13 +86,26 @@ public class UserController {
 
     @PostMapping("/authenticate")
     @AuthenticationLog(activity = Constant.LOGIN, description = "Login with email and password")
-    public ResponseVO authenticate(@Valid @RequestBody LoginDTO loginDto, HttpServletRequest request) {
-        log.log(Level.INFO, MessageFormat.format("Login: {0}", JsonConverter.convertObjectToJson(loginDto)));
-
+    public ResponseVO authenticate(
+            @Valid @RequestBody LoginDTO loginDto,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
         if (!userService.isValidCaptcha(request, loginDto.getCaptcha())) {
             throw new AppException(HttpStatus.BAD_REQUEST, "CAPTCHA_INCORRECT");
         }
+        CookieUtils.delete(request, response, Constant.CAPTCHA);
         return userService.authenticate(loginDto);
+    }
+
+    @PatchMapping("update-user-type")
+    public Object updateUserType(HttpServletRequest request) {
+        return ResponseVO
+                .builder()
+                .success(true)
+                .data(userService.updateUserType(request))
+                .build();
+
     }
 
     @PostMapping("/send-email")
@@ -177,7 +196,12 @@ public class UserController {
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .data(new NewInfoUser(profile.getFullName(), profile.getPhone(), profile.getAddress(), profile.getAvatar()))
+                .data(new NewInfoUser(
+                        profile.getFullName(),
+                        profile.getPhone(),
+                        profile.getAddress(),
+                        profile.getAvatar()
+                ))
                 .message("UPDATE_PROFILE_SUCCESS")
                 .build();
     }
@@ -343,6 +367,10 @@ public class UserController {
 
     public record ResetPasswordDTO(String otp, String password) {
     }
+
     public record NewInfoUser(String fullName, String phone, String address, String avatar) {
+    }
+
+    public record UpdateUserTypeDTO(UType userType) {
     }
 }

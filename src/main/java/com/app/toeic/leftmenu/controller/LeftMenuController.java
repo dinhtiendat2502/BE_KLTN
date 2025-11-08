@@ -17,6 +17,6 @@ public class LeftMenuController {
 
     @GetMapping("get")
     public Object getLeftMenu(){
-        return menuGroupRepo.findAll();
+        return menuGroupRepo.findAllMenu();
     }
 }

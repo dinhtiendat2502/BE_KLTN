@@ -4,13 +4,12 @@ import com.app.toeic.aop.annotation.AuthenticationLog;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.user.model.UserAccount;
 import com.app.toeic.user.model.UserAccountLog;
-import com.app.toeic.user.model.UserToken;
 import com.app.toeic.user.payload.LoginDTO;
 import com.app.toeic.user.payload.LoginSocialDTO;
 import com.app.toeic.user.repo.IUserAccountLogRepository;
 import com.app.toeic.user.repo.IUserAccountRepository;
-import com.app.toeic.user.repo.UserTokenRepository;
 import com.app.toeic.user.response.LoginResponse;
+import com.app.toeic.user.service.UserTokenService;
 import com.app.toeic.util.ServerHelper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +35,7 @@ import java.util.logging.Level;
 public class AuthenticationLogAspect {
     IUserAccountLogRepository iUserAccountLogRepository;
     IUserAccountRepository iUserAccountRepository;
-    UserTokenRepository userTokenRepository;
+    UserTokenService userTokenService;
 
     @Around(value = "@annotation(authLog)", argNames = "pjp, authLog")
     public Object aroundAspect(final ProceedingJoinPoint pjp, final AuthenticationLog authLog) throws Throwable {
@@ -53,31 +52,13 @@ public class AuthenticationLogAspect {
         try {
             response = pjp.proceed();
             return response;
-        } catch (Exception e) {
-log.log(Level.WARNING, "AccessibilityAspect >> aroundAspect >> Exception: ", e);
-            throw e;
         } finally {
             var user = Optional.<UserAccount>empty();
             if (args.length > 0) {
                 user = switch (args[0]) {
                     case LoginDTO loginDTO -> {
                         if (response instanceof ResponseVO vo && vo.getData() instanceof LoginResponse loginResponse) {
-                            var userTokenOptional = userTokenRepository.findByEmail(loginDTO.getEmail());
-                            userTokenOptional.ifPresentOrElse(uToken -> {
-                                uToken.setToken(loginResponse.getToken());
-                                uToken.setCreatedDate(loginResponse.getCreatedDate());
-                                uToken.setExpiredDate(loginResponse.getExpiredDate());
-                                userTokenRepository.save(uToken);
-                            }, () -> {
-                                var userToken = UserToken
-                                        .builder()
-                                        .token(loginResponse.getToken())
-                                        .email(loginDTO.getEmail())
-                                        .createdDate(loginResponse.getCreatedDate())
-                                        .expiredDate(loginResponse.getExpiredDate())
-                                        .build();
-                                userTokenRepository.save(userToken);
-                            });
+                            userTokenService.saveUserToken(loginResponse);
                         }
                         yield iUserAccountRepository.findByEmail(loginDTO.getEmail());
                     }

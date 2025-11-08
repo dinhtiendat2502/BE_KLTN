@@ -44,11 +44,9 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
         updateFirebaseConfig();
     }
 
-
     @Override
     public String uploadFile(MultipartFile file) throws IOException {
-        var rs = uploadFile(file, false);
-        return rs.get("url");
+        return uploadFile(file, false).get("url");
     }
 
     @Override

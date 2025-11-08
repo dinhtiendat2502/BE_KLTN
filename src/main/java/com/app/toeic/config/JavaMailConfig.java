@@ -30,7 +30,7 @@ public class JavaMailConfig {
         return mailSender;
     }
 
-    private static Properties buildJavaMailProperties() {
+    private Properties buildJavaMailProperties() {
         var mailProperties = new Properties();
         mailProperties.put("mail.smtp.auth", true);
         mailProperties.put("mail.smtp.starttls.enable", true);

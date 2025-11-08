@@ -1,62 +1,49 @@
 package com.app.toeic.util;
 
-import com.app.toeic.part.model.Part;
-import com.app.toeic.question.model.Question;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.Setter;
+import com.app.toeic.part.model.PartEnum;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.java.Log;
-import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.util.IOUtils;
-import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFDrawing;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Level;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 @Log
 @UtilityClass
 public class ExcelHelper {
-    public final String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+    public static final String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     private XSSFWorkbook workbook;
-    private XSSFSheet sheet;
+    private static final String NULL = StringUtils.EMPTY;
+    private final List<XSSFSheet> sheets = new ArrayList<>(7);
 
     public boolean hasExcelFormat(MultipartFile file) {
         return TYPE.equals(file.getContentType());
     }
 
     public void writeHeaderLine(String partCode, String[] headerMap) {
-        workbook = new XSSFWorkbook();
-        sheet = workbook.createSheet(partCode);
+        var sheet = workbook.createSheet(partCode);
+        sheets.add(sheet);
         var row = sheet.createRow(0);
-        var style = workbook.createCellStyle();
-        var font = workbook.createFont();
-        font.setBold(true);
-        font.setFontHeightInPoints((short) 16);
-        style.setFont(font);
 
-        int col = 0;
+        var col = new AtomicInteger(0);
         for (var header : headerMap) {
-            createCell(row, col, header, style);
-            col++;
+            createCell(row, col, header);
         }
     }
 
-    public void createCell(Row row, int columnCount, Object value, CellStyle style) {
-        sheet.autoSizeColumn(columnCount);
-        var cell = row.createCell(columnCount);
+    private void createCell(Row row, AtomicInteger columnCount, Object value) {
+        var cell = row.createCell(columnCount.get());
         if (value instanceof Integer) {
             cell.setCellValue((Integer) value);
         } else if (value instanceof Boolean) {
@@ -64,82 +51,80 @@ public class ExcelHelper {
         } else {
             cell.setCellValue((String) value);
         }
-        cell.setCellStyle(style);
+        columnCount.incrementAndGet();
     }
 
     @SneakyThrows
-    public void writeDataLines(String partCode, com.app.toeic.exam.response.PartResponse part) {
-        var style = workbook.createCellStyle();
-        var font = workbook.createFont();
-        font.setFontHeight(14);
-        style.setFont(font);
+    public void writeDataLines(com.app.toeic.exam.response.PartResponse part) {
+        var index = getIndexOfSheet(part.getPartCode());
+        var sheet = sheets.get(index);
 
-        int rowCount = 1;
+        var rowCount = new AtomicInteger(1);
         for (var question : part.getQuestions()) {
-            var row = sheet.createRow(rowCount);
-            var col = 0;
-            createCell(row, col++, question.getQuestionNumber(), style);
-            createCell(row, col++, question.getAnswerA(), style);
-            createCell(row, col++, question.getAnswerB(), style);
-            createCell(row, col++, question.getAnswerC(), style);
-            if(!"PART2".equalsIgnoreCase(part.getPartCode())) {
-                createCell(row, col++, question.getAnswerD(), style);
-            }
-            createCell(row, col++, question.getCorrectAnswer(), style);
-            createCell(row, col++, question.getTranscript(), style);
-            createCell(row, col++, question.getTranslateTranscript(), style);
+            var row = sheet.createRow(rowCount.get());
+            var col = new AtomicInteger(0);
+            createCell(row, col, question.getQuestionNumber());
+            createCell(row, col, StringUtils.defaultIfBlank(question.getQuestionContent(), NULL));
+            createCell(row, col, question.getAnswerA());
+            createCell(row, col, question.getAnswerB());
+            createCell(row, col, question.getAnswerC());
+            createCell(row, col, StringUtils.defaultIfBlank(question.getAnswerD(), NULL));
+            createCell(row, col, question.getCorrectAnswer());
+            createCell(row, col, StringUtils.defaultIfBlank(question.getTranscript(), NULL));
+            createCell(row, col, StringUtils.defaultIfBlank(question.getTranslateTranscript(), NULL));
 
-            if(!"PART2".equalsIgnoreCase(part.getPartCode())) {
-                var imageInputStream = FileUtils.getInfoFromUrl(question.getQuestionImage());
-                var inputImagePicture = workbook.addPicture(
-                        imageInputStream.imageBytes(),
-                        pictureTypeWorkbook(imageInputStream.contentType())
-                );
-                var drawing = (XSSFDrawing) sheet.createDrawingPatriarch();
-                var anchor = workbook.getCreationHelper().createClientAnchor();
-                anchor.setCol1(col);
-                anchor.setRow1(rowCount);
-                anchor.setCol2(col + 1);
-                anchor.setRow2(rowCount + 1);
-                drawing.createPicture(anchor, inputImagePicture);
-                sheet.setColumnWidth(col, 20 * 256);
+            if (!"PART7".equalsIgnoreCase(part.getPartCode()) && StringUtils.isNotBlank(question.getQuestionImage())) {
+                saveImageToExcel(question.getQuestionImage(), col, rowCount.get(), sheet);
+            } else if (question.getHaveMultiImage()) {
+                for (var questionImage : question.getQuestionImages()) {
+                    saveImageToExcel(questionImage.getQuestionImage(), col, rowCount.get(), sheet);
+                }
             }
-            rowCount++;
+            rowCount.incrementAndGet();
         }
+    }
+
+    private void saveImageToExcel(
+            String question,
+            AtomicInteger col,
+            int rowCount,
+            XSSFSheet sheet
+    ) throws IOException {
+        var imageInputStream = FileUtils.getInfoFromUrl(question);
+        var inputImagePicture = workbook.addPicture(
+                imageInputStream.imageBytes(),
+                pictureTypeWorkbook(imageInputStream.contentType())
+        );
+        var drawing = (XSSFDrawing) sheet.createDrawingPatriarch();
+        var anchor = workbook.getCreationHelper().createClientAnchor();
+        anchor.setCol1(col.get());
+        anchor.setRow1(rowCount);
+        anchor.setCol2(col.incrementAndGet());
+        anchor.setRow2(rowCount + 1);
+        drawing.createPicture(anchor, inputImagePicture);
+        sheet.setColumnWidth(col.get(), 20 * 256);
     }
 
     public void export(
-            HttpServletResponse response,
+            OutputStream outputStream,
             String[] headerMap,
-            com.app.toeic.exam.response.PartResponse part
+            List<com.app.toeic.exam.response.PartResponse> parts
     ) throws IOException {
-        writeHeaderLine(part.getPartCode(), headerMap);
-        writeDataLines(part.getPartCode(), part);
-
-        var outputStream = response.getOutputStream();
+        workbook = new XSSFWorkbook();
+        for (var part : parts) {
+            writeHeaderLine(part.getPartCode(), headerMap);
+            writeDataLines(part);
+        }
         workbook.write(outputStream);
         workbook.close();
-        outputStream.close();
     }
+
 
     private int pictureTypeWorkbook(String contentType) {
-        if (contentType.equals("image/jpeg")) {
-            return Workbook.PICTURE_TYPE_JPEG;
-        }
-        return Workbook.PICTURE_TYPE_PNG;
+        return contentType.equals("image/jpeg") ? Workbook.PICTURE_TYPE_JPEG : Workbook.PICTURE_TYPE_PNG;
     }
 
-    private byte[] loadImageFromUrl(InputStream inputStream) {
-        try (var baos = new ByteArrayOutputStream()) {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                baos.write(buffer, 0, bytesRead);
-            }
-            return baos.toByteArray();
-        } catch (Exception e) {
-            log.log(Level.WARNING, "ExcelHelper -> loadImageFromUrl -> error: ", e);
-            return null;
-        }
+    private int getIndexOfSheet(String partCode) {
+        return PartEnum.valueOf(partCode).getValue() - 1;
     }
 }

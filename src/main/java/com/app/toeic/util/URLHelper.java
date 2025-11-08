@@ -4,15 +4,15 @@ import lombok.experimental.UtilityClass;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 @UtilityClass
 public class URLHelper {
-    public static String replacer(String data) throws UnsupportedEncodingException {
+    public static String replacer(String data) {
         StringBuilder tempBuffer = getStringBuilder(data);
         data = tempBuffer.toString();
-        data = URLDecoder.decode(data
-                                         .replace("<percentage>", "%")
-                                         .replace("<plus>", "+"), "UTF-8");
+        data = URLDecoder.decode(data.replace("<percentage>", "%")
+                                     .replace("<plus>", "+"), StandardCharsets.UTF_8);
         return data;
     }
 
