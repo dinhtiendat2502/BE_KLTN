@@ -1,6 +1,5 @@
 package com.app.toeic.komunicate.model;
 
-import com.app.toeic.util.Constant;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,5 +21,5 @@ public class KommunicateAccount {
     private String password;
 
     @Builder.Default
-    private String status = Constant.STATUS_INACTIVE;
+    private String status = "INACTIVE";
 }

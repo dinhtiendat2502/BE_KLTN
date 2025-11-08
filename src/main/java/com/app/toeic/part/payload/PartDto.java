@@ -1,2 +1,13 @@
 package com.app.toeic.part.payload;
-public record PartDTO(Integer examId, Integer partId, String partAudio) { }
+
+
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
+public class PartDTO {
+    Integer examId;
+    Integer partId;
+    String partAudio;
+}

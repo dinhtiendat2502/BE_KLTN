@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface ExamService {
     Object getAllExam();
 
-    void addExam(Exam exam);
+    Object addExam(Exam exam);
 
-    void updateExam(Exam exam);
+    Object updateExam(Exam exam);
 
     Object removeExam(Integer examId);
 
@@ -30,5 +30,4 @@ public interface ExamService {
     String findCorrectAnswer(ExamVO.ExamFullQuestionWithAnswer examFullQuestionWithAnswer, Integer questionId);
 
     Optional<ExamVO.ExamFullQuestion> findExamPractice(int i, List<String> listPart);
-    void save(Exam exam);
 }

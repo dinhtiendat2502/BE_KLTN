@@ -3,7 +3,6 @@ package com.app.toeic.userexam.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 
 @Entity
@@ -13,9 +12,10 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserExamHistoryLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long userExamHistoryLogId;
+    private Long userExamHistoryLogId;
+
+
 }

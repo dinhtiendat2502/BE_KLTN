@@ -1,16 +1,12 @@
 package com.app.toeic.user.model;
 
 
-import com.app.toeic.chatai.model.ChatHistory;
-import com.app.toeic.comment.model.Comment;
-import com.app.toeic.user.enums.UType;
 import com.app.toeic.userexam.model.UserExamHistory;
 import com.app.toeic.user.enums.EUser;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,75 +17,55 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
-@Table(name = "user_account", indexes = {
-        @Index(name = "email", columnList = "email"),
-        @Index(name = "status", columnList = "status")
-})
+@Table(name = "user_account")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserAccount implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer userId;
+    private Integer userId;
 
     @Column(nullable = false)
-    String password;
-    String fullName;
-    String phone;
+    private String password;
+    private String fullName;
+    private String phone;
 
     @Column(length = 3000)
-    String address;
+    private String address;
 
     @Column(unique = true, nullable = false)
-    String email;
+    private String email;
 
     @Column(columnDefinition = "TEXT")
-    String avatar;
+    private String avatar;
 
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    UType userType = UType.STANDARD_USER;
-
-
-    @Builder.Default
-    @Enumerated(EnumType.STRING)
-    EUser status = EUser.ACTIVE;
-
-    String provider;
+    private EUser status = EUser.ACTIVE;
+    private String provider;
 
     @JsonIgnore
     @CreationTimestamp
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @JsonIgnore
     @UpdateTimestamp
-    LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roleId"))
     @Builder.Default
-    Set<Role> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonBackReference
     @Builder.Default
-    Set<UserExamHistory> userExamHistories = new HashSet<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonBackReference
-    @Builder.Default
-    Set<Comment> comments = new HashSet<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonBackReference
-    @Builder.Default
-    Set<ChatHistory> chatHistories = new HashSet<>();
+    private Set<UserExamHistory> userExamHistories = new HashSet<>();
 
 
     @Override

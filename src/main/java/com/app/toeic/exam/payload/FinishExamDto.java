@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -20,10 +19,6 @@ public class FinishExamDTO {
     Boolean isFullTest;
     Boolean isDone;
     String listPart;
-    int totalLeave;
-    int totalOpenNewTab;
-    LocalDateTime startTime;
-    LocalDateTime endTime;
 
     @Getter
     @Setter

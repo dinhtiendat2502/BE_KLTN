@@ -3,16 +3,15 @@ package com.app.toeic.topic.service;
 import com.app.toeic.topic.model.Topic;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface TopicService {
     Object getAllTopic(int page, int size);
 
-    Optional<Topic> getTopicById(Integer id);
+    Object getTopicById(Integer id);
 
-    void saveTopic(Topic topic);
+    Object addTopic(Topic topic);
 
-    void removeTopic(Integer topicId);
+    Object removeTopic(Integer topicId);
 
     List<Topic> getAllTopics();
 }

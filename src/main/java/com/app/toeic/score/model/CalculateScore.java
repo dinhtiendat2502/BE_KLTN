@@ -3,24 +3,20 @@ package com.app.toeic.score.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "calculate_score", indexes = {
-        @Index(name = "total_question_index", columnList = "totalQuestion"),
-})
+@Table(name = "calculate_score")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class CalculateScore {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer calculateScoreId;
+    private Integer calculateScoreId;
 
-    Integer totalQuestion;
-    Integer scoreListening;
-    Integer scoreReading;
+    private Integer totalQuestion;
+    private Integer scoreListening;
+    private Integer scoreReading;
 }

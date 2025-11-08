@@ -12,5 +12,4 @@ public interface KommunicateBotRepo extends JpaRepository<KommunicateBot, Intege
     Optional<KommunicateBot> findByAppId(String appId);
 
     List<KommunicateBot> findAllByAppIdNot(String appId);
-    List<KommunicateBot> findAllByStatus(boolean status);
 }

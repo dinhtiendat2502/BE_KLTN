@@ -4,7 +4,6 @@ import com.app.toeic.question.model.Question;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 
 @Entity
@@ -14,22 +13,21 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer userAnswerId;
+    private Integer userAnswerId;
 
-    String selectedAnswer;
-    Boolean isCorrect;
+    private String selectedAnswer;
+    private Boolean isCorrect;
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "question_id")
-    Question question;
+    private Question question;
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "user_exam_history_id")
-    UserExamHistory userExamHistory;
+    private UserExamHistory userExamHistory;
 }

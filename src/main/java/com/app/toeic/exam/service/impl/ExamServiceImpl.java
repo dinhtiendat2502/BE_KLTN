@@ -6,7 +6,6 @@ import com.app.toeic.exam.repo.IExamRepository;
 import com.app.toeic.exam.response.ExamVO;
 import com.app.toeic.exam.service.ExamService;
 import com.app.toeic.part.service.PartService;
-import com.app.toeic.util.Constant;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -26,26 +25,28 @@ public class ExamServiceImpl implements ExamService {
 
     @Override
     public Object getAllExam() {
-        return examRepository.findAllByStatus(Constant.STATUS_ACTIVE);
+        return examRepository.findAllByStatus("ACTIVE");
     }
 
     @Override
     @Transactional
-    public void addExam(Exam exam) {
+    public Object addExam(Exam exam) {
         if (Boolean.TRUE.equals(examRepository.existsExamByExamName(exam.getExamName(), Integer.MIN_VALUE))) {
             throw new AppException(HttpStatus.SEE_OTHER, "EXAM_EXISTED");
         }
         var returnExam = examRepository.save(exam);
         partService.init7PartForExam(returnExam);
+        return "CREATE_EXAM_SUCCESS";
     }
 
     @Override
     @Transactional
-    public void updateExam(Exam exam) {
+    public Object updateExam(Exam exam) {
         if (Boolean.TRUE.equals(examRepository.existsExamByExamName(exam.getExamName(), exam.getExamId()))) {
             throw new AppException(HttpStatus.SEE_OTHER, "EXAM_NAME_EXISTED");
         }
         examRepository.save(exam);
+        return "UPDATE_EXAM_SUCCESS";
     }
 
     @Override
@@ -53,7 +54,7 @@ public class ExamServiceImpl implements ExamService {
         var exam = examRepository
                 .findById(examId)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "EXAM_NOT_FOUND"));
-        exam.setStatus(Constant.STATUS_INACTIVE);
+        exam.setStatus("INACTIVE");
         examRepository.save(exam);
         return "DELETE_EXAM_SUCCESS";
     }
@@ -71,7 +72,7 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public Object getAllExamByTopic(Integer topicId) {
         if (topicId == null || topicId == 0) {
-            return examRepository.findAllByStatus(Constant.STATUS_ACTIVE);
+            return examRepository.findAllByStatus("ACTIVE");
         }
         if (topicId == -1) {
             return examRepository.findAllByTopicIsNull();
@@ -111,10 +112,5 @@ public class ExamServiceImpl implements ExamService {
     @Override
     public Optional<ExamVO.ExamFullQuestion> findExamPractice(int i, List<String> listPart) {
         return examRepository.findExamPractice(i, listPart);
-    }
-
-    @Override
-    public void save(Exam exam) {
-        examRepository.save(exam);
     }
 }

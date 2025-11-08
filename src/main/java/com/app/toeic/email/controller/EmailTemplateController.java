@@ -5,15 +5,14 @@ import com.app.toeic.email.payload.EmailTemplateDTO;
 import com.app.toeic.email.repo.EmailTemplateRepo;
 import com.app.toeic.external.response.ResponseVO;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/email/template")
+@CrossOrigin("*")
 @RequiredArgsConstructor
-@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class EmailTemplateController {
-    EmailTemplateRepo emailTemplateRepo;
+    private final EmailTemplateRepo emailTemplateRepo;
 
     @GetMapping("/all")
     public Object getAll() {

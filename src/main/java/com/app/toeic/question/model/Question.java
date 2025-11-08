@@ -6,10 +6,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.*;
 
 import java.time.LocalDateTime;
@@ -17,65 +15,62 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "question", indexes = {
-        @Index(name = "question_number_index", columnList = "questionNumber"),
-})
+@Table(name = "question")
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer questionId;
-    Integer questionNumber;
+    private Integer questionId;
+    private Integer questionNumber;
     @Column(columnDefinition = "TEXT")
-    String questionContent;
+    private String questionContent;
     @Column(columnDefinition = "TEXT")
-    String paragraph1;
+    private String paragraph1;
     @Column(columnDefinition = "TEXT")
-    String paragraph2;
+    private String paragraph2;
     @Column(columnDefinition = "TEXT")
-    String questionImage;
+    private String questionImage;
     @Column(columnDefinition = "TEXT")
-    String questionAudio;
-    String answerA;
-    String answerB;
-    String answerC;
-    String answerD;
-    String correctAnswer;
+    private String questionAudio;
+    private String answerA;
+    private String answerB;
+    private String answerC;
+    private String answerD;
+    private String correctAnswer;
 
     @Builder.Default
-    Boolean questionHaveTranscript = false;
+    private Boolean questionHaveTranscript = false;
 
     @Builder.Default
-    Boolean haveMultiImage = false;
+    private Boolean haveMultiImage = false;
 
     @Builder.Default
-    Integer numberQuestionInGroup = 1;
+    private Integer numberQuestionInGroup = 1;
 
     @Column(columnDefinition = "TEXT")
-    String transcript;
+    private String transcript;
     @Column(columnDefinition = "TEXT")
-    String translateTranscript;
+    private String translateTranscript;
 
     @JsonIgnore
     @CreationTimestamp
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @JsonIgnore
     @UpdateTimestamp
-    LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "part_id")
-    Part part;
+    private Part part;
 
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     @Builder.Default
-    Set<QuestionImage> questionImages = new HashSet<>();
+    private Set<QuestionImage> questionImages = new HashSet<>();
 }

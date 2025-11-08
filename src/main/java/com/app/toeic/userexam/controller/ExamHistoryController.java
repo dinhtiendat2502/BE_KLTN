@@ -7,19 +7,15 @@ import com.app.toeic.userexam.service.UserExamHistoryService;
 import com.app.toeic.user.service.UserService;
 import com.app.toeic.util.HttpStatus;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/exam-history")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ExamHistoryController {
-    UserExamHistoryService userExamHistoryService;
-    UserService userService;
+    private final UserExamHistoryService userExamHistoryService;
+    private final UserService userService;
     private static final String SUCCESS = "Thành công";
 
     @GetMapping("/find-by-id/{examHistoryId}")
@@ -63,4 +59,3 @@ public class ExamHistoryController {
     }
 
 }
-

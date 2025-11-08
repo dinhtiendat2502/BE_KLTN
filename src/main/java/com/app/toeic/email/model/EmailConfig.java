@@ -5,9 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "email_config", indexes = {
-        @Index(name = "status_index", columnList = "status")
-})
+@Table(name = "email_config")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,6 +21,5 @@ public class EmailConfig {
     private String username;
     private String password;
 
-    @Builder.Default
     private boolean status = false;
 }

@@ -1,77 +1,68 @@
 package com.app.toeic.chatai.controller;
 
-import com.app.toeic.aop.annotation.ChatAiLog;
-import com.app.toeic.chatai.model.ChatAI;
-import com.app.toeic.chatai.model.ModelChat;
-import com.app.toeic.chatai.payload.GeminiPayload;
-import com.app.toeic.chatai.repo.ChatAiRepository;
 import com.app.toeic.external.response.ResponseVO;
-import com.app.toeic.util.Constant;
-import com.app.toeic.util.JsonConverter;
-import com.app.toeic.util.RequestUtils;
+import com.google.cloud.vertexai.generativeai.ChatSession;
+import com.google.cloud.vertexai.generativeai.ContentMaker;
+import com.google.cloud.vertexai.generativeai.GenerativeModel;
+import com.google.cloud.vertexai.generativeai.ResponseHandler;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 
 @Log
 @RestController
 @RequestMapping("gemini")
+@CrossOrigin("*")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class GeminiController {
-    RestTemplate restTemplate;
-    ChatAiRepository chatAiRepository;
+    GenerativeModel generativeModel;
 
     @PostMapping("ask/v1")
-    @ChatAiLog(model = ModelChat.GEMINI)
     public Object askGeminiV1(@RequestBody GeminiPayload payload) {
-        var config = getChatAI();
-        var result = ResponseVO
+
+        return ResponseVO
                 .builder()
+                .success(true)
                 .build();
-        try {
-            var headers = RequestUtils.createHeaders();
-            var httpEntity = new HttpEntity<>(payload, headers);
-            var responseEntity = restTemplate.postForEntity(
-                    MessageFormat.format("{0}{1}", config.getUrl(), config.getToken()),
-                    httpEntity,
-                    Object.class
-            );
-            if (responseEntity.getStatusCode().is2xxSuccessful()
-                    && responseEntity.getBody() instanceof Map<?, ?> m) {
-                var candidates = m.get("candidates");
-                if (candidates instanceof List<?> l) {
-                    if(l.getFirst() instanceof Map<?, ?> m2) {
-                        result.setData(m2.get("content"));
-                        result.setSuccess(true);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            log.log(
-                    Level.WARNING,
-                    MessageFormat.format(
-                            "GeminiController >> ask >> param: {0} >> Exception: ",
-                            JsonConverter.convertObjectToJson(payload)
-                    ),
-                    e
-            );
-            result.setSuccess(false);
-        }
-        return result;
     }
 
-    private ChatAI getChatAI() {
-        return chatAiRepository.findAllByStatusAndType(true, Constant.GEMINI_CURL).getFirst();
+    @PostMapping("ask/v2")
+    public Object startChat(@RequestBody GeminiPayload payload) {
+        var chatSession = new ChatSession(generativeModel);
+        var historySession = payload.listMessage.stream().map(ContentMaker::fromString).toList();
+        chatSession.setHistory(historySession);
+        try {
+            var response = chatSession.sendMessage(payload.newMessage);
+            var text = ResponseHandler.getText(response);
+            return ResponseVO
+                    .builder()
+                    .data(text)
+                    .success(true)
+                    .message("ASK_GEMINI_SUCCESS")
+                    .build();
+        } catch (IOException ex) {
+            log.log(
+                    Level.WARNING,
+                    MessageFormat.format("VertexAIController >> startChat >> body: {0}", payload.listMessage),
+                    ex
+            );
+            return ResponseVO
+                    .builder()
+                    .success(false)
+                    .message("FAIL_ASK_GEMINI")
+                    .build();
+        }
+    }
+
+    public record GeminiPayload(List<String> listMessage, String newMessage) {
     }
 }

@@ -1,55 +1,41 @@
 package com.app.toeic.komunicate.controller;
 
+
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.komunicate.model.KommunicateBot;
 import com.app.toeic.komunicate.payload.KommunicateBotDTO;
 import com.app.toeic.komunicate.repo.KommunicateBotRepo;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/kommunicate/bot")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@CrossOrigin("*")
+@RequiredArgsConstructor
 public class KommunicateBotController {
-    KommunicateBotRepo kommunicateBotRepo;
+    private final KommunicateBotRepo kommunicateBotRepo;
 
     @GetMapping("/all")
     public Object getAll() {
         return kommunicateBotRepo.findAll();
     }
 
-    @GetMapping("get-bot-active")
-    public Object getBotActive() {
-        return ResponseVO
-                .builder()
-                .success(true)
-                .data(kommunicateBotRepo.findAllByStatus(true)
-                                        .getFirst())
-                .build();
-    }
-
     @PostMapping("/update")
     public Object updateKommunicateBot(@RequestBody KommunicateBotDTO payload) {
-        final var msg = new String[1];
+        String[] msg = new String[1];
         kommunicateBotRepo
                 .findByAppId(payload.getAppId())
                 .ifPresentOrElse(kommunicateBot -> {
                     kommunicateBot.setApiKey(payload.getApiKey());
-                    kommunicateBot.setScript(payload.getScript());
                     kommunicateBotRepo.save(kommunicateBot);
                     msg[0] = "UPDATE_KOMMUNICATE_BOT_SUCCESS";
                 }, () -> {
                     kommunicateBotRepo
                             .save(KommunicateBot
-                                          .builder()
-                                          .appId(payload.getAppId())
-                                          .apiKey(payload.getApiKey())
-                                          .script(payload.getScript())
-                                          .build());
+                                    .builder()
+                                    .appId(payload.getAppId())
+                                    .apiKey(payload.getApiKey())
+                                    .build());
                     msg[0] = "ADD_KOMMUNICATE_BOT_SUCCESS";
                 });
         return ResponseVO
@@ -85,7 +71,9 @@ public class KommunicateBotController {
 
     @DeleteMapping("/delete/{id}")
     public Object deleteKommunicateBot(@PathVariable Integer id) {
-        kommunicateBotRepo.deleteById(id);
+        kommunicateBotRepo
+                .findById(id)
+                .ifPresent(kommunicateBotRepo::delete);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)

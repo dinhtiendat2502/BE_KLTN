@@ -1,12 +1,10 @@
 package com.app.toeic.topic.model;
 
 import com.app.toeic.exam.model.Exam;
-import com.app.toeic.util.Constant;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -22,30 +20,29 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Topic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer topicId;
+    private Integer topicId;
 
-    String topicName;
-    String topicImage;
+    private String topicName;
+    private String topicImage;
     @Builder.Default
-    String status = Constant.STATUS_ACTIVE;
+    private String status = "ACTIVE";
     @Builder.Default
-    Boolean isFree = true;
+    private Boolean isFree = true;
 
     @JsonIgnore
     @CreationTimestamp
-    LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @JsonIgnore
     @UpdateTimestamp
-    LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "topic")
     @JsonBackReference
     @Builder.Default
-    Set<Exam> exams = new HashSet<>();
+    private Set<Exam> exams = new HashSet<>();
 }

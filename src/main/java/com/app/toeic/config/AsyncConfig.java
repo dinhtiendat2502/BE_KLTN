@@ -9,7 +9,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @Configuration
 @EnableAsync
 public class AsyncConfig {
-    @Bean(name = "toeicute")
+    @Bean(name = "crawlDataExecutor")
     public Executor taskExecutor() {
         var executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(10);

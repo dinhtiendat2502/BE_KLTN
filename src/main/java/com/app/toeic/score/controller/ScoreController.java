@@ -7,14 +7,12 @@ import com.app.toeic.score.repo.ICalculateScoreRepository;
 import com.app.toeic.external.response.ResponseVO;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,11 +23,10 @@ import java.util.stream.IntStream;
 
 
 @RestController
-@RequestMapping("/score")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
-@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
+@RequiredArgsConstructor
+@RequestMapping("/admin/score")
 public class ScoreController {
-    ICalculateScoreRepository calculateScoreRepository;
+    private final ICalculateScoreRepository calculateScoreRepository;
 
     @GetMapping("/init")
     public ResponseVO initScore() {
@@ -58,19 +55,6 @@ public class ScoreController {
                 .success(Boolean.TRUE)
                 .data(calculateScoreRepository.findAll())
                 .message("GET_LIST_SCORE_SUCCESS")
-                .build();
-    }
-
-    @GetMapping("cal")
-    public Object calculateScore(
-            @RequestParam("totalQuestionReading") String totalQuestionReading,
-            @RequestParam("totalQuestionListening") String totalQuestionListening
-    ) {
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .data(calculateScoreRepository.findAllByTotalQuestion(Integer.parseInt(totalQuestionReading), Integer.parseInt(totalQuestionListening)))
-                .message("CALCULATE_SCORE_SUCCESS")
                 .build();
     }
 
@@ -143,5 +127,3 @@ public class ScoreController {
     }
 
 }
-
-
