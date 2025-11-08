@@ -3,6 +3,7 @@ package com.app.toeic.question.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "question_image")
@@ -11,14 +12,15 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class QuestionImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer questionImageId;
+    Integer questionImageId;
     @Column(columnDefinition = "TEXT")
-    private String questionImage;
+    String questionImage;
 
     @ManyToOne
     @JoinColumn(name = "question_id")
-    private Question question;
+    Question question;
 }

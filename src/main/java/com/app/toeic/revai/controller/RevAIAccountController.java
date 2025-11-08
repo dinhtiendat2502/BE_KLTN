@@ -5,14 +5,16 @@ import com.app.toeic.revai.model.RevAIAccount;
 import com.app.toeic.revai.payload.RevAIAccountDTO;
 import com.app.toeic.revai.repo.RevAIAccountRepo;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/revai/account")
-@CrossOrigin("*")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class RevAIAccountController {
-    private final RevAIAccountRepo revAIAccountRepo;
+    RevAIAccountRepo revAIAccountRepo;
 
     @GetMapping("/all")
     public Object getAll() {

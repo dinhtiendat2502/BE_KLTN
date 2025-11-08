@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/kommunicate/account")
-@CrossOrigin("*")
 @RequiredArgsConstructor
 public class KommunicateAccountController {
     private final KommunicateAccountRepo kommunicateAccountRepo;

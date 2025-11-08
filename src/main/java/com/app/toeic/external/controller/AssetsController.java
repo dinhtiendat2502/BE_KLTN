@@ -7,8 +7,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import redis.clients.jedis.DefaultJedisClientConfig;
+import redis.clients.jedis.HostAndPort;
+import redis.clients.jedis.JedisPooled;
 
+import javax.net.ssl.SSLContext;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,6 +22,15 @@ public class AssetsController {
 
     @GetMapping("/test")
     public ResponseVO test(HttpServletRequest request) {
+        var address = new HostAndPort("redis-12988.c292.ap-southeast-1-1.ec2.redns.redis-cloud.com", 12988);
+        var config = DefaultJedisClientConfig.builder()
+                                             .ssl(true)
+                                             .user("default") // use your Redis user. More info https://redis.io/docs/latest/operate/oss_and_stack/management/security/acl/
+                                             .password("Ls3ZXG94qw9Zcw6fgLjq1iJUgSaPcxsS") // use your Redis password
+                                             .build();
+        try (var jedis = new JedisPooled(address, config)) {
+            jedis.sadd("kira", "test");
+        }
         return new ResponseVO(
                 Boolean.TRUE,
                 null,

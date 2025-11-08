@@ -2,6 +2,7 @@ package com.app.toeic.config;
 
 
 import com.app.toeic.user.service.impl.CustomerUserDetailsService;
+import lombok.experimental.FieldDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,8 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class ApplicationConfig {
-    private final CustomerUserDetailsService customerUserDetailsService;
+    CustomerUserDetailsService customerUserDetailsService;
 
     public ApplicationConfig(CustomerUserDetailsService customerUserDetailsService) {
         this.customerUserDetailsService = customerUserDetailsService;

@@ -6,7 +6,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "chatai")
+@Table(name = "chatai", indexes = {
+        @Index(name = "model_name_index", columnList = "modelName"),
+})
 @Getter
 @Setter
 @AllArgsConstructor

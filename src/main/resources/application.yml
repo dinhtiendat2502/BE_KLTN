@@ -1,28 +1,76 @@
+application:
+  ignored:
+    urls:
+      - /user/get-captcha
+      - /user/register
+      - /user/authenticate
+      - /user/forgot-password
+      - /user/confirm-otp
+      - /user/reset-password
+      - /user/test
+      - /v3/api-docs
+      - /v3/api-docs/**
+      - /swagger-ui/**
+      - /swagger-ui.html
+      - /slider/all
+      - /kommunicate/bot/get-bot-active
+
 server:
   port: ${PORT:8080}
   servlet:
     context-path: /api
 spring:
-  ai:
-    openai:
-      api-key: "${OPENAI_API_KEY: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}"
-      audio:
-        speech:
-          options:
-            model: tts-1
-      chat:
-        options:
-          model: gpt-3.5-turbo
-          temperature: 0.7
+  thymeleaf:
+    check-template-location: false
+  quartz:
+    job-store-type: jdbc
   application:
     name: toeicute-api
   boot:
     admin:
       client:
-        url: http://localhost:8080/api
+        url: "${SPRING_BOOT_ADMIN_URL:http://127.0.0.1:8080/api}"
         instance:
-          service-url: http://localhost:8080/api
-
+          service-url: "${SPRING_BOOT_ADMIN_URL:http://127.0.0.1:8080/api}"
+          name: "${spring.application.name}"
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: "${GOOGLE_CLIENT_ID:695539607356-7ivpkghg3bmq3sul0gp8illtpc1i056a.apps.googleusercontent.com}"
+            clientSecret: "${GOOGLE_CLIENT_SECRET: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}"
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
+          facebook:
+            clientId: "${FACEBOOK_CLIENT_ID:441124901895321}"
+            clientSecret: "${FACEBOOK_CLIENT_SECRET:c32645e832703aec8c10d776f85f45f1}"
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - public_profile
+        provider:
+          facebook:
+            authorizationUri: "https://www.facebook.com/v3.0/dialog/oauth"
+            tokenUri: "https://graph.facebook.com/v3.0/oauth/access_token"
+            userInfoUri: "https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)"
+  ai:
+    vertex:
+      ai:
+        gemini:
+          project-id: "${GEMINI_PROJECT_ID:123456}"
+          location: "${GEMINI_LOCATION:12356}"
+        api-key: "${GEMINI_API_KEY:123456}"
+        chat:
+          model: chat-bison-001
+    openai:
+      api-key: "${OPENAI_API_KEY:sk-1234567890}"
+      chat:
+        options:
+          model: gpt-3.5-turbo
+          temperature: 0.7
   datasource:
     url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true"
     username: "${DB_USERNAME:root}"
@@ -39,8 +87,8 @@ spring:
     open-in-view: false
   servlet:
     multipart:
-      max-file-size: 20MB
-      max-request-size: 20MB
+      max-file-size: 100MB
+      max-request-size: 100MB
 springdoc:
   api-docs:
     path: /toeicute/api-docs
@@ -63,22 +111,4 @@ logging:
     root: info
   file:
     name: target/toeicute.log
-
-firebase:
-  project-id: "${FIREBASE_PROJECT_ID:toeicute-70460}"
-  token-key: "${FIREBASE_TOKEN_KEY:toeicute-upload}"
-  bucket-name: "${FIREBASE_BUCKET_NAME:toeicute-70460.appspot.com}"
-ipinfo:
-  token: "${IPINFO_TOKEN:b1324b9ae149de}"
-
-BOT_AI_URL: "${API_AI:https://llamastudio.dev/api/cls40w5460001l2087o43vxsy}"
-openai:
-  model: gpt-3.5-turbo
-  api:
-    url: https://api.openai.com/v1/chat/completions
-    key: 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
-
-GOOGLE_TRANSLATE_API: "${GOOGLE_TRANSLATE_URL:https://translate.google.com/translate_a/single?client=at&dt=t&dt=ld&dt=qca&dt=rm&dt=bd&dj=1&hl=%25s&ie=UTF-8&oe=UTF-8&inputm=2&otf=2&iid=1dd3b944-fa62-4b55-b330-74909a99969e&}"
-REV_AI_TOKEN: "${REVAI_ACCESS_TOKEN:02x7qBPWLMBrrDZPKWallLiYEyxJ8Hz_JdqqVWgIaracvN8t9jtP_Xypu7QKlEDKDaXHwHN7_ArTSTKnsULjDqHKNQFtw}"
-
 

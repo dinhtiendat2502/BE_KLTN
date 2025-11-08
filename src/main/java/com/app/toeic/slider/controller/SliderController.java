@@ -16,12 +16,11 @@ import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin("*")
 @RequestMapping("/slider")
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class SliderController {
-    private final SliderRepository sliderRepository;
-    private final FirebaseStorageService firebaseStorageService;
+    SliderRepository sliderRepository;
+    FirebaseStorageService firebaseStorageService;
 
     @GetMapping("/all")
     public Object getAllSlider(

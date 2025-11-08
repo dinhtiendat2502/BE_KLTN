@@ -8,6 +8,6 @@ import lombok.Data;
 @Data
 @Builder
 public class UserDTO {
-    Integer id;
+    Integer userId;
     EUser status;
 }

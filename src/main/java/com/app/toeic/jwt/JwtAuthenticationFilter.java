@@ -7,7 +7,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,11 +27,11 @@ import java.util.Optional;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
-    private final JwtTokenProvider jwtUtilities;
-    private final UserDetailsService userDetailsService;
+    JwtTokenProvider jwtUtilities;
+    UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(
@@ -41,7 +43,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             IOException {
         var token = jwtUtilities.getToken(request);
 
-        if (token != null && jwtUtilities.validateToken(token)) {
+        if (org.apache.commons.lang3.StringUtils.isNotBlank(token)
+                && !"null".equalsIgnoreCase(token)
+                && jwtUtilities.validateToken(token)) {
             var username = jwtUtilities.extractUsername(token);
 
             var userDetails = userDetailsService.loadUserByUsername(username);

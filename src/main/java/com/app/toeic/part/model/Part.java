@@ -3,10 +3,12 @@ package com.app.toeic.part.model;
 
 import com.app.toeic.exam.model.Exam;
 import com.app.toeic.question.model.Question;
+import com.app.toeic.util.Constant;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,42 +17,48 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "part")
+@Table(name = "part", indexes = {
+        @Index(name = "part_exam_id_index", columnList = "exam_id"),
+        @Index(name = "part_code_index", columnList = "partCode")
+})
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Part {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer partId;
-    private String partName;
-    private String partCode;
+    Integer partId;
+    String partName;
+    String partCode;
     @Column(columnDefinition = "TEXT")
-    private String partImage;
+    String partImage;
     @Column(columnDefinition = "TEXT")
-    private String partAudio;
+    String partAudio;
     @Column(columnDefinition = "TEXT")
-    private String partContent;
-    private int numberOfQuestion;
+    String partContent;
+    int numberOfQuestion;
+
     @Builder.Default
-    private String status = "ACTIVE";
+    String status = Constant.STATUS_ACTIVE;
+
     @JsonIgnore
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 
     @JsonIgnore
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "exam_id")
-    private Exam exam;
+    Exam exam;
 
     @OneToMany(mappedBy = "part", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     @OrderBy("questionNumber ASC")
     @Builder.Default
-    private Set<Question> questions = new HashSet<>();
+    Set<Question> questions = new HashSet<>();
 }

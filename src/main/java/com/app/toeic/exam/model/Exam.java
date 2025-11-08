@@ -1,12 +1,15 @@
 package com.app.toeic.exam.model;
 
 
+import com.app.toeic.comment.model.Comment;
 import com.app.toeic.part.model.Part;
 import com.app.toeic.topic.model.Topic;
+import com.app.toeic.util.Constant;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -15,55 +18,69 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "exam")
+@Table(name = "exam", indexes = {
+        @Index(name = "status_index", columnList = "status"),
+        @Index(name = "is_free_index", columnList = "is_free"),
+})
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Exam {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer examId;
-    private String examName;
-    private String examImage;
-    
+    Integer examId;
+    String examName;
+    String examImage;
+
     @Column(columnDefinition = "TEXT")
-    private String examAudio;
+    String examAudio;
     @Column(columnDefinition = "TEXT")
-    private String audioPart1;
+    String audioPart1;
     @Column(columnDefinition = "TEXT")
-    private String audioPart2;
+    String audioPart2;
     @Column(columnDefinition = "TEXT")
-    private String audioPart3;
+    String audioPart3;
     @Column(columnDefinition = "TEXT")
-    private String audioPart4;
+    String audioPart4;
 
     @Builder.Default
-    private String status = "ACTIVE";
+    String status = Constant.STATUS_INACTIVE;
 
     @Builder.Default
-    private Integer numberOfUserDoExam = 0;
+    Integer numberOfUserDoExam = 0;
 
     @Builder.Default
-    private Double price = 0.0;
+    Double price = 0.0;
+
+    @Builder.Default
+    boolean isFree = false;
+
+    LocalDateTime fromDate;
+    LocalDateTime toDate;
 
     @JsonIgnore
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    LocalDateTime createdAt;
 
     @JsonIgnore
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn(name = "topic_id")
-    private Topic topic;
+    Topic topic;
 
     @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
-    @OrderBy("partId ASC")
+    @OrderBy("partCode ASC")
     @Builder.Default
-    private Set<Part> parts = new HashSet<>();
+    Set<Part> parts = new HashSet<>();
+
+    @OneToMany(mappedBy = "exam", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
+    @Builder.Default
+    Set<Comment> comments = new HashSet<>();
 }

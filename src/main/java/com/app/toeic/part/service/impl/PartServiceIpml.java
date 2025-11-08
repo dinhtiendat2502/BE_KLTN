@@ -7,84 +7,78 @@ import com.app.toeic.part.model.Part;
 import com.app.toeic.exam.repo.IExamRepository;
 import com.app.toeic.part.repo.IPartRepository;
 import com.app.toeic.part.service.PartService;
+import com.app.toeic.util.Constant;
 import com.app.toeic.util.HttpStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
+@Log
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class PartServiceIpml implements PartService {
-    private final IPartRepository partRepository;
-    private final IExamRepository examRepository;
+    IPartRepository partRepository;
+    IExamRepository examRepository;
 
     @Override
     @Transactional
     public void init7PartForExam(Exam exam) {
+        var listPart = new ArrayList<Part>();
         for (int i = 1; i <= 7; i++) {
             var part = Part
                     .builder()
-                    .partName("Part " + i)
-                    .partCode("PART" + i)
-                    .status("ACTIVE")
+                    .partName(MessageFormat.format("Part {0}", i))
+                    .partCode(MessageFormat.format("PART{0}", i))
+                    .status(Constant.STATUS_ACTIVE)
                     .exam(exam)
                     .build();
 
             switch (i) {
                 case 1 -> {
                     part.setPartAudio(exam.getAudioPart1());
-                    part.setNumberOfQuestion(6);
-                    part.setPartContent("""
-                            Directions : For each question in this part, you will hear four statements about a picture in your test book. When you hear the statements, you must select the one statement that best describes what you see in the picture. Then find the number of the question on your answer sheet and mark your answer. The statements will not be printed in your test book and will be spoken only one time.
-                            """);
+                    part.setNumberOfQuestion(Constant.NUMBER_QUESTION_PART_1);
+                    part.setPartContent(Constant.PART1_CONTENT);
                 }
                 case 2 -> {
                     part.setPartAudio(exam.getAudioPart2());
-                    part.setNumberOfQuestion(25);
-                    part.setPartContent("""
-                            Directions : You will hear a question or statement and three responses spoken in English. They will not be printed in your test book and will be spoken only one time. Select the best response to the question or statement and mark the letter (A), (B), or (C) on your answer sheet.
-                            """);
+                    part.setNumberOfQuestion(Constant.NUMBER_QUESTION_PART_2);
+                    part.setPartContent(Constant.PART2_CONTENT);
                 }
                 case 3 -> {
                     part.setPartAudio(exam.getAudioPart3());
-                    part.setNumberOfQuestion(39);
-                    part.setPartContent("""
-                            Directions : You will hear some conversations between two or more people. You will be asked to answer three questions about what the speakers say in each conversation. Select the best response to each question and mark the letter (A), (B), (C), or (D) on your answer sheet. The conversations will not be printed in your test book and will be spoken only one time.
-                            """);
+                    part.setNumberOfQuestion(Constant.NUMBER_QUESTION_PART_3);
+                    part.setPartContent(Constant.PART3_CONTENT);
                 }
                 case 4 -> {
                     part.setPartAudio(exam.getAudioPart4());
-                    part.setNumberOfQuestion(30);
-                    part.setPartContent("""
-                            Directions : You will hear some talks given by a single speaker. You will be asked to answer three questions about what the speaker says in each talk. Select the best response to each question and mark the letter (A), (B), (C), or (D) on your answer sheet. The talks will not be printed in your test book and will be spoken only one time.
-                            """);
+                    part.setNumberOfQuestion(Constant.NUMBER_QUESTION_PART_4);
+                    part.setPartContent(Constant.PART4_CONTENT);
                 }
                 case 5 -> {
-                    part.setNumberOfQuestion(30);
-                    part.setPartContent("""
-                            Directions: A word or phrase is missing in each of the sentences below. Four answer choices are given below each sentence. Select the best answer to complete the sentence. Then mark the letter (A), (B), (C), or (D) on your answer sheet.
-                            """);
+                    part.setNumberOfQuestion(Constant.NUMBER_QUESTION_PART_5);
+                    part.setPartContent(Constant.PART5_CONTENT);
                 }
                 case 6 -> {
-                    part.setNumberOfQuestion(16);
-                    part.setPartContent("""
-                            Directions : Read the texts that follow. A word, phrase, or sentence is missing in parts of each text. Four answer choices for each question are given below the text. Select the best answer to complete the text. Then mark the letter (A), (B), (C), or (D) on your answer sheet.
-                            """);
+                    part.setNumberOfQuestion(Constant.NUMBER_QUESTION_PART_6);
+                    part.setPartContent(Constant.PART6_CONTENT);
                 }
                 case 7 -> {
-                    part.setPartContent("""
-                            Directions: In this part you will read a selection of texts, such as magazine and newspaper articles, e-mails, and instant messages. Each text or set of texts is followed by several questions. Select the best answer for each question and mark the letter (A), (B), (C), or (D) on your answer sheet.
-                            """);
-                    part.setNumberOfQuestion(54);
+                    part.setPartContent(Constant.PART7_CONTENT);
+                    part.setNumberOfQuestion(Constant.NUMBER_QUESTION_PART_7);
                 }
-                default -> {
-                    break;
-                }
+                default -> log.info("PartServiceIpml >> init7PartForExam >> Invalid part number");
             }
-            partRepository.save(part);
+            listPart.add(part);
         }
+        partRepository.saveAll(listPart);
     }
 
     @Override

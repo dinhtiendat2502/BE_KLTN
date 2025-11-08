@@ -1,63 +1,141 @@
 package com.app.toeic.firebase.service.impl;
 
+import com.app.toeic.cache.FirebaseConfigCache;
+import com.app.toeic.exception.AppException;
+import com.app.toeic.firebase.model.FirebaseConfig;
+import com.app.toeic.firebase.model.FirebaseUploadHistory;
+import com.app.toeic.firebase.repo.FirebaseUploadHistoryRepo;
 import com.app.toeic.firebase.service.FirebaseStorageService;
-import com.app.toeic.util.URLHelper;
+import com.app.toeic.util.FileUtils;
+import com.app.toeic.util.HttpStatus;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.cloud.StorageClient;
+import jakarta.annotation.PostConstruct;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
+import java.text.MessageFormat;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 
+@Log
 @Service
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class FirebaseStorageServiceImpl implements FirebaseStorageService {
-    private final Storage storage;
+    final FirebaseConfigCache firebaseConfigCache;
+    final FirebaseUploadHistoryRepo firebaseUploadHistoryRepo;
+    static String downloadUrl = "https://firebasestorage.googleapis.com/v0/b/{0}/o/%s?alt=media";
+    static String gsUrl = "gs://{0}/%s";
 
-    @Value("${firebase.project-id}")
-    private String projectID;
+    private FirebaseConfig previousFirebaseBean;
 
-    @Value("${firebase.token-key}")
-    private String tokenUpload;
-
-    @Value("${firebase.bucket-name}")
-    private String bucketName;
-
-    private static final String DOWNLOAD_URL = "https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media";
-
-
-    public FirebaseStorageServiceImpl() throws IOException {
-        ClassPathResource serviceAccount = new ClassPathResource("firebase.json");
-        storage = StorageOptions
-                .newBuilder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount.getInputStream()))
-                .setProjectId(projectID)
-                .build()
-                .getService();
+    @PostConstruct
+    public synchronized void init() throws IOException {
+        updateFirebaseConfig();
     }
+
 
     @Override
     public String uploadFile(MultipartFile file) throws IOException {
-        String fileName = generateFileName(
-                URLHelper.replaceByRegex(Objects.requireNonNull(file.getOriginalFilename())));
-        Map<String, String> map = new HashMap<>();
-        map.put(tokenUpload, fileName);
-        var blobId = BlobId.of(bucketName, fileName);
-        var blobInfo = BlobInfo
-                .newBuilder(blobId)
-                .setMetadata(map)
-                .setContentType(file.getContentType())
+        var rs = uploadFile(file, false);
+        return rs.get("url");
+    }
+
+    @Override
+    public Map<String, String> uploadFile(MultipartFile file, boolean isGcs) throws IOException {
+        var bucket = StorageClient.getInstance().bucket();
+        var name = generateFileName(file.getOriginalFilename());
+        bucket.create(name, file.getBytes(), file.getContentType());
+        var url = getImageUrl(name);
+        log.info(MessageFormat.format("FirebaseStorageServiceImpl >> uploadFile >> {0}", url));
+
+        // save info to database
+        var history = FirebaseUploadHistory
+                .builder()
+                .fileName(name)
+                .fileUrl(url)
+                .fileType(file.getContentType())
+                .fileSize(file.getSize())
                 .build();
-        storage.create(blobInfo, file.getInputStream());
-        return String.format(DOWNLOAD_URL, bucketName, URLEncoder.encode(fileName, StandardCharsets.UTF_8));
+        firebaseUploadHistoryRepo.save(history);
+        return Map.of("url", url, "gcsUrl", getGcsUrl(name));
+    }
+
+    @Override
+    public String uploadFile(FileUtils.FileInfo file) {
+        var bucket = StorageClient.getInstance().bucket();
+        bucket.create(file.fileName(), file.file(), file.contentType());
+        var url = getImageUrl(file.fileName());
+        log.info(MessageFormat.format("FirebaseStorageServiceImpl >> uploadFile >> {0}", url));
+        // save info to database
+        var history = FirebaseUploadHistory
+                .builder()
+                .fileName(file.fileName())
+                .fileUrl(url)
+                .fileType(file.contentType())
+                .fileSize(file.fileSize())
+                .build();
+        firebaseUploadHistoryRepo.save(history);
+        return url;
+    }
+
+    @Override
+    public void delete(String name) throws IOException {
+        var bucket = StorageClient.getInstance().bucket();
+        if (org.apache.commons.lang3.StringUtils.isEmpty(name)) {
+            throw new AppException(HttpStatus.BAD_REQUEST, "FILE_NAME_IS_EMPTY");
+        }
+        var blob = bucket.get(name);
+        if (blob == null) {
+            throw new AppException(HttpStatus.NOT_FOUND, "FILE_NOT_FOUND");
+        }
+        blob.delete();
+    }
+
+    @Override
+    public void updateFirebaseConfig() throws IOException {
+        var firebaseBean = firebaseConfigCache.getConfigValue(true);
+        if (!firebaseBean.equals(previousFirebaseBean)) { // Kiểm tra xem có thay đổi không
+            if (org.apache.commons.lang3.StringUtils.isBlank(firebaseBean.getProjectId())) {
+                throw new AppException(HttpStatus.INTERNAL_SERVER_ERROR, "FIREBASE_CONFIG_NOT_FOUND");
+            }
+            downloadUrl = MessageFormat.format(downloadUrl, firebaseBean.getBucketName());
+            gsUrl = MessageFormat.format(gsUrl, firebaseBean.getBucketName());
+            var jsonContent = firebaseBean.getFileJson();
+            var credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(jsonContent.getBytes()));
+            var options = FirebaseOptions.builder()
+                                         .setCredentials(credentials)
+                                         .setStorageBucket(firebaseBean.getBucketName())
+                                         .build();
+            FirebaseApp.initializeApp(options);
+            previousFirebaseBean = firebaseBean; // Cập nhật tham chiếu đến phiên bản mới
+        }
+    }
+
+    @Override
+    public Object getAllFiles() {
+        var bucket = StorageClient.getInstance().bucket();
+        var rs = bucket.list()
+                       .streamAll()
+                       .map(blob -> {
+                           var url = getImageUrl(blob.getName());
+                           var contentType = blob.getContentType();
+                           var fileSize = blob.getSize();
+                           return Map.of("url", url, "contentType", contentType, "fileSize", fileSize);
+                       })
+                       .toList();
+        log.info(MessageFormat.format("FirebaseStorageServiceImpl >> getAllFiles >> {0}", rs.size()));
+        return rs;
     }
 
     private String generateFileName(String originalFileName) {
@@ -68,4 +146,11 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
         return StringUtils.getFilenameExtension(originalFileName);
     }
 
+    private String getImageUrl(String name) {
+        return String.format(downloadUrl, name);
+    }
+
+    private String getGcsUrl(String name) {
+        return String.format(gsUrl, name);
+    }
 }

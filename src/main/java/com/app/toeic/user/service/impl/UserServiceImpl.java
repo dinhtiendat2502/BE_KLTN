@@ -5,34 +5,48 @@ import com.app.toeic.user.enums.ERole;
 import com.app.toeic.user.enums.EUser;
 import com.app.toeic.exception.AppException;
 import com.app.toeic.jwt.JwtTokenProvider;
+import com.app.toeic.user.model.Role;
 import com.app.toeic.user.model.UserAccount;
 import com.app.toeic.user.payload.*;
 import com.app.toeic.user.repo.IRoleRepository;
+import com.app.toeic.user.repo.IUserAccountLogRepository;
 import com.app.toeic.user.repo.IUserAccountRepository;
+import com.app.toeic.user.repo.UserTokenRepository;
 import com.app.toeic.user.response.LoginResponse;
 import com.app.toeic.external.response.ResponseVO;
+import com.app.toeic.user.response.UserAccountRepsonse;
 import com.app.toeic.user.service.UserService;
-import com.app.toeic.util.AvatarHelper;
-import com.app.toeic.util.HttpStatus;
+import com.app.toeic.util.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.logging.Level;
 
+@Log
 @Service
 @Transactional
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class UserServiceImpl implements UserService {
     AuthenticationManager authenticationManager;
@@ -42,31 +56,30 @@ public class UserServiceImpl implements UserService {
     JwtTokenProvider jwtUtilities;
     UserDetailsService userDetailsService;
     EmailServiceImpl emailService;
+    IUserAccountLogRepository iUserAccountLogRepository;
+    UserTokenRepository userTokenRepository;
 
     private static final String EMAIL_NOT_REGISTERED = "EMAIL_NOT_REGISTERED";
+    private static final String CREATED_AT = "createdAt";
 
     @Override
     public ResponseVO authenticate(LoginDTO loginDto) {
         var v1 = new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
-        Authentication authentication = authenticationManager.authenticate(v1);
+        var authentication = authenticationManager.authenticate(v1);
         SecurityContextHolder
                 .getContext()
                 .setAuthentication(authentication);
-        UserAccount user = iUserRepository
+        var user = iUserRepository
                 .findByEmail(authentication.getName())
                 .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, EMAIL_NOT_REGISTERED));
-        if (user
-                .getStatus()
-                .equals(EUser.INACTIVE)) {
+        if (EUser.INACTIVE.equals(user.getStatus())) {
             return ResponseVO
                     .builder()
                     .success(Boolean.FALSE)
                     .data(user.getStatus())
                     .message("ACCOUNT_NOT_ACTIVE")
                     .build();
-        } else if (user
-                .getStatus()
-                .equals(EUser.BLOCKED)) {
+        } else if (EUser.BLOCKED.equals(user.getStatus())) {
             return ResponseVO
                     .builder()
                     .success(Boolean.FALSE)
@@ -74,21 +87,11 @@ public class UserServiceImpl implements UserService {
                     .build();
         }
 
-        List<String> rolesNames = new ArrayList<>();
-        user
-                .getRoles()
-                .forEach(r -> rolesNames.add(r.getRoleName()));
-        var token = jwtUtilities.generateToken(user.getUsername(), user.getPassword(), rolesNames);
-        var res = LoginResponse
-                .builder()
-                .token(token)
-                .email(user.getEmail())
-                .roles(rolesNames)
-                .build();
+        var rolesNames = user.getRoles().stream().map(Role::getRoleName).toList();
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
-                .data(res)
+                .data(jwtUtilities.generateTokenV2(user.getUsername(), user.getPassword(), rolesNames))
                 .message("LOGIN_SUCCESS")
                 .build();
     }
@@ -131,15 +134,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseVO updateUser(UserDTO user) {
         var u = iUserRepository
-                .findById(user.getId())
+                .findById(user.getUserId())
                 .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, "USER_NOT_FOUND"));
         u.setStatus(user.getStatus());
+        iUserRepository.save(u);
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)
                 .data(iUserRepository.save(u))
                 .message("UPDATE_USER_SUCCESS")
                 .build();
+    }
+
+    @Override
+    public Optional<UserAccount> getCurrentUser() {
+        var requestContext = RequestContextHolder.getRequestAttributes();
+        if (requestContext == null) {
+            return Optional.empty();
+        }
+        var request = ((ServletRequestAttributes) requestContext).getRequest();
+        return getProfile(request);
     }
 
     @Override
@@ -175,14 +189,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseVO updateAvatar(UserAccount userAccount) {
+    public void updateAvatar(UserAccount userAccount) {
         iUserRepository.save(userAccount);
-        return ResponseVO
-                .builder()
-                .success(Boolean.TRUE)
-                .data(null)
-                .message("UPDATE_AVATAR_SUCCESS")
-                .build();
     }
 
     @Override
@@ -191,7 +199,7 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isNotEmpty(token) && jwtUtilities.validateToken(token)) {
             String email = jwtUtilities.extractUsername(token);
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            var userDetails = userDetailsService.loadUserByUsername(email);
             if (Boolean.TRUE.equals(jwtUtilities.validateToken(token, userDetails))) {
                 var user = iUserRepository
                         .findByEmail(email)
@@ -208,7 +216,7 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isNotEmpty(token) && jwtUtilities.validateToken(token)) {
             String email = jwtUtilities.extractUsername(token);
 
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            var userDetails = userDetailsService.loadUserByUsername(email);
             return jwtUtilities.validateToken(token, userDetails);
         }
         return Boolean.FALSE;
@@ -229,29 +237,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object updateProfile(UserAccount profile) {
-        return iUserRepository.save(profile);
+    public void updateProfile(UserAccount profile) {
+        iUserRepository.save(profile);
     }
 
     @Override
     public Object loginSocial(LoginSocialDTO loginSocialDto) {
         var user = iUserRepository.findByEmail(loginSocialDto.getEmail());
-        List<String> tokens = new ArrayList<>();
+        var tokens = new ArrayList<String>();
         user.ifPresentOrElse(u -> {
             if (u.getStatus()
-                    .equals(EUser.INACTIVE)) {
+                 .equals(EUser.INACTIVE)) {
                 throw new AppException(HttpStatus.SEE_OTHER, "ACCOUNT_NOT_ACTIVE");
             } else if (u.getStatus()
-                    .equals(EUser.BLOCKED)) {
+                        .equals(EUser.BLOCKED)) {
                 throw new AppException(HttpStatus.SEE_OTHER, "ACCOUNT_BLOCKED");
             } else if (!u.getProvider()
-                    .equals(loginSocialDto.getProvider())) {
+                         .equals(loginSocialDto.getProvider())) {
                 throw new AppException(
                         HttpStatus.SEE_OTHER,
                         "EMAIL_EXISTED_WITH_OTHER_PROVIDER"
                 );
             }
-            List<String> rolesNames = new ArrayList<>();
+            var rolesNames = new ArrayList<String>();
             u.getRoles().forEach(r -> rolesNames.add(r.getRoleName()));
             final var token = jwtUtilities.generateToken(u.getUsername(), u.getPassword(), rolesNames);
             tokens.add(token);
@@ -270,7 +278,7 @@ public class UserServiceImpl implements UserService {
             iUserRepository.save(newUser);
             List<String> rolesNames = new ArrayList<>();
             newUser.getRoles()
-                    .forEach(r -> rolesNames.add(r.getRoleName()));
+                   .forEach(r -> rolesNames.add(r.getRoleName()));
             final var token = jwtUtilities.generateToken(newUser.getUsername(), newUser.getPassword(), rolesNames);
             tokens.add(token);
             emailService.sendEmailAccount(loginSocialDto, password, "LOGIN_SOCIAL");
@@ -301,9 +309,122 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Object forgotPassword(String email) {
+    public String forgotPassword(String email) {
         emailService.sendEmail(email, "FORGOT_PASSWORD");
         return "SEND_EMAIL_SUCCESS";
+    }
+
+    @Override
+    public Object getActivities(HttpServletRequest request, int page, int pageSize, String type) {
+        var profile = getProfile(request);
+        if (profile.isPresent()) {
+            return getListActivity(page, pageSize, type, profile.get(), null, null);
+        }
+        return Collections.emptyList();
+    }
+
+    private Object getListActivity(
+            int page,
+            int pageSize,
+            String type,
+            UserAccount account,
+            LocalDateTime dateFrom,
+            LocalDateTime dateTo
+    ) {
+        if ("ALL".equals(type)) {
+            return account != null
+                    ? iUserAccountLogRepository.findAllByUserAccount(
+                    account,
+                    PageRequest.of(
+                            page,
+                            pageSize,
+                            Sort.by(CREATED_AT).descending()
+                    )
+            )
+                    : iUserAccountLogRepository.findAllByCreatedAtBetween(
+                    dateFrom,
+                    dateTo,
+                    PageRequest.of(
+                            page,
+                            pageSize,
+                            Sort.by(CREATED_AT).descending()
+                    )
+            );
+        }
+        return account != null
+                ? iUserAccountLogRepository.findAllByUserAccountAndAction(
+                account,
+                type,
+                PageRequest.of(
+                        page,
+                        pageSize,
+                        Sort.by(CREATED_AT).descending()
+                )
+        )
+                : iUserAccountLogRepository.findAllByActionAndCreatedAtBetween(
+                type,
+                dateFrom,
+                dateTo,
+                PageRequest.of(
+                        page,
+                        pageSize,
+                        Sort.by(CREATED_AT).descending()
+                )
+        );
+    }
+
+    @Override
+    public Object getActivities(int page, int size, String type, String fromDate, String toDate) {
+        var dateFrom = DatetimeUtils.getFromDate(fromDate);
+        var dateTo = DatetimeUtils.getToDate(toDate);
+        return getListActivity(page, size, type, null, dateFrom, dateTo);
+    }
+
+    @Override
+    public LoginDTO readCaptcha(HttpServletRequest request) {
+        try {
+            return new ObjectMapper().readValue(request.getInputStream(), LoginDTO.class);
+        } catch (IOException e) {
+            log.log(Level.WARNING, "LoginAuthenticationFilter >> readRequest >> IOException: ", e.getMessage());
+            throw new AuthenticationServiceException("AUTHENTICATION.INVALID_REQUEST");
+        }
+    }
+
+    @Override
+    public boolean checkMultipleLogin(HttpServletRequest request) {
+        var token = jwtUtilities.getToken(request);
+        if (StringUtils.isNotEmpty(token) && jwtUtilities.validateToken(token)) {
+            var email = jwtUtilities.extractUsername(token);
+            var userToken = userTokenRepository.findByEmail(email);
+            if (userToken.isPresent()) {
+                var tokenValue = userToken.get().getToken();
+                return !token.equalsIgnoreCase(tokenValue);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isValidCaptcha(HttpServletRequest request, String captcha) {
+        var cookie = CookieUtils.get(request, Constant.CAPTCHA);
+        return cookie.isPresent() && AESUtils.decrypt(cookie.get().getValue()).equals(captcha.trim());
+    }
+
+    @Override
+    public Optional<UserAccountRepsonse> getProfileV2(HttpServletRequest request) {
+        var token = jwtUtilities.getToken(request);
+        if (StringUtils.isNotEmpty(token) && jwtUtilities.validateToken(token)) {
+            String email = jwtUtilities.extractUsername(token);
+
+            var userDetails = userDetailsService.loadUserByUsername(email);
+            if (Boolean.TRUE.equals(jwtUtilities.validateToken(token, userDetails))) {
+                var user = iUserRepository
+                        .getByEmail(email)
+                        .orElseThrow(() -> new AppException(HttpStatus.SEE_OTHER, EMAIL_NOT_REGISTERED));
+                return Optional.of(user);
+            }
+        }
+        return Optional.empty();
     }
 
     public String randomPassword() {

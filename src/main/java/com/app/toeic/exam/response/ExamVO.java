@@ -3,6 +3,7 @@ package com.app.toeic.exam.response;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -16,6 +17,7 @@ public class ExamVO {
         String getExamName();
 
         String getExamImage();
+        String getExamAudio();
 
         String getAudioPart1();
 
@@ -26,8 +28,11 @@ public class ExamVO {
         String getAudioPart4();
 
         Integer getNumberOfUserDoExam();
+        LocalDateTime getFromDate();
+        LocalDateTime getToDate();
 
         Double getPrice();
+        boolean isFree();
 
         Topic getTopic();
 
@@ -169,6 +174,13 @@ public class ExamVO {
         }
     }
 
+    public interface QuestionFull extends ExamFullQuestion.Part.Question {
+        String getTranscript();
+        String getTranslateTranscript();
+        String getCorrectAnswer();
+
+    }
+
     public interface ExamFullQuestionWithAnswer {
         Integer getExamId();
 
@@ -192,7 +204,7 @@ public class ExamVO {
 
             Set<ExamFullQuestionWithAnswer.Part.Question> getQuestions();
 
-            interface Question {
+            interface Question  {
                 Integer getQuestionId();
 
                 Integer getQuestionNumber();

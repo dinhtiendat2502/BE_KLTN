@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
 
@@ -12,8 +13,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 public class ResponseVO implements Serializable {
-    private Boolean success;
-    private transient Object data;
-    private String message;
+    @Builder.Default
+    Boolean success = true;
+    Object data;
+    String message;
 }

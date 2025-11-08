@@ -164,160 +164,240 @@ VALUES ('Mẫu email sau khi đăng ký tài khoản bằng FB/GOOGLE', 'active'
 insert into email_template(name, status, subject, template_code, template_content)
 VALUES ('Mẫu email cấp lại mật khẩu', 'active', 'Cấp lại mật khẩu TOEICUTE', 'FORGOT_PASSWORD',
         '
-<!doctype html>
-<html lang="en-US">
-
-<head>
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <title>Reset Password Email Template</title>
-    <meta name="description" content="Reset Password Email Template.">
-    <style type="text/css">
-        a:hover {
-            text-decoration: underline !important;
-        }
-    </style>
-</head>
-
-<body marginheight="0" topmargin="0" marginwidth="0" style="margin: 0px; background-color: #f2f3f8;" leftmargin="0">
-    <table cellspacing="0" border="0" cellpadding="0" width="600" bgcolor="#f2f3f8"
-        style="@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: ''Open Sans'', sans-serif;">
+<table style="background-color: #f2f3f8; max-width: 540px; margin: 0 auto;">
+    <tbody>
+        <tr>
+            <td style="height: 80px;">&nbsp;</td>
+        </tr>
+        <tr>
+            <td style="text-align: center;"><a title="logo" href="%s" target="_blank" rel="noopener">
+                    <img title="logo"
+                        src="https://firebasestorage.googleapis.com/v0/b/toeicute-70460.appspot.com/o/logo_tachnen.png?alt=media&amp;token=b1e89f15-9e51-4010-96bc-004946b3c586"
+                        alt="logo" width="60"> </a></td>
+        </tr>
+        <tr>
+            <td style="height: 20px;">&nbsp;</td>
+        </tr>
         <tr>
             <td>
-                <table style="background-color: #f2f3f8; max-width:670px;  margin:0 auto;" width="600" border="0"
-                    align="center" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <td style="height:80px;">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:center;">
-                            <a href="%s" title="logo" target="_blank">
-                                <img width="60"
-                                    src="https://firebasestorage.googleapis.com/v0/b/toeicute-70460.appspot.com/o/logo_tachnen.png?alt=media&token=b1e89f15-9e51-4010-96bc-004946b3c586"
-                                    title="logo" alt="logo">
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="height:20px;">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table width="500" border="0" align="center" cellpadding="0" cellspacing="0"
-                                style="max-width:670px;background:#fff; border-radius:3px; text-align:center;-webkit-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);-moz-box-shadow:0 6px 18px 0 rgba(0,0,0,.06);box-shadow:0 6px 18px 0 rgba(0,0,0,.06);">
-                                <tr>
-                                    <td style="height:40px;">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding:0 35px;">
-                                        <h1
-                                            style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:''Rubik'',sans-serif;">
-                                            Xin chào, bạn vừa gửi yêu cầu cấp lại mật khẩu.</h1>
-                                        <span
-                                            style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
-                                        <p
-                                            style="color:#455056; font-size:16px; line-height:24px; margin:0; text-decoration: solid;">
-                                            Nếu bạn không thực hiện yêu cầu này, vui lòng bỏ qua email này. <br>
-                                            Để cấp lại mật khẩu, vui lòng nhấn vào nút bên dưới.
-                                        </p>
-                                        <a href="%s" title="Reset Password" target="_blank"
-                                            style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Cấp
-                                            lại mật khẩu</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="height:40px;">&nbsp;</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
+                <table
+                    style="max-width: 540px; background: #fff; border-radius: 3px; text-align: center; -webkit-box-shadow: 0 6px 18px 0 rgba(0,0,0,.06); -moz-box-shadow: 0 6px 18px 0 rgba(0,0,0,.06); box-shadow: 0 6px 18px 0 rgba(0,0,0,.06);">
+                    <tbody>
+                        <tr>
+                            <td style="height: 40px;">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0 35px;">
+                                <h1
+                                    style="color: #1e1e2d; font-weight: 500; margin: 0; font-size: 32px; font-family: ''Rubik'',sans-serif;">
+                                    Xin ch&agrave;o, bạn vừa gửi y&ecirc;u cầu cấp lại mật khẩu.</h1>
+                                <p
+                                    style="color: #455056; font-size: 16px; line-height: 24px; margin: 0; text-decoration: solid;">
+                                    Nếu bạn kh&ocirc;ng thực hiện y&ecirc;u cầu n&agrave;y, vui
+                                    l&ograve;ng bỏ qua email n&agrave;y. <br>Để cấp lại mật khẩu, vui
+                                    l&ograve;ng nhấn v&agrave;o n&uacute;t b&ecirc;n dưới.</p>
+                                <a style="background: #20e277; text-decoration: none !important; font-weight: 500; margin-top: 35px; color: #fff; text-transform: uppercase; font-size: 14px; padding: 10px 24px; display: inline-block; border-radius: 50px;"
+                                    title="Reset Password" href="%s" target="_blank" rel="noopener">Cấp
+                                    lại mật khẩu</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="height: 40px;">&nbsp;</td>
+                        </tr>
+                    </tbody>
                 </table>
             </td>
         </tr>
-    </table>
-</body>
-
-</html>
+    </tbody>
+</table>
         ');
 
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Home', 'mdi mdi-home menu-icon', 1, false, '/admin', '', 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('User Management', 'mdi mdi-account-circle menu-icon', 2, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Topic Exam Management', 'mdi mdi-database menu-icon', 3, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Exam Management', 'mdi mdi-book-open menu-icon', 4, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Score Management', 'mdi mdi-checkbox-marked-circle menu-icon', 5, false, '/admin/score', null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Transcript', 'mdi mdi-tooltip-text menu-icon', 6, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Crawl', 'mdi mdi-database-plus menu-icon', 7, true, null, null, 'MEMBER');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Blog', 'mdi mdi mdi-clipboard-text menu-icon', 8, true, null, null, 'MEMBER');
 
-INSERT INTO toeicute.firebase_config (bucket_name, file_json, project_id, status, token_key)
-VALUES ('toeicute-70460.appspot.com',
-        '{  "type": "service_account",  "project_id": "toeicute-70460",  "private_key_id": "562fe111e58a250cdd0938afbd6fcc2cd35ce750",  "private_key": "-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCvsfMr0t8jP37r\\nNw4qp7Qyr1okAE323SgCiRms1uuUaOcW5pzd/AgeTOs6g9Po4ENFCCXfZ/jshnfB\\n/PsY+zIxaaeL/nqGIpjzVCdinB+9FkQmkNLcQvu5jtGwwj1tG6E5yydsNTsCIEYd\\nlzhQ1p/4ht40Bkb0iDDzkf1gfyUWf/t3x7g6dOn1TAoYESXIZfHGYwsO++NPJQe4\\nE1Bh9QDsKGfyxmaJzvY1NZPxbEaxadAFml3EHMb7nyZCpqYg7V/89bZCBH9aaf56\\ntOTQ8vs0YKjrq7at8KXktrLKcDnkRofn1rtfp5T7MMZc28myd/NwcSZq4RP4sV87\\nP3MA28nrAgMBAAECggEAEujOmLld3a/QS6WFx058ZPYdeAF2Yqrjyv4Rfto0yajO\\nslbIrFWbVBOIP6h/jrFQXCYn2VcZ4e8JBZ5iMgqbGNlbuIP/kN85Yfr9MC5IdjPm\\nytXMc/tbl1mJNQJ61Prjy9ITIKDMBIsPsNCdNYob9oYhdSz1xwy/Y/+i6xdUGQso\\nfFgDwhlLuB1eWmWl/834ozO7xinv7lkpyFJMs+8B09BLM2F0avakMSiD4MfIvfBL\\no30u7Oo58U4sUzGQKg21MiiE6aT7vAy9dHKdhAgd+xiKvGP31RYLfesUFHzkZHFe\\nypPUUA96Tokq3oSWTxH0roAoiKO8GmBlihrhfX6t1QKBgQDhIlT5VmJDl9eaui6r\\nnJqN/myQOZXiQtsiIXfbQSBNHxmIZYC632QOPnoFOWJMnBU9nrwsnajM0SOhQAgu\\ncQc23wpkuqy/1TevJLxYSr/n7hG3PnUT4GwOP8f4wPPmuRDVF/ECvIKF1mueYKu5\\n1QVl90+0guO1xIU2BNquED/YZQKBgQDHyG1/WqS9buQTn7jVZdkOe9vgjSXCnKUQ\\nDYoy5rwRPxuTXUSEN5AeuHsZFEY+CSulxcPhxYY4WskhMDVY1TtspZQZ8Dx+5cag\\nFU9+HDKs9DqEQKaKX/yrGWXFblRjPCGjNSKbxPXTyMQEMUT0mj1M1cbogRrB4Z8p\\nZNWx2o3sDwKBgQCpsW0HO1t5w1vZ3ngLFlFQsfM2ipE1KFtv0HY9J0unlcdzDb8I\\nHBWYvvLOOUCkqglAlwMTRgrTxtfqVQ9VohBkBZ4Z6rMHLTl5pGDq0/zuXn2v9z3c\\nK46G9wBNuXKd9+R+Gjupalmfc81OZWNLAQu+nbjQQNBOU8BsxR/nj4vwGQKBgHkV\\n4E/E934c/L1sHBGyxgjCRzTlN5KpcF23ZyCMukXVsvfxGnrsVjxYYbuEj0JAOqUh\\npSRsnHoBhE/KMTsjGf4yqP3DnlbnGyihYem0W356FBFeQdIydSianxU3VoxCwLxz\\nkwNIMBppX2yPFBUQesDb/M+kmDwUbGwhQmemaEg/AoGAMNtZCuY8sHBxPOhy25aX\\nOEE1MqPZ4g7Wg5MdXusIYHhcBIoh40EYDPAZ28VAghGPoBH5RhbwPZ3JyFBuPqbs\\n8zbEAj46oSAkdkvB3Mxjj3jA8NC0ATuvPfXc9O3n+x0Vr7jszlhBDrNvLryMzAFk\\nj6TXjTX9shCgLcdg3Vp7w3M=\\n-----END PRIVATE KEY-----\\n",  "client_email": "test-transcript@toeicute-70460.iam.gserviceaccount.com",  "client_id": "108599691535361340153",  "auth_uri": "https://accounts.google.com/o/oauth2/auth",  "token_uri": "https://oauth2.googleapis.com/token",  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/test-transcript%40toeicute-70460.iam.gserviceaccount.com",  "universe_domain": "googleapis.com"}',
-        'toeicute-70460', true, 'toeicute');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('System Monitoring', 'mdi mdi mdi-android menu-icon', 9, false, 'http://localhost:8080/api/applications', null,
+        'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Firebase Config', 'mdi mdi-cloud-upload menu-icon', 10, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Email Config', 'mdi mdi-email menu-icon', 11, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Slider Config', 'mdi mdi-equal-box menu-icon', 12, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Rev AI Config', 'mdi mdi-at menu-icon', 13, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Kommunicate Config', 'mdi mdi-earth menu-icon', 14, true, null, null, 'SYSTEM');
+insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
+VALUES ('Tiny Editor Config', 'mdi mdi-widgets menu-icon', 14, true, null, null, 'SYSTEM');
+
+
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Member Management', '/admin/users-management', null, 2);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Member Activity', '/admin/users-activity', null, 2);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Topic', '/admin/topic/list', null, 3);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Topic', '/admin/topic/add', null, 3);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Exam', '/admin/exam/list', null, 4);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Exam', '/admin/exam/add', null, 4);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Get Transcript', '/admin/transcript/get', null, 6);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Transcript History', '/admin/transcript/history', null, 6);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Crawl Data', '/admin/crawl/get', null, 7);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Config Crawl', '/admin/crawl/config', null, 7);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Crawl History', '/admin/crawl/list', null, 7);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Blog', '/admin/blog/get', null, 8);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Blog', '/admin/blog/add', null, 8);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Firebase Config', '/admin/firebase/list', null, 10);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Config', '/admin/firebase/update', null, 10);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('History Upload', '/admin/firebase/history', null, 10);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Email Config', '/admin/email/account/list', null, 11);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Email Config', '/admin/email/account/update', null, 11);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Template Email', '/admin/email/template-email/list', null, 11);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Template Email', '/admin/email/template-email/update', null, 11);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Slider', '/admin/slider/list', null, 12);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Slider', '/admin/slider/update', null, 12);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List RevAi Account', '/admin/rev-ai/account/list', null, 13);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add RevAi Account', '/admin/rev-ai/account/update', null, 13);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List RevAi Config', '/admin/rev-ai/config/list', null, 13);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add RevAi Config', '/admin/rev-ai/config/update', null, 13);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Kommunicate Account', '/admin/kommunicate/account/list', null, 14);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Kommunicate Account', '/admin/kommunicate/account/update', null, 14);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Kommunicate Config', '/admin/kommunicate/bot/list', null, 14);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Kommunicate Config', '/admin/kommunicate/bot/update', null, 14);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Tiny Account', '/admin/tiny/account/list', null, 15);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Tiny Account', '/admin/tiny/account/update', null, 15);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('List Tiny Config', '/admin/tiny/config/list', null, 15);
+insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('Add Tiny Config', '/admin/tiny/config/update', null, 15);
+
 
 insert into revai_config(access_token, status)
     value ('02Nr61oQry1wxj-hsCiaMUmAAdfM_VWYGTcFXiNxB0RwmozYdeLpBRde7O_wmZ63pE18gsxYor7OOm8tLbunHjuKma3e0', true);
 
-insert into chatai(location, model_name, project_id, prompt, status, token, type)
-values ('', 'gpt-3.5-turbo', '', 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot''s designated purpose of assisting users with TOEIC and English language learning.
-Start a conversation like "Hello!" and encourage them like "No worries!" when you feel they do not understand. Question: %s', true, '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', 'GPT');
 
+INSERT INTO chatai(type, url, prompt, model_name, status)
+VALUES ('LLAMAS', 'https://llamastudio.dev/api/clwa4ji0e0001jv08e7otvmm4', '', '', true);
+INSERT INTO chatai (location, model_name, project_id, prompt, status, token, type, url)
+VALUES ('', 'gpt-3.5-turbo', '',
+        'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot\'s designated purpose of assisting users with TOEIC and English language learning.
+Start a conversation like "Hello!" and encourage them like "No worries!" when you feel they do not understand. Question: %s', true, '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', 'GPT', 'https://api.openai.com/v1/chat/completions');
 
-insert into chatai(location, model_name, project_id, prompt, status, token, type)
-values ('us-central1', 'gemini-1.0-pro', 'toeicute-70460', 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot''s designated purpose of assisting users with TOEIC and English language learning.
-Start a conversation like "Hello!" and encourage them like "No worries!" when you feel they do not understand. Question: %s', true,
-        '{
+insert into chatai(type, token, status, prompt, url) values ('GEMINI-CURL', 'AIzaSyBRL8Lz9vaftejrIqHAaHOZhuobfJFHgis', true, 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning,
+        the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics,
+        the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot\'s designated purpose of assisting users with TOEIC and English language learning.
+Start a conversation like "Hello!" and encourage them like "No worries!" when you feel they do not understand. Question: %s',
+        'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=%s');
+
+insert into system_config(config_key, value, description, updated_at)
+VALUES ('GOOGLE_TRANSLATE_URL',
+        'https://translate.google.com/translate_a/single?client=at&dt=t&dt=ld&dt=qca&dt=rm&dt=bd&dj=1&hl=%25s&ie=UTF-8&oe=UTF-8&inputm=2&otf=2&iid=1dd3b944-fa62-4b55-b330-74909a99969e&',
+        '', CURDATE());
+insert into system_config(config_key, value, description, updated_at)
+VALUES ('TWILIO_SID', 'AC1df831ee034c57eff6e804dd57683db4', '', CURRENT_DATE());
+insert into system_config(config_key, value, description, updated_at)
+VALUES ('TWILIO_TOKEN', '79287f208f1057facf553eca59e14515', '', CURRENT_DATE());
+insert into system_config(config_key, description, updated_at, value) VALUES ('authorizedRedirectUris', '', CURRENT_DATE(), 'http://localhost:4200/oauth2/redirect');
+insert into system_config (config_key, description, updated_at, value)
+values ('VERTEX','Description for vertex ai', CURRENT_DATE, '{
   "type": "service_account",
-  "project_id": "toeicute-70460",
-  "private_key_id": "8099381cf1dfc903ebc36dcbf42bc95a9391526b",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDdiBE4j1WI8SY+\n8vWPbWrzEI481q9Q/rP1qj0Dnm+uPWz6HBvCDHKOCttAuemF4JrnUngtpUOh7lZV\n3e0VAuNlNSzzlpQ+AvtPcnk1vKCaPdAZ1NcS0L9mdqjTtMSM3UOn4CRTvEEr81m0\nGb178HfcQlLqHANUTl785HVRXR/AkD6OEZTGhW0iisPTbb3oM4CqaNQfIIHMmlTS\nvA2RlMFPZew4Iut1fB5B/C7ipNHecaO1Rg4mMY9aOGSIDM35DqqW4Z0vC9qpqzpz\no1FpDZcwol8hAkKD5ov3QolPrAUhtZ/nZkmUow8T5TjJkmefiQP5ZDsPbEkeAhH5\nzAQ9oC7DAgMBAAECggEAJXcLDokzGodKBBBb1idXlIbiv0hBew2wSqZBTljfo1SR\nFxVk3mLzhrEwVlh6tWEAYYmxeGrALuUbZccz/r8vzOB62zFGndwsO0ntVNizQpKc\nnJnBy9VQ4VfFApTKPtZ2yC/ghObMEM5Fh+9oe8r1wmLXGe+l4n6kktliO+Hnak3K\nLPdAp3SwDjPZPAWNqY0zG2xHyi+keG5U9SAbDwOBR05Cg64vzgqd0MpIgWT6507e\nG91XigA7JtrWq7N7GJzrleQU6Hh8lygPIY5oJm5En6ZEhSCg6aJ953prFH9fIQQk\niJKBK1/8Kb/uUYdgcSHkgYkxraUt2//PPAPziybhkQKBgQDzVZQMVbTD8RSNw+qR\n1fF4bdnG4Cu8lzx6LCwi5VtDfqprByX4FRFAsVSy1CJgj4tCm2KY+0yW+uXR5G99\nnddbRBc8p6PkqpAe+Ggsav8FMNjVpfFMAIFFKfxllEjFHYhXI+UDL/OF0clT9aOR\nUr1/sH1RBcZH+fZFym3Skk70cQKBgQDpD/e3Jn3GkGfkag8gZ5sjZXGb9Dbq7MDC\nfeLd4rW5weohgwOLmza0DLVEVIGsa1mCnC6bd3e0VkTCjcLIVWUnUrSxePj/5uhs\nzfz2J5aCP6dw/QU0l83rHg+ssKAb2S+1U/pzK564au5yukdev2WD85ZPls+9yOBz\nLunLF15gcwKBgAg0oJNx6HCbFphZPPXCAyyOd8OPF6p6Zx2vk6VxmoxCHzkQuqUN\nANHvqO2G3cnnzUhnuQFzp/eHamyTiXbw9awsNaRj+tDhN47zzX+B9CuWpBlASUzI\nz5MngU1jnLiY8FoP6c8btNiUZHeiVuu1oJJHv1IWIcOXmEhuNRneuS7hAoGBAI7u\nO/0Wngwog46RfLVi1MHgdMwv+X4ZtB2TFo79enVxdyUWNBZqGiJRqNk++kfDjiGL\npwmxOrheL80hI1O5C1ASaL5uckZ+VgxkR76uiJ9Yalfg1FBsyNxokzRVHdv2Vkve\nNLptBeoTqiiyFRMGTjueJ5Cn7L93ci8xli/3JOoBAoGBALX9JGfPLXcXuNVBJp6f\nyv4XEhvhrlLP/mNf/LgVeoXzf75JRCYWF2bgBmlTFM8eWqGqW1MOYi8lg4PfCotr\n/UaifK/U75rFYF6rHIcvFQ/jC3NHuKxj5MSZ/T2/zz5Nub0C5R9QQvvtKPTaL/f/\nnUHQaVN+NCCWocW/aB2syt84\n-----END PRIVATE KEY-----\n",
-  "client_email": "firebase-adminsdk-ajpvp@toeicute-70460.iam.gserviceaccount.com",
-  "client_id": "109193298623065780489",
+  "project_id": "beaming-inn-423802-q6",
+  "private_key_id": "329f5697e378faecc7aba72bfb34649da6b362a2",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCV3MmiHIX9JbYN\nujWZgyLtTHxSL+ZCBcZRGDWGoh6lV/AtRxZ11/Z8u7QNal0QTfpPHc2228ly7u/c\ntxsUtQsuVELJKiwpDuxzDzXHJJnOrUthG/RvVSFWCTWns23KCb13fXPhaA+7y5DH\n0IPVv7aYoaykn1kiL5OQYOm8q7r4h7Z13P6EPF9GOY5j486FgH/R20gzmNGo7kmg\nGI3iTqgCTlqp6fsaye8PJTgY4tApTEfRkfUOWM0UBGsa76238nZgS2QfenSOTOaK\nWZYaXOSTa9t9OHs4VXeCS/I0Md5whP4Hk6ZFtxNPXScr605wyLBzc9uOvOWb3JuF\n2zXnvCevAgMBAAECggEAFKWxYhRr9s9rSxjh/vSCVg9jptnSmjtmx2V+emjRBWwd\nkHTAM3GTFDxdjOZKoXnHiCmjCL6J/WZ4xaq0oHW7xKD3Up/s1aX+Dcbase/pAQCp\n51yNS4l/E6DRM6RqS/EWRDrp7EmvYUBQAjednPrSPX/eOWV68lV7ueNK+3jtmbAN\nmrzhP2SSFXIHop4vSKTyi0YwAN/9ClTWPLAJq+Bds1poIuNKKzINJu8y/i/gpxHN\njoq8bcfaec5N3SyjrGWbc/Rh6TWeElQpJ3CUtldQWsHzK+FKLOiFLzMm37EDXSfL\nqoC5nCmoZT29tuxvIGavm3u/TP8Nj7kRr1UxFDonAQKBgQDQXyjWO3ufhxy0JWu2\nUVb9cbTts03UPoJGoU8kSC9RmTK5jRmXGMbeB5RYBXEm8ysWHGdBgoQROWFuSeCw\n+tLidDCGXBBUsHacGIYt0PubbkW9PMlluBCjwJH3DD42E9PIzhCGqo7t7YbqgUsD\nmFuxzgXcwNFZJAlS8/u5Ss4VhwKBgQC4HfePXU3JcUYQjFQ0IqcmlZUFxicPkiMc\nqGst1p/lzeMNm4HYLkXQ9rvXE9D07B4wo7GSpKjMvhx+rwptSS8UyQdYT/p5w0/X\nWMBQDECV5sjhOVoLkn0rZDFqq0gZEOvuFyNxC7ddXIWOyv/9D8FewTujhwyECPNz\nk/I5qXbmmQKBgQClagWHHC1lVOMKd3Jsh2HhTLTuxhqQ1Raib0fea5d01YMZHdQk\nyLyGYcn3nkpXO08G/IFT1gJ1kfGwleFTXaqvrsEeyFMGiBeAj09la7Nxjja6pVjT\n8Sz0cdjuH7/7Of40OLGR1jAk3RzvaLheIEMagYzR1BfdBeiI+7rnO2UiXQKBgGAa\n/FswR+dLolgG9/kS0Y9ZayVNbpw5GuzdmLyfmG1bEBbNQnS2iqjt8dTtuhfunD+l\nYo56NsZQwgz6j4XGOrYtzRCzBrrCUY3F/PSLwLa+dcLirfb2azHYJddZOtQiuhRY\nrZ5XkEpCflCv8/mDXNt6IAhW+Rh+l52P71Nb+v2ZAoGBAKLa60Gcz5ogl9kPxC4E\nve2cyuU7mLKqJ+SLZ+rtJWLUBR4SsdJjHURdJRcGSDVFDPUzNLlbhEq+EAgdWAgj\nnOLr6RTq1mdiis42nyWmOHCELod2w9H5plCFwCWYpBjSrUge1cDy0m0ICFZ0fCjF\nOhmDzDt7vtVoN12l0zt9uj/i\n-----END PRIVATE KEY-----\n",
+  "client_email": "toeicute@beaming-inn-423802-q6.iam.gserviceaccount.com",
+  "client_id": "115334651142144592942",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
   "token_uri": "https://oauth2.googleapis.com/token",
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ajpvp%40toeicute-70460.iam.gserviceaccount.com",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/toeicute%40beaming-inn-423802-q6.iam.gserviceaccount.com",
   "universe_domain": "googleapis.com"
 }
-', 'GEMINI');
+');
+insert into system_config (config_key, description, updated_at, value)
+values ('PALM2','Description for PALM2', CURRENT_DATE, 'AIzaSyBRL8Lz9vaftejrIqHAaHOZhuobfJFHgis');
+insert into system_config (config_key, description, updated_at, value)
+values ('GPT','Description for GPT', CURRENT_DATE, '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');
 
+insert into kommunicate_bot(api_key, app_id, status, script)
+VALUES ('21e1deaca7ccde427eab393663be5b77a', '', true, '(function (d, m) {
+    var defaultSettings = {
+        "defaultBotIds": ["toeicute-7iflz"],
+        "defaultAssignee": "toeicute-7iflz",
+        "skipRouting":true
+        };
+      var kommunicateSettings = {
+        "appId": "21e1deaca7ccde427eab393663be5b77a",
+        "popupWidget": true,
+        "automaticChatOpenOnNavigation": true,
+        "voiceNote": true,
+        "onInit": function() {
+            Kommunicate.customizeWidgetCss(".chat-popup-widget-text{color:red!important;} .mck-box-top {background-color: red!important;}");
+            Kommunicate.updateSettings(defaultSettings);
+        }
+      };
+      var s = document.createElement("script");
+      s.type = "text/javascript";
+      s.async = true;
+      s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
+      var h = document.getElementsByTagName("head")[0];
+      h.appendChild(s);
+      window.kommunicate = m;
+      m._globals = kommunicateSettings;
+    })(document, window.kommunicate || {});');
 
-INSERT INTO chatai (chat_ai_id, location, model_name, project_id, prompt, status, token, type, url) VALUES (1, 'us-central1', 'gemini-1.0-pro', 'toeicute-70460', 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot\'s designated purpose of assisting users with TOEIC and English language learning.
-Start a conversation like "Hello!" and encourage them like "No worries!" when you feel they do not understand. Question: %s', true, '{
-  "type": "service_account",
-                                                                                                            "project_id": "toeicute-70460",
-                                                                                                            "private_key_id": "8099381cf1dfc903ebc36dcbf42bc95a9391526b",
-                                                                                                            "private_key": "-----BEGIN PRIVATE KEY-----
-MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDdiBE4j1WI8SY+
-8vWPbWrzEI481q9Q/rP1qj0Dnm+uPWz6HBvCDHKOCttAuemF4JrnUngtpUOh7lZV
-3e0VAuNlNSzzlpQ+AvtPcnk1vKCaPdAZ1NcS0L9mdqjTtMSM3UOn4CRTvEEr81m0
-Gb178HfcQlLqHANUTl785HVRXR/AkD6OEZTGhW0iisPTbb3oM4CqaNQfIIHMmlTS
-vA2RlMFPZew4Iut1fB5B/C7ipNHecaO1Rg4mMY9aOGSIDM35DqqW4Z0vC9qpqzpz
-o1FpDZcwol8hAkKD5ov3QolPrAUhtZ/nZkmUow8T5TjJkmefiQP5ZDsPbEkeAhH5
-zAQ9oC7DAgMBAAECggEAJXcLDokzGodKBBBb1idXlIbiv0hBew2wSqZBTljfo1SR
-FxVk3mLzhrEwVlh6tWEAYYmxeGrALuUbZccz/r8vzOB62zFGndwsO0ntVNizQpKc
-nJnBy9VQ4VfFApTKPtZ2yC/ghObMEM5Fh+9oe8r1wmLXGe+l4n6kktliO+Hnak3K
-LPdAp3SwDjPZPAWNqY0zG2xHyi+keG5U9SAbDwOBR05Cg64vzgqd0MpIgWT6507e
-G91XigA7JtrWq7N7GJzrleQU6Hh8lygPIY5oJm5En6ZEhSCg6aJ953prFH9fIQQk
-iJKBK1/8Kb/uUYdgcSHkgYkxraUt2//PPAPziybhkQKBgQDzVZQMVbTD8RSNw+qR
-1fF4bdnG4Cu8lzx6LCwi5VtDfqprByX4FRFAsVSy1CJgj4tCm2KY+0yW+uXR5G99
-nddbRBc8p6PkqpAe+Ggsav8FMNjVpfFMAIFFKfxllEjFHYhXI+UDL/OF0clT9aOR
-Ur1/sH1RBcZH+fZFym3Skk70cQKBgQDpD/e3Jn3GkGfkag8gZ5sjZXGb9Dbq7MDC
-feLd4rW5weohgwOLmza0DLVEVIGsa1mCnC6bd3e0VkTCjcLIVWUnUrSxePj/5uhs
-zfz2J5aCP6dw/QU0l83rHg+ssKAb2S+1U/pzK564au5yukdev2WD85ZPls+9yOBz
-LunLF15gcwKBgAg0oJNx6HCbFphZPPXCAyyOd8OPF6p6Zx2vk6VxmoxCHzkQuqUN
-ANHvqO2G3cnnzUhnuQFzp/eHamyTiXbw9awsNaRj+tDhN47zzX+B9CuWpBlASUzI
-z5MngU1jnLiY8FoP6c8btNiUZHeiVuu1oJJHv1IWIcOXmEhuNRneuS7hAoGBAI7u
-O/0Wngwog46RfLVi1MHgdMwv+X4ZtB2TFo79enVxdyUWNBZqGiJRqNk++kfDjiGL
-pwmxOrheL80hI1O5C1ASaL5uckZ+VgxkR76uiJ9Yalfg1FBsyNxokzRVHdv2Vkve
-NLptBeoTqiiyFRMGTjueJ5Cn7L93ci8xli/3JOoBAoGBALX9JGfPLXcXuNVBJp6f
-yv4XEhvhrlLP/mNf/LgVeoXzf75JRCYWF2bgBmlTFM8eWqGqW1MOYi8lg4PfCotr
-/UaifK/U75rFYF6rHIcvFQ/jC3NHuKxj5MSZ/T2/zz5Nub0C5R9QQvvtKPTaL/f/
-nUHQaVN+NCCWocW/aB2syt84
------END PRIVATE KEY-----
-",
-                                                                                                            "client_email": "firebase-adminsdk-ajpvp@toeicute-70460.iam.gserviceaccount.com",
-                                                                                                            "client_id": "109193298623065780489",
-                                                                                                            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-                                                                                                            "token_uri": "https://oauth2.googleapis.com/token",
-                                                                                                            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-                                                                                                            "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ajpvp%40toeicute-70460.iam.gserviceaccount.com",
-                                                                                                            "universe_domain": "googleapis.com"
-}
-', 'GEMINI', null);
-INSERT INTO chatai (chat_ai_id, location, model_name, project_id, prompt, status, token, type, url) VALUES (2, '', 'gpt-3.5-turbo', '', 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot\'s designated purpose of assisting users with TOEIC and English language learning.
-Start a conversation like "Hello!" and encourage them like "No worries!" when you feel they do not understand. Question: %s', true, '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', 'GPT', 'https://api.openai.com/v1/chat/completions');
+insert into system_config(config_key, description, updated_at, value)
+VALUES ('URL_FRONTEND', 'Domain of frontend', current_date, 'http://localhost:4200');
 
-insert into chatai(type, token, status, prompt, url) values ('GEMINI-CURL', 'AIzaSyBRL8Lz9vaftejrIqHAaHOZhuobfJFHgis', true, 'Rule for answering this question: As an English tutor specializing in TOEIC exam preparation and English language learning, the chatbot is dedicated to addressing inquiries pertinent to these subjects. Should the user inquire about unrelated topics, the chatbot will courteously guide them back to the main theme by posing relevant questions. This ensures clarity in discussion and adherence to the chatbot\'s designated purpose of assisting users with TOEIC and English language learning.
-Start a conversation like "Hello!" and encourage them like "No worries!" when you feel they do not understand. Question: %s', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=%s');
-alter table calculate_score add index (total_question);
+insert into system_config(config_key, description, updated_at, value)
+VALUES ('REDIS_HOST', 'Host of redis', current_date, 'toeicute-redis-toeicute.f.aivencloud.com');
+insert into system_config(config_key, description, updated_at, value)
+VALUES ('REDIS_PORT', 'Port of redis', current_date, '23605');
+insert into system_config(config_key, description, updated_at, value)
+VALUES ('REDIS_PASSWORD', 'Password of redis', current_date, 'AVNS_x8WigoRV7Q8k-6X2rOB');
+
+INSERT INTO system_config (config_key, description, updated_at, value)
+VALUES ('GPT_4', null, '2024-06-09 13:22:30.000000', 'sk-proj-hCtKKpRFdz2fkp05TmaET3BlbkFJijf1eYearfBzThtVMM3r');

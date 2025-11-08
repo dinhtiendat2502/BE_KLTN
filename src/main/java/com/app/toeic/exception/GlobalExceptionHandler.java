@@ -1,26 +1,31 @@
 package com.app.toeic.exception;
 
 import com.app.toeic.external.response.ResponseVO;
-import lombok.extern.slf4j.Slf4j;
+import com.google.cloud.storage.StorageException;
+import io.undertow.server.RequestTooBigException;
+import lombok.extern.java.Log;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.time.DateTimeException;
+import java.util.logging.Level;
 
+@Log
 @RestControllerAdvice
-@Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(AppException.class)
-    public ResponseVO handleAppException(AppException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleAppException: {}", e.getMessage());
+    public Object handleAppException(AppException e) {
+        log.log(Level.WARNING, MessageFormat.format("Exception >> GlobalExceptionHandler >> handleAppException: {0}", e.getMessage()));
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
@@ -29,10 +34,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseVO handleValidationException(MethodArgumentNotValidException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleValidationException: %s".formatted(e.getMessage()), e);
+    public Object handleValidationException(MethodArgumentNotValidException e) {
+        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> handleValidationException: {0}", e);
 
-        BindingResult bindingResult = e.getBindingResult();
+        var bindingResult = e.getBindingResult();
         var errorMessages = bindingResult
                 .getFieldErrors()
                 .stream()
@@ -47,9 +52,29 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
+    @ExceptionHandler(NoResourceFoundException.class)
+    public Object handleNoResourceFoundException(NoResourceFoundException e) {
+        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> handleNoResourceFoundException: {0}", e);
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message("API_NOT_FOUND")
+                .build();
+    }
+
     @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public ResponseVO handleFileSizeLimitExceededException(MaxUploadSizeExceededException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleFileSizeLimitExceededException: %s".formatted(e.getMessage()), e);
+    public Object handleFileSizeLimitExceededException(MaxUploadSizeExceededException e) {
+        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> handleFileSizeLimitExceededException: {0}", e);
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message("SIZE_LIMIT_EXCEEDED")
+                .build();
+    }
+
+    @ExceptionHandler(RequestTooBigException.class)
+    public Object handleFileSizeLimitExceededException(RequestTooBigException e) {
+        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> RequestTooBigException: {0}", e);
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
@@ -58,8 +83,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MultipartException.class)
-    public ResponseVO handleMultipartException(MultipartException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleMultipartException: %s".formatted(e.getMessage()), e);
+    public Object handleMultipartException(MultipartException e) {
+        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> handleMultipartException: {0}", e);
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
@@ -68,8 +93,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(IOException.class)
-    public ResponseVO handleIOException(IOException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleIOException: %s".formatted(e.getMessage()), e);
+    public Object handleIOException(IOException e) {
+        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> handleIOException: {0}", e);
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
@@ -78,8 +103,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    public ResponseVO handleNotFoundException(NoHandlerFoundException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleNotFoundException: %s".formatted(e.getMessage()), e);
+    public Object handleNotFoundException(NoHandlerFoundException e) {
+        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> handleNotFoundException: {0}", e);
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
@@ -88,8 +113,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseVO handleBadCredentialsException(BadCredentialsException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleBadCredentialsException: %s".formatted(e.getMessage()), e);
+    public Object handleBadCredentialsException(BadCredentialsException e) {
+        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> handleBadCredentialsException: {0}", e);
         var message = e.getMessage();
         if (message.contains("Bad credentials")) {
             message = "EMAIL_OR_PASSWORD_INCORRECT";
@@ -102,8 +127,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseVO handleUsernameNotFoundException(UsernameNotFoundException e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleUsernameNotFoundException: %s".formatted(e.getMessage()), e);
+    public Object handleUsernameNotFoundException(UsernameNotFoundException e) {
+        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> handleUsernameNotFoundException: {0}", e);
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
@@ -112,9 +137,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(InternalAuthenticationServiceException.class)
-    public ResponseVO handleInternalAuthenticationServiceException(InternalAuthenticationServiceException e) {
-        log.error(
-                "Exception >> GlobalExceptionHandler >> handleInternalAuthenticationServiceException: %s".formatted(e.getMessage()),
+    public Object handleInternalAuthenticationServiceException(InternalAuthenticationServiceException e) {
+        log.log(
+                Level.WARNING,
+                "Exception >> GlobalExceptionHandler >> handleInternalAuthenticationServiceException: {0}",
                 e
         );
         return ResponseVO
@@ -124,12 +150,29 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
+    @ExceptionHandler(StorageException.class)
+    public Object handleStorageException(StorageException e) {
+        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> StorageException: {0}", e);
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message(e.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(DateTimeException.class)
+    public Object handleDateTimeException(DateTimeException e) {
+        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> handleDateTimeException: {0}", e);
+        return ResponseVO
+                .builder()
+                .success(Boolean.FALSE)
+                .message("INVALID_DATE_FORMAT")
+                .build();
+    }
+
     @ExceptionHandler(Exception.class)
-    public ResponseVO handleUnwantedException(Exception e) {
-        log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException: {}", e
-                .getClass()
-                .getSimpleName());
-        log.error("Exception >> GlobalExceptionHandler >> handleUnwantedException:", e);
+    public Object handleUnwantedException(Exception e) {
+        log.log(Level.WARNING, "Exception >> GlobalExceptionHandler >> handleUnwantedException: {0}", e);
         return ResponseVO
                 .builder()
                 .success(Boolean.FALSE)
