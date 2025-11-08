@@ -34,7 +34,7 @@ import java.util.UUID;
 public class FirebaseStorageServiceImpl implements FirebaseStorageService {
     final FirebaseConfigCache firebaseConfigCache;
     final FirebaseUploadHistoryRepo firebaseUploadHistoryRepo;
-    static String downloadUrl = "https://firebasestorage.googleapis.com/v0/b/{0}/o/%s?alt=media";
+    static String downloadUrl = "https://firebasestorage.googleapis.com/v0/b/{0}/o/%s?alt=media&token=";
     static String gsUrl = "gs://{0}/%s";
 
     private FirebaseConfig previousFirebaseBean;
