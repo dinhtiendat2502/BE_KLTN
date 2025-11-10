@@ -1,4 +1,3 @@
-use toeichero;
 INSERT INTO role (role_id, role_name)
 VALUES (1, 'ADMIN'),
        (2, 'USER');
@@ -13,7 +12,7 @@ VALUES ('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, li
         'csrftoken=taoxMpbf7FKoFHoZGyNqfdoKcwD0elEJgIKsrel28Pc7cEKWiO5XB9Tc8Lw4r0ge; sessionid=11wlkenrvfpsrris51vl9aqbixlvcvfq; cf_clearance=.UxZwpQCxxLgA3nOPuc8.XCIZ3pXEIYNPBVDEK1r_r8-1711956447-1.0.1.1-MTG7UGOio0vwN9itKBMXt3e8nMGDHKmXBgnQfft.DVHqFqok0rtyy.QQ9imW79wiElSwe8jX0eKt8vHd9HyijQ',
         'hideonbush8405@gmail.com');
 insert into email_config(host, port, username, password, status)
-values ('smtp.gmail.com', '587', 'luuhoang06102002@gmail.com', 'mgjo icbs zonk oxtr', true);
+values ('smtp.gmail.com', '587', '', '', true);
 
 
 insert into email_template(name, status, subject, template_code, template_content)
@@ -26,7 +25,7 @@ VALUES ('Mẫu email xác thực OTP khi đăng ký', 'active', 'Xác thực tà
             <meta charset="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-            <title>Toeic Hero</title>
+            <title>Toeicute</title>
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
         </head>
 
@@ -71,7 +70,7 @@ VALUES ('Mẫu email sau khi đăng ký tài khoản bằng FB/GOOGLE', 'active'
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Toeic Hero</title>
+    <title>Toeicute</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 </head>
 
@@ -262,6 +261,9 @@ VALUES ('List Exam', '/admin/exam/list', null, 4);
 insert into left_menu(display_name, path, roles, menu_group_id)
 VALUES ('Add Exam', '/admin/exam/add', null, 4);
 insert into left_menu(display_name, path, roles, menu_group_id)
+VALUES ('User Exam History', '/admin/exam/history', null, 4);
+
+insert into left_menu(display_name, path, roles, menu_group_id)
 VALUES ('Get Transcript', '/admin/transcript/get', null, 6);
 insert into left_menu(display_name, path, roles, menu_group_id)
 VALUES ('Transcript History', '/admin/transcript/history', null, 6);
@@ -346,19 +348,7 @@ insert into system_config(config_key, value, description, updated_at)
 VALUES ('TWILIO_TOKEN', '', '', CURRENT_DATE());
 insert into system_config(config_key, description, updated_at, value) VALUES ('authorizedRedirectUris', '', CURRENT_DATE(), 'http://localhost:4200/oauth2/redirect');
 insert into system_config (config_key, description, updated_at, value)
-values ('VERTEX','Description for vertex ai', CURRENT_DATE, '{
-  "type": "service_account",
-  "project_id": "hero-toeic",
-  "private_key_id": "0d1ce4ae421238d7e02374f120f8b876e730f27a",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCkrquv1xSqiGXl\nhwVrEE5/nng9t27GbhvKEO9iiiFfWLNSMMA27sdt+lbey5bBnOdDLZBGfwOuiTOL\nCDeeUndEWmNIjkUWTXcljgLDRbjZHlspkR0GwVeoUWcikFmVe6kqtnEK8nceSLe9\nUQPfKj1S3at0H+bsmoqSVTT8pbfn9PdQv5WsNc8ouEmIthFZ3BFeHphJs8AaK8P8\nVPf/P/SYnYBq96GcwX1aZyozS3NUa1GVJ7mK3Vw7568T+po5+cvgLlO2sCRqNzGS\nuz47+suZWcOEguQu3x37b5So9rliP6+3lF5/h6JZ5yp4zWF5wSiH14Xd2W1J94Z9\nBgnFlSDDAgMBAAECggEAEI1Jzkuk1RsOespeXgtuiF8qILHeHW2Vt3KKTPIrNoUY\nyOsDdsH7I2+k6ZG23lDh4Zujw6IigZlip9e0l2IcgK9BCVrbUMmKbyjd2Diawp/N\nc9kU/MfUAqPj5NJzXpXmQ9fAduQ12sJeTVXmOLjrHvgOsoY+VIuX3+tWfwo8+MA5\n/Ud1JsnztXq1eedD+dUS5588Q4gxcqyDodfUM8JOU258PFYjmUTU8a33cLtce8bn\nD8LdaYekAdnfv9W6oF9rkRFEnqJWDIzWRscHegapAsCQu7Ioq/E7jHKg1wcZBGOk\n5h5wCSbdzYt6m0MtjvE2daGxXjkLD5+3xv7rAMh+oQKBgQDaR4c90bvSIVjO2v9+\nHFUsMOuz8lUB2OoYfKUjJpSgSTSQ6a9sqZq86F3tN1g9qscIEPk43WH2jcTrJuZ7\nCXyVx4lp3+lyGiSCjmEFmsKPQ7SkuiPKMi8ELG1q3rjD1G5lbpl6rxBx7cQ8jh6E\nazqzkDUKv77tGUDM8S6nwXYmcwKBgQDBJA7brAeNWsKB7CO2Dx7xbkCdlAULe9Oi\nAIEnSzjK5VE9vvv1FGcQaJhy8JIKSNq0InDCf6inQ6bhjVZATEZ+F9WfatnyXaQf\nABq09HZDCsUMR+hlL5Ct5P+0HzO8cXWs7qVh1ClYb9FO5L7EGeHtm8rIie+zMX/p\nDLpGAac4cQKBgDccpj3qjZSRjN21l5qcxriApZJqliIARaLnHb7RR+dsdFQ+XGeA\nLyyRMt3pAmOXkecsefBsnQZmZxjEWp8oFweuOLi9qzB+/0bjcgW7PHJ1ss+Am/a6\nUvqnyPyZvWbcZP9BPIkoWGubj9eGPphKhqi9uVa8cRVmMeFM5+29P/qXAoGAM8zg\n80fDSsUhz8iul0Cc8vG4AMtXQwo164gpG4nQNJKmZGIZn1SWg88ZvBILiRibF575\nESE98YZydqH6lQogCeeIktYMmDVHNE1J3GiIY1i7Gp0aljDYo9r8Pan0rUDc58Gl\nt4Q4hpCO2ZL+Gwg6EQksrPZZxHytKqsQNoBxAfECgYEApvxLaUYxpSBGVd/Az+CF\nwBe2MUNMx8TvnQfxFjGiUC6/8FOBcAMHk0hQVPE1sj7DfIKI+Nbbxz+FUa74AGr9\nBwRMmkX33rTzlTwoSwYv6xIGXrG4g5NWLriSJWBI+ZCGZhNkLOrKay91MO6xg5z8\nVSbQ3arJKwK4c32rRGeJ2aQ=\n-----END PRIVATE KEY-----\n",
-  "client_email": "firebase-adminsdk-jm7nh@hero-toeic.iam.gserviceaccount.com",
-  "client_id": "117725900472395111541",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-jm7nh%40hero-toeic.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}');
+values ('VERTEX','Description for vertex ai', CURRENT_DATE, '');
 insert into system_config (config_key, description, updated_at, value)
 values ('PALM2','Description for PALM2', CURRENT_DATE, 'AIzaSyBRL8Lz9vaftejrIqHAaHOZhuobfJFHgis');
 insert into system_config (config_key, description, updated_at, value)
@@ -371,9 +361,9 @@ insert into system_config(config_key, description, updated_at, value)
 VALUES ('URL_FRONTEND', 'Domain of frontend', current_date, 'http://localhost:4200');
 
 insert into system_config(config_key, description, updated_at, value)
-VALUES ('REDIS_HOST', 'Host of redis', current_date, 'localhost');
+VALUES ('REDIS_HOST', 'Host of redis', current_date, 'toeicute-redis-toeicute.f.aivencloud.com');
 insert into system_config(config_key, description, updated_at, value)
-VALUES ('REDIS_PORT', 'Port of redis', current_date, '6379');
+VALUES ('REDIS_PORT', 'Port of redis', current_date, '23605');
 insert into system_config(config_key, description, updated_at, value)
 VALUES ('REDIS_PASSWORD', 'Password of redis', current_date, 'AVNS_x8WigoRV7Q8k-6X2rOB');
 
@@ -391,20 +381,8 @@ set path = '/admin/home'
 where menu_group_id = 1;
 
 
-INSERT INTO firebase_config (id, file_json, bucket_name, project_id, status, token_key) VALUES (1, '{
-  "type": "service_account",
-  "project_id": "hero-toeic",
-  "private_key_id": "0d1ce4ae421238d7e02374f120f8b876e730f27a",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCkrquv1xSqiGXl\nhwVrEE5/nng9t27GbhvKEO9iiiFfWLNSMMA27sdt+lbey5bBnOdDLZBGfwOuiTOL\nCDeeUndEWmNIjkUWTXcljgLDRbjZHlspkR0GwVeoUWcikFmVe6kqtnEK8nceSLe9\nUQPfKj1S3at0H+bsmoqSVTT8pbfn9PdQv5WsNc8ouEmIthFZ3BFeHphJs8AaK8P8\nVPf/P/SYnYBq96GcwX1aZyozS3NUa1GVJ7mK3Vw7568T+po5+cvgLlO2sCRqNzGS\nuz47+suZWcOEguQu3x37b5So9rliP6+3lF5/h6JZ5yp4zWF5wSiH14Xd2W1J94Z9\nBgnFlSDDAgMBAAECggEAEI1Jzkuk1RsOespeXgtuiF8qILHeHW2Vt3KKTPIrNoUY\nyOsDdsH7I2+k6ZG23lDh4Zujw6IigZlip9e0l2IcgK9BCVrbUMmKbyjd2Diawp/N\nc9kU/MfUAqPj5NJzXpXmQ9fAduQ12sJeTVXmOLjrHvgOsoY+VIuX3+tWfwo8+MA5\n/Ud1JsnztXq1eedD+dUS5588Q4gxcqyDodfUM8JOU258PFYjmUTU8a33cLtce8bn\nD8LdaYekAdnfv9W6oF9rkRFEnqJWDIzWRscHegapAsCQu7Ioq/E7jHKg1wcZBGOk\n5h5wCSbdzYt6m0MtjvE2daGxXjkLD5+3xv7rAMh+oQKBgQDaR4c90bvSIVjO2v9+\nHFUsMOuz8lUB2OoYfKUjJpSgSTSQ6a9sqZq86F3tN1g9qscIEPk43WH2jcTrJuZ7\nCXyVx4lp3+lyGiSCjmEFmsKPQ7SkuiPKMi8ELG1q3rjD1G5lbpl6rxBx7cQ8jh6E\nazqzkDUKv77tGUDM8S6nwXYmcwKBgQDBJA7brAeNWsKB7CO2Dx7xbkCdlAULe9Oi\nAIEnSzjK5VE9vvv1FGcQaJhy8JIKSNq0InDCf6inQ6bhjVZATEZ+F9WfatnyXaQf\nABq09HZDCsUMR+hlL5Ct5P+0HzO8cXWs7qVh1ClYb9FO5L7EGeHtm8rIie+zMX/p\nDLpGAac4cQKBgDccpj3qjZSRjN21l5qcxriApZJqliIARaLnHb7RR+dsdFQ+XGeA\nLyyRMt3pAmOXkecsefBsnQZmZxjEWp8oFweuOLi9qzB+/0bjcgW7PHJ1ss+Am/a6\nUvqnyPyZvWbcZP9BPIkoWGubj9eGPphKhqi9uVa8cRVmMeFM5+29P/qXAoGAM8zg\n80fDSsUhz8iul0Cc8vG4AMtXQwo164gpG4nQNJKmZGIZn1SWg88ZvBILiRibF575\nESE98YZydqH6lQogCeeIktYMmDVHNE1J3GiIY1i7Gp0aljDYo9r8Pan0rUDc58Gl\nt4Q4hpCO2ZL+Gwg6EQksrPZZxHytKqsQNoBxAfECgYEApvxLaUYxpSBGVd/Az+CF\nwBe2MUNMx8TvnQfxFjGiUC6/8FOBcAMHk0hQVPE1sj7DfIKI+Nbbxz+FUa74AGr9\nBwRMmkX33rTzlTwoSwYv6xIGXrG4g5NWLriSJWBI+ZCGZhNkLOrKay91MO6xg5z8\nVSbQ3arJKwK4c32rRGeJ2aQ=\n-----END PRIVATE KEY-----\n",
-  "client_email": "firebase-adminsdk-jm7nh@hero-toeic.iam.gserviceaccount.com",
-  "client_id": "117725900472395111541",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-jm7nh%40hero-toeic.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
-', 'hero-toeic.appspot.com', 'hero-toeic', true, 'hero-toeic');
+INSERT INTO firebase_config (id, bucket_name, file_json, project_id, status, token_key) VALUES (2, '', 'toeicute-70460', true, 'toeicute');
+INSERT INTO firebase_config (id, bucket_name, file_json, project_id, status, token_key) VALUES (3, '', false, 'dsadsadsa');
 INSERT INTO system_config (system_config_id, config_key, description, updated_at, value) VALUES (14, 'VN_PAY_RETURN_URL', null, '2024-06-09 13:22:30.000000', 'http://localhost:4200/thank-you');
 
 INSERT INTO system_config (config_key, description, updated_at, value) VALUES ('PAYPAL_CLIENT_ID', null, '2024-06-09 13:22:30.000000', 'AfUIEEg0iDSc1w33ZqAwjYj5kCPlJ1GKC3yxmf9DjjI9SZScVEMb8xcBGTEKjvCofXFkMHlnc3gB3Wxj');
@@ -413,13 +391,13 @@ INSERT INTO system_config (config_key, description, updated_at, value) VALUES ('
 INSERT INTO system_config (config_key, description, updated_at, value) VALUES ('STRIPE_RETURN_URL', null, '2024-06-09 13:22:30.000000', 'http://localhost:4200/thank-you/stripe');
 
 UPDATE menu_group t1
-    JOIN (
+JOIN (
     SELECT menu_group_id
     FROM menu_group
     WHERE display_name = 'Exam Management'
-    ) t2
+) t2
 ON t1.menu_group_id > t2.menu_group_id
-    SET t1.priority = t1.priority + 1
+SET t1.priority = t1.priority + 1
 where true;
 
 insert into menu_group(display_name, icon, priority, have_child, path, roles, type)
@@ -437,7 +415,3 @@ insert into left_menu(display_name, path, roles, menu_group_id)
 VALUES ('Management Course Register', '/admin/course-mana/course-register', null, 17);
 insert into left_menu(display_name, path, roles, menu_group_id)
 VALUES ('Management QR Code', '/admin/course-mana/qr', null, 17);
-INSERT INTO system_config (config_key, description, updated_at, value) VALUES ('CLIENT_GOOGLE_ID', null, '2024-06-09 13:22:30.000000', '123');
-INSERT INTO system_config (config_key, description, updated_at, value) VALUES ('CLIENT_GOOGLE_SECRET', null, '2024-06-09 13:22:30.000000', 'dasd');
-
-

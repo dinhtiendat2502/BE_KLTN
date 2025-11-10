@@ -52,5 +52,16 @@ public class UserExamHistoryServiceImpl implements UserExamHistoryService {
                 .findByUserExamHistoryId(profile, userExamHistoryId)
                 .orElse(null);
     }
+
+    @Override
+    public Object findUserExamHistoryByUserIdAndExamId(Integer userExamHistoryId) {
+        return userExamHistoryRepository.findByUserExamHistoryId(userExamHistoryId).orElse(null);
+    }
+
+    @Override
+    public Object findAllUserExamHistory() {
+        return userExamHistoryRepository
+                .findAllExamHistory();
+    }
 }
 

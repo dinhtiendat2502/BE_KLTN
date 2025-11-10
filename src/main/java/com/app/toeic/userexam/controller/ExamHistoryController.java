@@ -22,6 +22,17 @@ public class ExamHistoryController {
     UserService userService;
     private static final String SUCCESS = "Thành công";
 
+    @GetMapping("/find-all")
+    public ResponseVO findAll() {
+        var examHistories = userExamHistoryService.findAllUserExamHistory();
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(examHistories)
+                .message(SUCCESS)
+                .build();
+    }
+
     @GetMapping("/find-by-id/{examHistoryId}")
     public ResponseVO findById(@PathVariable("examHistoryId") String examHistoryId) {
         var examHistory = userExamHistoryService.findUserExamHistoryByExamHistoryId(Integer.parseInt(examHistoryId));
@@ -48,12 +59,28 @@ public class ExamHistoryController {
     }
 
     @GetMapping("/my-detail/{userExamHistoryId}")
-    public ResponseVO findByUserIdAndExamId(HttpServletRequest request, @PathVariable("userExamHistoryId") String userExamHistoryId) {
+    public ResponseVO findByUserIdAndExamId(
+            HttpServletRequest request,
+            @PathVariable("userExamHistoryId") String userExamHistoryId
+    ) {
         var profile = userService
                 .getProfile(request)
                 .orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy thông tin người dùng"));
         var examHistory = userExamHistoryService.findUserExamHistoryByUserIdAndExamId(profile, Integer.parseInt(
                 userExamHistoryId));
+        return ResponseVO
+                .builder()
+                .success(Boolean.TRUE)
+                .data(examHistory)
+                .message(SUCCESS)
+                .build();
+    }
+
+    @GetMapping("detail/{userExamHistoryId}")
+    public ResponseVO detail(
+            @PathVariable("userExamHistoryId") String userExamHistoryId
+    ) {
+        var examHistory = userExamHistoryService.findUserExamHistoryByUserIdAndExamId(Integer.parseInt(userExamHistoryId));
         return ResponseVO
                 .builder()
                 .success(Boolean.TRUE)

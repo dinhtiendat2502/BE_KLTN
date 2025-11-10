@@ -50,7 +50,6 @@ public interface IUserExamHistoryRepository extends JpaRepository<UserExamHistor
     List<ExamHistoryStatisticV2DTO> findAllByRealExam();
 
 
-
     @Query("""
                     SELECT u
                     FROM UserExamHistory u
@@ -63,5 +62,31 @@ public interface IUserExamHistoryRepository extends JpaRepository<UserExamHistor
                         AND u.userExamHistoryId = ?2
                     order by q.questionNumber
             """)
-    Optional<UserExamHistoryVO.UserExamHistoryDetail> findByUserExamHistoryId(UserAccount profile, Integer userExamHistoryId);
+    Optional<UserExamHistoryVO.UserExamHistoryDetail> findByUserExamHistoryId(
+            UserAccount profile,
+            Integer userExamHistoryId
+    );
+
+    @Query("""
+                    SELECT u
+                    FROM UserExamHistory u
+                         JOIN FETCH u.exam e
+                         JOIN FETCH u.userAnswers ua
+                         JOIN FETCH ua.question q
+                         LEFT JOIN FETCH q.questionImages
+                    WHERE TRUE
+                        AND u.userExamHistoryId = ?1
+                    order by q.questionNumber
+            """)
+    Optional<UserExamHistoryVO.UserExamHistoryDetail> findByUserExamHistoryId(Integer userExamHistoryId);
+
+
+    @Query("""
+               SELECT u
+               FROM UserExamHistory u
+               JOIN FETCH u.exam e
+               JOIN  FETCH u.user us
+               ORDER BY u.examDate DESC
+            """)
+    List<UserExamHistoryInfo> findAllExamHistory();
 }

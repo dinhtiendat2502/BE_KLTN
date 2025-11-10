@@ -106,6 +106,9 @@ public class UserExamHistoryVO {
         Integer getTimeRemaining();
 
         LocalDateTime getExamDate();
+        Integer getTotalLeave();
+
+        Integer getTotalOpenNewTab();
 
         ExamVo1 getExam();
 

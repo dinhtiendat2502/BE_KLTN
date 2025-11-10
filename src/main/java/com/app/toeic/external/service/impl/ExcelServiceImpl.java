@@ -42,9 +42,7 @@ public class ExcelServiceImpl implements ExcelService {
                 rowNumber++;
                 continue;
             }
-            Iterator<Cell> cellsInRow = currentRow.iterator();
-            while (cellsInRow.hasNext()) {
-                Cell currentCell = cellsInRow.next();
+            for (Cell currentCell : currentRow) {
                 int columnIndex = currentCell.getColumnIndex();
                 if (columnIndex == 10) {
                     if (isAddNew) {
@@ -85,9 +83,7 @@ public class ExcelServiceImpl implements ExcelService {
                 rowNumber++;
                 continue;
             }
-            Iterator<Cell> cellsInRow = currentRow.iterator();
-            while (cellsInRow.hasNext()) {
-                Cell currentCell = cellsInRow.next();
+            for (Cell currentCell : currentRow) {
                 int columnIndex = currentCell.getColumnIndex();
                 if (columnIndex == 10) {
                     if (isAddNew) {
@@ -155,7 +151,9 @@ public class ExcelServiceImpl implements ExcelService {
                     }
                 }
             }
-            questionList.add(question);
+            if (isAddNew) {
+                questionList.add(question);
+            }
             questionNumber++;
             rowNumber++;
         }
@@ -186,9 +184,7 @@ public class ExcelServiceImpl implements ExcelService {
                     .questionNumber(questionNumber)
                     .part(part)
                     .build() : questionList.get(rowNumber - 1);
-            Iterator<Cell> cellsInRow = currentRow.iterator();
-            while (cellsInRow.hasNext()) {
-                Cell currentCell = cellsInRow.next();
+            for (Cell currentCell : currentRow) {
                 int columnIndex = currentCell.getColumnIndex();
                 var cellType = currentCell.getCellType();
                 String value;
@@ -209,7 +205,9 @@ public class ExcelServiceImpl implements ExcelService {
                     }
                 }
             }
-            questionList.add(question);
+            if (isAddNew) {
+                questionList.add(question);
+            }
             questionNumber++;
             rowNumber++;
         }
@@ -261,7 +259,9 @@ public class ExcelServiceImpl implements ExcelService {
                     }
                 }
             }
-            questionList.add(question);
+            if (isAddNew) {
+                questionList.add(question);
+            }
             questionNumber++;
             rowNumber++;
         }
@@ -317,7 +317,9 @@ public class ExcelServiceImpl implements ExcelService {
                     }
                 }
             }
-            questionList.add(question);
+            if (isAddNew) {
+                questionList.add(question);
+            }
             questionNumber++;
             rowNumber++;
         }
@@ -352,9 +354,7 @@ public class ExcelServiceImpl implements ExcelService {
                     .questionNumber(questionNumber)
                     .part(part)
                     .build() : questionList.get(rowNumber - 1);
-            Iterator<Cell> cellsInRow = currentRow.iterator();
-            while (cellsInRow.hasNext()) {
-                Cell currentCell = cellsInRow.next();
+            for (Cell currentCell : currentRow) {
                 int columnIndex = currentCell.getColumnIndex();
                 var cellType = currentCell.getCellType();
                 String value;
@@ -377,7 +377,9 @@ public class ExcelServiceImpl implements ExcelService {
                     }
                 }
             }
-            questionList.add(question);
+            if (isAddNew) {
+                questionList.add(question);
+            }
             questionNumber++;
             rowNumber++;
         }

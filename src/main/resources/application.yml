@@ -72,9 +72,9 @@ spring:
           model: gpt-3.5-turbo
           temperature: 0.7
   datasource:
-    url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeichero}?useUnicode=true&createDatabaseIfNotExist=true"
+    url: "jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:toeicute}?useUnicode=true&createDatabaseIfNotExist=true"
     username: "${DB_USERNAME:root}"
-    password: "${DB_PASSWORD:123456}"
+    password: "${DB_PASSWORD:1234}"
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database: mysql
