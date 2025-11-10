@@ -34,7 +34,7 @@ import java.util.UUID;
 public class FirebaseStorageServiceImpl implements FirebaseStorageService {
     final FirebaseConfigCache firebaseConfigCache;
     final FirebaseUploadHistoryRepo firebaseUploadHistoryRepo;
-    static String downloadUrl = "https://firebasestorage.googleapis.com/v0/b/{0}/o/%s?alt=media";
+    static String downloadUrl = "https://firebasestorage.googleapis.com/v0/b/{0}/o/%s?alt=media&token=";
     static String gsUrl = "gs://{0}/%s";
 
     private FirebaseConfig previousFirebaseBean;
@@ -54,8 +54,8 @@ public class FirebaseStorageServiceImpl implements FirebaseStorageService {
         var bucket = StorageClient.getInstance().bucket();
         var name = generateFileName(file.getOriginalFilename());
         var blob = bucket.create(name, file.getBytes(), file.getContentType());
-        var url = blob.getMediaLink();
-//        var url = getImageUrl(name);
+//        var url = blob.getMediaLink();
+        var url = getImageUrl(name);
         log.info(MessageFormat.format("FirebaseStorageServiceImpl >> uploadFile >> {0}", url));
 
         // save info to database

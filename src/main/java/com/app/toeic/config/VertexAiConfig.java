@@ -53,7 +53,7 @@ public class VertexAiConfig {
                                                    "https://www.googleapis.com/auth/cloud-platform",
                                                    "https://www.googleapis.com/auth/cloud-platform.read-only"
                                            );
-        var vertexApi = new VertexAI("beaming-inn-423802-q6", "us-central1", credentials);
+        var vertexApi = new VertexAI("hero-toeic", "us-central1", credentials);
         return new VertexAiGeminiChatClient(
                 vertexApi,
                 VertexAiGeminiChatOptions.builder()
