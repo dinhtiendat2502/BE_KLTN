@@ -323,7 +323,7 @@ public class CrawlServiceImpl implements CrawlService {
                 saveFailedJob(job, "NOT_FOUND_PART_TO_CRAWL");
                 return;
             }
-            var exam = Exam.builder().status(Constant.STATUS_PENDING).price(0.0).numberOfUserDoExam(0).isFree(true);
+            var exam = Exam.builder().status(Constant.STATUS_ACTIVE).price(0.0).numberOfUserDoExam(0).isFree(true);
             var title = doc.getElementsByTag("h1").first();
             if (title != null && CollectionUtils.isNotEmpty(title.children())) {
                 title.children().remove();

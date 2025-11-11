@@ -1,30 +1,37 @@
 package com.app.toeic.chatai.payload;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class GeminiPayload {
-    List<Content> contents;
+
+    @Builder.Default
+    List<Content> contents = new ArrayList<>();
 
     @Getter
     @Setter
     @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class Content {
         String role;
-        List<PartContent> parts;
+
+        @Builder.Default
+        List<PartContent> parts = new ArrayList<>();
     }
 
     @Getter
     @Setter
     @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class PartContent {
         String text;
     }

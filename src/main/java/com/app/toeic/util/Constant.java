@@ -22,7 +22,8 @@ public class Constant {
     public static final String PART5_CONTENT = "Directions: A word or phrase is missing in each of the sentences below. Four answer choices are given below each sentence. Select the best answer to complete the sentence. Then mark the letter (A), (B), (C), or (D) on your answer sheet.";
     public static final String PART6_CONTENT = "Directions : Read the texts that follow. A word, phrase, or sentence is missing in parts of each text. Four answer choices for each question are given below the text. Select the best answer to complete the text. Then mark the letter (A), (B), (C), or (D) on your answer sheet.";
     public static final String PART7_CONTENT = "Directions: In this part you will read a selection of texts, such as magazine and newspaper articles, e-mails, and instant messages. Each text or set of texts is followed by several questions. Select the best answer for each question and mark the letter (A), (B), (C), or (D) on your answer sheet.";
-    public static final String REGEX_CHECK_LINK_STUDY4 = "^https://study4\\.com/tests/(\\d+)/results/(\\d+)/details/$";
+    public static final String REGEX_CHECK_LINK_STUDY4 =
+            "^https://study4\\.com/tests/(\\d+)(?:/[a-zA-Z0-9\\-]+)?/results/(\\d+)/details/$";
     public static final String CONTEXT_TRANSCRIPT = "context-transcript";
     public static final String COLLAPSE = "collapse";
     public static final String CORRECT = "correct";

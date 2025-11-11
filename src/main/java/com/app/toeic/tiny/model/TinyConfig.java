@@ -8,8 +8,7 @@ import lombok.*;
 @Table(name = "tiny_config")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Getter@Setter
 @Builder
 public class TinyConfig {
     @Id
@@ -17,8 +16,9 @@ public class TinyConfig {
     private Long tinyConfigId;
 
     @Column(unique = true)
-    private String apiKey;
+    private String apiKey = "8b794dn1wu635cyq3thspfbaxifw3gqoghn9gbc442kgjf8j";
 
     @Builder.Default
     private boolean status = false;
 }
+

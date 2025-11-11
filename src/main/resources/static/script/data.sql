@@ -415,3 +415,10 @@ insert into left_menu(display_name, path, roles, menu_group_id)
 VALUES ('Management Course Register', '/admin/course-mana/course-register', null, 17);
 insert into left_menu(display_name, path, roles, menu_group_id)
 VALUES ('Management QR Code', '/admin/course-mana/qr', null, 17);
+
+insert into system_config(config_key, value, description, updated_at)
+VALUES ('CLIENT_GOOGLE_ID', 'dummy-client-id', null, CURRENT_DATE());
+
+insert into system_config(config_key, value, description, updated_at)
+VALUES ('CLIENT_GOOGLE_SECRET', 'dummy-client-secret', null, CURRENT_DATE());
+;

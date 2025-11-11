@@ -34,16 +34,22 @@ public class GeminiController {
 
     @PostMapping("ask/v1")
     @ChatAiLog(model = ModelChat.GEMINI)
-    public Object askGeminiV1(@RequestBody GeminiPayload payload) {
+    public Object askGeminiV1(@RequestBody VertexAIController.PayloadVertex request) {
         var config = getChatAI();
         var result = ResponseVO
                 .builder()
                 .build();
         try {
             var headers = RequestUtils.createHeaders();
+            headers.set("x-goog-api-key", config.getToken());
+            var partContent = new GeminiPayload.PartContent(request.prompt());
+            var content = new GeminiPayload.Content(Constant.USER, List.of(partContent));
+            var payload = GeminiPayload.builder()
+                    .contents(List.of(content))
+                    .build();
             var httpEntity = new HttpEntity<>(payload, headers);
             var responseEntity = restTemplate.postForEntity(
-                    MessageFormat.format("{0}{1}", config.getUrl(), config.getToken()),
+                    config.getUrl(),
                     httpEntity,
                     Object.class
             );
@@ -52,8 +58,16 @@ public class GeminiController {
                 var candidates = m.get("candidates");
                 if (candidates instanceof List<?> l) {
                     if(l.getFirst() instanceof Map<?, ?> m2) {
-                        result.setData(m2.get("content"));
-                        result.setSuccess(true);
+                        if(m2.get("content") instanceof Map<?, ?> m3) {
+                            if(m3.get("parts") instanceof List<?> l2) {
+                                if(l2.getFirst() instanceof Map<?, ?> m4) {
+                                    if(m4.get("text") instanceof String s) {
+                                        result.setData(s);
+                                        result.setSuccess(true);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -62,7 +76,7 @@ public class GeminiController {
                     Level.WARNING,
                     MessageFormat.format(
                             "GeminiController >> ask >> param: {0} >> Exception: ",
-                            JsonConverter.convertObjectToJson(payload)
+                            JsonConverter.convertObjectToJson(request)
                     ),
                     e
             );
