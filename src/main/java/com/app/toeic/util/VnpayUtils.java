@@ -31,8 +31,8 @@ public class VnpayUtils {
     public static final String VNP_COMMAND_VALUE = "pay";
     public static final String VNP_COMMAND_QUERY_VALUE = "querydr";
     public static final String VNP_CURR_CODE_VALUE = "VND";
-    public static final String VNP_TMN_CODE_VALUE = "GLE8YXG4";
-    public static final String VNP_SECRET_KEY_VALUE = "ZCVPMHAELZKRPGTFLWJDPLQVPHBWEKXG";
+    public static final String VNP_TMN_CODE_VALUE = "YL93UMHH";
+    public static final String VNP_SECRET_KEY_VALUE = "VMH0MB00GL5V1JZ3ORX0LP0O49BGL23Z";
     public static final String VNP_ORDER_TYPE_VALUE = "other";
     public static final String VNP_LOCALE_VALUE = "vn";
     public static final String VNP_PAY_URL = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";

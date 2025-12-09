@@ -1,7 +1,7 @@
 version: '3'
 services:
   spring-app:
-    container_name: toeichero-service
+    container_name: toeicmaster-service
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,7 +9,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - DB_HOST=toeic-hero-toeichero.e.aivencloud.com
+      - DB_HOST=toeic-hero-toeicmaster.e.aivencloud.com
       - DB_PORT=22110
       - DB_USERNAME=avnadmin
       - DB_PASSWORD=AVNS_imM3wBeU7YcBpLLjPe4

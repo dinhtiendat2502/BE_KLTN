@@ -40,30 +40,49 @@ public class LLamasController {
     @PostMapping("ask")
     @ChatAiLog(model = ModelChat.LLAMAS)
     public Object ask(@RequestBody String input) {
-        var config = getChatAI();
-        var result = ResponseVO
-                .builder()
-                .build();
+        var config = getChatAI();  // lấy bản ghi trong chat_ai
+        var result = ResponseVO.builder().build();
+
         try {
-            var headers = RequestUtils.createHeaders();
-            var httpEntity = new HttpEntity<>(Map.of("input", input), headers);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setBearerAuth(config.getToken()); // <<< token từ bảng chat_ai
+
+            // Body đúng chuẩn Groq / OpenAI Llama API
+            Map<String, Object> body = Map.of(
+                    "model", config.getModelName(),   // từ DB
+                    "messages", List.of(
+                            Map.of(
+                                    "role", "user",
+                                    "content", input
+                            )
+                    )
+            );
+
+            var httpEntity = new HttpEntity<>(body, headers);
+
             var responseEntity = restTemplate.postForEntity(
-                    config.getUrl(),
+                    config.getUrl(),  // từ DB
                     httpEntity,
                     Object.class
             );
+
             result.setData(responseEntity.getBody());
             result.setSuccess(true);
         } catch (Exception e) {
-            log.log(
-                    Level.WARNING,
-                    MessageFormat.format("LLamasController >> ask >> param: {0} >> Exception: ", input),
-                    e
-            );
+            log.log(Level.WARNING,
+                    MessageFormat.format(
+                            "LLamasController >> ask >> param: {0} >> Exception: ",
+                            input
+                    ),
+                    e);
+
             result.setSuccess(false);
         }
+
         return result;
     }
+
 
     private ChatAI getChatAI() {
         return chatAiRepository.findAllByStatusAndType(true, Constant.LLAMAS).getFirst();
