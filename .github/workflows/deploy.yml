@@ -39,3 +39,4 @@ jobs:
         script: |
           sudo systemctl restart springboot
           sudo systemctl status springboot --no-pager
+          sudo journalctl -u springboot --no-pager -n 50 || true
