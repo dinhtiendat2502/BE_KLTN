@@ -1,0 +1,41 @@
+name: Deploy Spring Boot to EC2
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    - name: Build app
+      run: mvn clean package -DskipTests
+
+    - name: Copy JAR to EC2
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ubuntu
+        key: ${{ secrets.EC2_KEY }}
+        source: "target/*.jar"
+        target: "/home/ubuntu/app/app.jar"
+
+    - name: Restart Spring Boot service
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ubuntu
+        key: ${{ secrets.EC2_KEY }}
+        script: |
+          sudo systemctl restart springboot
+          sudo systemctl status springboot --no-pager
