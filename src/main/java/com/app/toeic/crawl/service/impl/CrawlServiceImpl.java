@@ -37,7 +37,7 @@ import java.util.logging.Level;
 
 @Log
 @Service
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class CrawlServiceImpl implements CrawlService {
     JobCrawlRepository jobCrawlRepository;

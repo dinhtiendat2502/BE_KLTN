@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Log
 @Service
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
 public class UserTokenService {
     UserTokenRepository userTokenRepository;

@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("plan")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PlanController {
     PlanRepository planRepository;

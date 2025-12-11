@@ -25,7 +25,7 @@ import java.util.Date;
 
 @Log
 @RestController
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @RequestMapping("/admin/part")
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class PartController {

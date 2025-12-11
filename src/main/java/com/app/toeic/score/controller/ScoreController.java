@@ -21,7 +21,7 @@ import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/score")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class ScoreController {
     ICalculateScoreRepository calculateScoreRepository;

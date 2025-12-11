@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/course-register")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class CourseRegisterController {
     CourseRegisterRepo courseRegisterRepo;

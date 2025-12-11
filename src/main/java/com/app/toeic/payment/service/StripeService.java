@@ -18,7 +18,7 @@ import java.text.MessageFormat;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class StripeService {
     SystemConfigService systemConfigService;

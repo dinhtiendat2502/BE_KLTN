@@ -34,7 +34,7 @@ import java.util.logging.Level;
 @Log
 @RestController
 @RequestMapping("transcript")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class TranscriptController {
     RevAIConfigRepo revAIConfigRepo;

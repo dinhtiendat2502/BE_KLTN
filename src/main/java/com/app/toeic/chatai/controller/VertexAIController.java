@@ -37,7 +37,7 @@ import java.util.logging.Level;
 @Log
 @RestController
 @RequestMapping("vertex")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class VertexAIController {
     VertexAiPaLm2ChatClient vertexAiPaLm2ChatClient;

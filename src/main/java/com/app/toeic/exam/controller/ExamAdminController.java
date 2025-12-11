@@ -37,7 +37,7 @@ import java.util.logging.Level;
 @Log
 @RequestMapping("/admin/exam")
 @RestController
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class ExamAdminController {
     ExamService examService;

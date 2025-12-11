@@ -14,7 +14,7 @@ import java.text.MessageFormat;
 
 @Log
 @Service
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CaptchaService {
     JedisPooled jedisPooled;

@@ -30,7 +30,7 @@ import java.util.logging.Level;
 @Log
 @Aspect
 @Component
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationLogAspect {
     IUserAccountLogRepository iUserAccountLogRepository;

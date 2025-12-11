@@ -23,7 +23,7 @@ import java.util.logging.Level;
 @Log
 @RestController
 @RequestMapping("blog")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BlogController {
     BlogRepository blogRepository;

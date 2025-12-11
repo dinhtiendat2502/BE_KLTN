@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @Log
 @RestController
 @RequestMapping("comment")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CommentController {
     CommentRepository commentRepository;

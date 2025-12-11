@@ -12,7 +12,7 @@ import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisPooled;
 
 @Configuration
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class RedisConfig {
     SystemConfigService systemConfigService;

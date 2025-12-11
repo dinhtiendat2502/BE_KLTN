@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @Service
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class QuestionServiceImpl implements QuestionService {
     IQuestionRepository questionRepository;

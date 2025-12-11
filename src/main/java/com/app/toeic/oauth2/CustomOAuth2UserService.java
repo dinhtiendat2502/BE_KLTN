@@ -35,7 +35,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     IUserAccountRepository iUserAccountRepository;

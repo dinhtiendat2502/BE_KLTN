@@ -23,7 +23,7 @@ import java.util.Map;
 @Log
 @RestController
 @RequestMapping("/firebase/history")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
+@RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class FirebaseHistoryController {
     FirebaseUploadHistoryRepo firebaseUploadHistoryRepo;
