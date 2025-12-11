@@ -4,7 +4,7 @@ package com.app.toeic.firebase.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import lombok.Builder;
+
 @Entity
 @Table(name = "firebase_config")
 @Getter

@@ -34,7 +34,7 @@ import java.util.logging.Level;
 
 @Log
 @RestController
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequestMapping("gpt")
 public class ChatGPTController {

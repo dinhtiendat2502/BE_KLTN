@@ -42,7 +42,7 @@ import java.util.logging.Level;
 @Log
 @RestController
 @RequestMapping("/user")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserController {
     UserService userService;

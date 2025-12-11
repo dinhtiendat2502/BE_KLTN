@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/revai/account")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class RevAIAccountController {
     RevAIAccountRepo revAIAccountRepo;

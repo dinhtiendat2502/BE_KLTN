@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Log
 @RestController
 @RequestMapping("/chat")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class MessageController {
     IUserAccountRepository iUserAccountRepository;

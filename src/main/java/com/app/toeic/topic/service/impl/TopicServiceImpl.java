@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class TopicServiceImpl implements TopicService {
     ITopicRepository iTopicRepository;

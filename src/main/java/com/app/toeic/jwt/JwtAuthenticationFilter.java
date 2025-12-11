@@ -26,7 +26,7 @@ import java.util.Optional;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     JwtTokenProvider jwtUtilities;

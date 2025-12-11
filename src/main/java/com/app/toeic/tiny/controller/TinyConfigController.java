@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("tiny-config")
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class TinyConfigController {
     TinyConfigRepo tinyConfigRepo;
 

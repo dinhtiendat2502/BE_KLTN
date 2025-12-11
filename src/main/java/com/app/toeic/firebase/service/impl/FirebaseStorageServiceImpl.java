@@ -30,7 +30,7 @@ import java.util.UUID;
 @Log
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class FirebaseStorageServiceImpl implements FirebaseStorageService {
     final FirebaseConfigCache firebaseConfigCache;
     final FirebaseUploadHistoryRepo firebaseUploadHistoryRepo;

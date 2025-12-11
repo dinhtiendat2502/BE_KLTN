@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Log
 @RestController
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @RequestMapping("/statistic")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class StatisticController {

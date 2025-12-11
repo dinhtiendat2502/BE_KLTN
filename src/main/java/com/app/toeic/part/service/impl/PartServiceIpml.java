@@ -27,7 +27,7 @@ import java.util.List;
 
 @Log
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class PartServiceIpml implements PartService {
     IPartRepository partRepository;

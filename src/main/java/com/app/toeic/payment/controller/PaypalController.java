@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 
 @RestController
 @RequestMapping("payment/paypal")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PaypalController {
     PaypalService paypalService;

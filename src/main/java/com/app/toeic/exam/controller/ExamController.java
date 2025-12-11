@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Log
 @RestController
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @RequestMapping("/exam")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ExamController {

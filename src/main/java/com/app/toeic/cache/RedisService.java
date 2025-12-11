@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.JedisPooled;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class RedisService {
     JedisPooled jedisPooled;

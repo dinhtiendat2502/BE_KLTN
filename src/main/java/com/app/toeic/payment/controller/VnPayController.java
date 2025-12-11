@@ -26,7 +26,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("payment/vn-pay")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class VnPayController {
     UserService userService;

@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Log
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TranslateService {
     RestTemplate restTemplate;

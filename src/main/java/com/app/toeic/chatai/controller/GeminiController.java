@@ -26,7 +26,7 @@ import java.util.logging.Level;
 @Log
 @RestController
 @RequestMapping("gemini")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class GeminiController {
     RestTemplate restTemplate;

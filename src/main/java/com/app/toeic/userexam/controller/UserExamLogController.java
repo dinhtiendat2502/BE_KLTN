@@ -24,7 +24,7 @@ import java.util.List;
 @Log
 @RestController
 @RequestMapping("/user-exam-log")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserExamLogController {
     JedisPooled jedisPooled;

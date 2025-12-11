@@ -24,7 +24,7 @@ import java.util.NoSuchElementException;
 
 @Log
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PaypalService {
     PayPalHttpClient payPalHttpClient;

@@ -22,7 +22,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/course")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class CourseController {
     FirebaseStorageService firebaseStorageService;

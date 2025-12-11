@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE, makeFinal = true)
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @RequestMapping("tiny-account")
 public class TinyAccountController {
     TinyAccountRepo tinyAccountRepo;

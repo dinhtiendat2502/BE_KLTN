@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 @Log
 @RestController
 @RequestMapping("/admin/crawl")
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class CrawlController {
     CrawlConfigRepository crawlConfigRepository;

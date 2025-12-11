@@ -48,7 +48,7 @@ import java.util.logging.Level;
 @Log
 @Service
 @Transactional
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class UserServiceImpl implements UserService {
     AuthenticationManager authenticationManager;

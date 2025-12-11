@@ -18,7 +18,7 @@ import java.util.logging.Level;
 
 @Log
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = lombok.AccessLevel.PRIVATE)
 public class FirebaseConfigCache {
     FirebaseRepository firebaseRepository;

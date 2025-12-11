@@ -30,7 +30,7 @@ import java.util.logging.Level;
 
 @Log
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
 public class GoogleTranscriptService {
     TranscriptRepo transcriptRepo;
