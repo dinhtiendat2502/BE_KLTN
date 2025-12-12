@@ -77,7 +77,7 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfiguration() {
         var corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(List.of("http://localhost:4200", "http://192.168.1.26:4200"));
+        corsConfig.setAllowedOrigins(List.of("http://localhost:4200", "http://192.168.1.26:4200", "https://fe-kltn-35.vercel.app"));
         corsConfig.setAllowedMethods(List.of("*"));
         corsConfig.setAllowedHeaders(List.of("*"));
         corsConfig.addExposedHeader(Constant.CAPTCHA);
