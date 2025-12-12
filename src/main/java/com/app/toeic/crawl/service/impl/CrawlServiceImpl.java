@@ -314,9 +314,18 @@ public class CrawlServiceImpl implements CrawlService {
     public void crawlDataV2(String url, CrawlConfig config, JobCrawl job) {
         var startTime = System.currentTimeMillis();
         try {
-            var connection = Jsoup.connect(url);
-            connection.header("Cookie", config.getToken());
-            var doc = connection.userAgent(config.getAgentUser()).get();
+            var connection = Jsoup.connect(url)
+                    .userAgent(config.getAgentUser())
+                    .header("Cookie", config.getToken())
+                    .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
+                    .header("Accept-Language", "en-US,en;q=0.9")
+                    .header("Referer", "https://study4.com/")
+                    .timeout(15000)   // tăng timeout
+                    .followRedirects(true);
+
+            var doc = connection.get();
+
+
             var listPartContent = doc.getElementsByClass("test-questions-wrapper");
             int totalPart = 7;
             if (CollectionUtils.isEmpty(listPartContent) || listPartContent.size() != totalPart) {
