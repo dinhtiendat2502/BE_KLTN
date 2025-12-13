@@ -73,41 +73,52 @@ public class ExamAdminController {
             @RequestParam(value = "toDate", required = false) LocalDateTime toDate
     ) {
         var rs = ResponseVO.builder();
+
+        // VALIDATE AUDIO CHÍNH (bắt buộc cho cả 2 trường hợp)
+        if (audio == null || audio.isEmpty() || FileUtils.isNotAudio(audio)) {
+            return rs.success(Boolean.FALSE).message("INVALID_AUDIO_FORMAT").build();
+        }
+
+        // VALIDATE cho isFree = false
+        if (!isFree) {
+            if (fromDate == null || toDate == null) {
+                return rs.success(Boolean.FALSE).message("DATE_RANGE_REQUIRED").build();
+            }
+        }
+
         var exam = Exam
                 .builder()
                 .examName(examName)
                 .isFree(isFree)
-                .topic(topicId != -1 ? Topic.builder().topicId(topicId).build() : null)
+                .topic(topicId != null && topicId != -1 ? Topic.builder().topicId(topicId).build() : null)
                 .build();
+
         if (!isFree) {
-            if (!ExcelHelper.hasExcelFormat(excel) || FileUtils.isNotAudio(audio)) {
-                return rs.success(Boolean.FALSE).message("INVALID_FILE_FORMAT").build();
-            }
             exam.setFromDate(fromDate);
             exam.setToDate(toDate);
         }
-        var mapAudio = Map.of(0, audio, 1, audio1, 2, audio2, 3, audio3, 4, audio4);
-        for (var entry : mapAudio.entrySet()) {
-            uploadAudio(entry.getValue(), exam, entry.getKey());
+
+        // Upload audio chính (index = 0)
+        uploadAudio(audio, exam, 0);
+
+        // Chỉ upload audio phụ khi isFree = true
+        if (isFree) {
+            var mapAudio = Map.of(1, audio1, 2, audio2, 3, audio3, 4, audio4);
+            for (var entry : mapAudio.entrySet()) {
+                uploadAudio(entry.getValue(), exam, entry.getKey());
+            }
         }
 
         try {
-            if (isFree) {
-                examService.addExam(exam);
-            } else {
-                var job = JobImportExcelExam
-                        .builder()
-                        .audio(audio.getOriginalFilename())
-                        .excel(excel.getOriginalFilename())
-                        .examName(examName)
-                        .topicId(topicId)
-                        .build();
-                var returnJob = jobImportExcelExamRepo.save(job);
-                examService.importExcelExam(excel, returnJob, exam);
-            }
+            // Cả 2 trường hợp đều dùng addExam
+            examService.addExam(exam);
             return rs.success(Boolean.TRUE).message("CREATE_EXAM_SUCCESS").build();
         } catch (AppException e) {
+            log.log(Level.SEVERE, "Error creating exam", e);
             return rs.success(Boolean.FALSE).message(e.getMessage()).build();
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Unexpected error creating exam", e);
+            return rs.success(Boolean.FALSE).message("CREATE_EXAM_FAILED").build();
         }
     }
 
